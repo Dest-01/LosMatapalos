@@ -1,226 +1,307 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-        <div class="row">
+      <div class="row">
+        <div class="col-12">
+          <div class="card" v-if="$gate.isAdmin()">
+            <div class="card-header">
+              <h3 class="card-title">Category List</h3>
 
-          <div class="col-12">
-        
-            <div class="card" v-if="$gate.isAdmin()">
-              <div class="card-header">
-                <h3 class="card-title">Category List</h3>
-
-                <div class="card-tools">
-                  
-                  <button type="button" class="btn btn-sm btn-primary" @click="newModal">
-                      <i class="fa fa-plus-square"></i>
-                      Add New
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Created</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                     <tr v-for="category in categories.data" :key="category.id">
-
-                      <td>{{category.id}}</td>
-                      <td class="text-capitalize">{{category.name}}</td>
-                      <td>{{category.description}}</td>
-                      <td>{{category.created_at}}</td>
-                      <td>
-
-                        <a href="#" @click="editModal(category)">
-                            <i class="fa fa-edit blue"></i>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                  <pagination :data="categories" @pagination-change-page="getResults"></pagination>
+              <div class="card-tools">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="newModal"
+                >
+                  <i class="fa fa-plus-square"></i>
+                  Add New
+                </button>
               </div>
             </div>
-            <!-- /.card -->
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Created</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="category in categories.data" :key="category.id">
+                    <td>{{ category.id }}</td>
+                    <td class="text-capitalize">{{ category.name }}</td>
+                    <td>{{ category.description }}</td>
+                    <td><img v-bind:src="'/images/productos/' + category.photo" width="50" height="50"></td>
+                    <td>{{ category.created_at }}</td>
+                    <td>
+                      <a href="#" @click="editModal(category)">
+                        <i class="fa fa-edit blue"></i>
+                      </a>
+                      /
+                      <a href="#" @click="deleteCategory(category.id)">
+                        <i class="fa fa-trash red"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              <pagination
+                :data="categories"
+                @pagination-change-page="getResults"
+              ></pagination>
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+
+      <div v-if="!$gate.isAdmin()">
+        <not-found></not-found>
+      </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="addNew"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="addNew"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" v-show="!editmode">
+                Create New Category
+              </h5>
+              <h5 class="modal-title" v-show="editmode">Update Category</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <!-- <form @submit.prevent="createUser"> -->
+
+            <form
+              @submit.prevent="editmode ? updateCategory() : createCategory()"
+            >
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input
+                    v-model="form.name"
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('name') }"
+                  />
+                  <has-error :form="form" field="name"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <input
+                    v-model="form.description"
+                    type="text"
+                    name="description"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('description') }"
+                  />
+                  <has-error :form="form" field="description"></has-error>
+                </div>
+                <div class="form-group">
+                  <label for="photo" class="col-sm-2 control-label"
+                    >Imagen</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="file"
+                      @change="updatePhoto"
+                      name="photo"
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button v-show="editmode" type="submit" class="btn btn-success">
+                  Update
+                </button>
+                <button
+                  v-show="!editmode"
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Create
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-
-
-        <div v-if="!$gate.isAdmin()">
-            <not-found></not-found>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNew" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" v-show="!editmode">Create New Category</h5>
-                    <h5 class="modal-title" v-show="editmode">Update Category</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <!-- <form @submit.prevent="createUser"> -->
-
-                <form @submit.prevent="editmode ? updateCategory() : createCategory()">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input v-model="form.name" type="text" name="name"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                            <has-error :form="form" field="name"></has-error>
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <input v-model="form.description" type="text" name="description"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
-                            <has-error :form="form" field="description"></has-error>
-                        </div>
-                        <div class="form-group">
-                                    <label for="photo" class="col-sm-2 control-label">Imagen</label>
-                                    <div class="col-sm-12">
-                                        <input type="file" @change="updatePhoto" name="photo" class="form-input">
-                                    </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
-                        <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
-                    </div>
-                  </form>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-    export default {
-        data () {
-            return {
-                editmode: false,
-                categories : {},
-                form: new Form({
-                    id : '',
-                    name: '',
-                    description: '',
-                    photo: '',
-                })
-            }
-        },
-        methods: {
+export default {
+  data() {
+    return {
+      editmode: false,
+      categories: {},
+      form: new Form({
+        id: "",
+        name: "",
+        description: "",
+        photo: "",
+      }),
+    };
+  },
+  methods: {
+    updatePhoto(e) {
+      let file = e.target.files[0];
+      let reader = new FileReader();
 
-         updatePhoto(e){
+      if (file["size"] < 2111775) {
+        reader.onloadend = (file) => {
+          //console.log('RESULT', reader.result)
+          this.form.photo = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        swal({
+          type: "error",
+          title: "ops...",
+          text: "archivo muy grande",
+        });
+      }
+    },
 
-             let file = e.target.files[0];
-             let reader = new FileReader();
+    getResults(page = 1) {
+      this.$Progress.start();
 
-             if(file['size']<2111775){
-             reader.onloadend = (file)=> {
-                 //console.log('RESULT', reader.result)
-                 this.form.photo = reader.result;
-             }
-             reader.readAsDataURL(file);
-             }else{
-                 swal({
-                     type: 'error',
-                     title: 'ops...',
-                     text: 'archivo muy grande',
-                 })
-             }
-         },
+      axios
+        .get("/api/test?page=" + page)
+        .then(({ data }) => (this.categories = data.data));
 
-            getResults(page = 1) {
+      this.$Progress.finish();
+    },
+    updateCategory() {
+      this.$Progress.start();
+      this.form
+        .put("/api/test/" + this.form.id)
+        .then((response) => {
+          // success
+          $("#addNew").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$Progress.finish();
+          //  Fire.$emit('AfterCreate');
 
-                  this.$Progress.start();
-                  
-                  axios.get('/api/test?page=' + page).then(({ data }) => (this.categories = data.data));
+          this.loadCategories();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
+    },
+    editModal(category) {
+      this.editmode = true;
+      this.form.reset();
+      $("#addNew").modal("show");
+      this.form.fill(category);
+    },
+    newModal() {
+      this.editmode = false;
+      this.form.reset();
+      $("#addNew").modal("show");
+    },
 
-                  this.$Progress.finish();
-            },
-            updateCategory(){
-                this.$Progress.start();
-                this.form.put('/api/test/'+this.form.id)
-                .then((response) => {
-                    // success
-                    $('#addNew').modal('hide');
-                    Toast.fire({
-                      icon: 'success',
-                      title: response.data.message
-                    });
-                    this.$Progress.finish();
-                        //  Fire.$emit('AfterCreate');
+    loadCategories() {
+      if (this.$gate.isAdmin()) {
+        axios
+          .get("/api/test")
+          .then(({ data }) => (this.categories = data.data));
+      }
+    },
 
-                    this.loadCategories();
-                })
-                .catch(() => {
-                    this.$Progress.fail();
-                });
+    createCategory() {
+      this.$Progress.start();
+      this.form
+        .post("/api/test")
+        .then((response) => {
+          $("#addNew").modal("hide");
 
-            },
-            editModal(category){
-                this.editmode = true;
-                this.form.reset();
-                $('#addNew').modal('show');
-                this.form.fill(category);
-            },
-            newModal(){
-                this.editmode = false;
-                this.form.reset();
-                $('#addNew').modal('show');
-            },
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
 
-            loadCategories(){
-                if(this.$gate.isAdmin()){
-                    axios.get("/api/test").then(({ data }) => (this.categories = data.data));
-                }
-            },
-            
-            createCategory(){
-                this.$Progress.start();
-                this.form.post('/api/test')
-                .then((response)=>{
-                    $('#addNew').modal('hide');
-
-                    Toast.fire({
-                            icon: 'success',
-                            title: response.data.message
-                    });
-
-                    this.$Progress.finish();
-                    this.loadCategories();
-                })
-                .catch(()=>{
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Some error occured! Please try again'
-                    });
-                })
-            }
-
-        },
-        mounted() {
-            console.log('Component mounted.')
-        },
-        created() {
-
-            this.$Progress.start();
-            this.loadCategories();
-            this.$Progress.finish();
+          this.$Progress.finish();
+          this.loadCategories();
+        })
+        .catch(() => {
+          Toast.fire({
+            icon: "error",
+            title: "Some error occured! Please try again",
+          });
+        });
+    },
+    deleteCategory(id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        // Send request to the server
+        if (result.value) {
+          this.form
+            .delete("/api/test/" + id)
+            .then(() => {
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+              // Fire.$emit('AfterCreate');
+              this.loadCategories();
+            })
+            .catch((data) => {
+              Swal.fire("Failed!", data.message, "warning");
+            });
         }
-    }
+      });
+    },
+  },
+  mounted() {
+    console.log("Component mounted.");
+  },
+  deleteCategory(id) {},
+
+  created() {
+    this.$Progress.start();
+    this.loadCategories();
+    this.$Progress.finish();
+  },
+};
+
 </script>

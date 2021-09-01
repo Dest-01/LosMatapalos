@@ -92,8 +92,9 @@ class TestController extends BaseController
         $tag = $this->test->findOrFail($id);
 
         $currentPhoto = $tag->photo;
-        
-        if($request->photo){
+
+
+        if($request->photo != $currentPhoto){
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
 
             \Image::make($request->photo)->save(public_path('images/productos/').$name);
@@ -103,7 +104,9 @@ class TestController extends BaseController
             if(file_exists($userPhoto)){
                 @unlink($userPhoto);
             }
+
         }
+
         $tag->update($request->all());
 
         return $this->sendResponse($tag, 'Test Information has been updated');
