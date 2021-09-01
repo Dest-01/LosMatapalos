@@ -20,6 +20,7 @@
 
   <script src="{{ asset('/js/navbar.js') }}"></script>
   <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
+  
   <link rel="stylesheet" href="{{ asset('/css/cliente.css') }}">
 </head>
 <body>
