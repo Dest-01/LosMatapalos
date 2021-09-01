@@ -39,5 +39,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'product' => 'ProductController',
         'category' => 'CategoryController',
         'tag' => 'TagController',
+        'test' => 'TestController',
+        'donativo' => 'DonativosController',
     ]);
 });

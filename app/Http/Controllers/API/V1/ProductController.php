@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 class ProductController extends BaseController
 {
 
-    protected $product = '';
-
     /**
      * Create a new controller instance.
      *
@@ -131,8 +129,8 @@ class ProductController extends BaseController
 
     public function upload(Request $request)
     {
-        $fileName = time() . '.' . $request->file->getClientOriginalExtension();
-        $request->file->move(public_path('upload'), $fileName);
+        $photo = time() . '.' . $request->photo->getClientOriginalExtension();
+        $request->photo->move(public_path('images'), $photo);
 
         return response()->json(['success' => true]);
     }

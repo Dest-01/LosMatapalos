@@ -6,5 +6,14 @@ export default [
     { path: '/products', component: require('./components/product/Products.vue').default },
     { path: '/product/tag', component: require('./components/product/Tag.vue').default },
     { path: '/product/category', component: require('./components/product/Category.vue').default },
-    { path: '*', component: require('./components/NotFound.vue').default }
+    { path: '*', component: require('./components/NotFound.vue').default },
+    { path: '/product/test', component: require('./components/product/Test.vue').default },
+
+///////////RUTAS ADMIN CRUDS
+    { path: '/admin/donativos', component: require('./components/admin/Donativos.vue').default },
+
+    //////////////////////CLIENTE RUTAS
+    { path: '/', component: require('./components/cliente/Home.vue').default },
+    { path: '/libro', component: require('./components/cliente/Libro.vue').default },
+    { path: '/donaciones', component: require('./components/cliente/Donaciones.vue').default },
 ];

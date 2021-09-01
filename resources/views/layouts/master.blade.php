@@ -9,93 +9,94 @@
 
   <title>{{ config('app.name', 'Laravel') }}</title>
   
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-  <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script src="{{ asset('/js/navbar.js') }}"></script>
+  <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('/css/cliente.css') }}">
 </head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper" id="app">
+<body>
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-      </li>
-    </ul>
 
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <router-link to="/dashboard" class="brand-link">
-      <img src="{{ asset('/images/logo.png') }}" alt="The Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
-    </router-link>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-        <router-link to="/profile">
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-              <div class="image">
-                <img src="{{ auth()->user()->photo }}" class="img-circle elevation-2" alt="User Image">
-              </div>
-              <div class="info">
-
-                  {{ Auth::user()->name }}
-                  <span class="d-block text-muted">
-                    {{ Ucfirst(Auth::user()->type) }}
-                  </span>
-              </div>
-          </div>
-        </router-link>
-
-      <!-- Sidebar Menu -->
-      @include('layouts.sidebar-menu')
-      <!-- /.sidebar-menu -->
+<!--============= Navbar =============-->
+<nav class="navbar">
+    <div class="container">
+    
+     <!-- Navbar Header [collects both toggle button and navbar brand] -->
+    <div class="navbar-header">
+    <!-- Toggle Button [handles opening navbar menu on mobile screens]-->
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#exampleNavComponents" aria-expanded"false">
+    <i class="glyphicon glyphicon-list"></i>
+    </button>
+    
+     <!-- Navbar Brand -->
+    <a href="#" class="navbar-brand">
+    Sendero
+    </a>
     </div>
-    <!-- /.sidebar -->
-  </aside>
-
+    
+    <!-- Navbar Collapse [collect navbar components such as navbar links and forms ] -->
+    <div class="collapse navbar-collapse" id="exampleNavComponents">
+    
+     <!-- Navbar Links -->
+    <ul class="nav navbar-nav navbar-right">
+    <li><a href="{{ url('/dashboard') }}" >Dashboard</a></li>
+    <li><a href="{{ url('/donaciones') }}">Donaciones</a></li>
+    <li class="dropdown" >
+    <a href="#!" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    >Services</a>
+    <ul class="dropdown-menu" style="border-top-radius: 50px; border-bottom-radius: 10px; background: #339966;" >
+    <li>
+    <a class="dropdown-item" href="#!">Web Design</a>
+    </li>
+    <li>
+    <a class="dropdown-item" href="#!">Web Design</a>
+    </li>
+    </ul>
+    </li>
+    <li><a href="{{ url('/libro') }}">Flora y Fauna</a></li>
+    <li><a href="#">¿Quiénes somos?</a></li>
+    </li>
+    @if (Route::has('login'))
+    @auth
+    <li>
+    <a href="{{ url('/home') }}">Home</a>
+    </li>
+    @else
+    <li>
+    <button href="{{ route('login') }}" type="button" class="btn navbar-btn navbar-right">Sign in</button>
+    </li>
+    <!-- @if (Route::has('register'))
+    <li>
+    <a href="{{ route('register') }}">Register</a>
+    </li>
+    @endif -->
+    @endauth
+    @endif
+    </ul>
+    
+    <!-- Navbar Button -->
+    
+     </div>
+    </div>
+    
+    </nav><!-- /.============= Navbar =============-->
+    <div class="wrapper" id="app">
   {{-- Content Wrapper. Contains page content --}}
-  <div class="content-wrapper">
+  <div class="">
     {{-- Main content --}}
     
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        {{-- <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark"></h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row --> --}}
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+
 
     <!-- Main content -->
+   
     <router-view></router-view>
 
     <vue-progress-bar></vue-progress-bar>
@@ -104,15 +105,6 @@
   </div>
   {{-- /.content-wrapper --}}
 
-  {{-- Main Footer --}}
-  <footer class="main-footer">
-    {{-- To the right --}}
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.0
-    </div>
-    {{-- Default to the left --}}
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
 </div>
 {{-- ./wrapper --}}
 
@@ -122,5 +114,6 @@
 </script>
 @endauth
 <script src="{{ mix('/js/app.js') }}"></script>
+
 </body>
 </html>
