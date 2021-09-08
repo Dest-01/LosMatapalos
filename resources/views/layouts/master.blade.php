@@ -48,7 +48,7 @@
     
      <!-- Navbar Links -->
     <ul class="nav navbar-nav navbar-right">
-    <li><a href="{{ url('/dashboard') }}" >Dashboard</a></li>
+    <li><a href="{{ url('/dashboard') }}" >Admin Panel</a></li>
     <li><a href="{{ url('/donaciones') }}">Donaciones</a></li>
     <li class="dropdown" >
     <a href="#!" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -72,7 +72,7 @@
     </li>
     @else
     <li>
-    <button href="{{ route('login') }}" type="button" class="btn navbar-btn navbar-right">Sign in</button>
+    <button href="{{ url('login') }}" type="button" class="btn navbar-btn navbar-right">Sign in</button>
     </li>
     <!-- @if (Route::has('register'))
     <li>
@@ -115,6 +115,5 @@
 </script>
 @endauth
 <script src="{{ mix('/js/app.js') }}"></script>
-
 </body>
 </html>

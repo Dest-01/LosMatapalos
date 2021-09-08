@@ -36,7 +36,7 @@
                     <td>{{ category.id }}</td>
                     <td class="text-capitalize">{{ category.name }}</td>
                     <td>{{ category.description }}</td>
-                    <td><img v-bind:src="'/images/productos/' + category.photo" width="50" height="50"></td>
+                    <td><img v-bind:src="'/images/productos/' + category.photo"></td>
                     <td>{{ category.created_at }}</td>
                     <td>
                       <a href="#" @click="editModal(category)">
@@ -305,3 +305,7 @@ export default {
 };
 
 </script>
+
+<style>
+
+</style>

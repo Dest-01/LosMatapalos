@@ -1,212 +1,234 @@
 <template>
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row ">
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">CPU Traffic</span>
-                            <span class="info-box-number">
-                            10
-                            <small>%</small>
-                            </span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Likes</span>
-                            <span class="info-box-number">41,410</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- fix for small devices only -->
-                <div class="clearfix hidden-md-up"></div>
-
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Sales</span>
-                            <span class="info-box-number">760</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">New Members</span>
-                            <span class="info-box-number">2,000</span>
-                        </div>
-                    <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-            <!-- /.col -->
-            </div>
-            <!-- /.row -->
-
-            <div class="row">
-                <!-- Left col -->
-                <div class="col-md-8">
-                    <!-- MAP & BOX PANE -->
-                    <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Latest Orders (Demo)</h3>
-
-                        <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                        <table class="table m-0">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Item</th>
-                                    <th>Status</th>
-                                    <th>Popularity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                    <td>Call of Duty IV</td>
-                                    <td><span class="badge badge-success">Shipped</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                    <td>Samsung Smart TV</td>
-                                    <td><span class="badge badge-warning">Pending</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                    <td>iPhone 6 Plus</td>
-                                    <td><span class="badge badge-danger">Delivered</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                    <td>Samsung Smart TV</td>
-                                    <td><span class="badge badge-info">Processing</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                    <td>Samsung Smart TV</td>
-                                    <td><span class="badge badge-warning">Pending</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                    <td>iPhone 6 Plus</td>
-                                    <td><span class="badge badge-danger">Delivered</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-                <!-- /.card -->
-            </div>
-            <!-- /.col -->
-
-            <div class="col-md-4">
-                <!-- Info Boxes Style 2 -->
-                <div class="info-box mb-3 bg-secondary">
-                <span class="info-box-icon"><i class="fas fa-tag"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Inventory</span>
-                    <span class="info-box-number">5,200</span>
-                </div>
-                <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-                <div class="info-box mb-3 bg-success">
-                <span class="info-box-icon"><i class="far fa-heart"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Mentions</span>
-                    <span class="info-box-number">92,050</span>
-                </div>
-                <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-                <div class="info-box mb-3 bg-danger">
-                <span class="info-box-icon"><i class="fas fa-cloud-download-alt"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Downloads</span>
-                    <span class="info-box-number">114,381</span>
-                </div>
-                <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-                <div class="info-box mb-3 bg-info">
-                <span class="info-box-icon"><i class="far fa-comment"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Direct Messages</span>
-                    <span class="info-box-number">163,921</span>
-                </div>
-                <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div><!--/. container-fluid -->
-    </section>
+  <ul class="cards">
+    <li class="cards__item">
+      <div class="card1">
+      <!--  <img class="image fit" v-bind:key="image" v-for="image in images1" :src="image.url"/> -->
+        <div class="card__content">
+          <div class="card__title">Flex</div>
+          <p class="card__text">
+            This is the shorthand for flex-grow, flex-shrink and flex-basis
+            combined. The second and third parameters (flex-shrink and
+            flex-basis) are optional. Default is 0 1 auto.
+          </p>
+          <button class="btn btn--block card__btn">Button</button>
+        </div>
+      </div>
+    </li>
+    <li class="cards__item">
+      <div class="card1">
+     <!--   <img class="image fit" v-bind:key="image" v-for="image in images2" :src="image.url"/> -->
+        <div class="card__content">
+          <div class="card__title">Flex Grow</div>
+          <p class="card__text">
+            This defines the ability for a flex item to grow if necessary. It
+            accepts a unitless value that serves as a proportion. It dictates
+            what amount of the available space inside the flex container the
+            item should take up.
+          </p>
+          <button class="btn btn--block card__btn">Button</button>
+        </div>
+      </div>
+    </li>
+    <li class="cards__item">
+      <div class="card1">
+       <!--  <img class="image fit" v-bind:key="image" v-for="image in images3" :src="image.url"/> -->
+        <div class="card__content">
+          <div class="card__title">Flex Shrink</div>
+          <p class="card__text">
+            This defines the ability for a flex item to shrink if necessary.
+            Negative numbers are invalid.
+          </p>
+          <button class="btn btn--block card__btn">Button</button>
+        </div>
+      </div>
+    </li>
+    <li class="cards__item">
+      <div class="card1">
+     <!--    <img class="image fit" v-bind:key="image" v-for="image in images4" :src="image.url"/> -->
+     <i class="fas fa-user-tie"></i>
+        <div class="card__content">
+          <div class="card__title">Flex Basis</div>
+          <p class="card__text">
+            This defines the default size of an element before the remaining
+            space is distributed. It can be a length (e.g. 20%, 5rem, etc.) or a
+            keyword. The auto keyword means "look at my width or height
+            property."
+          </p>
+          <button class="btn btn--block card__btn">Button</button>
+        </div>
+      </div>
+    </li>
+  </ul>
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
+export default {
+  data() {
+    return {
+      images: [
+        {
+          url: "../images/test2.png",
+          name: "My Image 1",
+        },
+      ],
+      images1: [
+        {
+          url: "../images/donation.png",
+          name: "My Image 1",
+          
+        },
+      ],
+      images2: [
+        {
+          url: "../images/reservation.png",
+          name: "My Image 1",
+          
+        },
+      ],
+      images3: [
+        {
+          url: "../images/donation.png",
+          name: "My Image 1",
+          
+        },
+      ],
+      images4: [
+        {
+          url: "../images/donation.png",
+          name: "My Image 1",
+          
+        },
+      ],
+    };
+  },
+};
 </script>
+
+<style>
+html {
+  background-color: #f0f0f0;
+}
+body {
+ /* color: #999999; */
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/*
+img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+  height: 200px;
+
+}
+*/
+.btn {
+  
+  border: 1px solid #cccccc;
+  
+  padding: 0.5rem;
+  text-transform: lowercase;
+}
+.btn--block {
+  display: block;
+  width: 100%;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cards__item {
+  display: flex;
+  padding: 10px;
+  border-radius: 20%;
+}
+@media (min-width: 40rem) {
+  .cards__item {
+    width: 50%;
+  }
+}
+@media (min-width: 56rem) {
+  .cards__item {
+    width: 25%;
+  }
+}
+@media (min-height: 56rem) {
+  .cards__item {
+    width: 25%;
+  }
+}
+.card1 {
+  background-color: rgb(184 184 184);
+  border-radius: 0.25rem;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.card:hover .card__image {
+  filter: contrast(100%);
+}
+.card__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 1rem;
+}
+.card__image {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  filter: contrast(70%);
+  overflow: hidden;
+  position: relative;
+  transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+}
+.card__image::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+}
+@media (min-width: 40rem) {
+  .card__image::before {
+    padding-top: 66.6%;
+  }
+}
+.card__image--flowers {
+  background-image: url(https://unsplash.it/800/600?image=82);
+}
+.card__image--river {
+  background-image: url(https://unsplash.it/800/600?image=11);
+}
+.card__image--record {
+  background-image: url(https://unsplash.it/800/600?image=39);
+}
+.card__image--fence {
+  background-image: url(https://unsplash.it/800/600?image=59);
+}
+.card__title {
+  color: #696969;
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.card__text {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+</style>
+
+

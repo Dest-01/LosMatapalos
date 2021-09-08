@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('cliente');
 });
 
+Route::get('login', function () {
+    return view('login');
+});
+
 Auth::routes(['verify' => true]);
 
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
@@ -45,6 +49,11 @@ Route::get('/product/test', function () {
 Route::get('/admin/donativos', function () {
     return view('admin');
 })->where('admin/donativos', '[\/\w\.-]*')->middleware('auth');
+
+
+Route::get('/admin/personas', function () {
+    return view('admin');
+})->where('admin/personas', '[\/\w\.-]*')->middleware('auth');
 
 ///Para rutas que no este protegidas
 Route::get('/{vue_capture?}', function () {

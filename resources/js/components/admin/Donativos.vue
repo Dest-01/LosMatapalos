@@ -112,14 +112,12 @@
                 </div>
 
                 <div class="form-group">
-                     <label>Type</label>
-                  <select class="dropdown" v-model="form.tipo">
+                  <label>Type</label>
+                  <select class="custom-select" v-model="form.tipo">
                     <option disabled value="">Select option</option>
-                    <option>Money</option>
-                    <option>Material</option>
-
+                    <option class="items">Money</option>
+                    <option class="items">Material</option>
                   </select>
-                  <span>Seleccionado: {{ tipo }}</span>
                 </div>
 
                 <div class="form-group">
@@ -176,7 +174,6 @@
 export default {
   data() {
     return {
-
       editmode: false,
       donativos: {},
       form: new Form({
@@ -297,3 +294,70 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.custom-select {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  outline: none;
+  height: 45px;
+  line-height: 47px;
+}
+
+.custom-select .selected {
+  background-color: #080808;
+  border-radius: 6px;
+  border: 1px solid #666666;
+  color: #fff;
+  padding-left: 1em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-select .selected.open {
+  border: 1px solid #ad8225;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.custom-select .selected:after {
+  position: absolute;
+  content: "";
+  top: 22px;
+  right: 1em;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+.custom-select .items {
+  color: rgb(2, 2, 2);
+  border-radius: 0px 0px 6px 6px;
+  overflow: hidden;
+  border-right: 1px solid #ad8225;
+  border-left: 1px solid #ad8225;
+  border-bottom: 1px solid #ad8225;
+  position: absolute;
+  background-color: #ffffff;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.custom-select .items div {
+  color: rgb(0, 0, 0);
+  padding-left: 1em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-select .items div:hover {
+  background-color: #ad8225;
+}
+
+.selectHide {
+  display: none;
+}
+</style>

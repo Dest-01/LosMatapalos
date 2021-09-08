@@ -11,6 +11,7 @@ export default [
 
 ///////////RUTAS ADMIN CRUDS
     { path: '/admin/donativos', component: require('./components/admin/Donativos.vue').default },
+    { path: '/admin/personas', component: require('./components/admin/Personas.vue').default },
 
     //////////////////////CLIENTE RUTAS
     { path: '/', component: require('./components/cliente/Home.vue').default },
