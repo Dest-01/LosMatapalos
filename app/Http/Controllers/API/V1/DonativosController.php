@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Http\Requests\Admin\DonativosRequest;
+use App\Http\Requests\Test\DonativosRequest;
 use App\Models\Donativos;
 use Illuminate\Http\Request;
 
 class DonativosController extends BaseController
 {
-    protected $donativos = '';
 
-     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct(Donativos $donativos)
     {
         $this->middleware('auth:api');
@@ -30,7 +24,15 @@ class DonativosController extends BaseController
     {
         $donativo = $this->donativos->latest()->paginate(10);
 
-        return $this->sendResponse($donativo, 'Donation list');
+        return $this->sendResponse($donativo, 'Lista Donativos');
+    }
+
+
+    public function list()
+    {
+        $donativo = $this->donativos->pluck('tipo', 'id');
+
+        return $this->sendResponse($donativo, 'Lista Donativos');
     }
 
     /**
@@ -41,14 +43,23 @@ class DonativosController extends BaseController
      */
     public function store(Request $request)
     {
-        $tag = $this->donativos->create([
-            'nombre' => $request->get('nombre'),
-            'tipo' => $request->get('tipo'),
-            'descripcion' => $request->get('descripcion'),
-            'fecha' => $request->get('fecha'),
-        ]);
+        if($request->photo){
+            $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos
+            ($request->photo, ';')))[1])[1];
+            
+           \Image::make($request->photo)->save(public_path('images/donativos/').$name);
+           $request->merge(['photo' => $name]);
 
-        return $this->sendResponse($tag, 'Donation Created Successfully');
+        }
+
+        $tag = $this->donativos->create([
+            'tipo' => $request->get('tipo'),
+            'detalle' => $request->get('detalle'),
+            'photo' => $request->get('photo'),
+            'fecha' => $request->get('fecha'),
+            'estado' => $request->get('estado')
+        ]);
+        return $this->sendResponse($tag, 'Donativo creado');
     }
 
     /**
@@ -73,9 +84,25 @@ class DonativosController extends BaseController
     {
         $tag = $this->donativos->findOrFail($id);
 
+        $currentPhoto = $tag->photo;
+
+
+        if($request->photo != $currentPhoto){
+            $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+
+            \Image::make($request->photo)->save(public_path('images/donativos/').$name);
+            $request->merge(['photo' => $name]);
+
+            $userPhoto = public_path('images/donativos/').$currentPhoto;
+            if(file_exists($userPhoto)){
+                @unlink($userPhoto);
+            }
+
+        }
+
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Donation Information has been updated');
+        return $this->sendResponse($tag, 'Donativo Actualizado');
     }
 
     /**
@@ -88,10 +115,22 @@ class DonativosController extends BaseController
     {
         $this->authorize('isAdmin');
 
-        $donativos = $this->donativos->findOrFail($id);
-
-        $donativos->delete();
-
-        return $this->sendResponse($donativos, 'Donation has been Deleted');
+        $donativos = Donativos::FindOrFail($id);  
+        if(file_exists('images/donativos/'.$donativos->photo) AND !empty($donativos->photo)){ 
+              unlink('images/donativos/'.$donativos->photo);
+           } 
+              try{
+  
+                  $donativos->delete();
+                  $bug = 0;
+              }
+              catch(\Exception $e){
+                  $bug = $e->errorInfo[1];
+              } 
+              if($bug==0){
+                  echo "success";
+              }else{
+                  echo 'error';
+              }
     }
 }

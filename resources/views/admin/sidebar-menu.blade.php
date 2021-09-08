@@ -13,7 +13,16 @@
         <li class="nav-item">
           <router-link to="/admin/personas" class="nav-link">
             <i class="fa fa-users nav-icon blue"></i>
-            <p>Registro</p>
+            <p>Registro Cliente</p>
+          </router-link>
+        </li>
+      @endcan
+
+      @can('isAdmin')
+        <li class="nav-item">
+          <router-link to="/admin/organizacion" class="nav-link">
+            <i class="fa fa-users nav-icon blue"></i>
+            <p>Registro Organización</p>
           </router-link>
         </li>
       @endcan
@@ -57,7 +66,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="" class="nav-link">
+            <router-link to="/admin/donativos" class="nav-link">
               <i class="nav-icon fas fa-thumbtack green"></i>
               <p>
                 Registrar donativos

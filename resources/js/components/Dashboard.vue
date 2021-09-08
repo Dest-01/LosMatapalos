@@ -4,7 +4,7 @@
       <div class="card1">
       <!--  <img class="image fit" v-bind:key="image" v-for="image in images1" :src="image.url"/> -->
         <div class="card__content">
-          <div class="card__title">Flex</div>
+          <div class="card__title">Registro Organización</div>
           <p class="card__text">
             This is the shorthand for flex-grow, flex-shrink and flex-basis
             combined. The second and third parameters (flex-shrink and
@@ -18,7 +18,7 @@
       <div class="card1">
      <!--   <img class="image fit" v-bind:key="image" v-for="image in images2" :src="image.url"/> -->
         <div class="card__content">
-          <div class="card__title">Flex Grow</div>
+          <div class="card__title">Registro Cliente</div>
           <p class="card__text">
             This defines the ability for a flex item to grow if necessary. It
             accepts a unitless value that serves as a proportion. It dictates
@@ -33,7 +33,7 @@
       <div class="card1">
        <!--  <img class="image fit" v-bind:key="image" v-for="image in images3" :src="image.url"/> -->
         <div class="card__content">
-          <div class="card__title">Flex Shrink</div>
+          <div class="card__title">Donativos</div>
           <p class="card__text">
             This defines the ability for a flex item to shrink if necessary.
             Negative numbers are invalid.
@@ -45,9 +45,9 @@
     <li class="cards__item">
       <div class="card1">
      <!--    <img class="image fit" v-bind:key="image" v-for="image in images4" :src="image.url"/> -->
-     <i class="fas fa-user-tie"></i>
+
         <div class="card__content">
-          <div class="card__title">Flex Basis</div>
+          <div class="card__title">Categoria Donativos</div>
           <p class="card__text">
             This defines the default size of an element before the remaining
             space is distributed. It can be a length (e.g. 20%, 5rem, etc.) or a

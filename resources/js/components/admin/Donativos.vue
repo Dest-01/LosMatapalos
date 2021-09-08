@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
             <div class="card-header">
-              <h3 class="card-title">Donation List</h3>
+              <h3 class="card-title">Lista de donativos</h3>
 
               <div class="card-tools">
                 <button
@@ -14,7 +14,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Add New
+                  agregar nuevo
                 </button>
               </div>
             </div>
@@ -24,26 +24,34 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>type</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Action</th>
+                    <th>Tipo</th>
+                    <th>Detalle</th>
+                    <th>Imagen</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="donativo in donativos.data" :key="donativo.id">
                     <td>{{ donativo.id }}</td>
-                    <td class="text-capitalize">{{ donativo.nombre }}</td>
-                    <td>{{ donativo.tipo }}</td>
-                    <td>{{ donativo.descripcion }}</td>
+                    <td class="text-capitalize">{{ donativo.tipo }}</td>
+                    <td>{{ donativo.detalle }}</td>
+                    <td>
+                      <img
+                        v-bind:src="'/images/donativos/' + donativo.photo"
+                        width="50px"
+                        height="50px"
+                      />
+                    </td>
                     <td>{{ donativo.fecha }}</td>
+                    <td>{{ donativo.estado }}</td>
                     <td>
                       <a href="#" @click="editModal(donativo)">
                         <i class="fa fa-edit blue"></i>
                       </a>
                       /
-                      <a href="#" @click="deleteDonation(donativo.id)">
+                      <a href="#" @click="eliminarDonativo(donativo.id)">
                         <i class="fa fa-trash red"></i>
                       </a>
                     </td>
@@ -80,9 +88,9 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-show="!editmode">
-                Create New Donation
+                Crear nuevo donativo
               </h5>
-              <h5 class="modal-title" v-show="editmode">Update Donation</h5>
+              <h5 class="modal-title" v-show="editmode">Actualizar donativo</h5>
               <button
                 type="button"
                 class="close"
@@ -96,43 +104,56 @@
             <!-- <form @submit.prevent="createUser"> -->
 
             <form
-              @submit.prevent="editmode ? updateDonation() : createDonation()"
+              @submit.prevent="
+                editmode ? actualizarDonativo() : crearDonativo()
+              "
             >
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Name</label>
-                  <input
-                    v-model="form.nombre"
-                    type="text"
-                    name="nombre"
+                  <label>Tipo</label>
+                  <select
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('nombre') }"
-                  />
-                  <has-error :form="form" field="nombre"></has-error>
-                </div>
-
-                <div class="form-group">
-                  <label>Type</label>
-                  <select class="custom-select" v-model="form.tipo">
-                    <option disabled value="">Select option</option>
-                    <option class="items">Money</option>
-                    <option class="items">Material</option>
+                    v-model="form.tipo"
+                    :class="{ 'is-invalid': form.errors.has('tipo') }"
+                  >
+                    <option disabled value="">Seleccione un elemento</option>
+                    <option>Material</option>
+                    <option>Monetario</option>
                   </select>
+
+                  <has-error :form="form" field="estado"></has-error>
                 </div>
 
                 <div class="form-group">
-                  <label>Description</label>
+                  <label>Detalle</label>
                   <input
-                    v-model="form.descripcion"
+                    v-model="form.detalle"
                     type="text"
-                    name="descripcion"
+                    name="detalle"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('descripcion') }"
+                    :class="{ 'is-invalid': form.errors.has('detalle') }"
                   />
-                  <has-error :form="form" field="descripcion"></has-error>
+                  <has-error :form="form" field="detalle"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Date</label>
+                    <label for="photo" class="col-sm-2 control-label"
+                      >Imagen</label
+                    >
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                       @change="updatePhoto"
+                       name="photo"
+                      class="custom-file-input"
+                      id="inputGroupFile01"
+                    />
+                    <label class="custom-file-label" for="inputGroupFile01"
+                      >Seleccione un imagen</label
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Fecha</label>
                   <input
                     v-model="form.fecha"
                     type="date"
@@ -142,6 +163,21 @@
                   />
                   <has-error :form="form" field="fecha"></has-error>
                 </div>
+                <div class="form-group">
+                  <label>Estado</label>
+                  <select
+                    class="form-control"
+                    v-model="form.estado"
+                    :class="{ 'is-invalid': form.errors.has('estado') }"
+                  >
+                    <option disabled value="">Seleccione un elemento</option>
+                    <option>Recibido</option>
+                    <option>Pendiente</option>
+                    <option>Rechazado</option>
+                  </select>
+
+                  <has-error :form="form" field="estado"></has-error>
+                </div>
               </div>
               <div class="modal-footer">
                 <button
@@ -149,17 +185,17 @@
                   class="btn btn-secondary"
                   data-dismiss="modal"
                 >
-                  Close
+                  Cerrar
                 </button>
                 <button v-show="editmode" type="submit" class="btn btn-success">
-                  Update
+                  Actualizar
                 </button>
                 <button
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Create
+                  Crear
                 </button>
               </div>
             </form>
@@ -178,14 +214,34 @@ export default {
       donativos: {},
       form: new Form({
         id: "",
-        nombre: "",
         tipo: "",
-        descripcion: "",
+        detalle: "",
+        photo: "",
         fecha: "",
+        estado: "",
       }),
     };
   },
   methods: {
+    updatePhoto(e) {
+      let file = e.target.files[0];
+      let reader = new FileReader();
+
+      if (file["size"] < 2111775) {
+        reader.onloadend = (file) => {
+          //console.log('RESULT', reader.result)
+          this.form.photo = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        swal({
+          type: "error",
+          title: "ops...",
+          text: "archivo muy grande",
+        });
+      }
+    },
+
     getResults(page = 1) {
       this.$Progress.start();
 
@@ -195,7 +251,7 @@ export default {
 
       this.$Progress.finish();
     },
-    updateDonation() {
+    actualizarDonativo() {
       this.$Progress.start();
       this.form
         .put("/api/donativo/" + this.form.id)
@@ -209,7 +265,7 @@ export default {
           this.$Progress.finish();
           //  Fire.$emit('AfterCreate');
 
-          this.loadDonation();
+          this.cargarDonativos();
         })
         .catch(() => {
           this.$Progress.fail();
@@ -227,7 +283,7 @@ export default {
       $("#addNew").modal("show");
     },
 
-    loadDonation() {
+    cargarDonativos() {
       if (this.$gate.isAdmin()) {
         axios
           .get("/api/donativo")
@@ -235,7 +291,8 @@ export default {
       }
     },
 
-    createDonation() {
+    crearDonativo() {
+      this.$Progress.start();
       this.form
         .post("/api/donativo")
         .then((response) => {
@@ -247,36 +304,39 @@ export default {
           });
 
           this.$Progress.finish();
-          this.loadDonation();
+          this.cargarDonativos();
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Some error occured! Please try again",
+            title: "Ocurrio un error!",
           });
         });
     },
-
-    deleteDonation(id) {
+    eliminarDonativo(id) {
       Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        title: "Seguro que lo desea eliminar?",
+        text: "Esta acción no puede revertirse!",
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "Si, Eliminar!",
       }).then((result) => {
         // Send request to the server
         if (result.value) {
           this.form
             .delete("/api/donativo/" + id)
             .then(() => {
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+              Swal.fire(
+                "Eliminado!",
+                "Se ha eliminado la información.",
+                "success"
+              );
               // Fire.$emit('AfterCreate');
-              this.loadDonation();
+              this.cargarDonativos();
             })
             .catch((data) => {
-              Swal.fire("Failed!", data.message, "warning");
+              Swal.fire("Fallo!", data.message, "warning");
             });
         }
       });
@@ -285,79 +345,15 @@ export default {
   mounted() {
     console.log("Component mounted.");
   },
-  deleteDonation(id) {},
+  deleteCategory(id) {},
 
   created() {
     this.$Progress.start();
-    this.loadDonation();
+    this.cargarDonativos();
     this.$Progress.finish();
   },
 };
 </script>
 
-
-<style scoped>
-.custom-select {
-  position: relative;
-  width: 100%;
-  text-align: left;
-  outline: none;
-  height: 45px;
-  line-height: 47px;
-}
-
-.custom-select .selected {
-  background-color: #080808;
-  border-radius: 6px;
-  border: 1px solid #666666;
-  color: #fff;
-  padding-left: 1em;
-  cursor: pointer;
-  user-select: none;
-}
-
-.custom-select .selected.open {
-  border: 1px solid #ad8225;
-  border-radius: 6px 6px 0px 0px;
-}
-
-.custom-select .selected:after {
-  position: absolute;
-  content: "";
-  top: 22px;
-  right: 1em;
-  width: 0;
-  height: 0;
-  border: 5px solid transparent;
-  border-color: #fff transparent transparent transparent;
-}
-
-.custom-select .items {
-  color: rgb(2, 2, 2);
-  border-radius: 0px 0px 6px 6px;
-  overflow: hidden;
-  border-right: 1px solid #ad8225;
-  border-left: 1px solid #ad8225;
-  border-bottom: 1px solid #ad8225;
-  position: absolute;
-  background-color: #ffffff;
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-
-.custom-select .items div {
-  color: rgb(0, 0, 0);
-  padding-left: 1em;
-  cursor: pointer;
-  user-select: none;
-}
-
-.custom-select .items div:hover {
-  background-color: #ad8225;
-}
-
-.selectHide {
-  display: none;
-}
+<style>
 </style>
