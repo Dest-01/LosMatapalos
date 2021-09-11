@@ -18,6 +18,13 @@ class PersonasController extends BaseController
         $this->personas = $personas;
     }
 
+    public function list()
+    {
+        $persona = $this->personas->pluck('id', 'id');
+
+        return $this->sendResponse($persona, 'Lista Personas');
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -40,7 +47,7 @@ class PersonasController extends BaseController
     public function store(PersonasRequest $request)
     {
         $tag = $this->personas->create([
-            'cedula' => $request->get('cedula'),
+            'id' => $request->get('id'),
             'nombre' => $request->get('nombre'),
             'apellido1' => $request->get('apellido1'),
             'apellido2' => $request->get('apellido2'),

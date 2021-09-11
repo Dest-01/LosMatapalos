@@ -46,14 +46,20 @@ Route::get('/product/test', function () {
 
 
 //RUTA CRUDS ADMIN PROTEGIDO
-Route::get('/admin/donativos', function () {
-    return view('admin');
-})->where('admin/donativos', '[\/\w\.-]*')->middleware('auth');
-
 
 Route::get('/admin/personas', function () {
     return view('admin');
 })->where('admin/personas', '[\/\w\.-]*')->middleware('auth');
+
+Route::get('/admin/organizaciones', function () {
+    return view('admin');
+})->where('admin/organizaciones', '[\/\w\.-]*')->middleware('auth');
+
+
+Route::get('/admin/donativos', function () {
+    return view('admin');
+})->where('admin/donativos', '[\/\w\.-]*')->middleware('auth');
+
 
 ///Para rutas que no este protegidas
 Route::get('/{vue_capture?}', function () {
