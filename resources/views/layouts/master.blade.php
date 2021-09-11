@@ -50,6 +50,7 @@
     <ul class="nav navbar-nav navbar-right">
     <li><a href="{{ url('/dashboard') }}" >Admin Panel</a></li>
     <li><a href="{{ url('/donaciones') }}">Donaciones</a></li>
+    <li><a href="{{ url('/reservacion') }}">Reservar</a></li>
     <li class="dropdown" >
     <a href="#!" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
     >Services</a>

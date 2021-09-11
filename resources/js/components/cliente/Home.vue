@@ -1,9 +1,5 @@
 <template>
-  <h1>HOLA HOME CLIENTE</h1>
+    <div>
+        <h2>PAGINA PRINCIPAL</h2>
+    </div>
 </template>
-
-<script>
-    export default {
-        
-    }
-</script>

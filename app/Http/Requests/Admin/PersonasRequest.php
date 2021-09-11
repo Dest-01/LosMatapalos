@@ -37,10 +37,11 @@ class PersonasRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'cedula' => 'required|string|max:18',
+            'id' => 'required|string|max:18',
             'nombre' => 'required|string|max:20',
             'apellido1' => 'required|string|max:20',
             'apellido2' => 'required|string|max:20',
+            'telefono' => 'required',
             'correo' => 'required',
         ];
     }
@@ -53,21 +54,22 @@ class PersonasRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'cedula' => 'required|string|max:18',
+            'id' => 'required|string|max:18',
             'nombre' => 'required|string|max:20|min:3',
             'apellido1' => 'required|string|max:20|min:3',
             'apellido2' => 'required|string|max:20|min:3',
+            'telefono' => 'required',
             'correo' => 'required',
         ];
     }
 
     public function messages(){
         return [
-            'cedula.*'=>'Cedula requiere mínimo 8 caracteres y máximo 18',
+            'id.*'=>'Cedula requiere mínimo 8 caracteres y máximo 18',
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 20',
             'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 20',
-            
+            'telefono.*' => 'Telefono se requiere',
             'correo.*' => 'Correo se requiere',
         ];
     }

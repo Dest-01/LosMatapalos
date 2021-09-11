@@ -25,7 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+//Grupo de rutas para los controladores en la carpeta API V1
 Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('profile', 'ProfileController@profile');
     Route::put('profile', 'ProfileController@updateProfile');
@@ -34,6 +34,11 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('category/list', 'CategoryController@list');
     Route::post('product/upload', 'ProductController@upload');
 
+///////Rutas Personalizadas o especificas a un metodo
+    Route::get('persona/lista', 'PersonasController@list');
+    Route::get('organizacion/lista', 'OrganizacionesController@list');
+
+    //////Rutas total GET, PUT, POST, DELETE
     Route::apiResources([
         'user' => 'UserController',
         'product' => 'ProductController',
@@ -42,5 +47,6 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'test' => 'TestController',
         'donativo' => 'DonativosController',
         'persona' => 'PersonasController',
+        'organizacion' => 'OrganizacionesController',
     ]);
 });

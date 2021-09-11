@@ -10,11 +10,13 @@ export default [
     { path: '/product/test', component: require('./components/product/Test.vue').default },
 
 ///////////RUTAS ADMIN CRUDS
-    { path: '/admin/donativos', component: require('./components/admin/Donativos.vue').default },
+   
     { path: '/admin/personas', component: require('./components/admin/Personas.vue').default },
-
+    { path: '/admin/organizaciones', component: require('./components/admin/Organizaciones.vue').default },
+    { path: '/admin/donativos', component: require('./components/admin/Donativos.vue').default },
     //////////////////////CLIENTE RUTAS
     { path: '/', component: require('./components/cliente/Home.vue').default },
-    { path: '/libro', component: require('./components/cliente/Libro.vue').default },
+    { path: '/reservacion', component: require('./components/cliente/Reservar.vue').default },
     { path: '/donaciones', component: require('./components/cliente/Donaciones.vue').default },
+    { path: '/home', component: require('./components/cliente/Home.vue').default },
 ];

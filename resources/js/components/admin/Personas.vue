@@ -23,7 +23,6 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>ID</th>
                     <th>Cédula</th>
                     <th>Nombre</th>
                     <th>Primer Apellido</th>
@@ -35,7 +34,6 @@
                 <tbody>
                   <tr v-for="persona in personas.data" :key="persona.id">
                     <td>{{ persona.id }}</td>
-                    <td>{{ persona.cedula }}</td>
                     <td class="text-capitalize">{{ persona.nombre }}</td>
                     <td>{{ persona.apellido1 }}</td>
                     <td>{{ persona.apellido2 }}</td>
@@ -103,16 +101,13 @@
                 <div class="form-group">
                   <label>Cedula</label>
                   <input
-                    v-model="form.cedula"
+                    v-model="form.id"
                     type="text"
-                    name="cedula"
+                    name="id"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('cedula') }"
+                    :class="{ 'is-invalid': form.errors.has('id') }"
                   />
-                  <has-error :form="form" field="cedula"></has-error>
-                  <span class="text danger" v-if="errores.cedula">{{
-                    errores.cedula[0]
-                  }}</span>
+                  <has-error :form="form" field="id"></has-error>
                 </div>
 
                 <div class="form-group">
@@ -211,7 +206,6 @@ export default {
       personas: {},
       form: new Form({
         id: "",
-        cedula: "",
         nombre: "",
         apellido1: "",
         apellido2: "",

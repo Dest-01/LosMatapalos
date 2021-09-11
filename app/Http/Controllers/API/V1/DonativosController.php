@@ -22,7 +22,8 @@ class DonativosController extends BaseController
      */
     public function index()
     {
-        $donativo = $this->donativos->latest()->paginate(10);
+        $donativo = $this->donativos->latest()->with('personas', 'organizaciones')->paginate(10);
+      //  $products = $this->product->latest()->with('category', 'tags')->paginate(10);
 
         return $this->sendResponse($donativo, 'Lista Donativos');
     }
@@ -54,10 +55,13 @@ class DonativosController extends BaseController
 
         $tag = $this->donativos->create([
             'tipo' => $request->get('tipo'),
+            'idPersona' => $request->get('idPersona'),
+            'idOrganizacion' => $request->get('idOrganizacion'),
             'detalle' => $request->get('detalle'),
             'photo' => $request->get('photo'),
             'fecha' => $request->get('fecha'),
             'estado' => $request->get('estado')
+            
         ]);
         return $this->sendResponse($tag, 'Donativo creado');
     }
@@ -68,9 +72,11 @@ class DonativosController extends BaseController
      * @param  \App\Models\Donativos  $donativos
      * @return \Illuminate\Http\Response
      */
-    public function show(Donativos $donativos)
+    public function show($id)
     {
-        //
+        $donativo = $this->donativos->with(['personas', 'organizaciones'])->findOrFail($id);
+
+        return $this->sendResponse($donativo, 'Donativo Detalle');
     }
 
     /**

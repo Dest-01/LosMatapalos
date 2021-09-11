@@ -36,7 +36,7 @@
                   <tr v-for="donativo in donativos.data" :key="donativo.id">
                     <td>{{ donativo.id }}</td>
                     <td class="text-capitalize">{{ donativo.tipo }}</td>
-                    <td>{{ donativo.detalle }}</td>
+                    <td>{{ donativo.detalle | truncate(30, "...") }}</td>
                     <td>
                       <img
                         v-bind:src="'/images/donativos/' + donativo.photo"
@@ -125,6 +125,36 @@
                 </div>
 
                 <div class="form-group">
+                  <label>Cedula Persona</label>
+                  <select class="form-control" v-model="form.idPersona">
+                    <option
+                      v-for="(per, index) in personas"
+                      :key="index"
+                      :value="index"
+                      :selected="index == form.idPersona"
+                    >
+                      {{ per }}
+                    </option>
+                  </select>
+                  <has-error :form="form" field="idPersona"></has-error>
+                </div>
+
+                <div class="form-group">
+                  <label>Cedula Juridica</label>
+                  <select class="form-control" v-model="form.idOrganizacion">
+                    <option
+                      v-for="(org, index) in organizaciones"
+                      :key="index"
+                      :value="index"
+                      :selected="index == form.idOrganizacion"
+                    >
+                      {{ org }}
+                    </option>
+                  </select>
+                  <has-error :form="form" field="idPersona"></has-error>
+                </div>
+
+                <div class="form-group">
                   <label>Detalle</label>
                   <input
                     v-model="form.detalle"
@@ -136,14 +166,14 @@
                   <has-error :form="form" field="detalle"></has-error>
                 </div>
                 <div class="form-group">
-                    <label for="photo" class="col-sm-2 control-label"
-                      >Imagen</label
-                    >
+                  <label for="photo" class="col-sm-2 control-label"
+                    >Imagen</label
+                  >
                   <div class="custom-file">
                     <input
                       type="file"
-                       @change="updatePhoto"
-                       name="photo"
+                      @change="updatePhoto"
+                      name="photo"
                       class="custom-file-input"
                       id="inputGroupFile01"
                     />
@@ -214,12 +244,20 @@ export default {
       donativos: {},
       form: new Form({
         id: "",
+        persona: "",
+        idPersona: "",
+        organizacion: "",
+        idOrganizacion: "",
         tipo: "",
         detalle: "",
         photo: "",
         fecha: "",
         estado: "",
       }),
+      personas: [],
+      organizaciones: [],
+      org: null,
+      per: null,
     };
   },
   methods: {
@@ -290,6 +328,16 @@ export default {
           .then(({ data }) => (this.donativos = data.data));
       }
     },
+    cargarPersona() {
+      axios
+        .get("/api/persona/lista")
+        .then(({ data }) => (this.personas = data.data));
+    },
+    cargarOrganizacion() {
+      axios
+        .get("/api/organizacion/lista")
+        .then(({ data }) => (this.organizaciones = data.data));
+    },
 
     crearDonativo() {
       this.$Progress.start();
@@ -350,7 +398,21 @@ export default {
   created() {
     this.$Progress.start();
     this.cargarDonativos();
+    this.cargarPersona();
+    this.cargarOrganizacion();
     this.$Progress.finish();
+  },
+  filters: {
+    truncate: function (text, length, suffix) {
+      return text.substring(0, length) + suffix;
+    },
+  },
+  computed: {
+    filteredItems() {
+      return this.autocompleteItems.filter((i) => {
+        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+      });
+    },
   },
 };
 </script>

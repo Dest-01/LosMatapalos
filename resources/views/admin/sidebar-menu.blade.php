@@ -10,19 +10,19 @@
       </li>
 
       @can('isAdmin')
+      <li class="nav-item">
+        <router-link to="/admin/organizaciones" class="nav-link">
+          <i class="fa fa-users nav-icon blue"></i>
+          <p>Registro Organización</p>
+        </router-link>
+      </li>
+    @endcan
+
+      @can('isAdmin')
         <li class="nav-item">
           <router-link to="/admin/personas" class="nav-link">
             <i class="fa fa-users nav-icon blue"></i>
             <p>Registro Cliente</p>
-          </router-link>
-        </li>
-      @endcan
-
-      @can('isAdmin')
-        <li class="nav-item">
-          <router-link to="/admin/organizacion" class="nav-link">
-            <i class="fa fa-users nav-icon blue"></i>
-            <p>Registro Organización</p>
           </router-link>
         </li>
       @endcan
@@ -32,7 +32,7 @@
         <li class="nav-item">
           <router-link to="/users" class="nav-link">
             <i class="fa fa-users nav-icon blue"></i>
-            <p>Users</p>
+            <p>Usuarios</p>
           </router-link>
         </li>
       @endcan
@@ -49,22 +49,8 @@
         </a>
         <ul class="nav nav-treeview">
 
-          <li class="nav-item">
-            <router-link to="" class="nav-link">
-              <i class="nav-icon fas fa-thumbtack green"></i>
-              <p>
-                Organización Donante
-              </p>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="" class="nav-link">
-              <i class="nav-icon fas fa-thumbtack green"></i>
-              <p>
-                Persona Donante
-              </p>
-            </router-link>
-          </li>
+ 
+
           <li class="nav-item">
             <router-link to="/admin/donativos" class="nav-link">
               <i class="nav-icon fas fa-thumbtack green"></i>
@@ -79,14 +65,6 @@
                   <i class="nav-icon fas fa-thumbtack green"></i>
                   <p>
                       Categoria Donativo
-                  </p>
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="" class="nav-link">
-                <i class="nav-icon fas fa-thumbtack green"></i>
-                  <p>
-                      Asociar Donativo
                   </p>
               </router-link>
             </li>
@@ -108,7 +86,7 @@
         <ul class="nav nav-treeview">
 
           <li class="nav-item">
-            <router-link to="/product/category" class="nav-link">
+            <router-link to="" class="nav-link">
               <i class="nav-icon fas fa-file-alt white"></i>
               <p>
                 Reservar Organización
