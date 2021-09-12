@@ -60,6 +60,10 @@ Route::get('/admin/donativos', function () {
     return view('admin');
 })->where('admin/donativos', '[\/\w\.-]*')->middleware('auth');
 
+Route::get('/admin/Catdonativos', function () {
+    return view('admin');
+})->where('admin/Catdonativos', '[\/\w\.-]*')->middleware('auth');
+
 
 ///Para rutas que no este protegidas
 Route::get('/{vue_capture?}', function () {

@@ -36,6 +36,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
 
 ///////Rutas Personalizadas o especificas a un metodo
     Route::get('persona/lista', 'PersonasController@list');
+    Route::get('reservarCliente/verificar', 'PersonasController@obtenerCedula');
     Route::get('organizacion/lista', 'OrganizacionesController@list');
 
     //////Rutas total GET, PUT, POST, DELETE
@@ -45,8 +46,19 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'category' => 'CategoryController',
         'tag' => 'TagController',
         'test' => 'TestController',
+        ////RUTAS ADMIN API
+        'catDonativo' => 'CatDonativosController',
         'donativo' => 'DonativosController',
         'persona' => 'PersonasController',
         'organizacion' => 'OrganizacionesController',
+    ]);
+});
+
+Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
+        
+   // Route::get('reservarCliente/verificar', 'ReservarCliController@obtenerCedula');
+
+    Route::apiResources([
+        'reservarCliente' => 'ReservarCliController',
     ]);
 });

@@ -22,76 +22,76 @@
 
           <!-- Modal body -->
           <div class="modal-body">
-             <div class="form-group">
-                  <label>Cedula</label>
-                  <input
-                    v-model="form.id"
-                    type="text"
-                    name="id"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('id') }"
-                  />
-                  <has-error :form="form" field="id"></has-error>
-                </div>
+            <div class="form-group">
+              <label>Cedula</label>
+              <input
+                v-model="form.cedula"
+                type="text"
+                name="id"
+                class="form-control"
+                :class="{ 'is-invalid': form.errors.has('id') }"
+              />
+              <has-error :form="form" field="id"></has-error>
+            </div>
 
-                <div class="form-group">
-                  <label>Nombre</label>
-                  <input
-                    v-model="form.nombre"
-                    type="text"
-                    name="nombre"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('nombre') }"
-                  />
-                  <has-error :form="form" field="nombre"></has-error>
-                </div>
+            <div class="form-group">
+              <label>Nombre</label>
+              <input
+                v-model="form.nombre"
+                type="text"
+                name="nombre"
+                class="form-control"
+                :class="{ 'is-invalid': form.errors.has('nombre') }"
+              />
+              <has-error :form="form" field="nombre"></has-error>
+            </div>
 
-                <div class="form-group">
-                  <label>Primer Apellido</label>
-                  <input
-                    v-model="form.apellido1"
-                    type="text"
-                    name="apellido1"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('apellido1') }"
-                  />
-                  <has-error :form="form" field="apellido1"></has-error>
-                </div>
+            <div class="form-group">
+              <label>Primer Apellido</label>
+              <input
+                v-model="form.apellido1"
+                type="text"
+                name="apellido1"
+                class="form-control"
+                :class="{ 'is-invalid': form.errors.has('apellido1') }"
+              />
+              <has-error :form="form" field="apellido1"></has-error>
+            </div>
 
-                <div class="form-group">
-                  <label>Segundo Apellido</label>
-                  <input
-                    v-model="form.apellido2"
-                    type="text"
-                    name="apellido2"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('apellido2') }"
-                  />
-                  <has-error :form="form" field="apellido2"></has-error>
-                </div>
+            <div class="form-group">
+              <label>Segundo Apellido</label>
+              <input
+                v-model="form.apellido2"
+                type="text"
+                name="apellido2"
+                class="form-control"
+                :class="{ 'is-invalid': form.errors.has('apellido2') }"
+              />
+              <has-error :form="form" field="apellido2"></has-error>
+            </div>
 
-                <div class="form-group">
-                  <label>Telefono</label>
-                  <input
-                    v-model="form.telefono"
-                    type="number"
-                    name="telefono"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('telefono') }"
-                  />
-                  <has-error :form="form" field="telefono"></has-error>
-                </div>
-                <div class="form-group">
-                  <label>Correo</label>
-                  <input
-                    v-model="form.correo"
-                    type="email"
-                    name="correo"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('correo') }"
-                  />
-                  <has-error :form="form" field="correo"></has-error>
-                </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input
+                v-model="form.telefono"
+                type="number"
+                name="telefono"
+                class="form-control"
+                :class="{ 'is-invalid': form.errors.has('telefono') }"
+              />
+              <has-error :form="form" field="telefono"></has-error>
+            </div>
+            <div class="form-group">
+              <label>Correo</label>
+              <input
+                v-model="form.correo"
+                type="email"
+                name="correo"
+                class="form-control"
+                :class="{ 'is-invalid': form.errors.has('correo') }"
+              />
+              <has-error :form="form" field="correo"></has-error>
+            </div>
           </div>
 
           <!-- Modal footer -->
@@ -138,28 +138,35 @@
       </button>
 
       <div class="form-group">
-        <label for="">Consulta cedula</label>
-        <input class="form-control" type="search" />
+        <label>Cedula a consultar</label>
+        <input
+          v-model="buscador"
+          type="text"
+          name="buscador"
+          class="form-control1"
+        />
+      </div>
+      <div class="form-group">
+        <button @click="ConsultaCedula()">Consultar cedula</button>
+
       </div>
       <div class="form-group">
         <label for="">Cantidad de visitantes</label>
-        <input class="form-control" type="text" />
+        <input class="form-control1" type="text" />
       </div>
       <div class="form-group">
         <label for="">Fecha</label>
-        <input class="form-control" type="date" />
+        <input class="form-control1" type="date" />
       </div>
       <div class="form-group">
         <label for="">Hora de entrada</label>
-        <input class="form-control" type="text" />
+        <input class="form-control1" type="text" />
       </div>
       <div class="form-group">
         <label for="">Hora de salida</label>
-        <input class="form-control" type="text" />
+        <input class="form-control1" type="text" />
       </div>
-      <button  type="button" class="btn btn-primary my-4">
-        Reservar
-      </button>
+      <button type="button" class="btn btn-primary my-4">Reservar</button>
     </div>
   </div>
 </template>
@@ -167,9 +174,12 @@
 <script>
 export default {
   data() {
+    
     return {
+      buscador : '',
       personas: {},
       form: new Form({
+        identificacion: "",
         id: "",
         nombre: "",
         apellido1: "",
@@ -200,12 +210,28 @@ export default {
         }
       }
     },
+    ConsultaCedula() {
+      this.$Progress.start();
+      this.form
+        .get('/api/reservarCliente/verificar', { params: { buscador: this.buscador } })
+        .then((response) => {
+          // success
+          $("#addNew").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$Progress.finish();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
+    },
 
     abrirModal(data = {}) {
       this.modal = 1;
       (this.id = 0), (this.tituloModal = "Registrarse");
-    //  this.articulo.nombre = "";
-
+      //  this.articulo.nombre = "";
     },
     cerrarMmodal() {
       this.modal = 0;
@@ -223,14 +249,10 @@ export default {
   opacity: 1;
   background: rgba(121, 120, 120, 0.623);
 }
-
-span {
-  color: red;
-}
 </style>
 
 <style>
-.form-control {
+.form-control1 {
   display: block;
   width: 500px;
   height: 34px;

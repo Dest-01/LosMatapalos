@@ -292,7 +292,7 @@ export default {
     actualizarDonativo() {
       this.$Progress.start();
       this.form
-        .put("/api/donativo/" + this.form.id)
+        .put("/api/donativo/cedula/" + this.form.id)
         .then((response) => {
           // success
           $("#addNew").modal("hide");

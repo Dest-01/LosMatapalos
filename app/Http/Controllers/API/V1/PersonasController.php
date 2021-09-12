@@ -38,13 +38,23 @@ class PersonasController extends BaseController
         return $this->sendResponse($persona, 'Lista de Personas');
     }
 
+    public function obtenerCedula(Request $request)
+    {
+        $filtro = $request->buscador;
+
+        $persona = Personas::where('id', $filtro)->get();
+
+        return $this->sendResponse($persona, 'Cedula si existe');
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PersonasRequest $request)
+    public function store(Request $request)
     {
         $tag = $this->personas->create([
             'id' => $request->get('id'),
@@ -76,7 +86,7 @@ class PersonasController extends BaseController
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function update(PersonasRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $tag = $this->personas->findOrFail($id);
 

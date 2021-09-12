@@ -14,6 +14,7 @@ export default [
     { path: '/admin/personas', component: require('./components/admin/Personas.vue').default },
     { path: '/admin/organizaciones', component: require('./components/admin/Organizaciones.vue').default },
     { path: '/admin/donativos', component: require('./components/admin/Donativos.vue').default },
+    { path: '/admin/Catdonativos', component: require('./components/admin/CatDonativos.vue').default },
     //////////////////////CLIENTE RUTAS
     { path: '/', component: require('./components/cliente/Home.vue').default },
     { path: '/reservacion', component: require('./components/cliente/Reservar.vue').default },

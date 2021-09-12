@@ -61,10 +61,10 @@
           </li>
           
             <li class="nav-item">
-              <router-link to="" class="nav-link">
+              <router-link to="/admin/Catdonativos" class="nav-link">
                   <i class="nav-icon fas fa-thumbtack green"></i>
                   <p>
-                      Categoria Donativo
+                      Categoria Donativos
                   </p>
               </router-link>
             </li>
