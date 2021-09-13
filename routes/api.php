@@ -57,6 +57,9 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
 Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         
     Route::get('reservarCliente/verificar', 'ReservarCliController@obtenerCedula');
+    Route::get('reservarCliente/verificarOrg', 'ReservarCliController@obtenerCedulaOrg');
+    Route::post('reservarCliente/persona', 'ReservarCliController@GuardarPersona');
+    Route::post('reservarCliente/organizacion', 'ReservarCliController@GuardarOrganizacion');
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',
