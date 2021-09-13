@@ -144,29 +144,48 @@
           type="text"
           name="buscador"
           class="form-control1"
+          :disabled="CedulaBloqueo"
         />
       </div>
       <div class="form-group">
-        <button @click="ConsultaCedula()">Consultar cedula</button>
-
+        <span class="mensajeCedula" v-if="personas.length == 0"
+          >Cedula no registrada o campo vacio!</span
+        >
       </div>
       <div class="form-group">
+        <button
+          type="submit"
+          class="btn btn-success my-4"
+          @click="ConsultaCedula(), habilitarCampos()"
+        >
+          Consultar cedula
+        </button>
+      </div>
+
+      <div class="form-group">
         <label for="">Cantidad de visitantes</label>
-        <input class="form-control1" type="text" />
+        <input :disabled="isDisabled" class="form-control1" type="text" />
       </div>
       <div class="form-group">
         <label for="">Fecha</label>
-        <input class="form-control1" type="date" />
+        <input :disabled="isDisabled" class="form-control1" type="date" />
       </div>
       <div class="form-group">
         <label for="">Hora de entrada</label>
-        <input class="form-control1" type="text" />
+        <input :disabled="isDisabled" class="form-control1" type="time" />
       </div>
       <div class="form-group">
         <label for="">Hora de salida</label>
-        <input class="form-control1" type="text" />
+        <input :disabled="isDisabled" class="form-control1" type="time" />
       </div>
       <button type="button" class="btn btn-primary my-4">Reservar</button>
+      <button
+        type="button"
+        @click="reiniciarCampos()"
+        class="btn btn-danger my-4"
+      >
+        Cancelar
+      </button>
     </div>
   </div>
 </template>
@@ -174,9 +193,11 @@
 <script>
 export default {
   data() {
-    
     return {
-      buscador : '',
+      CedulaBloqueo: false,
+      isDisabled: true,
+      buscador: "",
+      validar: 0,
       personas: {},
       form: new Form({
         identificacion: "",
@@ -210,21 +231,32 @@ export default {
         }
       }
     },
+    reiniciarCampos() {
+      this.CedulaBloqueo = false;
+      this.isDisabled = true;
+      this.buscador = "";
+    },
+    habilitarCampos() {
+      for (let i = 0; i < this.personas.length; i++) {
+        if (this.personas[i].id == this.buscador) {
+          this.validar = 1;
+          this.isDisabled = false;
+          this.CedulaBloqueo = true;
+        }
+      }
+    },
+
     ConsultaCedula() {
       this.$Progress.start();
+
       this.form
-        .get('/api/reservarCliente/verificar', { params: { buscador: this.buscador } })
-        .then((response) => {
-          // success
-          $("#addNew").modal("hide");
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.$Progress.finish();
+        .get("/api/reservarCliente/verificar", {
+          params: { buscador: this.buscador },
         })
-        .catch(() => {
-          this.$Progress.fail();
+        .then(({ data }) => (this.personas = data.data))
+        .then((response) => {
+          this.habilitarCampos();
+          this.$Progress.finish();
         });
     },
 
@@ -238,7 +270,13 @@ export default {
       this.errores = {};
     },
   },
-  created() {},
+  mounted() {
+    console.log("Component mounted.");
+  },
+  created() {
+    this.$Progress.start();
+    this.$Progress.finish();
+  },
 };
 </script>
 
@@ -252,6 +290,9 @@ export default {
 </style>
 
 <style>
+.mensajeCedula {
+  color: red;
+}
 .form-control1 {
   display: block;
   width: 500px;

@@ -36,7 +36,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
 
 ///////Rutas Personalizadas o especificas a un metodo
     Route::get('persona/lista', 'PersonasController@list');
-    Route::get('reservarCliente/verificar', 'PersonasController@obtenerCedula');
+  //  Route::get('reservarCliente/verificar', 'PersonasController@obtenerCedula');
     Route::get('organizacion/lista', 'OrganizacionesController@list');
 
     //////Rutas total GET, PUT, POST, DELETE
@@ -56,7 +56,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
 
 Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         
-   // Route::get('reservarCliente/verificar', 'ReservarCliController@obtenerCedula');
+    Route::get('reservarCliente/verificar', 'ReservarCliController@obtenerCedula');
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',

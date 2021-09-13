@@ -39,12 +39,16 @@ class ReservarCliController extends BaseController
      * @param  \App\Models\ReservarCli  $reservarCli
      * @return \Illuminate\Http\Response
      */
-    public function show(ReservarCli $reservarCli, $cedula)
+    public function obtenerCedula(Request $request)
     {
-        return DB::table('personas')->where('id', $cedula)->pluck('id');
+        $filtro = $request->buscador;
+
+        $persona = Personas::where('id', $filtro)->get('id');
 
 
-        return $this->sendResponse('La cedula si existe');
+            return $this->sendResponse($persona, 'Cedula si existe');
+        
+       
     }
 
     /**

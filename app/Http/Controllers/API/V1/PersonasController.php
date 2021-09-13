@@ -42,7 +42,7 @@ class PersonasController extends BaseController
     {
         $filtro = $request->buscador;
 
-        $persona = Personas::where('id', $filtro)->get();
+        $persona = Personas::where('id', $filtro)->get('id');
 
         return $this->sendResponse($persona, 'Cedula si existe');
 
