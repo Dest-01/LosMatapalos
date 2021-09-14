@@ -33,7 +33,7 @@
 
 <body>
 
-
+<header>
     <!--============= Navbar =============-->
     <nav class="navbar">
         <div class="container">
@@ -101,6 +101,7 @@
         </div>
 
     </nav><!-- /.============= Navbar =============-->
+</header>
     <div class="wrapper" id="app">
         {{-- Content Wrapper. Contains page content --}}
         <div class="">
