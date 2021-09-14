@@ -1,6 +1,6 @@
 <template>
   <div style="background: #fff">
-    <header>
+    <header style="margin-top: 250px;">
       <section class="textos-header">
         <h1>Sendero Los Matapalos</h1>
         <h2>Estamos encantados de recibirle</h2>
@@ -396,7 +396,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 header {
   width: 100%;
   height: 300px;
@@ -418,7 +418,7 @@ header {
   background-size: cover;
   background-attachment: fixed;
   position: relative;
-  top: -50px;
+ 
   margin-bottom: 0;
 }
 header .textos-header {

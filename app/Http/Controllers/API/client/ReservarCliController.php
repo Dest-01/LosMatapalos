@@ -7,6 +7,7 @@ use App\Models\Personas;
 use App\Models\Organizaciones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Admin\PersonasRequest;
 
 class ReservarCliController extends BaseController
 {
@@ -62,7 +63,7 @@ class ReservarCliController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function GuardarPersona(Request $request)
+    public function GuardarPersona(PersonasRequest $request)
     {
         //$filtro
 

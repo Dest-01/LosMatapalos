@@ -1,5 +1,6 @@
 <template>
   <section class="content">
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
@@ -19,7 +20,7 @@
               </div>
               <div class="card-tools"></div>
               <div class="card-tools">
-                <button
+                <button style="margin-right: 20px;"
                   type="button"
                   class="btn btn-sm btn-primary"
                   @click="newModal"
@@ -29,7 +30,7 @@
                 </button>
               </div>
               <div class="card-tools">
-                <button
+                <button style="margin-right: 20px;"
                   type="button"
                   class="btn btn-sm btn-primary"
                   @click="newModal"
@@ -153,6 +154,30 @@
                   >
                     Consultar cedula
                   </button>
+                </div>
+                 <div class="form-group">
+                  <label>Identificacion Donante</label>
+                  <input
+                    v-model="form.idPersona"
+                    type="text"
+                    name="idPersona"
+                    class="form-control"
+                    
+                    :class="{ 'is-invalid': form.errors.has('idPersona') }"
+                  />
+                  <has-error :form="form" field="idPersona"></has-error>
+                </div>
+                 <div class="form-group">
+                  <label>Detalles de Donación</label>
+                  <input
+                    v-model="form.detalle"
+                    type="text"
+                    name="detalle"
+                    class="form-control"
+                    
+                    :class="{ 'is-invalid': form.errors.has('detalle') }"
+                  />
+                  <has-error :form="form" field="detalle"></has-error>
                 </div>
                 <div class="form-group">
                   <label>Tipo de donativo</label>
@@ -485,4 +510,5 @@ export default {
 </script>
 
 <style>
+
 </style>

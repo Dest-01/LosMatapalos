@@ -1,12 +1,8 @@
 <template>
-<div class="container">
-  
-  <div class="page-header">
-    <h1>Donaciones Sendero los Matapalos</h1>
 
-  </div>
-       
+  <div style="background: #fff">
 
+    <div class="container">
   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -52,6 +48,12 @@
     <div>
       <h2>Lista de donaciones necesarias</h2>
   </div>
-
+  <div>
+      <h2>Lista de donadores</h2>
+  </div>
+    <div>
+      <h2>Lista de donaciones necesarias</h2>
+  </div>
+</div>
 </div>
 </template>

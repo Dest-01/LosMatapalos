@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <h1 class="text-center">Reservación</h1>
-    <hr />
+  <div style="background: #fff">
 
     <!-- Modal de persona -->
-    <div class="modal" :class="{ mostrar: modal }">
+    <div class="modalReserva" :class="{ mostrar: modal }" style="background: rgb(253 253 253 / 0%);">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -19,7 +17,6 @@
               &times;
             </button>
           </div>
-
           <!-- Modal body -->
           <div class="modal-body">
             <div class="form-group">
@@ -33,7 +30,6 @@
               />
               <has-error :form="formPer" field="id"></has-error>
             </div>
-
             <div class="form-group">
               <label>Nombre</label>
               <input
@@ -45,7 +41,6 @@
               />
               <has-error :form="formPer" field="nombre"></has-error>
             </div>
-
             <div class="form-group">
               <label>Primer Apellido</label>
               <input
@@ -57,7 +52,6 @@
               />
               <has-error :form="formPer" field="apellido1"></has-error>
             </div>
-
             <div class="form-group">
               <label>Segundo Apellido</label>
               <input
@@ -69,7 +63,6 @@
               />
               <has-error :form="formPer" field="apellido2"></has-error>
             </div>
-
             <div class="form-group">
               <label>Telefono</label>
               <input
@@ -93,7 +86,6 @@
               <has-error :form="formPer" field="correo"></has-error>
             </div>
           </div>
-
           <!-- Modal footer -->
           <div class="modal-footer">
             <button
@@ -117,8 +109,8 @@
       </div>
     </div>
     <!-- Modal de organizacion-->
-        <!-- The Modal -->
-    <div class="modal" :class="{ mostrar: modalOrg }">
+    <!-- The Modal -->
+    <div class="modalReserva" :class="{ mostrar: modalOrg }" style="background: rgb(253 253 253 / 0%);">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -147,7 +139,6 @@
               />
               <has-error :form="formOrg" field="id"></has-error>
             </div>
-
             <div class="form-group">
               <label>Nombre de Organizacion</label>
               <input
@@ -182,7 +173,6 @@
               <has-error :form="formOrg" field="correo"></has-error>
             </div>
           </div>
-
           <!-- Modal footer -->
           <div class="modal-footer">
             <button
@@ -206,107 +196,116 @@
       </div>
     </div>
     <!-- formulario de reserva campos-->
-    <div class="container">
-      <button @click="abrirModal()" type="button" class="btn btn-primary my-4">
-        Registrar Persona
-      </button>
+    <main>
+      <div class="form">
+        <div class="title">Reservas</div>
+        <div class="subtitle">Registre su reserva!</div>
 
-      <button @click="abrirModalOrg()" type="button" class="btn btn-primary my-4">
-        Registrar Organizacion
-      </button>
+        <button @click="abrirModal()" type="button" class="registrarP my-4">
+          Registrar Persona
+        </button>
 
-      <div class="form-group">
-        <label>Cedula a consultar</label>
-        <input
-          v-model="buscador"
-          type="text"
-          name="buscador"
-          class="form-control1"
-          :disabled="CedulaBloqueo"
-        />
-      </div>
-      <div>
-        
-       
-      </div>
-      <div class="form-group">
-        <span class="mensajeCedula" v-if=" cedulas.length === 0 &&  cedulasOrg.length === 0"
-          >Cedula no registrada o campo vacio!</span
-        >
-         <span class="mensajeCedula" v-else
-          ></span
-        >
-      </div>
-      <div class="form-group">
+        <button @click="abrirModalOrg()" type="button" class="registrarP my-4">
+          Registrar Organizacion
+        </button>
+
+        <div class="input-container ic1">
+          <label for="Cedula" class="placeholder">Cedula</label>
+          <input
+            id="Cedula"
+            class="input"
+            type="text"
+            v-model="buscador"
+            name="buscador"
+            :disabled="CedulaBloqueo"
+          />
+          <div class="cut"></div>
+          <!-- <label for="Cedula" class="placeholder">Cedula</label> -->
+        </div>
         <button
+          id="consultabtn"
           type="submit"
-          class="btn btn-success my-4"
+          class="registrarP my-4"
           @click="ConsultaCedula(), habilitarCampos()"
         >
           Consultar cedula
         </button>
-      </div>
-
-      <div class="form-group">
-        <label for="">Cantidad de visitantes</label>
-        <input
-          v-model="formReserva.cantidad"
+        <div class="form-group">
+          <!-- <span class="mensajeCedula" v-if="personas.length == 0">Cedula no registrada o campo vacio!</span> </span>-->
+        </div>
+        <div class="input-container ic2">
+          <label for="">Cantidad de visitantes</label>
+          <input
+            v-model="formReserva.cantidad"
+            :disabled="isDisabled"
+            class="input"
+            type="text"
+            :class="{ 'is-invalid': formReserva.errors.has('cantidad') }"
+          />
+          <has-error :form="formReserva" field="cantidad"></has-error>
+          <div class="cut"></div>
+          <!-- <label for="CantVisitantes" class="placeholder">Cantidad Visitantes</label> -->
+        </div>
+        <div class="input-container ic2">
+          <label for="">Fecha</label>
+          <input
+            v-model="formReserva.fecha"
+            :disabled="isDisabled"
+            class="input"
+            type="date"
+            :class="{ 'is-invalid': formReserva.errors.has('fecha') }"
+          />
+          <has-error :form="formReserva" field="fecha"></has-error>
+          <div class="cut"></div>
+          <!-- <label for="" class="placeholder" ></label> -->
+        </div>
+        <div class="input-container ic2">
+          <label for="">Hora de entrada</label>
+          <input
+            v-model="formReserva.horaInicio"
+            :disabled="isDisabled"
+            class="input"
+            type="time"
+            :class="{ 'is-invalid': formReserva.errors.has('horaInicio') }"
+          />
+          <div class="cut"></div>
+          <!-- <label for="HoraEntrada" class="placeholder">Hora entrada</label> -->
+        </div>
+        <has-error :form="formReserva" field="horaInicio"></has-error>
+        <div class="input-container ic2">
+          <label for="">Hora de salida</label>
+          <input
+            v-model="formReserva.horaFin"
+            :disabled="isDisabled"
+            class="input"
+            type="time"
+            :class="{ 'is-invalid': formReserva.errors.has('horaFin') }"
+          />
+          <has-error :form="formReserva" field="horaFin"></has-error>
+          <div class="cut"></div>
+          <!-- <label for="HoraSalida" class="placeholder">Hora Salida</label> -->
+        </div>
+        <button
           :disabled="isDisabled"
-          class="form-control1"
-          type="text"
-          :class="{ 'is-invalid': formReserva.errors.has('cantidad') }"
-        />
-        <has-error :form="formReserva" field="cantidad"></has-error>
+          @click="crearReserva()"
+          type="button"
+          class="submit"
+        >
+          Reservar
+        </button>
+        <button type="button" @click="reiniciarCampos(), limpiar()" class="cancel">
+          Cancelar
+        </button>
       </div>
-      <div class="form-group">
-        <label for="">Fecha</label>
-        <input
-          v-model="formReserva.fecha"
-          :disabled="isDisabled"
-          class="form-control1"
-          type="date"
-          :class="{ 'is-invalid': formReserva.errors.has('fecha') }"
-        />
-        <has-error :form="formReserva" field="fecha"></has-error>
-      </div>
-      <div class="form-group">
-        <label for="">Hora de entrada</label>
-        <input
-          v-model="formReserva.horaInicio"
-          :disabled="isDisabled"
-          class="form-control1"
-          type="time"
-          :class="{ 'is-invalid': formReserva.errors.has('horaInicio') }"
-        />
-      </div>
-      <has-error :form="formReserva" field="horaInicio"></has-error>
-      <div class="form-group">
-        <label for="">Hora de salida</label>
-        <input
-          v-model="formReserva.horaFin"
-          :disabled="isDisabled"
-          class="form-control1"
-          type="time"
-          :class="{ 'is-invalid': formReserva.errors.has('horaFin') }"
-        />
-        <has-error :form="formReserva" field="horaFin"></has-error>
-      </div>
-      <button
-        :disabled="isDisabled"
-        @click="crearReserva()"
-        type="button"
-        class="btn btn-primary my-4"
-      >
-        Reservar
-      </button>
-      <button
-        type="button"
-        @click="reiniciarCampos()"
-        class="btn btn-danger my-4"
-      >
-        Cancelar
-      </button>
+    </main>
+      <footer style="background: rgba(0,0,0,.3);">
+   
+    <div class="float-right d-none d-sm-block">
+    
     </div>
+   
+    <strong>Copyright &copy; 2021-2022 <a href="">Los Matapalos</a>.</strong> All rights reserved.
+  </footer>
   </div>
 </template>
 
@@ -320,7 +319,7 @@ export default {
       cedulas: {},
       cedulasOrg: {},
       formReserva: new Form({
-        identificacion : "",
+        identificacion: "",
         cantidad: "",
         fecha: "",
         horaInicio: "",
@@ -334,7 +333,7 @@ export default {
         telefono: "",
         correo: "",
       }),
-       formOrg: new Form({
+      formOrg: new Form({
         id: "",
         nombre: "",
         telefono: "",
@@ -345,6 +344,11 @@ export default {
       modal: 0,
       modalOrg: 0,
       tituloModal: "",
+      image17: [
+        {
+          url: "../images/portada.jpg",
+        },
+      ],
     };
   },
   methods: {
@@ -352,11 +356,11 @@ export default {
       this.CedulaBloqueo = false;
       this.isDisabled = true;
       this.buscador = "";
-      this.formReserva.cantidad ="";
-      this.formReserva.fecha ="";
-      this.formReserva.horaInicio="";
-      this.formReserva.horaFin="";
-      this.formReserva.identificacion="";
+      this.formReserva.cantidad = "";
+      this.formReserva.fecha = "";
+      this.formReserva.horaInicio = "";
+      this.formReserva.horaFin = "";
+      this.formReserva.identificacion = "";
     },
     habilitarCampos() {
       for (let i = 0; i < this.cedulas.length; i++) {
@@ -364,10 +368,8 @@ export default {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
           this.formReserva.identificacion = this.buscador;
-          
         }
       }
-     
     },
     habilitarCamposOrg() {
       for (let i = 0; i < this.cedulasOrg.length; i++) {
@@ -375,10 +377,16 @@ export default {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
           this.formReserva.identificacion = this.buscador;
-        
         }
       }
-     
+    },
+    limpiar() {
+      this.formPer.nombre = ""
+      this.formPer.apellido1 = ""
+      this.formPer.apellido2 = ""
+      this.formPer.telefono = ""
+      this.formPer.correo = ""
+      this.formPer.errors.clear();
     },
 
     ConsultaCedula() {
@@ -392,15 +400,16 @@ export default {
           this.habilitarCampos();
           this.$Progress.finish();
         });
-        this.formReserva.get("/api/reservarCliente/verificarOrg", {
+      this.formReserva
+        .get("/api/reservarCliente/verificarOrg", {
           params: { buscador: this.buscador },
-        }).then(({ data }) => (this.cedulasOrg = data.data))
+        })
+        .then(({ data }) => (this.cedulasOrg = data.data))
         .then((response) => {
           this.habilitarCamposOrg();
           this.$Progress.finish();
         });
     },
-
 
     abrirModal(data = {}) {
       this.modal = 1;
@@ -412,7 +421,7 @@ export default {
       (this.id = 0), (this.tituloModal = "Registro Organizacion");
       //  this.articulo.nombre = "";
     },
-     cerrarMmodal() {
+    cerrarMmodal() {
       this.modal = 0;
       this.errores = {};
     },
@@ -493,41 +502,155 @@ export default {
 </script>
 
 
-<style>
-.mostrar {
-  display: list-item;
-  opacity: 1;
-  background: rgba(121, 120, 120, 0.623);
-}
-</style>
+<style scoped>
+header {
+  width: 100%;
 
-<style>
-.mensajeCedula {
-  color: red;
+  background: hsla(155, 95%, 50%, 0.459);
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    hsla(155, 95%, 50%, 0.459),
+    hsla(216, 45%, 52%, 0.664)
+  );
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    hsla(155, 95%, 50%, 0.459),
+    hsla(216, 45%, 52%, 0.664)
+  );
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+  top: -50px;
+  margin-bottom: 0;
 }
-.form-control1 {
-  display: block;
-  width: 500px;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  -webkit-transition: border-color ease-in-out 0.15s,
-    box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -webkit-transition: border-color ease-in-out 0.15s,
-    -webkit-box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s,
-    -webkit-box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s,
-    -webkit-box-shadow ease-in-out 0.15s;
+
+.form {
+  margin-left: 35%;
+  background-color: #034991;
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 700px;
+  padding: 20px;
+  width: 600px;
+  box-shadow: 5px 10px whitesmoke;
+  margin-block: 70px;
+  color: white;
+  margin-top: -50px;
+}
+#consultabtn {
+  margin-top: 30px;
+}
+.title {
+  color: white;
+  font-family: sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+.subtitle {
+  color: white;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.input-container {
+  height: 40px;
+  position: relative;
+  width: 100%;
+  padding-top: 5px;
+}
+
+.ic1 {
+  margin-top: 30px;
+}
+
+.ic2 {
+  margin-top: 20px;
+}
+
+.input {
+  font-weight: bold;
+  background-color: #cececed7;
+  color: black;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  font-size: 18px;
+  height: 100%;
+  padding: 4px 10px 0;
+  width: 100%;
+}
+
+.submit {
+  background-color: #08d;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  margin-top: 38px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  /* // outline: 0; */
+  text-align: center;
+  width: 40%;
+}
+
+.registrarP {
+  font-weight: bolder;
+  margin-top: 4px;
+  background-color: #08d;
+  border-radius: 12px;
+  padding: 5px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  cursor: pointer;
+}
+
+.cancel {
+  background-color: rgba(255, 0, 0, 0.829);
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  margin-top: 38px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+  /* // outline: 0; */
+  text-align: center;
+  width: 40%;
+}
+
+.cancel:active {
+  background-color: rgba(255, 0, 0, 0.589);
+}
+
+.submit:active {
+  background-color: #06b;
+}
+
+.modalReserva {
+    position: fixed;
+    top: 150px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
 }
 </style>
