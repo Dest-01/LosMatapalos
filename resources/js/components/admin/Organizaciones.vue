@@ -27,6 +27,7 @@
                     <th>Nombre organización</th>
                     <th>Teléfono organización</th>
                     <th>Correo organización</th>
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -76,13 +77,14 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode">Nueva organización</h5>
-              <h5 class="modal-title" v-show="editmode">Actualizar organización</h5>
+              <h5 class="modal-title" v-show="!editmode">Registrar nueva organización</h5>
+              <h5 class="modal-title" v-show="editmode">Actualizar datos de la organización</h5>
               <button
                 type="button"
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
+                @click="limpiar()"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -101,6 +103,7 @@
                     type="text"
                     name="id"
                     class="form-control"
+                    :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('id') }"
                   />
                   <has-error :form="form" field="id"></has-error>
@@ -147,8 +150,9 @@
                   type="button"
                   class="btn btn-secondary"
                   data-dismiss="modal"
+                  @click="limpiar()"
                 >
-                  cerrar
+                  Cancelar
                 </button>
                 <button v-show="editmode" type="submit" class="btn btn-success">
                   Actualizar
@@ -158,7 +162,7 @@
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Crear
+                  Registrar
                 </button>
               </div>
             </form>
@@ -173,6 +177,7 @@
 export default {
   data() {
     return {
+      CedulaBloqueo: false,
       editmode: false,
       errores: {},
       organizaciones: {},
@@ -217,13 +222,23 @@ export default {
     editModal(organizacion) {
       this.editmode = true;
       this.form.reset();
+      this.CedulaBloqueo = true;
       $("#addNew").modal("show");
       this.form.fill(organizacion);
     },
     newModal() {
       this.editmode = false;
+      this.CedulaBloqueo = false;
       this.form.reset();
       $("#addNew").modal("show");
+    },
+    limpiar() {
+      this.form.nombre = ""
+      this.form.apellido1 = ""
+      this.form.apellido2 = ""
+      this.form.telefono = ""
+      this.form.correo = ""
+      this.form.errors.clear();
     },
 
     cargarOrganizacion() {
@@ -236,7 +251,9 @@ export default {
 
     crearOrganizacion() {
       this.form
-        .post("/api/organizacion/")
+        .post("/api/organizacion/",{
+          params: { id: this.form.id },
+        })
         .then((response) => {
           $("#addNew").modal("hide");
 

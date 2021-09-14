@@ -35,9 +35,8 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::post('product/upload', 'ProductController@upload');
 
 ///////Rutas Personalizadas o especificas a un metodo
-    Route::get('persona/lista', 'PersonasController@list');
-  //  Route::get('reservarCliente/verificar', 'PersonasController@obtenerCedula');
-    Route::get('organizacion/lista', 'OrganizacionesController@list');
+    Route::get('donativo/verificar', 'DonativosController@obtenerCedula');
+    Route::get('donativo/verificarOrg', 'DonativosController@obtenerCedulaOrg');
 
     //////Rutas total GET, PUT, POST, DELETE
     Route::apiResources([

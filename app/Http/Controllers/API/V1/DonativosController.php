@@ -5,14 +5,21 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Requests\Test\DonativosRequest;
 use App\Models\Donativos;
 use Illuminate\Http\Request;
+use App\Models\Personas;
+use App\Models\Organizaciones;
 
 class DonativosController extends BaseController
 {
+    protected $personas = '';
+    protected $organizaciones = '';
+    protected $donativos = '';
 
-    public function __construct(Donativos $donativos)
+    public function __construct(Donativos $donativos, Personas $personas, Organizaciones $organizaciones)
     {
         $this->middleware('auth:api');
         $this->donativos = $donativos;
+        $this->personas = $personas;
+        $this->organizaciones = $organizaciones;
     }
 
     /**
@@ -31,9 +38,22 @@ class DonativosController extends BaseController
 
     public function list()
     {
-        $donativo = $this->donativos->pluck('tipo', 'id');
+//
+    }
 
-        return $this->sendResponse($donativo, 'Lista Donativos');
+    public function obtenerCedula(Request $request)
+    {
+        $filtro = $request->buscador;
+        $persona = Personas::where('id', $filtro)->get('id');
+            return $this->sendResponse($persona, 'Cedula si existe');
+        
+       
+    }
+    public function obtenerCedulaOrg(Request $request)
+    {
+        $filtro = $request->buscador;
+        $organizacion = Organizaciones::where('id', $filtro)->get('id');
+        return $this->sendResponse($organizacion, 'Cedula si existe');
     }
 
     /**
@@ -74,11 +94,8 @@ class DonativosController extends BaseController
      */
     public function show($id)
     {
-        $donativo = $this->donativos->with(['personas', 'organizaciones'])->findOrFail($id);
-
-        return $this->sendResponse($donativo, 'Donativo Detalle');
+       //
     }
-
     /**
      * Update the specified resource in storage.
      *

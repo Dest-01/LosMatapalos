@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Models\Personas;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\PersonasRequest;
+use DB;
 
 class PersonasController extends BaseController
 {
@@ -54,18 +55,25 @@ class PersonasController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PersonasRequest $request)
     {
-        $tag = $this->personas->create([
-            'id' => $request->get('id'),
-            'nombre' => $request->get('nombre'),
-            'apellido1' => $request->get('apellido1'),
-            'apellido2' => $request->get('apellido2'),
-            'telefono' => $request->get('telefono'),
-            'correo' => $request->get('correo'),
-        ]);
+        $filtro = $request->id;
+        $existencia = Personas::find($filtro);
 
-        return $this->sendResponse($tag, 'Persona creada');
+        if(empty($existencia)){
+            
+                $tag = $this->personas->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'apellido1' => $request->get('apellido1'),
+                    'apellido2' => $request->get('apellido2'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+                return $this->sendResponse($tag, 'Registro creado');
+            }
+            return $this->sendResponse($tag, 'Registro no creado');
+    
     }
 
     /**
@@ -86,7 +94,7 @@ class PersonasController extends BaseController
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PersonasRequest $request, $id)
     {
         $tag = $this->personas->findOrFail($id);
 

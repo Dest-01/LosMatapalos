@@ -14,6 +14,27 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
+                  Registro Donante
+                </button>
+              </div>
+              <div class="card-tools"></div>
+              <div class="card-tools">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="newModal"
+                >
+                  <i class="fa fa-plus-square"></i>
+                  Registro organización
+                </button>
+              </div>
+              <div class="card-tools">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="newModal"
+                >
+                  <i class="fa fa-plus-square"></i>
                   agregar nuevo
                 </button>
               </div>
@@ -24,17 +45,21 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Tipo</th>
-                    <th>Detalle</th>
-                    <th>Imagen</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th>Persona Donante</th>
+                    <th>Organización Donante</th>
+                    <th>Tipo donativo</th>
+                    <th>Detalles de donativo</th>
+                    <th>Foto de donativo</th>
+                    <th>Fecha de donativo</th>
+                    <th>Estado de Donación</th>
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="donativo in donativos.data" :key="donativo.id">
                     <td>{{ donativo.id }}</td>
+                    <td>{{ donativo.idPersona }}</td>
+                    <td>{{ donativo.idOrganizacion }}</td>
                     <td class="text-capitalize">{{ donativo.tipo }}</td>
                     <td>{{ donativo.detalle | truncate(30, "...") }}</td>
                     <td>
@@ -109,11 +134,32 @@
               "
             >
               <div class="modal-body">
+                <div v-show="show" class="form-group">
+                  <label>Cedula a consultar</label>
+                  <input
+                    v-model="buscador"
+                    type="text"
+                    name="buscador"
+                    class="form-control"
+                    :disabled="CedulaBloqueo"
+                  />
+                </div>
+
+                <div v-show="show" class="form-group">
+                  <button
+                    type="button"
+                    class="btn btn-success my-4"
+                    @click="ConsultaCedula(), habilitarCampos()"
+                  >
+                    Consultar cedula
+                  </button>
+                </div>
                 <div class="form-group">
-                  <label>Tipo</label>
+                  <label>Tipo de donativo</label>
                   <select
                     class="form-control"
                     v-model="form.tipo"
+                    :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('tipo') }"
                   >
                     <option disabled value="">Seleccione un elemento</option>
@@ -125,49 +171,20 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Cedula Persona</label>
-                  <select class="form-control" v-model="form.idPersona">
-                    <option
-                      v-for="(per, index) in personas"
-                      :key="index"
-                      :value="index"
-                      :selected="index == form.idPersona"
-                    >
-                      {{ per }}
-                    </option>
-                  </select>
-                  <has-error :form="form" field="idPersona"></has-error>
-                </div>
-
-                <div class="form-group">
-                  <label>Cedula Juridica</label>
-                  <select class="form-control" v-model="form.idOrganizacion">
-                    <option
-                      v-for="(org, index) in organizaciones"
-                      :key="index"
-                      :value="index"
-                      :selected="index == form.idOrganizacion"
-                    >
-                      {{ org }}
-                    </option>
-                  </select>
-                  <has-error :form="form" field="idPersona"></has-error>
-                </div>
-
-                <div class="form-group">
-                  <label>Detalle</label>
+                  <label>Detalles de Donación</label>
                   <input
                     v-model="form.detalle"
                     type="text"
                     name="detalle"
                     class="form-control"
+                    :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('detalle') }"
                   />
                   <has-error :form="form" field="detalle"></has-error>
                 </div>
                 <div class="form-group">
                   <label for="photo" class="col-sm-2 control-label"
-                    >Imagen</label
+                    >Foto</label
                   >
                   <div class="custom-file">
                     <input
@@ -175,6 +192,7 @@
                       @change="updatePhoto"
                       name="photo"
                       class="custom-file-input"
+                      :disabled="isDisabled"
                       id="inputGroupFile01"
                     />
                     <label class="custom-file-label" for="inputGroupFile01"
@@ -183,23 +201,26 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Fecha</label>
+                  <label>Fecha de Donación</label>
                   <input
                     v-model="form.fecha"
                     type="date"
                     name="fecha"
                     class="form-control"
+                    :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('fecha') }"
                   />
                   <has-error :form="form" field="fecha"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Estado</label>
+                  <label>Estado del donativo</label>
                   <select
                     class="form-control"
                     v-model="form.estado"
+                    :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('estado') }"
                   >
+                    <div class="form-group"></div>
                     <option disabled value="">Seleccione un elemento</option>
                     <option>Recibido</option>
                     <option>Pendiente</option>
@@ -215,7 +236,7 @@
                   class="btn btn-secondary"
                   data-dismiss="modal"
                 >
-                  Cerrar
+                  Cancelar
                 </button>
                 <button v-show="editmode" type="submit" class="btn btn-success">
                   Actualizar
@@ -225,7 +246,7 @@
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Crear
+                  Registrar
                 </button>
               </div>
             </form>
@@ -240,13 +261,18 @@
 export default {
   data() {
     return {
+      show : true,
+      CedulaBloqueo: false,
+      isDisabled: true,
+      buscador: "",
+      cedulas: {},
+      cedulasOrg: {},
       editmode: false,
       donativos: {},
       form: new Form({
         id: "",
         persona: "",
         idPersona: "",
-        organizacion: "",
         idOrganizacion: "",
         tipo: "",
         detalle: "",
@@ -254,10 +280,6 @@ export default {
         fecha: "",
         estado: "",
       }),
-      personas: [],
-      organizaciones: [],
-      org: null,
-      per: null,
     };
   },
   methods: {
@@ -289,10 +311,47 @@ export default {
 
       this.$Progress.finish();
     },
+    habilitarCampos() {
+      for (let i = 0; i < this.cedulas.length; i++) {
+        if (this.cedulas[i].id == this.buscador) {
+          this.isDisabled = false;
+          this.CedulaBloqueo = true;
+          this.form.idPersona = this.buscador;
+        }
+      }
+    },
+    habilitarCamposOrg() {
+      for (let i = 0; i < this.cedulasOrg.length; i++) {
+        if (this.cedulasOrg[i].id == this.buscador) {
+          this.isDisabled = false;
+          this.CedulaBloqueo = true;
+          this.form.idOrganizacion = this.buscador;
+        }
+      }
+    },
+    ConsultaCedula() {
+      this.form
+        .get("/api/donativo/verificar", {
+          params: { buscador: this.buscador },
+        })
+        .then(({ data }) => (this.cedulas = data.data))
+        .then((response) => {
+          this.habilitarCampos();
+        });
+      this.form
+        .get("/api/donativo/verificarOrg", {
+          params: { buscador: this.buscador },
+        })
+        .then(({ data }) => (this.cedulasOrg = data.data))
+        .then((response) => {
+          this.habilitarCamposOrg();
+        });
+    },
+
     actualizarDonativo() {
       this.$Progress.start();
       this.form
-        .put("/api/donativo/cedula/" + this.form.id)
+        .put("/api/donativo/" + this.form.id)
         .then((response) => {
           // success
           $("#addNew").modal("hide");
@@ -311,14 +370,22 @@ export default {
     },
     editModal(donativo) {
       this.editmode = true;
-      this.form.reset();
+      // this.form.reset();
+
       $("#addNew").modal("show");
       this.form.fill(donativo);
+      this.isDisabled = false;
+      this.CedulaBloqueo = true;
+      this.show = false;
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
       $("#addNew").modal("show");
+      this.show = true;
+      this.buscador = "";
+       this.isDisabled = true;
+      this.CedulaBloqueo = false;
     },
 
     cargarDonativos() {
@@ -393,7 +460,7 @@ export default {
   mounted() {
     console.log("Component mounted.");
   },
-  deleteCategory(id) {},
+ 
 
   created() {
     this.$Progress.start();

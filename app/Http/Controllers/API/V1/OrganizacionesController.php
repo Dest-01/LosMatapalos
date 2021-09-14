@@ -44,16 +44,23 @@ class OrganizacionesController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrganizacionesRequest $request)
     {
-        $tag = $this->organizaciones->create([
-            'id' => $request->get('id'),
-            'nombre' => $request->get('nombre'),
-            'telefono' => $request->get('telefono'),
-            'correo' => $request->get('correo'),
-        ]);
+        $filtro = $request->id;
+        $existencia = Organizaciones::find($filtro);
 
-        return $this->sendResponse($tag, 'Organización creada');
+        if(empty($existencia)){
+            
+            $tag = $this->organizaciones->create([
+                'id' => $request->get('id'),
+                'nombre' => $request->get('nombre'),
+                'telefono' => $request->get('telefono'),
+                'correo' => $request->get('correo'),
+            ]);
+    
+            return $this->sendResponse($tag, 'Organización creada');
+            }
+            return $this->sendResponse('Organización no creado');
     }
 
     /**
@@ -74,7 +81,7 @@ class OrganizacionesController extends BaseController
      * @param  \App\Models\Organizaciones  $organizaciones
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OrganizacionesRequest $request, $id)
     {
         $tag = $this->organizaciones->findOrFail($id);
 

@@ -37,7 +37,7 @@ class PersonasRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'id' => 'required|string|max:18',
+            'id' => 'required|string|max:18|min:8',
             'nombre' => 'required|string|max:20',
             'apellido1' => 'required|string|max:20',
             'apellido2' => 'required|string|max:20',
@@ -54,7 +54,7 @@ class PersonasRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'id' => 'required|string|max:18',
+           
             'nombre' => 'required|string|max:20|min:3',
             'apellido1' => 'required|string|max:20|min:3',
             'apellido2' => 'required|string|max:20|min:3',

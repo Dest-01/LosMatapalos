@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
             <div class="card-header">
-              <h3 class="card-title">Listado de Registro</h3>
+              <h3 class="card-title">Listado de Registro de los clientes</h3>
 
               <div class="card-tools">
                 <button
@@ -29,6 +29,7 @@
                     <th>Segundo Apellido</th>
                     <th>Teléfono</th>
                     <th>Correo</th>
+                     <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -80,13 +81,14 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode">Nuevo registro</h5>
-              <h5 class="modal-title" v-show="editmode">Actualizar Registro</h5>
+              <h5 class="modal-title" v-show="!editmode">Registro de cliente</h5>
+              <h5 class="modal-title" v-show="editmode">Actualización de cliente</h5>
               <button
                 type="button"
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
+                @click="limpiar()"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -99,12 +101,13 @@
             >
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Cedula</label>
+                  <label>Cédula</label>
                   <input
                     v-model="form.id"
                     type="text"
                     name="id"
                     class="form-control"
+                    :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('id') }"
                   />
                   <has-error :form="form" field="id"></has-error>
@@ -147,7 +150,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Telefono</label>
+                  <label>Teléfono</label>
                   <input
                     v-model="form.telefono"
                     type="number"
@@ -175,8 +178,9 @@
                   type="button"
                   class="btn btn-secondary"
                   data-dismiss="modal"
+                  @click="limpiar()"
                 >
-                  cerrar
+                  Cancelar
                 </button>
                 <button v-show="editmode" type="submit" class="btn btn-success">
                   Actualizar
@@ -186,7 +190,7 @@
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Crear
+                  Registrar
                 </button>
               </div>
             </form>
@@ -201,8 +205,9 @@
 export default {
   data() {
     return {
+      CedulaBloqueo: false,
       editmode: false,
-      errores: {},
+      errors: {},
       personas: {},
       form: new Form({
         id: "",
@@ -246,14 +251,24 @@ export default {
     },
     editModal(persona) {
       this.editmode = true;
+      this.CedulaBloqueo = true;
       this.form.reset();
       $("#addNew").modal("show");
       this.form.fill(persona);
     },
     newModal() {
       this.editmode = false;
+      this.CedulaBloqueo = false;
       this.form.reset();
       $("#addNew").modal("show");
+    },
+    limpiar() {
+      this.form.nombre = ""
+      this.form.apellido1 = ""
+      this.form.apellido2 = ""
+      this.form.telefono = ""
+      this.form.correo = ""
+      this.form.errors.clear();
     },
 
     cargarPersona() {
@@ -266,7 +281,9 @@ export default {
 
     crearPersona() {
       this.form
-        .post("/api/persona/")
+        .post("/api/persona/", {
+          params: { id: this.form.id },
+        })
         .then((response) => {
           $("#addNew").modal("hide");
 
@@ -283,8 +300,6 @@ export default {
             icon: "error",
             title: "Ocurrio un problema",
           });
-
-          
         });
     },
 
@@ -399,5 +414,4 @@ export default {
 .selectHide {
   display: none;
 }
-
 </style>
