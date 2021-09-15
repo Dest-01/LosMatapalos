@@ -2,7 +2,7 @@
   <div style="background: #fff">
 
     <!-- Modal de persona -->
-    <div class="modalReserva" :class="{ mostrar: modal }" style="background: rgb(253 253 253 / 0%);">
+    <div class="modal" :class="{ mostrar: modal }">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -110,7 +110,7 @@
     </div>
     <!-- Modal de organizacion-->
     <!-- The Modal -->
-    <div class="modalReserva" :class="{ mostrar: modalOrg }" style="background: rgb(253 253 253 / 0%);">
+    <div class="modal" :class="{ mostrar: modalOrg }">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -498,29 +498,7 @@ export default {
 
 
 <style scoped>
-header {
-  width: 100%;
 
-  background: hsla(155, 95%, 50%, 0.459);
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    hsla(155, 95%, 50%, 0.459),
-    hsla(216, 45%, 52%, 0.664)
-  );
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    hsla(155, 95%, 50%, 0.459),
-    hsla(216, 45%, 52%, 0.664)
-  );
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background-size: cover;
-  background-attachment: fixed;
-  position: relative;
-  top: -50px;
-  margin-bottom: 0;
-}
 
 .form {
   margin-left: 35%;
@@ -636,16 +614,5 @@ header {
   background-color: #06b;
 }
 
-.modalReserva {
-    position: fixed;
-    top: 150px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1050;
-    display: none;
-    overflow: hidden;
-    -webkit-overflow-scrolling: touch;
-    outline: 0;
-}
+
 </style>
