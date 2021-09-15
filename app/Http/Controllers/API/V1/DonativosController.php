@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Http\Requests\Test\DonativosRequest;
+use App\Http\Requests\admin\DonativosRequest;
 use App\Models\Donativos;
 use Illuminate\Http\Request;
 use App\Models\Personas;
@@ -62,7 +62,7 @@ class DonativosController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DonativosRequest $request)
     {
         if($request->photo){
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos
@@ -103,7 +103,7 @@ class DonativosController extends BaseController
      * @param  \App\Models\Donativos  $donativos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DonativosRequest $request, $id)
     {
         $tag = $this->donativos->findOrFail($id);
 

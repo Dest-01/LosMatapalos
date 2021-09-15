@@ -344,11 +344,6 @@ export default {
       modal: 0,
       modalOrg: 0,
       tituloModal: "",
-      image17: [
-        {
-          url: "../images/portada.jpg",
-        },
-      ],
     };
   },
   methods: {
@@ -538,7 +533,7 @@ header {
   box-shadow: 5px 10px whitesmoke;
   margin-block: 70px;
   color: white;
-  margin-top: -50px;
+
 }
 #consultabtn {
   margin-top: 30px;

@@ -1,18 +1,16 @@
 <template>
   <section class="content">
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
             <div class="card-header">
               <h3 class="card-title">Lista de donativos</h3>
-
               <div class="card-tools">
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
-                  @click="newModal"
+                  @click="abrirModal()"
                 >
                   <i class="fa fa-plus-square"></i>
                   Registro Donante
@@ -20,17 +18,19 @@
               </div>
               <div class="card-tools"></div>
               <div class="card-tools">
-                <button style="margin-right: 20px;"
+                <button
+                  style="margin-right: 20px"
                   type="button"
                   class="btn btn-sm btn-primary"
-                  @click="newModal"
+                  @click="abrirModalOrg()"
                 >
                   <i class="fa fa-plus-square"></i>
                   Registro organización
                 </button>
               </div>
               <div class="card-tools">
-                <button style="margin-right: 20px;"
+                <button
+                  style="margin-right: 20px"
                   type="button"
                   class="btn btn-sm btn-primary"
                   @click="newModal"
@@ -101,6 +101,168 @@
         <not-found></not-found>
       </div>
 
+      <!-- Modal de persona -->
+      <div class="modal" :class="{ mostrar: modal }">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">{{ tituloModal }}</h4>
+              <button
+                @click="cerrarModal()"
+                type="button"
+                class="close"
+                data-dismiss="modal"
+              >
+                &times;
+              </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div v-show="showPersona" class="form-group">
+                <label>Cedula</label>
+                <input
+                  v-model="formPer.id"
+                  type="text"
+                  name="id"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('id') }"
+                />
+                <has-error :form="formPer" field="id"></has-error>
+              </div>
+              <div v-show="showPersona" class="form-group">
+                <label>Nombre</label>
+                <input
+                  v-model="formPer.nombre"
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                />
+                <has-error :form="formPer" field="nombre"></has-error>
+              </div>
+              <div v-show="showPersona" class="form-group">
+                <label>Primer Apellido</label>
+                <input
+                  v-model="formPer.apellido1"
+                  type="text"
+                  name="apellido1"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                />
+                <has-error :form="formPer" field="apellido1"></has-error>
+              </div>
+              <div v-show="showPersona" class="form-group">
+                <label>Segundo Apellido</label>
+                <input
+                  v-model="formPer.apellido2"
+                  type="text"
+                  name="apellido2"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                />
+                <has-error :form="formPer" field="apellido2"></has-error>
+              </div>
+              <div v-show="showPersona" class="form-group">
+                <label>Telefono</label>
+                <input
+                  v-model="formPer.telefono"
+                  type="number"
+                  name="telefono"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('telefono') }"
+                />
+                <has-error :form="formPer" field="telefono"></has-error>
+              </div>
+              <div v-show="showPersona" class="form-group">
+                <label>Correo</label>
+                <input
+                  v-model="formPer.correo"
+                  type="email"
+                  name="correo"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                />
+                <has-error :form="formPer" field="correo"></has-error>
+              </div>
+              <!-- PARTE DE ORGANIZACION EN EL MISMO MODAL -->
+              <div v-show="showOrganizacion" class="form-group">
+                <label>Cedula Juridica</label>
+                <input
+                  v-model="formOrg.id"
+                  type="text"
+                  name="id"
+                  class="form-control"
+                  :class="{ 'is-invalid': formOrg.errors.has('id') }"
+                />
+                <has-error :form="formOrg" field="id"></has-error>
+              </div>
+              <div v-show="showOrganizacion" class="form-group">
+                <label>Nombre de Organizacion</label>
+                <input
+                  v-model="formOrg.nombre"
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  :class="{ 'is-invalid': formOrg.errors.has('nombre') }"
+                />
+                <has-error :form="formOrg" field="nombre"></has-error>
+              </div>
+              <div v-show="showOrganizacion" class="form-group">
+                <label>Telefono Organización</label>
+                <input
+                  v-model="formOrg.telefono"
+                  type="number"
+                  name="telefono"
+                  class="form-control"
+                  :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
+                />
+                <has-error :form="formOrg" field="telefono"></has-error>
+              </div>
+              <div v-show="showOrganizacion" class="form-group">
+                <label>Correo Organización</label>
+                <input
+                  v-model="formOrg.correo"
+                  type="email"
+                  name="correo"
+                  class="form-control"
+                  :class="{ 'is-invalid': formOrg.errors.has('correo') }"
+                />
+                <has-error :form="formOrg" field="correo"></has-error>
+              </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button
+                @click="cerrarModal(), limpiar()"
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                v-show="showPersona"
+                @click="crearPersona()"
+                type="button"
+                class="btn btn-success"
+                data-dismiss="modal"
+              >
+                Guardar
+              </button>
+              <button
+                v-show="showOrganizacion"
+                @click="crearOrganizacion()"
+                type="button"
+                class="btn btn-success"
+                data-dismiss="modal"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Modal -->
       <div
         class="modal fade"
@@ -122,6 +284,8 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
+               
+                
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -136,7 +300,7 @@
             >
               <div class="modal-body">
                 <div v-show="show" class="form-group">
-                  <label>Cedula a consultar</label>
+                  <label>Cedula a registrar:</label>
                   <input
                     v-model="buscador"
                     type="text"
@@ -145,39 +309,43 @@
                     :disabled="CedulaBloqueo"
                   />
                 </div>
-
+                <div>
+                  <label v-show="showExistenciaCedula" v-text="MensajeCedula" style="color: red"></label>
+                </div>
                 <div v-show="show" class="form-group">
                   <button
                     type="button"
                     class="btn btn-success my-4"
-                    @click="ConsultaCedula(), habilitarCampos()"
+                    @click="
+                      ConsultaCedula(), habilitarCampos(), NoexisteCedula()
+                    "
                   >
-                    Consultar cedula
+                    Comprobar cedula
                   </button>
                 </div>
-                 <div class="form-group">
-                  <label>Identificacion Donante</label>
+                <div v-show="showIdentificacion" class="form-group">
+                  <label>Identificación Donante</label>
                   <input
                     v-model="form.idPersona"
                     type="text"
                     name="idPersona"
                     class="form-control"
-                    
+                    :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('idPersona') }"
                   />
                   <has-error :form="form" field="idPersona"></has-error>
                 </div>
-                 <div class="form-group">
-                  <label>Detalles de Donación</label>
+                <div v-show="showIdentificacion" class="form-group">
+                  <label>Identificación de Organización</label>
                   <input
-                    v-model="form.detalle"
+                    v-model="form.idOrganizacion"
                     type="text"
-                    name="detalle"
+                    name="idOrganizacion"
                     class="form-control"
-                    
-                    :class="{ 'is-invalid': form.errors.has('detalle') }"
+                    :disabled="CedulaBloqueo"
+                    :class="{ 'is-invalid': form.errors.has('idOrganizacion') }"
                   />
-                  <has-error :form="form" field="detalle"></has-error>
+                  <has-error :form="form" field="idOrganizacion"></has-error>
                 </div>
                 <div class="form-group">
                   <label>Tipo de donativo</label>
@@ -208,9 +376,7 @@
                   <has-error :form="form" field="detalle"></has-error>
                 </div>
                 <div class="form-group">
-                  <label for="photo" class="col-sm-2 control-label"
-                    >Foto</label
-                  >
+                  <label for="photo" class="col-sm-2 control-label">Foto</label>
                   <div class="custom-file">
                     <input
                       type="file"
@@ -219,6 +385,7 @@
                       class="custom-file-input"
                       :disabled="isDisabled"
                       id="inputGroupFile01"
+                      :class="{ 'is-invalid': form.errors.has('photo') }"
                     />
                     <label class="custom-file-label" for="inputGroupFile01"
                       >Seleccione un imagen</label
@@ -260,6 +427,7 @@
                   type="button"
                   class="btn btn-secondary"
                   data-dismiss="modal"
+                  @click="limpiarDonativo()"
                 >
                   Cancelar
                 </button>
@@ -286,7 +454,12 @@
 export default {
   data() {
     return {
-      show : true,
+      MensajeCedula: "Digite un numero de cedula",
+      showExistenciaCedula: false,
+      showPersona: true,
+      showOrganizacion: false,
+      showIdentificacion: false,
+      show: true,
       CedulaBloqueo: false,
       isDisabled: true,
       buscador: "",
@@ -305,9 +478,41 @@ export default {
         fecha: "",
         estado: "",
       }),
+      formPer: new Form({
+        id: "",
+        nombre: "",
+        apellido1: "",
+        apellido2: "",
+        telefono: "",
+        correo: "",
+      }),
+      formOrg: new Form({
+        id: "",
+        nombre: "",
+        telefono: "",
+        correo: "",
+      }),
+      id: 0,
+      tituloModal: "",
+      modal: 0,
     };
   },
   methods: {
+    abrirModal(data = {}) {
+      this.modal = 1;
+      (this.id = 0), (this.tituloModal = "Registro cliente");
+      this.showPersona = true;
+      this.showOrganizacion = false;
+    },
+    abrirModalOrg(data = {}) {
+      this.modal = 1;
+      (this.id = 0), (this.tituloModal = "Registro Organizacion");
+      this.showPersona = false;
+      this.showOrganizacion = true;
+    },
+    cerrarModal() {
+      this.modal = 0;
+    },
     updatePhoto(e) {
       let file = e.target.files[0];
       let reader = new FileReader();
@@ -351,8 +556,40 @@ export default {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
           this.form.idOrganizacion = this.buscador;
+        
         }
       }
+    },
+    NoexisteCedula() {
+      if (this.cedulas.length === 0 && this.cedulasOrg.length === 0) {
+        this.showExistenciaCedula = true;
+         this.MensajeCedula =
+          "El numero de cedula no esta registrado";
+      }
+      if (this.buscador.length == 0) {
+        this.showExistenciaCedula = true;
+        this.MensajeCedula =
+          "Campo vacio, por favor digite un número de cedula";
+      }
+    },
+
+    limpiarDonativo() {
+      this.showExistenciaCedula = false;
+      this.form.errors.clear();
+    },
+    limpiar() {
+      this.formPer.id = "";
+      this.formPer.nombre = "";
+      this.formPer.apellido1 = "";
+      this.formPer.apellido2 = "";
+      this.formPer.telefono = "";
+      this.formPer.correo = "";
+      this.formPer.errors.clear();
+      this.formOrg.id = "";
+      this.formOrg.nombre = "";
+      this.formOrg.telefono = "";
+      this.formOrg.correo = "";
+      this.formOrg.errors.clear();
     },
     ConsultaCedula() {
       this.form
@@ -402,6 +639,8 @@ export default {
       this.isDisabled = false;
       this.CedulaBloqueo = true;
       this.show = false;
+      this.showIdentificacion = true;
+      this.showExistenciaCedula = false;
     },
     newModal() {
       this.editmode = false;
@@ -409,8 +648,10 @@ export default {
       $("#addNew").modal("show");
       this.show = true;
       this.buscador = "";
-       this.isDisabled = true;
+      this.isDisabled = true;
       this.CedulaBloqueo = false;
+      this.showIdentificacion = false;
+      this.showExistenciaCedula = false;
     },
 
     cargarDonativos() {
@@ -419,16 +660,6 @@ export default {
           .get("/api/donativo")
           .then(({ data }) => (this.donativos = data.data));
       }
-    },
-    cargarPersona() {
-      axios
-        .get("/api/persona/lista")
-        .then(({ data }) => (this.personas = data.data));
-    },
-    cargarOrganizacion() {
-      axios
-        .get("/api/organizacion/lista")
-        .then(({ data }) => (this.organizaciones = data.data));
     },
 
     crearDonativo() {
@@ -450,6 +681,50 @@ export default {
           Toast.fire({
             icon: "error",
             title: "Ocurrio un error!",
+          });
+        });
+    },
+    crearPersona() {
+      this.formPer
+        .post("/api/persona", {
+          params: { id: this.formPer.id },
+        })
+        .then((response) => {
+          $("#addNew").modal("hide");
+
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.cerrarModal();
+          //  this.$Progress.finish();
+        })
+        .catch(() => {
+          Toast.fire({
+            icon: "error",
+            title: "Ocurrio un problema",
+          });
+        });
+    },
+    crearOrganizacion() {
+      this.formOrg
+        .post("/api/organizacion", {
+          params: { id: this.formOrg.id },
+        })
+        .then((response) => {
+          $("#addNew").modal("hide");
+
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.cerrarModal();
+          //  this.$Progress.finish();
+        })
+        .catch(() => {
+          Toast.fire({
+            icon: "error",
+            title: "Ocurrio un problema",
           });
         });
     },
@@ -485,13 +760,10 @@ export default {
   mounted() {
     console.log("Component mounted.");
   },
- 
 
   created() {
     this.$Progress.start();
     this.cargarDonativos();
-    this.cargarPersona();
-    this.cargarOrganizacion();
     this.$Progress.finish();
   },
   filters: {
@@ -510,5 +782,4 @@ export default {
 </script>
 
 <style>
-
 </style>
