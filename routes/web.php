@@ -31,7 +31,9 @@ Route::get('admin', function () {
     return redirect('/dashboard');
 });
 
-/////Rutas protegidas
+////////////////////////////////////////////////////////////////////////////
+//-----------------------RUTAS ADMIN Y PRUEBAS------------------------------
+////////////////////////////////////////////////////////////////////////////
 Route::get('/dashboard', function () {
     return view('admin');
 })->where('dashboard', '[\/\w\.-]*')->middleware('auth');
@@ -43,10 +45,11 @@ Route::get('/products', function () {
 Route::get('/product/test', function () {
     return view('admin');
 })->where('product/test', '[\/\w\.-]*')->middleware('auth');
+/////////////////////----FIN-ADMIN Y PRUEBAS---//////////////////////////////
 
-
-//RUTA CRUDS ADMIN PROTEGIDO
-
+////////////////////////////////////////////////////////////////////////////
+//-----------------------PERSONAS ORGANIZACION------------------------------
+////////////////////////////////////////////////////////////////////////////
 Route::get('/admin/personas', function () {
     return view('admin');
 })->where('admin/personas', '[\/\w\.-]*')->middleware('auth');
@@ -54,8 +57,10 @@ Route::get('/admin/personas', function () {
 Route::get('/admin/organizaciones', function () {
     return view('admin');
 })->where('admin/organizaciones', '[\/\w\.-]*')->middleware('auth');
-
-
+/////////////////////----FIN-PERSONAS ORGANIZACION---///////////////////////
+///////////////////////////////////////////////////////////////////////////
+//-----------------------DONATIVOS-----------------------------------------
+///////////////////////////////////////////////////////////////////////////
 Route::get('/admin/donativos', function () {
     return view('admin');
 })->where('admin/donativos', '[\/\w\.-]*')->middleware('auth');
@@ -63,13 +68,29 @@ Route::get('/admin/donativos', function () {
 Route::get('/admin/Catdonativos', function () {
     return view('admin');
 })->where('admin/Catdonativos', '[\/\w\.-]*')->middleware('auth');
+///////////////////////////////----FIN-DONATIVOS---////////////////////////
+///////////////////////////////////////////////////////////////////////////
+//-----------------------VOLUNTARIADO--------------------------------------
+///////////////////////////////////////////////////////////////////////////
+Route::get('/admin/voluntario', function () {
+    return view('admin');
+})->where('admin/voluntario', '[\/\w\.-]*')->middleware('auth');
 
+Route::get('/admin/voluntarioPersona', function () {
+    return view('admin');
+})->where('admin/voluntarioPersona', '[\/\w\.-]*')->middleware('auth');
 
-///Para rutas que no este protegidas
+Route::get('/admin/voluntarioEstudiante', function () {
+    return view('admin');
+})->where('admin/voluntarioEstudiante', '[\/\w\.-]*')->middleware('auth');
+///////////////////////////////----FIN--VOLUNTARIADO--///////////////////////
+///////////////////////////////////////////////////////////////////////////
+//-----------------------RUTAS PARA EL CLIENTE SIN LOGIN-------------------
+///////////////////////////////////////////////////////////////////////////
 Route::get('/{vue_capture?}', function () {
     return view('cliente');
 })->where('vue_capture', '[\/\w\.-]*');
-
+///////////////////////////////----FIN-RUTAS--CLIENTE---//////////////////////
 
 
 

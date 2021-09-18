@@ -1,6 +1,5 @@
 <template>
   <div style="background: #fff">
-
     <!-- Modal de persona -->
     <div class="modal" :class="{ mostrar: modal }">
       <div class="modal-dialog">
@@ -219,14 +218,20 @@
             name="buscador"
             :disabled="CedulaBloqueo"
           />
-          <div class="cut"></div>
-          <!-- <label for="Cedula" class="placeholder">Cedula</label> -->
+      
+        </div>
+        <div class="input-container ic1">
+          <label
+            v-show="showExistenciaCedula"
+            v-text="MensajeCedula"
+            style="color: white"
+          ></label>
         </div>
         <button
           id="consultabtn"
           type="submit"
           class="registrarP my-4"
-          @click="ConsultaCedula(), habilitarCampos()"
+          @click="ConsultaCedula(), habilitarCampos(), NoexisteCedula()"
         >
           Consultar cedula
         </button>
@@ -293,19 +298,21 @@
         >
           Reservar
         </button>
-        <button type="button" @click="reiniciarCampos(), limpiar()" class="cancel">
+        <button
+          type="button"
+          @click="reiniciarCampos(), limpiar()"
+          class="cancel"
+        >
           Cancelar
         </button>
       </div>
     </main>
-      <footer style="background: rgba(0,0,0,.3);">
-   
-    <div class="float-right d-none d-sm-block">
-    
-    </div>
-   
-    <strong>Copyright &copy; 2021-2022 <a href="">Los Matapalos</a>.</strong> All rights reserved.
-  </footer>
+    <footer style="background: rgba(0, 0, 0, 0.3)">
+      <div class="float-right d-none d-sm-block"></div>
+
+      <strong>Copyright &copy; 2021-2022 <a href="">Los Matapalos</a>.</strong>
+      All rights reserved.
+    </footer>
   </div>
 </template>
 
@@ -313,6 +320,8 @@
 export default {
   data() {
     return {
+      MensajeCedula: "Digite un numero de cedula",
+      showExistenciaCedula: false,
       CedulaBloqueo: false,
       isDisabled: true,
       buscador: "",
@@ -376,12 +385,23 @@ export default {
       }
     },
     limpiar() {
-      this.formPer.nombre = ""
-      this.formPer.apellido1 = ""
-      this.formPer.apellido2 = ""
-      this.formPer.telefono = ""
-      this.formPer.correo = ""
+      this.formPer.nombre = "";
+      this.formPer.apellido1 = "";
+      this.formPer.apellido2 = "";
+      this.formPer.telefono = "";
+      this.formPer.correo = "";
       this.formPer.errors.clear();
+    },
+    NoexisteCedula() {
+      if (this.cedulas.length === 0 && this.cedulasOrg.length === 0) {
+        this.showExistenciaCedula = true;
+        this.MensajeCedula = "El numero de cedula no esta registrado";
+      }
+      if (this.buscador.length == 0) {
+        this.showExistenciaCedula = true;
+        this.MensajeCedula =
+          "Campo vacio, por favor digite un número de cedula";
+      }
     },
 
     ConsultaCedula() {
@@ -498,8 +518,6 @@ export default {
 
 
 <style scoped>
-
-
 .form {
   margin-left: 35%;
   background-color: #034991;
@@ -511,7 +529,6 @@ export default {
   box-shadow: 5px 10px whitesmoke;
   margin-block: 70px;
   color: white;
-
 }
 #consultabtn {
   margin-top: 30px;
@@ -613,6 +630,9 @@ export default {
 .submit:active {
   background-color: #06b;
 }
-
-
+.mostrar {
+  display: list-item;
+  opacity: 1;
+  background: rgba(121, 120, 120, 0.623);
+}
 </style>

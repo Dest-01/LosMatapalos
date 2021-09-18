@@ -782,4 +782,9 @@ export default {
 </script>
 
 <style>
+.mostrar {
+  display: list-item;
+  opacity: 1;
+  background: rgba(121, 120, 120, 0.623);
+}
 </style>

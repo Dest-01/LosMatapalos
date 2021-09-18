@@ -119,33 +119,33 @@
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-hands-helping orange"></i>
           <p>
-            Voluntario
+            Voluntariado
             <i class="right fas fa-angle-left"></i>
           </p>
         </a>
         <ul class="nav nav-treeview">
 
           <li class="nav-item">
-            <router-link to="/product/category" class="nav-link">
+            <router-link to="/admin/voluntarioPersona" class="nav-link">
               <i class="nav-icon fas fa-fist-raised orange"></i>
               <p>
-                Actividad
+                Voluntario Persona
               </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/product/test" class="nav-link">
+            <router-link to="/admin/voluntarioEstudiante" class="nav-link">
               <i class="nav-icon fas fa-fist-raised orange"></i>
               <p>
-                Voluntariado Persona
+                Voluntariado Estudiante
               </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/product/tag" class="nav-link">
+            <router-link to="/admin/voluntario" class="nav-link">
               <i class="nav-icon fas fa-fist-raised orange"></i>
               <p>
-                Voluntariado Organización
+                Voluntariado
               </p>
             </router-link>
           </li>

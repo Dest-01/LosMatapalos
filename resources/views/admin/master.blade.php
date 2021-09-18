@@ -45,7 +45,7 @@
     <router-link to="/dashboard" class="brand-link">
       <img src="{{ asset('/images/logo.png') }}" alt="The Logo" class="brand-image elevation-3"
            style="opacity: .9">
-      <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
+      <span style="font-size: 18px" class="brand-text font-weight-light" >{{ config('app.name', 'Laravel') }}</span>
     </router-link>
 
     <!-- Sidebar -->

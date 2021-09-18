@@ -50,6 +50,9 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'donativo' => 'DonativosController',
         'persona' => 'PersonasController',
         'organizacion' => 'OrganizacionesController',
+        'voluntario' => 'VoluntarioController',
+        'voluntarioEstudiante' => 'VoluntarioEstudiantesController',
+        'voluntarioPersona' => 'VoluntarioPersonaController',
     ]);
 });
 
