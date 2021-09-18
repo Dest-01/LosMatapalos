@@ -561,7 +561,7 @@ export default {
       }
     },
     NoexisteCedula() {
-      if (this.cedulas.length === 0 && this.cedulasOrg.length === 0) {
+      if (this.cedulas.length == 0 && this.cedulasOrg.length == 0) {
         this.showExistenciaCedula = true;
          this.MensajeCedula =
           "El numero de cedula no esta registrado";

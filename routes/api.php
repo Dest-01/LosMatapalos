@@ -25,20 +25,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Grupo de rutas para los controladores en la carpeta API V1
+//////////Grupo de rutas para los controladores en la carpeta API V1
 Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('profile', 'ProfileController@profile');
     Route::put('profile', 'ProfileController@updateProfile');
     Route::post('change-password', 'ProfileController@changePassword');
-    Route::get('tag/list', 'TagController@list');
-    Route::get('category/list', 'CategoryController@list');
-    Route::post('product/upload', 'ProductController@upload');
 
-///////Rutas Personalizadas o especificas a un metodo
+    ///////Rutas Personalizadas o especificas a un metodo
     Route::get('donativo/verificar', 'DonativosController@obtenerCedula');
     Route::get('donativo/verificarOrg', 'DonativosController@obtenerCedulaOrg');
+      /////////////////////////---VOLUNTARIO--ESTUDIANTE---//////////////////////////////////////////////////////////////////
+    Route::get('voluntarioEstudiante/obtenerCedula', 'VoluntarioEstudiantesController@obtenerCedula');
+    Route::get('voluntarioEstudiante/NombreVoluntario', 'VoluntarioEstudiantesController@obtenerNombreVoluntario');
+    /////////////////////////---VOLUNTARIO--PERSONA---//////////////////////////////////////////////////////////////////
+    Route::get('voluntarioPersona/obtenerCedula', 'VoluntarioPersonaController@obtenerCedula');
+    Route::get('voluntarioPersona/NombreVoluntario', 'VoluntarioPersonaController@obtenerNombreVoluntario');
 
-    //////Rutas total GET, PUT, POST, DELETE
+    //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
         'user' => 'UserController',
         'product' => 'ProductController',

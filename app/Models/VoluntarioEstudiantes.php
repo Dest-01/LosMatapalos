@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class VoluntarioEstudiantes extends Model
 {
-    use HasFactory;
+    protected $fillable = ['id','identificacion', 'voluntariado_id', 'Universidad', 'carrera'];
 }
