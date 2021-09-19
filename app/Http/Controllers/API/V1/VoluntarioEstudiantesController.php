@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Models\VoluntarioEstudiantes;
 use Illuminate\Http\Request;
-use App\Http\Requests\admin\VoluntarioEstudianteRequest;
+use App\Http\Requests\admin\VoluntarioEstudiantesRequest;
 use App\Models\Personas;
 use App\Models\Voluntario;
 
@@ -58,7 +58,7 @@ class VoluntarioEstudiantesController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VoluntarioEstudiantesRequest $request)
     {
         $tag = $this->voluntarioEstudiantes->create([
             'identificacion' => $request->get('identificacion'),
@@ -88,7 +88,7 @@ class VoluntarioEstudiantesController extends BaseController
      * @param  \App\Models\VoluntarioEstudiantes  $voluntarioEstudiantes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(VoluntarioEstudiantesRequest $request, $id)
     {
         $tag = $this->voluntarioEstudiantes->findOrFail($id);
 

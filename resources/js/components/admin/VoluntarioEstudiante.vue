@@ -15,6 +15,14 @@
                   <i class="fa fa-plus-square"></i>
                   Agregar nuevo
                 </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="abrirModal()"
+                >
+                  <i class="fa fa-plus-square"></i>
+                  Agregar Estudiante
+                </button>
               </div>
             </div>
             <!-- fin del card-header -->
@@ -135,6 +143,7 @@
                   <button
                     type="button"
                     class="btn btn-success my-4"
+                    style="width: 155px; height: 40px"
                     @click="
                       ConsultaCedula(), ComprobarCampos(), NoexisteCedula()
                     "
@@ -145,6 +154,7 @@
                     type="button"
                     class="btn btn-danger my-4"
                     @click="cancelarCedula()"
+                    style="width: 100px; height: 40px"
                   >
                     Cancelar
                   </button>
@@ -175,6 +185,7 @@
                   <button
                     type="button"
                     class="btn btn-success my-4"
+                    style="width: 155px; height: 40px"
                     @click="
                       ConsultaNombreVoluntario(),
                         ComprobarCampos(),
@@ -186,6 +197,7 @@
                   <button
                     type="button"
                     class="btn btn-danger my-4"
+                    style="width: 100px; height: 40px"
                     @click="cancelarVoluntario()"
                   >
                     Cancelar
@@ -205,7 +217,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Nombre del voluntariado</label>
+                  <label>Id del voluntariado</label>
                   <input
                     :disabled="bloquearCedulaVoluntario"
                     v-model="form.voluntariado_id"
@@ -267,6 +279,114 @@
           </div>
         </div>
       </div>
+       <!-- Modal de persona -->
+      <div class="modal" :class="{ mostrar: modal }">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">{{ tituloModal }}</h4>
+              <button
+                @click="cerrarModal()"
+                type="button"
+                class="close"
+                data-dismiss="modal"
+              >
+                &times;
+              </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Cedula</label>
+                <input
+                  v-model="formPer.id"
+                  type="text"
+                  name="id"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('id') }"
+                />
+                <has-error :form="formPer" field="id"></has-error>
+              </div>
+              <div  class="form-group">
+                <label>Nombre</label>
+                <input
+                  v-model="formPer.nombre"
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                />
+                <has-error :form="formPer" field="nombre"></has-error>
+              </div>
+              <div class="form-group">
+                <label>Primer Apellido</label>
+                <input
+                  v-model="formPer.apellido1"
+                  type="text"
+                  name="apellido1"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                />
+                <has-error :form="formPer" field="apellido1"></has-error>
+              </div>
+              <div class="form-group">
+                <label>Segundo Apellido</label>
+                <input
+                  v-model="formPer.apellido2"
+                  type="text"
+                  name="apellido2"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                />
+                <has-error :form="formPer" field="apellido2"></has-error>
+              </div>
+              <div class="form-group">
+                <label>Telefono</label>
+                <input
+                  v-model="formPer.telefono"
+                  type="number"
+                  name="telefono"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('telefono') }"
+                />
+                <has-error :form="formPer" field="telefono"></has-error>
+              </div>
+              <div class="form-group">
+                <label>Correo</label>
+                <input
+                  v-model="formPer.correo"
+                  type="email"
+                  name="correo"
+                  class="form-control"
+                  :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                />
+                <has-error :form="formPer" field="correo"></has-error>
+              </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button
+                @click="cerrarModal()"
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                @click="crearPersona()"
+                type="button"
+                class="btn btn-success"
+                data-dismiss="modal"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
     </div>
   </section>
 </template>
@@ -284,7 +404,7 @@ export default {
       showMensajesVoluntario: false,
       showMensajesVoluntario2: false,
       bloquearCedulaVoluntario: true,
-      bloquearCamposExtras: true,
+      bloquearCamposExtras: false,
       editmode: false,
       CedulaBloqueo: false,
       VoluntarioBloqueo: false,
@@ -301,6 +421,17 @@ export default {
         Universidad: "",
         carrera: "",
       }),
+      formPer: new Form({
+        id: "",
+        nombre: "",
+        apellido1: "",
+        apellido2: "",
+        telefono: "",
+        correo: "",
+      }),
+      id: 0,
+      tituloModal: "",
+      modal: 0,
     };
   },
   methods: {
@@ -319,12 +450,23 @@ export default {
       $("#addNew").modal("show");
       this.form.fill(voluntarioEstudiante);
       this.showBuscadores = false;
+      this.showMensajesVoluntario2 = false;
+      this.showMensajesCedula2 = false;
+      this.showMensajesCedula = false;
+      this.showMensajesVoluntario = false;
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
       $("#addNew").modal("show");
       this.showBuscadores = true;
+    },
+    abrirModal(data = {}) {
+      this.modal = 1;
+      (this.id = 0), (this.tituloModal = "Registro de persona");
+    },
+     cerrarModal() {
+      this.modal = 0;
     },
     limpiar() {
       this.form.identificacion = "";
@@ -333,6 +475,12 @@ export default {
       this.form.carrera = "";
       this.buscadorC = "";
       this.buscadorV = "";
+      this.showMensajesVoluntario2 = false;
+      this.showMensajesCedula2 = false;
+      this.showMensajesCedula = false;
+      this.showMensajesVoluntario = false;
+      this.CedulaBloqueo = false;
+      this.VoluntarioBloqueo = false;
       this.form.errors.clear();
     },
     SiExisteCedula() {
@@ -392,16 +540,17 @@ export default {
       }
     },
     ComprobarCampos() {
-   if(this.cedulas.length != 0){
-     this.ComprobarCampos2();
-   }
-    },
-    ComprobarCampos2(){
-      if(this.voluntarioNombre.length != 0){
-        this.bloquearCamposExtras = false;
+      for (let i = 0; i < this.cedulas.length; i++) {
+        if (this.cedulas[i].id != null) {
+          for (let i = 0; i < this.voluntarioNombre.length; i++) {
+            if (this.voluntarioNombre[i].id != null) {
+              this.bloquearCamposExtras = false;
+            }
+          }
+        }
       }
-
     },
+
     ConsultaCedula() {
       this.form
         .get("/api/voluntarioEstudiante/obtenerCedula", {
@@ -428,6 +577,28 @@ export default {
           .get("/api/voluntarioEstudiante/")
           .then(({ data }) => (this.voluntarioEst = data.data));
       }
+    },
+    crearPersona() {
+      this.formPer
+        .post("/api/persona", {
+          params: { id: this.formPer.id },
+        })
+        .then((response) => {
+          $("#addNew").modal("hide");
+
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.cerrarModal();
+          //  this.$Progress.finish();
+        })
+        .catch(() => {
+          Toast.fire({
+            icon: "error",
+            title: "Ocurrio un problema",
+          });
+        });
     },
     crearVoluntarioEst() {
       this.form
@@ -464,7 +635,7 @@ export default {
           this.$Progress.finish();
           //  Fire.$emit('AfterCreate');
 
-          this.cargarVoluntario();
+          this.cargarVoluntarioEst();
         })
         .catch(() => {
           this.$Progress.fail();
@@ -509,3 +680,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.mostrar {
+  display: list-item;
+  opacity: 1;
+  background: rgba(121, 120, 120, 0.623);
+}
+</style>

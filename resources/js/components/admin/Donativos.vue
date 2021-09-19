@@ -781,7 +781,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .mostrar {
   display: list-item;
   opacity: 1;

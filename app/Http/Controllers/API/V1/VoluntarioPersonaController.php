@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Models\VoluntarioPersona;
 use Illuminate\Http\Request;
-use App\Http\Requests\admin\VoluntarioPersonaRequest;
+use App\Http\Requests\admin\VoluntarioPersonasRequest;
 use App\Models\Personas;
 use App\Models\Voluntario;
 
@@ -15,19 +15,19 @@ class VoluntarioPersonaController extends BaseController
 
     protected $personas = '';
     protected $voluntarios = '';
-    protected $voluntarioPersonas = '';
+    protected $voluntarioPersona = '';
 
-    public function __construct(VoluntarioPersona $voluntarioPersona, Personas $personas, Voluntarios $voluntarios)
+    public function __construct(VoluntarioPersona $voluntarioPersona, Personas $personas, Voluntario $voluntarios)
     {
         $this->middleware('auth:api');
-        $this->voluntarioPersonas = $voluntarioPersonas;
+        $this->voluntarioPersona = $voluntarioPersona;
         $this->personas = $personas;
         $this->voluntarios = $voluntarios;
     }
 
     public function obtenerCedula(Request $request)
     {
-        $filtro = $request->buscador;
+        $filtro = $request->buscadorC;
         $persona = Personas::where('id', $filtro)->get('id');
             return $this->sendResponse($persona, 'Cedula si existe');
         
@@ -36,8 +36,8 @@ class VoluntarioPersonaController extends BaseController
 
     public function obtenerNombreVoluntario(Request $request)
     {
-        $filtro = $request->nombreVoluntario;
-        $voluntario = Voluntario::where('id', $filtro)->get('id','nombre');
+        $filtro = $request->buscadorV;
+        $voluntario = Voluntario::where('nombre', $filtro)->get();
             return $this->sendResponse($voluntario, 'Voluntario si existe');
         
        
@@ -50,7 +50,7 @@ class VoluntarioPersonaController extends BaseController
      */
     public function index()
     {
-        $voluntarioPer = $this->voluntarioPersonas->latest()->paginate(10);
+        $voluntarioPer = $this->voluntarioPersona->latest()->paginate(10);
 
         return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
     }
@@ -61,9 +61,9 @@ class VoluntarioPersonaController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VoluntarioPersonasRequest $request)
     {
-        $tag = $this->voluntarioPersonas->create([
+        $tag = $this->voluntarioPersona->create([
             'identificacion' => $request->get('identificacion'),
             'voluntariado_id' => $request->get('voluntariado_id'),
         ]);
@@ -89,9 +89,9 @@ class VoluntarioPersonaController extends BaseController
      * @param  \App\Models\VoluntarioPersona  $voluntarioPersona
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(VoluntarioPersonasRequest $request, $id)
     {
-        $tag = $this->voluntarioPersonas->findOrFail($id);
+        $tag = $this->voluntarioPersona->findOrFail($id);
 
         $tag->update($request->all());
 
@@ -108,7 +108,7 @@ class VoluntarioPersonaController extends BaseController
     {
         $this->authorize('isAdmin');
 
-        $voluntarioPer = $this->voluntarioPersonas->findOrFail($id);
+        $voluntarioPer = $this->voluntarioPersona->findOrFail($id);
 
         $voluntarioPer->delete();
 
