@@ -32,5 +32,6 @@ export default [
     { path: '/home', component: require('./components/cliente/Home.vue').default },
     { path: '/reservacion', component: require('./components/cliente/Reservar.vue').default },
     { path: '/donaciones', component: require('./components/cliente/Donaciones.vue').default },
+    { path: '/somos', component: require('./components/cliente/QuienesSomos.vue').default },
     { path: '/pruebas', component: require('./components/cliente/pruebas.vue').default },
 ];

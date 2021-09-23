@@ -2,55 +2,22 @@
 General Demo Styles [not related to navbar]
 ==========================================================*/
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
- body {
-font-family: 'Poppins', sans-serif;
+*{
+    margin: 0;
+    padding: 0;
 }
-#background-image {
-background-image: url('senderoBack.jpg');
-background-attachment: fixed;
-}
-p {
-font-size: 1.2em;
-line-height: 1.8em;
-font-weight: 300;
-color: rgb(0, 0, 0);
-margin: 30px 0;
-}
-strong {
-font-weight: 600;
-color: #333;
-}
-a {
--webkit-transition: all 0.3s;
--o-transition: all 0.3s;
-transition: all 0.3s;
-}
-.line {
-width: 100%;
-height: 1px;
-margin: 30px 0;
-border-bottom: 1px dashed #ddd;
-}
-.content {
-padding: 50px 0;
-}
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-color: #eee !important;
-}
-::-moz-placeholder { /* Firefox 19+ */
-color: #eee !important;
-}
-:-ms-input-placeholder { /* IE 10+ */
-color: #eee !important;
-}
-:-moz-placeholder { /* Firefox 18- */
-color: #eee !important;
-}
-
+body {
+    font-family: 'Poppins', sans-serif;
+    }
+    #background-image {
+    background-image: url('senderoBack.jpg');
+    background-attachment: fixed;
+    }
 /* ==========================================================
 Navbar Styles
 ==========================================================*/
+
+
 nav.navbar {
 /* background: #910404;-*/
 background-image: linear-gradient(#910404, #a31e32);
@@ -60,7 +27,7 @@ border-radius: 0;
 border-bottom-left-radius: 30px;
 border-bottom-right-radius: 30px;
 box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.2);
-padding: 15px 0;
+padding: 20px 0;
 -webkit-transition: all 0.5s;
 -o-transition: all 0.5s;
 transition: all 0.5s;
@@ -95,13 +62,13 @@ border: none;
 nav.navbar ul.navbar-nav {
 border: none;
 }
-nav.navbar ul.navbar-nav a {
+nav.navbar ul.navbar-nav a { /*Borde a poner el puntero*/
 border-radius: 20px;
 color: #fff;
 }
 nav.navbar ul.navbar-nav a:hover,
-nav.navbar ul.navbar-nav a:focus {
-color: #fff;
+nav.navbar ul.navbar-nav a:focus { /*Color a poner el puntero*/
+color: rgb(29, 23, 23);
 background: #339966;
 }
 
@@ -148,14 +115,22 @@ dropdown-menu{
 background: cadetblue;
 border-radius: 10px;
 }
-a{
-    font-size: initial;
+
+.navbar-brand {
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 400px;
+    font-size: 1.25rem;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
-body {
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
+    color: rgb(243 243 243 / 90%);
+    font-size: 20px;
+}
 
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #333;
-    background-color: #f0f0f0;
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(255 255 255);
+    font-size: 20px;
 }
