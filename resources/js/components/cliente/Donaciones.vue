@@ -1,107 +1,52 @@
 <template>
-  <div>
+  <div style="margin-top:10px;">
+    <div class="container multi">
+       <h2 class="titles">
+        <span class="pull-right">Accesorios</span> Lista de donaciones
+        necesarias
+      </h2>
+    </div>
     <div class="container multi">
       <h2 class="titles">
-        <span class="pull-right">Accesorios</span> Lista de donaciones necesarias
+        <span class="pull-right">Accesorios</span> Lista de donaciones
+        necesarias
       </h2>
       <div class="row">
-        <div class="carousel slide" id="myCarousel">
+        <!-- Carousel wrapper -->
+        <div
+          id="carouselExampleFade"
+          class="carousel slide carousel-fade"
+          data-bs-ride="carousel"
+        >
           <div class="carousel-inner">
-            <div class="item active">
-              <div class="col-xs-3">
-                <a href="#"
-                  ><img
-                    v-bind:key="image"
-                    v-for="image in image1"
-                    :src="image.url"
-                    class="img-responsive"
-                /></a>
-              </div>
+            <div class="carousel-item active">
+              <img src="https://dl.dropboxusercontent.com/s/0tbo6rg6t768phx/img%20%2815%29.jpg" class="d-block w-100" alt="" />
             </div>
-            <div class="item">
-              <div class="col-xs-3">
-                <a href="#"
-                  ><img
-                    v-bind:key="image"
-                    v-for="image in image2"
-                    :src="image.url"
-                    class="img-responsive"
-                /></a>
-              </div>
+            <div class="carousel-item">
+              <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg" class="d-block w-100" alt="" />
             </div>
-            <div class="item">
-              <div class="col-xs-3">
-                <a href="#"
-                  ><img
-                     v-bind:key="image"
-                    v-for="image in image3"
-                    :src="image.url"
-                    class="img-responsive"
-                /></a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="col-xs-3">
-                <a href="#"
-                  ><img
-                    v-bind:key="image"
-                    v-for="image in image4"
-                    :src="image.url"
-                    class="img-responsive"
-                /></a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="col-xs-3">
-                <a href="#"
-                  ><img
-                    v-bind:key="image"
-                    v-for="image in image5"
-                    :src="image.url"
-                    class="img-responsive"
-                /></a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="col-xs-3">
-                <a href="#"
-                  ><img
-                    v-bind:key="image"
-                    v-for="image in image6"
-                    :src="image.url"
-                    class="img-responsive"
-                /></a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="col-xs-3">
-                <a href="#"
-                  ><img
-                     v-bind:key="image"
-                    v-for="image in image7"
-                    :src="image.url"
-                    class="img-responsive"
-                /></a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="col-xs-3">
-                <a href="#"
-                  ><img
-                     v-bind:key="image"
-                    v-for="image in image8"
-                    :src="image.url"
-                    class="img-responsive"
-                /></a>
-              </div>
+            <div class="carousel-item">
+              <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg" class="d-block w-100" alt="" />
             </div>
           </div>
-          <a class="left carousel-control" href="#myCarousel" data-slide="prev"
-            ><i class="glyphicon glyphicon-chevron-left"></i
-          ></a>
-          <a class="right carousel-control" href="#myCarousel" data-slide="next"
-            ><i class="glyphicon glyphicon-chevron-right"></i
-          ></a>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleFade"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleFade"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
     </div>
@@ -169,7 +114,9 @@
 
     <!-- Type-3 -->
     <div class="container">
-      <h2 class="titles"><span class="pull-right">Donaciones</span> Donaciones Recibidas</h2>
+      <h2 class="titles">
+        <span class="pull-right">Donaciones</span> Donaciones Recibidas
+      </h2>
       <div class="row donation">
         <div class="col-sm-3">
           <a href="" class="card">
@@ -284,7 +231,6 @@ export default {
           url: "../images/donativos/palas.jpg",
         },
       ],
-
     };
   },
 };
@@ -309,7 +255,6 @@ export default {
   margin-left: 15px;
   background-image: none;
 }
-
 /* Type-2 */
 .scroll-box {
   display: flex;
@@ -350,7 +295,6 @@ export default {
 .scroll-box a h5 {
   line-height: 20px;
 }
-
 /* Type-3 */
 .donation a.card {
   display: block;
@@ -387,7 +331,6 @@ export default {
   text-overflow: ellipsis;
   max-width: 200px;
 }
-
 /* Heading */
 .titles {
   background: #034991;
