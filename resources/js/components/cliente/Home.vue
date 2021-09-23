@@ -403,7 +403,7 @@ export default {
 
 .header {
     width: 100%;
-    height: 300px;
+    height: 340px;
     
     background: hsla(155, 95%, 50%, 0.459);
     /* fallback for old browsers */
@@ -415,7 +415,7 @@ export default {
     background-attachment: fixed;
     position: relative;
     margin-bottom: 0;
-   margin-top: 90px;
+   margin-top: 112px;
 }
 .header .textos-header{
     display: flex;
@@ -435,6 +435,7 @@ export default {
     color:#fff;
     text-shadow: 5px 5px 5px #000;
     z-index: 20;
+    margin-top: 50px;
 }
 
 .textos-header h2{

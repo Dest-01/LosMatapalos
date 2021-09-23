@@ -125,9 +125,10 @@ border-radius: 10px;
     white-space: nowrap;
 }
 
-.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
-    color: rgb(243 243 243 / 90%);
-    font-size: 20px;
+.navbar.navbar-light .breadcrumb .nav-item .nav-link, .navbar.navbar-light .navbar-nav .nav-item .nav-link {
+    color: #fff;
+    -webkit-transition: .35s;
+    transition: .35s;
 }
 
 .navbar-light .navbar-nav .nav-link {

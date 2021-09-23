@@ -83,6 +83,10 @@ Route::get('/admin/voluntarioPersona', function () {
 Route::get('/admin/voluntarioEstudiante', function () {
     return view('admin');
 })->where('admin/voluntarioEstudiante', '[\/\w\.-]*')->middleware('auth');
+Route::get('/admin/actividad', function(){
+    return view('admin');
+})->where('admin/actividad', '[\/\w\.-]*')->middleware('auth');
+
 ///////////////////////////////----FIN--VOLUNTARIADO--///////////////////////
 ///////////////////////////////////////////////////////////////////////////
 //-----------------------RUTAS PARA EL CLIENTE SIN LOGIN-------------------

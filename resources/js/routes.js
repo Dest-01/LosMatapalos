@@ -24,6 +24,7 @@ export default [
     { path: '/admin/voluntario', component: require('./components/admin/Voluntario.vue').default },
     { path: '/admin/voluntarioPersona', component: require('./components/admin/VoluntarioPersona.vue').default },
     { path: '/admin/voluntarioEstudiante', component: require('./components/admin/VoluntarioEstudiante.vue').default },
+    { path: '/admin/actividad', component: require('./components/admin/Actividades.vue').default },
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //------------------=-------------------------------RUTAS CLIENTE-------------------------------------------------
