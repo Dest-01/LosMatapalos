@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
             <div class="card-header">
-              <h3 class="card-title">Listado de Voluntarios</h3>
+              <h3 class="card-title">Listado de actividades de voluntario</h3>
               <div class="card-tools">
                 <button
                   type="button"
@@ -23,7 +23,6 @@
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Nombre de voluntario</th>
                     <th>Cantidad de actividades</th>
                     <th>Funciones</th>
                   </tr>
@@ -34,7 +33,6 @@
                     :key="voluntario.id"
                   >
                     <td>{{ voluntario.id }}</td>
-                    <td>{{ voluntario.nombre }}</td>
                     <td>{{ voluntario.cantidad }}</td>
                     <td>
                       <a href="#" @click="editModal(voluntario)">
@@ -103,15 +101,15 @@
             >
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Nombre Voluntariado</label>
+                  <label>Id Voluntariado</label>
                   <input
-                    v-model="form.nombre"
+                    v-model="form.id"
                     type="text"
-                    name="nombre"
+                    name="id"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('nombre') }"
+                    :class="{ 'is-invalid': form.errors.has('id') }"
                   />
-                  <has-error :form="form" field="nombre"></has-error>
+                  <has-error :form="form" field="id"></has-error>
                 </div>
 
                 <div class="form-group">
@@ -162,7 +160,6 @@ export default {
       voluntarios: {},
       form: new Form({
         id: "",
-        nombre: "",
         cantidad: "",
       }),
     };

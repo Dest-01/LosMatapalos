@@ -38,8 +38,7 @@ class VoluntarioController extends BaseController
     public function store(VoluntarioRequest $request)
     {
         $tag = $this->voluntario->create([
-            'tipo' => $request->get('tipo'),
-            'nombre' => $request->get('nombre'),
+            'id' => $request->get('id'),
             'cantidad' => $request->get('cantidad')
             
         ]);

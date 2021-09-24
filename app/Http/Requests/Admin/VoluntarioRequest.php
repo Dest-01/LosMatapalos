@@ -37,7 +37,6 @@ class VoluntarioRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'nombre' => 'required|string|max:20',
             'cantidad' => 'required|integer|',
         ];
     }
@@ -50,14 +49,12 @@ class VoluntarioRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'nombre' => 'required|string|max:20',
             'cantidad' => 'required|integer|',
         ];
     }
 
     public function messages(){
         return [
-            'nombre.*' => 'Nombre se requiere y maximo de 20 caracteres',
             'cantidad.*' => 'Se requiere una cantidad y solo números',
         ];
     }

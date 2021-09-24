@@ -32,9 +32,9 @@
                   <tr>
                     <th>Id</th>
                     <th>Cedula de voluntario</th>
-                    <th>Universidad</th>
-                    <th>Carrera</th>
                     <th>Id de voluntario</th>
+                     <th>Carrera</th>
+                    <th>Foto</th>
                     <th>Funciones</th>
                   </tr>
                 </thead>
@@ -45,9 +45,15 @@
                   >
                     <td>{{ voluntarioestudiante.id }}</td>
                     <td>{{ voluntarioestudiante.identificacion }}</td>
-                    <td>{{ voluntarioestudiante.Universidad }}</td>
-                    <td>{{ voluntarioestudiante.carrera }}</td>
                     <td>{{ voluntarioestudiante.voluntariado_id }}</td>
+                    <td>{{ voluntarioestudiante.carrera }}</td>
+                   <td>
+                      <img
+                        v-bind:src="'/images/voluntariado/' + voluntarioestudiante.photo"
+                        width="50px"
+                        height="50px"
+                      />
+                    </td>
                     <td>
                       <a href="#" @click="editModal(voluntarioestudiante)">
                         <i class="fa fa-edit blue"></i>
@@ -113,7 +119,8 @@
 
             <form
               @submit.prevent="
-                editmode ? actualizarVoluntarioEst() : crearVoluntarioEst()
+                editmode ? actualizarVoluntarioEst() : crearVoluntario(),
+                  crearVoluntarioEst()
               "
             >
               <div class="modal-body">
@@ -144,9 +151,7 @@
                     type="button"
                     class="btn btn-success my-4"
                     style="width: 155px; height: 40px"
-                    @click="
-                      ConsultaCedula(), ComprobarCampos(), NoexisteCedula()
-                    "
+                    @click="ConsultaCedula(), NoexisteCedula()"
                   >
                     Comprobar cedula
                   </button>
@@ -155,50 +160,6 @@
                     class="btn btn-danger my-4"
                     @click="cancelarCedula()"
                     style="width: 100px; height: 40px"
-                  >
-                    Cancelar
-                  </button>
-                </div>
-                <div v-show="showBuscadores" class="form-group">
-                  <label>Nombre de voluntario a consultar:</label>
-                  <input
-                    v-model="buscadorV"
-                    type="text"
-                    name="buscadorV"
-                    class="form-control"
-                    :disabled="VoluntarioBloqueo"
-                  />
-                </div>
-                <div>
-                  <label
-                    v-show="showMensajesVoluntario"
-                    v-text="MensajeVoluntario"
-                    style="color: red"
-                  ></label>
-                  <label
-                    v-show="showMensajesVoluntario2"
-                    v-text="MensajeVoluntario2"
-                    style="color: green"
-                  ></label>
-                </div>
-                <div v-show="showBuscadores" class="form-group">
-                  <button
-                    type="button"
-                    class="btn btn-success my-4"
-                    style="width: 155px; height: 40px"
-                    @click="
-                      ConsultaNombreVoluntario(),
-                        ComprobarCampos(),
-                        NoexisteNombreV()
-                    "
-                  >
-                    Comprobar voluntario
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger my-4"
-                    style="width: 100px; height: 40px"
-                    @click="cancelarVoluntario()"
                   >
                     Cancelar
                   </button>
@@ -217,30 +178,18 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Id del voluntariado</label>
+                  <label>Id del voluntario</label>
                   <input
-                    :disabled="bloquearCedulaVoluntario"
-                    v-model="form.voluntariado_id"
+                    :disabled="bloquearCamposExtras"
+                    v-model="formVoluntario.id"
                     type="text"
-                    name="voluntariado_id"
+                    name="id"
                     class="form-control"
                     :class="{
-                      'is-invalid': form.errors.has('voluntariado_id'),
+                      'is-invalid': form.errors.has('id'),
                     }"
                   />
-                  <has-error :form="form" field="voluntariado_id"></has-error>
-                </div>
-                <div class="form-group">
-                  <label>Universidad perteneciente</label>
-                  <input
-                    v-model="form.Universidad"
-                    type="text"
-                    name="Universidad"
-                    class="form-control"
-                    :disabled="bloquearCamposExtras"
-                    :class="{ 'is-invalid': form.errors.has('Universidad') }"
-                  />
-                  <has-error :form="form" field="Universidad"></has-error>
+                  <has-error :form="formVoluntario" field="id"></has-error>
                 </div>
                 <div class="form-group">
                   <label>Carrera universitaria</label>
@@ -253,6 +202,34 @@
                     :class="{ 'is-invalid': form.errors.has('carrera') }"
                   />
                   <has-error :form="form" field="carrera"></has-error>
+                </div>
+                 <div class="form-group">
+                  <label for="imagen" class="col-sm-2 control-label"
+                    >Imagen</label
+                  >
+                  <div class="custom-file">
+                    <input @change="updatePhoto" type="file" name="photo" accept="image/*" class="custom-file-input">
+                    <label class="custom-file-label" for="inputGroupFile01"
+                      >Seleccione un imagen</label
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Cantidad de actividades</label>
+                  <input
+                    :disabled="bloquearCamposExtras"
+                    v-model="formVoluntario.cantidad"
+                    type="text"
+                    name="cantidad"
+                    class="form-control"
+                    :class="{
+                      'is-invalid': formVoluntario.errors.has('cantidad'),
+                    }"
+                  />
+                  <has-error
+                    :form="formVoluntario"
+                    field="cantidad"
+                  ></has-error>
                 </div>
               </div>
               <div class="modal-footer">
@@ -279,7 +256,7 @@
           </div>
         </div>
       </div>
-       <!-- Modal de persona -->
+      <!-- Modal de persona -->
       <div class="modal" :class="{ mostrar: modal }">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -308,7 +285,7 @@
                 />
                 <has-error :form="formPer" field="id"></has-error>
               </div>
-              <div  class="form-group">
+              <div class="form-group">
                 <label>Nombre</label>
                 <input
                   v-model="formPer.nombre"
@@ -396,30 +373,24 @@ export default {
     return {
       MensajeCedula: "",
       MensajeCedula2: "Se encontro la cedula!",
-      MensajeVoluntario: "",
-      MensajeVoluntario2: "Se encontro el nombre!",
       showBuscadores: false, //se oculta al editar
       showMensajesCedula: false,
       showMensajesCedula2: false,
-      showMensajesVoluntario: false,
-      showMensajesVoluntario2: false,
       bloquearCedulaVoluntario: true,
-      bloquearCamposExtras: false,
+      bloquearCamposExtras: true,
       editmode: false,
       CedulaBloqueo: false,
-      VoluntarioBloqueo: false,
       buscadorC: "",
-      buscadorV: "",
       errors: {},
       cedulas: {},
-      voluntarioNombre: {},
+      voluntarios: {},
       voluntarioEst: {},
       form: new Form({
         id: "",
         identificacion: "",
         voluntariado_id: "",
-        Universidad: "",
         carrera: "",
+        imagen: "",
       }),
       formPer: new Form({
         id: "",
@@ -429,12 +400,36 @@ export default {
         telefono: "",
         correo: "",
       }),
+      formVoluntario: new Form({
+        id: "",
+        cantidad: "",
+      }),
       id: 0,
       tituloModal: "",
       modal: 0,
     };
   },
   methods: {
+    
+      updatePhoto(e) {
+      let file = e.target.files[0];
+      let reader = new FileReader();
+
+      if (file["size"] < 2111775) {
+        reader.onloadend = (file) => {
+          //console.log('RESULT', reader.result)
+          this.form.imagen = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        swal({
+          type: "error",
+          title: "ops...",
+          text: "archivo muy grande",
+        });
+      }
+    },
+
     getResults(page = 1) {
       this.$Progress.start();
 
@@ -465,13 +460,13 @@ export default {
       this.modal = 1;
       (this.id = 0), (this.tituloModal = "Registro de persona");
     },
-     cerrarModal() {
+    cerrarModal() {
       this.modal = 0;
     },
     limpiar() {
       this.form.identificacion = "";
       this.form.voluntario_id = "";
-      this.form.universidad = "";
+      this.form.photo = "";
       this.form.carrera = "";
       this.buscadorC = "";
       this.buscadorV = "";
@@ -482,6 +477,7 @@ export default {
       this.CedulaBloqueo = false;
       this.VoluntarioBloqueo = false;
       this.form.errors.clear();
+      this.bloquearCamposExtras = true;
     },
     SiExisteCedula() {
       for (let i = 0; i < this.cedulas.length; i++) {
@@ -490,16 +486,7 @@ export default {
           this.showMensajesCedula2 = true;
           this.CedulaBloqueo = true;
           this.form.identificacion = this.buscadorC;
-        }
-      }
-    },
-    SiExisteNombre() {
-      for (let i = 0; i < this.voluntarioNombre.length; i++) {
-        if (this.voluntarioNombre[i].nombre == this.buscadorV) {
-          this.VoluntarioBloqueo = true;
-          this.showMensajesVoluntario = false;
-          this.showMensajesVoluntario2 = true;
-          this.form.voluntariado_id = this.voluntarioNombre[i].id;
+          this.bloquearCamposExtras = false;
         }
       }
     },
@@ -508,13 +495,9 @@ export default {
       this.showMensajesCedula = false;
       this.showMensajesCedula2 = false;
       this.form.identificacion = "";
+      this.bloquearCamposExtras = true;
     },
-    cancelarVoluntario() {
-      this.VoluntarioBloqueo = false;
-      this.showMensajesVoluntario = false;
-      this.showMensajesVoluntario2 = false;
-      this.form.voluntariado_id = "";
-    },
+
     NoexisteCedula() {
       if (this.cedulas.length == 0) {
         this.showMensajesCedula = true;
@@ -528,29 +511,6 @@ export default {
           "Campo vacio, por favor digite un numero de cedula";
       }
     },
-    NoexisteNombreV() {
-      if (this.voluntarioNombre.length == 0) {
-        this.showMensajesVoluntario = true;
-        this.MensajeVoluntario = "El nombre de voluntario no esta registrado";
-      }
-      if (this.buscadorV.length == 0) {
-        this.showMensajesVoluntario = true;
-        this.MensajeVoluntario =
-          "Campo vacio, por favor digite un nombre de voluntario";
-      }
-    },
-    ComprobarCampos() {
-      for (let i = 0; i < this.cedulas.length; i++) {
-        if (this.cedulas[i].id != null) {
-          for (let i = 0; i < this.voluntarioNombre.length; i++) {
-            if (this.voluntarioNombre[i].id != null) {
-              this.bloquearCamposExtras = false;
-            }
-          }
-        }
-      }
-    },
-
     ConsultaCedula() {
       this.form
         .get("/api/voluntarioEstudiante/obtenerCedula", {
@@ -559,16 +519,6 @@ export default {
         .then(({ data }) => (this.cedulas = data.data))
         .then((response) => {
           this.SiExisteCedula();
-        });
-    },
-    ConsultaNombreVoluntario() {
-      this.form
-        .get("/api/voluntarioEstudiante/NombreVoluntario/", {
-          params: { buscadorV: this.buscadorV },
-        })
-        .then(({ data }) => (this.voluntarioNombre = data.data))
-        .then((response) => {
-          this.SiExisteNombre();
         });
     },
     cargarVoluntarioEst() {
@@ -600,7 +550,37 @@ export default {
           });
         });
     },
-    crearVoluntarioEst() {
+    cargarVoluntario() {
+      if (this.$gate.isAdmin()) {
+        axios
+          .get("/api/voluntario/")
+          .then(({ data }) => (this.voluntarios = data.data));
+      }
+    },
+    crearVoluntario() {
+      this.formVoluntario
+        .post("/api/voluntario/")
+        .then((response) => {
+          $("#addNew").modal("hide");
+
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+
+          this.$Progress.finish();
+          this.cargarVoluntario();
+        })
+        .catch(() => {
+          Toast.fire({
+            icon: "error",
+            title: "Ocurrio un problema!",
+          });
+        });
+    },
+    async crearVoluntarioEst() {
+       this.$Progress.start();
+      this.form.voluntariado_id = this.formVoluntario.id;
       this.form
         .post("/api/voluntarioEstudiante/")
         .then((response) => {
@@ -677,6 +657,18 @@ export default {
     this.$Progress.start();
     this.cargarVoluntarioEst();
     this.$Progress.finish();
+  },
+   filters: {
+    truncate: function (text, length, suffix) {
+      return text.substring(0, length) + suffix;
+    },
+  },
+    computed: {
+    filteredItems() {
+      return this.autocompleteItems.filter((i) => {
+        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+      });
+    },
   },
 };
 </script>

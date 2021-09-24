@@ -39,7 +39,6 @@ class VoluntarioEstudiantesRequest extends FormRequest
         return [
             'identificacion' => 'required|string|',
             'voluntariado_id' => 'required|integer|',
-            'Universidad' => 'required|string|min:2|max:20',
             'carrera' => 'required|string|min:2|max:50',
         ];
     }
@@ -52,7 +51,6 @@ class VoluntarioEstudiantesRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'Universidad' => 'required|string|min:2|max:20',
             'carrera' => 'required|string|min:2|max:50',
         ];
     }
@@ -60,8 +58,7 @@ class VoluntarioEstudiantesRequest extends FormRequest
     public function messages(){
         return [
             'identificacion.*' => 'La cedula se requiere, compruebe si existe',
-            'voluntariado_id.*' => 'El nombre de voluntario se requiere, compruebe si existe',
-            'Universidad.*' => 'Se requiere la universidad minimo 2 caracteres y maximo 20 caracteres',
+            'voluntariado_id.*' => 'El id de voluntario se requiere',
             'carrera.*' => 'Se requiere la carrera de la universidad minimo 2 caracteres y maximo 50 caracteres',
         ];
     }

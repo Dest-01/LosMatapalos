@@ -320,7 +320,7 @@ export default {
       ],
       image3: [
         {
-          url: "../images/face2.png",
+          url: "../images/bird3.jpg",
         },
       ],
       image4: [
@@ -415,7 +415,7 @@ export default {
     background-attachment: fixed;
     position: relative;
     margin-bottom: 0;
-   margin-top: 112px;
+   margin-top: 90px;
 }
 .header .textos-header{
     display: flex;

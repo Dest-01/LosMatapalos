@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Voluntario extends Model
 {
-    protected $fillable = ['id','nombre', 'cantidad'];
+    protected $fillable = ['id','cantidad'];
 }

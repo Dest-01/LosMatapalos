@@ -34,6 +34,7 @@
                     <th>Cedula de persona</th>
                     <th>Id de voluntario</th>
                     <th>Funciones</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -99,7 +100,7 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                @click="limpiar()"
+                @click="limpiar(), cancelarCedula()"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -109,7 +110,7 @@
 
             <form
               @submit.prevent="
-                editmode ? actualizarVoluntarioPer() : crearVoluntarioPer()
+                editmode ? actualizarVoluntarioPer() : crearVoluntario(), crearVoluntarioPer()
               "
             >
               <div class="modal-body">
@@ -141,7 +142,7 @@
                     class="btn btn-success my-4"
                     style="width: 155px; height: 40px"
                     @click="
-                      ConsultaCedula(), ComprobarCampos(), NoexisteCedula()
+                      ConsultaCedula(), NoexisteCedula()
                     "
                   >
                     Comprobar cedula
@@ -151,50 +152,6 @@
                     class="btn btn-danger my-4"
                     @click="cancelarCedula()"
                     style="width: 100px; height: 40px"
-                  >
-                    Cancelar
-                  </button>
-                </div>
-                <div v-show="showBuscadores" class="form-group">
-                  <label>Nombre de voluntario a consultar:</label>
-                  <input
-                    v-model="buscadorV"
-                    type="text"
-                    name="buscadorV"
-                    class="form-control"
-                    :disabled="VoluntarioBloqueo"
-                  />
-                </div>
-                <div>
-                  <label
-                    v-show="showMensajesVoluntario"
-                    v-text="MensajeVoluntario"
-                    style="color: red"
-                  ></label>
-                  <label
-                    v-show="showMensajesVoluntario2"
-                    v-text="MensajeVoluntario2"
-                    style="color: green"
-                  ></label>
-                </div>
-                <div v-show="showBuscadores" class="form-group">
-                  <button
-                    type="button"
-                    class="btn btn-success my-4"
-                    style="width: 155px; height: 40px"
-                    @click="
-                      ConsultaNombreVoluntario(),
-                        ComprobarCampos(),
-                        NoexisteNombreV()
-                    "
-                  >
-                    Comprobar voluntario
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger my-4"
-                    style="width: 100px; height: 40px"
-                    @click="cancelarVoluntario()"
                   >
                     Cancelar
                   </button>
@@ -213,18 +170,46 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Id del voluntariado</label>
+                  <label>Id del voluntario</label>
                   <input
-                    :disabled="bloquearCedulaVoluntario"
-                    v-model="form.voluntariado_id"
+                    :disabled="bloquearCamposExtras"
+                    v-model="formVoluntario.id"
                     type="text"
-                    name="voluntariado_id"
+                    name="id"
                     class="form-control"
                     :class="{
-                      'is-invalid': form.errors.has('voluntariado_id'),
+                      'is-invalid': form.errors.has('id'),
                     }"
                   />
-                  <has-error :form="form" field="voluntariado_id"></has-error>
+                  <has-error :form="formVoluntario" field="id"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Lugar de procedencia</label>
+                  <input
+                    :disabled="bloquearCamposExtras"
+                    v-model="form.lugar"
+                    type="text"
+                    name="lugar"
+                    class="form-control"
+                    :class="{
+                      'is-invalid': form.errors.has('lugar'),
+                    }"
+                  />
+                  <has-error :form="form" field="lugar"></has-error>
+                </div>
+                 <div class="form-group">
+                  <label>Cantidad de actividades</label>
+                  <input
+                    :disabled="bloquearCamposExtras"
+                    v-model="formVoluntario.cantidad"
+                    type="text"
+                    name="cantidad"
+                    class="form-control"
+                    :class="{
+                      'is-invalid': formVoluntario.errors.has('cantidad'),
+                    }"
+                  />
+                  <has-error :form="formVoluntario" field="cantidad"></has-error>
                 </div>
               </div>
               <div class="modal-footer">
@@ -232,7 +217,7 @@
                   type="button"
                   class="btn btn-secondary"
                   data-dismiss="modal"
-                  @click="limpiar()"
+                  @click="limpiar(), cancelarCedula()"
                 >
                   Cancelar
                 </button>
@@ -243,6 +228,7 @@
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
+
                 >
                   Registrar
                 </button>
@@ -251,7 +237,7 @@
           </div>
         </div>
       </div>
-       <!-- Modal de persona -->
+      <!-- Modal de persona -->
       <div class="modal" :class="{ mostrar: modal }">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -280,7 +266,7 @@
                 />
                 <has-error :form="formPer" field="id"></has-error>
               </div>
-              <div  class="form-group">
+              <div class="form-group">
                 <label>Nombre</label>
                 <input
                   v-model="formPer.nombre"
@@ -368,28 +354,27 @@ export default {
     return {
       MensajeCedula: "",
       MensajeCedula2: "Se encontro la cedula!",
-      MensajeVoluntario: "",
-      MensajeVoluntario2: "Se encontro el nombre!",
       showBuscadores: false, //se oculta al editar
       showMensajesCedula: false,
       showMensajesCedula2: false,
-      showMensajesVoluntario: false,
-      showMensajesVoluntario2: false,
       bloquearCedulaVoluntario: true,
-      bloquearCamposExtras: false,
+      bloquearCamposExtras: true,
       editmode: false,
       CedulaBloqueo: false,
-      VoluntarioBloqueo: false,
       buscadorC: "",
-      buscadorV: "",
       errors: {},
       cedulas: {},
-      voluntarioNombre: {},
+      voluntarios: {},
       voluntarioPer: {},
       form: new Form({
         id: "",
         identificacion: "",
         voluntariado_id: "",
+        lugar: "",
+      }),
+      formVoluntario: new Form({
+        id: "",
+        cantidad: "",
       }),
       formPer: new Form({
         id: "",
@@ -435,22 +420,20 @@ export default {
       this.modal = 1;
       (this.id = 0), (this.tituloModal = "Registro de persona");
     },
-     cerrarModal() {
+    cerrarModal() {
       this.modal = 0;
     },
     limpiar() {
       this.form.identificacion = "";
       this.form.voluntario_id = "";
-      this.form.universidad = "";
+      this.form.lugar = "";
       this.form.carrera = "";
+      this.formVoluntario.id = "";
+      this.formVoluntario.cantidad = "";
       this.buscadorC = "";
-      this.buscadorV = "";
-      this.showMensajesVoluntario2 = false;
       this.showMensajesCedula2 = false;
       this.showMensajesCedula = false;
-      this.showMensajesVoluntario = false;
       this.CedulaBloqueo = false;
-      this.VoluntarioBloqueo = false;
       this.form.errors.clear();
     },
     SiExisteCedula() {
@@ -460,16 +443,7 @@ export default {
           this.showMensajesCedula2 = true;
           this.CedulaBloqueo = true;
           this.form.identificacion = this.buscadorC;
-        }
-      }
-    },
-    SiExisteNombre() {
-      for (let i = 0; i < this.voluntarioNombre.length; i++) {
-        if (this.voluntarioNombre[i].nombre == this.buscadorV) {
-          this.VoluntarioBloqueo = true;
-          this.showMensajesVoluntario = false;
-          this.showMensajesVoluntario2 = true;
-          this.form.voluntariado_id = this.voluntarioNombre[i].id;
+           this.bloquearCamposExtras = false;
         }
       }
     },
@@ -478,12 +452,7 @@ export default {
       this.showMensajesCedula = false;
       this.showMensajesCedula2 = false;
       this.form.identificacion = "";
-    },
-    cancelarVoluntario() {
-      this.VoluntarioBloqueo = false;
-      this.showMensajesVoluntario = false;
-      this.showMensajesVoluntario2 = false;
-      this.form.voluntariado_id = "";
+      this.bloquearCamposExtras = true;
     },
     NoexisteCedula() {
       if (this.cedulas.length == 0) {
@@ -498,28 +467,6 @@ export default {
           "Campo vacio, por favor digite un numero de cedula";
       }
     },
-    NoexisteNombreV() {
-      if (this.voluntarioNombre.length == 0) {
-        this.showMensajesVoluntario = true;
-        this.MensajeVoluntario = "El nombre de voluntario no esta registrado";
-      }
-      if (this.buscadorV.length == 0) {
-        this.showMensajesVoluntario = true;
-        this.MensajeVoluntario =
-          "Campo vacio, por favor digite un nombre de voluntario";
-      }
-    },
-    ComprobarCampos() {
-      for (let i = 0; i < this.cedulas.length; i++) {
-        if (this.cedulas[i].id != null) {
-          for (let i = 0; i < this.voluntarioNombre.length; i++) {
-            if (this.voluntarioNombre[i].id != null) {
-              this.bloquearCamposExtras = false;
-            }
-          }
-        }
-      }
-    },
 
     ConsultaCedula() {
       this.form
@@ -531,22 +478,40 @@ export default {
           this.SiExisteCedula();
         });
     },
-    ConsultaNombreVoluntario() {
-      this.form
-        .get("/api/voluntarioPersona/NombreVoluntario/", {
-          params: { buscadorV: this.buscadorV },
-        })
-        .then(({ data }) => (this.voluntarioNombre = data.data))
-        .then((response) => {
-          this.SiExisteNombre();
-        });
-    },
     cargarVoluntarioPer() {
       if (this.$gate.isAdmin()) {
         axios
           .get("/api/voluntarioPersona/")
           .then(({ data }) => (this.voluntarioPer = data.data));
       }
+    },
+      cargarVoluntario() {
+      if (this.$gate.isAdmin()) {
+        axios
+          .get("/api/voluntario/")
+          .then(({ data }) => (this.voluntarios = data.data));
+      }
+    },
+       crearVoluntario() {
+      this.formVoluntario
+        .post("/api/voluntario/")
+        .then((response) => {
+          $("#addNew").modal("hide");
+
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+
+          this.$Progress.finish();
+          this.cargarVoluntario();
+        })
+        .catch(() => {
+          Toast.fire({
+            icon: "error",
+            title: "Ocurrio un problema!",
+          });
+        });
     },
     crearPersona() {
       this.formPer
@@ -570,7 +535,8 @@ export default {
           });
         });
     },
-    crearVoluntarioPer() {
+    async crearVoluntarioPer() {
+      this.form.voluntariado_id = this.formVoluntario.id
       this.form
         .post("/api/voluntarioPersona/")
         .then((response) => {
@@ -646,6 +612,7 @@ export default {
   created() {
     this.$Progress.start();
     this.cargarVoluntarioPer();
+    this.cargarVoluntario();
     this.$Progress.finish();
   },
 };

@@ -38,7 +38,7 @@ class DonativosRequest extends FormRequest
     {
         return [
             'tipo' => 'required',
-            'detalle' => 'required|min:10|max:20',
+            'detalle' => 'required',
             'fecha' => 'required|date',
             'estado' => 'required',
             'photo' => 'required',
@@ -54,7 +54,7 @@ class DonativosRequest extends FormRequest
     {
         return [
             'tipo' => 'required',
-            'detalle' => 'required|max:20',
+            'detalle' => 'required',
             'fecha' => 'required|date',
             'estado' => 'required',
             'photo' => 'required',

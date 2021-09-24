@@ -31,15 +31,6 @@ class VoluntarioEstudiantesController extends BaseController
         
        
     }
-
-    public function obtenerNombreVoluntario(Request $request)
-    {
-        $filtro = $request->buscadorV;
-        $voluntario = Voluntario::where('nombre', $filtro)->get();
-            return $this->sendResponse($voluntario, 'Voluntario si existe');
-        
-       
-    }
     /**
      * Display a listing of the resource.
      *
@@ -60,14 +51,20 @@ class VoluntarioEstudiantesController extends BaseController
      */
     public function store(VoluntarioEstudiantesRequest $request)
     {
+        if($request->imagen){
+            $name = time().'.' . explode('/', explode(':', substr($request->imagen, 0, strpos
+            ($request->imagen, ';')))[1])[1];
+           \Image::make($request->imagen)->save(public_path('images/voluntariado/').$name);
+           $request->merge(['imagen' => $name]);
+        }
         $tag = $this->voluntarioEstudiantes->create([
             'identificacion' => $request->get('identificacion'),
             'voluntariado_id' => $request->get('voluntariado_id'),
-            'Universidad' => $request->get('Universidad'),
             'carrera' => $request->get('carrera'),
+            'imagen' => $request->get('imagen')
+            
         ]);
-
-        return $this->sendResponse($tag, 'Voluntario estudiante creado');
+        return $this->sendResponse($tag, 'Voluntario estudiantes creado');
     }
 
     /**
@@ -90,11 +87,24 @@ class VoluntarioEstudiantesController extends BaseController
      */
     public function update(VoluntarioEstudiantesRequest $request, $id)
     {
-        $tag = $this->voluntarioEstudiantes->findOrFail($id);
-
-        $tag->update($request->all());
-
-        return $this->sendResponse($tag, 'Voluntario Estudiante Actualizado');
+        {
+            $tag = $this->voluntarioEstudiantes->findOrFail($id);
+            $currentFoto = $tag->imagen;
+            if($request->imagen != $currentFoto){
+             $name = time().'.' . explode('/', explode(':', substr($request->imagen, 0, strpos
+             ($request->imagen, ';')))[1])[1];
+     
+             \Image::make($request->imagen)->save(public_path('images/voluntariado/').$name);
+              $request->merge(['imagen' => $name]);
+     
+              $EstudianteFoto = public_path('images/voluntariado/').$currentFoto;
+              if(file_exists($EstudianteFoto)){
+                  @unlink($EstudianteFoto);
+              }
+            }
+            $tag->update($request->all());
+            return $this->sendResponse($tag, 'Voluntariado Actualizada');
+        }
     }
 
     /**
@@ -109,8 +119,24 @@ class VoluntarioEstudiantesController extends BaseController
 
         $voluntarioEst = $this->voluntarioEstudiantes->findOrFail($id);
 
-        $voluntarioEst->delete();
+        if(file_exists('images/voluntariado/'.$voluntarioEst->photo) AND !empty($voluntarioEst->photo)){ 
+            unlink('images/voluntariado/'.$voluntarioEst->photo);
+         } 
+            try{
 
-        return $this->sendResponse($voluntarioEst, 'Voluntario Estudiante eliminado');
+                $voluntarioEst->delete();
+                $bug = 0;
+            }
+            catch(\Exception $e){
+                $bug = $e->errorInfo[1];
+            } 
+            if($bug==0){
+                echo "success";
+                return $this->sendResponse($voluntarioEst, 'Voluntario Estudiante eliminado');
+            }else{
+                echo 'error';
+            }
+
+       
     }
 }

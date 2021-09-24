@@ -16,9 +16,10 @@ class CreateVoluntarioEstudiantesTable extends Migration
         Schema::create('voluntario_estudiantes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('identificacion');
-            $table->integer('voluntariado_id');
-            $table->string('Universidad');
+            $table->integer('voluntariado_id')->unsigned();
+            $table->foreign('voluntariado_id')->references('id')->on('voluntarios');
             $table->string('carrera');
+            $table->string('imagen');
             $table->timestamps();
         });
     }
