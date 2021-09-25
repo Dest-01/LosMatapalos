@@ -557,13 +557,7 @@ export default {
     };
   },
   methods: {
-    selectImage() {
-      this.currentImage = this.$refs.file.files.item(0);
-      this.previewImage = URL.createObjectURL(this.currentImage);
-      this.progress = 0;
-      this.message = "";
-    },
-
+  
     abrirModal(data = {}) {
       this.modal = 1;
       (this.id = 0), (this.tituloModal = "Registro cliente");

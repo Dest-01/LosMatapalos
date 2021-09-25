@@ -257,7 +257,7 @@
             <div class="modal-header">
               <h4 class="modal-title">{{ tituloModal }}</h4>
               <button
-                @click="cerrarModal()"
+                @click="cerrarModal(), limpiarPersona()"
                 type="button"
                 class="close"
                 data-dismiss="modal"
@@ -337,7 +337,7 @@
             <!-- Modal footer -->
             <div class="modal-footer">
               <button
-                @click="cerrarModal()"
+                @click="cerrarModal(), limpiarPersona()"
                 type="button"
                 class="btn btn-secondary"
                 data-dismiss="modal"
@@ -459,6 +459,15 @@ export default {
       this.formVoluntario.id = "";
       this.formVoluntario.cantidad = "";
     },
+     limpiarPersona() {
+      this.formPer.nombre = ""
+      this.formPer.apellido1 = ""
+      this.formPer.apellido2 = ""
+      this.formPer.telefono = ""
+      this.formPer.correo = ""
+      this.formPer.errors.clear();
+    },
+
     SiExisteCedula() {
       for (let i = 0; i < this.cedulas.length; i++) {
         if (this.cedulas[i].id == this.buscadorC) {
@@ -544,7 +553,7 @@ export default {
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Ocurrio un problema",
+           title: "Cedula existente o campos vacios",
           });
         });
     },

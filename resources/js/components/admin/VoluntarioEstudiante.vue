@@ -34,7 +34,7 @@
                     <th>Cedula de voluntario</th>
                     <th>Id de voluntario</th>
                     <th>Carrera</th>
-                    
+
                     <th>Foto</th>
                     <th>Funciones</th>
                   </tr>
@@ -48,7 +48,7 @@
                     <td>{{ voluntarioestudiante.identificacion }}</td>
                     <td>{{ voluntarioestudiante.voluntariado_id }}</td>
                     <td>{{ voluntarioestudiante.carrera }}</td>
-                    
+
                     <td>
                       <img
                         v-bind:src="
@@ -198,7 +198,7 @@
                   <input
                     :disabled="bloquearCamposIdVoluntario"
                     v-model="formVoluntario.id"
-                    type="text"
+                    type="number"
                     name="id"
                     class="form-control"
                     :class="{
@@ -219,23 +219,55 @@
                   />
                   <has-error :form="form" field="carrera"></has-error>
                 </div>
+
                 <div class="form-group">
-                  <label for="imagen" class="col-sm-2 control-label"
-                    >Imagen</label
-                  >
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      @change="updatePhoto"
-                      name="imagen"
-                      class="custom-file-input"
-                      :disabled="bloquearCamposExtras"
-                      :class="{ 'is-invalid': form.errors.has('imagen') }"
-                    />
-                    <has-error :form="form" field="imagen"></has-error>
-                    <label class="custom-file-label" for="inputGroupFile01"
-                      >Seleccione un imagen</label
+                  <div>
+                    <div class="row">
+                      <div class="col-8">
+                        <label class="btn btn-default p-0">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            ref="file"
+                            name="imagen"
+                            @change="updatePhoto"
+                            :disabled="bloquearCamposExtras"
+                            :class="{ 'is-invalid': form.errors.has('imagen') }"
+                          />
+                          <has-error :form="form" field="imagen"></has-error>
+                        </label>
+                      </div>
+                      <div class="col-4"></div>
+                    </div>
+                    <div v-if="currentImage" class="progress">
+                      <div
+                        class="progress-bar progress-bar-info"
+                        role="progressbar"
+                        :aria-valuenow="progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        :style="{ width: progress + '%' }"
+                      >
+                        {{ progress }}%
+                      </div>
+                    </div>
+                    <div v-if="previewImage">
+                      <div>
+                        <img
+                          class="preview my-3"
+                          :src="previewImage"
+                          alt=""
+                          width="100px"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      v-if="message"
+                      class="alert alert-secondary"
+                      role="alert"
                     >
+                      {{ message }}
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -243,7 +275,7 @@
                   <input
                     :disabled="bloquearCamposExtras"
                     v-model="formVoluntario.cantidad"
-                    type="text"
+                    type="number"
                     name="cantidad"
                     class="form-control"
                     :class="{
@@ -289,7 +321,7 @@
             <div class="modal-header">
               <h4 class="modal-title">{{ tituloModal }}</h4>
               <button
-                @click="cerrarModal()"
+                @click="cerrarModal(), limpiarPersona()"
                 type="button"
                 class="close"
                 data-dismiss="modal"
@@ -369,7 +401,7 @@
             <!-- Modal footer -->
             <div class="modal-footer">
               <button
-                @click="cerrarModal()"
+                @click="cerrarModal(), limpiarPersona()"
                 type="button"
                 class="btn btn-secondary"
                 data-dismiss="modal"
@@ -396,6 +428,12 @@
 export default {
   data() {
     return {
+      currentImage: undefined,
+      previewImage: undefined,
+      progress: 0,
+      message: "",
+      imageInfos: [],
+
       MensajeCedula: "",
       MensajeCedula2: "Se encontro la cedula!",
       showBuscadores: false, //se oculta al editar
@@ -439,6 +477,8 @@ export default {
   methods: {
     updatePhoto(e) {
       let file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.currentImage = file;
       let reader = new FileReader();
 
       if (file["size"] < 2111775) {
@@ -486,6 +526,11 @@ export default {
       this.showBuscadores = true;
       this.form.errors.clear();
       this.formVoluntario.errors.clear();
+      this.showMensajesCedula2 = false;
+      this.CedulaBloqueo = false;
+      this.buscadorC = "";
+      this.bloquearCamposExtras = true;
+      this.bloquearCamposIdVoluntario = true;
     },
     abrirModal(data = {}) {
       this.modal = 1;
@@ -510,6 +555,14 @@ export default {
       this.bloquearCamposIdVoluntario = true;
       this.formVoluntario.id = "";
       this.formVoluntario.cantidad = "";
+    },
+    limpiarPersona() {
+      this.formPer.nombre = "";
+      this.formPer.apellido1 = "";
+      this.formPer.apellido2 = "";
+      this.formPer.telefono = "";
+      this.formPer.correo = "";
+      this.formPer.errors.clear();
     },
     SiExisteCedula() {
       for (let i = 0; i < this.cedulas.length; i++) {
@@ -598,7 +651,7 @@ export default {
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Ocurrio un problema",
+            title: "Cedula existente o campos vacios",
           });
         });
     },
@@ -612,7 +665,9 @@ export default {
     async crearVoluntarioEst() {
       this.$Progress.start();
       this.form.voluntariado_id = this.formVoluntario.id;
-      this.formVoluntario.post("/api/voluntario", { params:{id: this.formVoluntario.id}});
+      this.formVoluntario.post("/api/voluntario", {
+        params: { id: this.formVoluntario.id },
+      });
       this.form
         .post("/api/voluntarioEstudiante/")
         .then((response) => {
