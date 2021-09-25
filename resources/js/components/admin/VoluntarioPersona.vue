@@ -51,9 +51,7 @@
                         href="#"
                         @click="
                           editModal(voluntariopersonas),
-                            ObtenerCantidad(
-                              voluntariopersonas.voluntariado_id
-                            )
+                            ObtenerCantidad(voluntariopersonas.voluntariado_id)
                         "
                       >
                         <i class="fa fa-edit blue"></i>
@@ -207,7 +205,7 @@
                   />
                   <has-error :form="form" field="lugar"></has-error>
                 </div>
-                
+
                 <div class="form-group">
                   <label>Cantidad de actividades</label>
                   <input
@@ -427,12 +425,16 @@ export default {
       this.bloquearCamposExtras = false;
       this.bloquearCamposIdVoluntario = true;
       this.formVoluntario.cantidad = this.CantidadActividades.cantidad;
+      this.form.errors.clear();
+      this.formVoluntario.errors.clear();
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
       $("#addNew").modal("show");
       this.showBuscadores = true;
+      this.form.errors.clear();
+      this.formVoluntario.errors.clear();
     },
     abrirModal(data = {}) {
       this.modal = 1;
@@ -556,7 +558,9 @@ export default {
     async crearVoluntarioPer() {
       this.$Progress.start();
       this.form.voluntariado_id = this.formVoluntario.id;
-      this.formVoluntario.post("/api/voluntario", { params:{id: this.formVoluntario.id}});
+      this.formVoluntario.post("/api/voluntario", {
+        params: { id: this.formVoluntario.id },
+      });
       this.form
         .post("/api/voluntarioPersona/")
         .then((response) => {

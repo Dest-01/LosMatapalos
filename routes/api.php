@@ -45,10 +45,6 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
         'user' => 'UserController',
-        'product' => 'ProductController',
-        'category' => 'CategoryController',
-        'tag' => 'TagController',
-        'test' => 'TestController',
         ////RUTAS ADMIN API
         'catDonativo' => 'CatDonativosController',
         'donativo' => 'DonativosController',

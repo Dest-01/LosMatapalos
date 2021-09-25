@@ -8,9 +8,12 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>{{ config('app.name', 'Laravel') }}</title>
-  
+
 
   <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+
+
+  <script src="{{ asset('/js/utilitarios.js') }}"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
@@ -54,7 +57,7 @@
         <router-link to="/profile">
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
               <div class="image">
-                <img src="{{ auth()->user()->photo }}" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ asset('/images/profile.png') }}" class="img-circle elevation-2" alt="User Image">
               </div>
               <div class="info">
 
@@ -108,7 +111,7 @@
   <footer class="main-footer">
     {{-- To the right --}}
     <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.0
+     
     </div>
     {{-- Default to the left --}}
     <strong>Copyright &copy; 2021-2022 <a href="">Los Matapalos</a>.</strong> All rights reserved.

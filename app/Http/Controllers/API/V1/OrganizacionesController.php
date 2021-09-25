@@ -58,9 +58,9 @@ class OrganizacionesController extends BaseController
                 'correo' => $request->get('correo'),
             ]);
     
-            return $this->sendResponse($tag, 'Organización creada');
+            return $this->sendResponse($tag, 'Datos creados');
             }
-            return $this->sendResponse('Organización no creado');
+            return $this->sendError($tag, 'La cedula ya existe');
     }
 
     /**
@@ -87,7 +87,7 @@ class OrganizacionesController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Organización Actualizada');
+        return $this->sendResponse($tag, 'Datos actualizados');
     }
 
     /**
@@ -104,6 +104,6 @@ class OrganizacionesController extends BaseController
 
         $organizaciones->delete();
 
-        return $this->sendResponse($organizaciones, 'Organización eliminada');
+        return $this->sendResponse($organizaciones, 'Datos eliminados');
     }
 }

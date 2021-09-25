@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Http\Requests\admin\DonativosRequest;
 use App\Models\Donativos;
 use Illuminate\Http\Request;
 use App\Models\Personas;
@@ -62,8 +61,28 @@ class DonativosController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DonativosRequest $request)
+    public function store(Request $request)
     {
+        $rules = [
+            'tipo' => 'required|string|max:50',
+            'detalle' => 'required|string|max:255',
+            'fecha' => 'required|date',
+            'photo' => 'required',
+            'estado' => 'required|string|',
+
+        ];
+    
+        $messages = [
+            'tipo.*' => 'Seleccione un tipo de donativo',
+            'detalle.*' => 'Breve descripción del donativo',
+            'fecha.*' => 'Seleccione fecha de donativo',
+            'photo.*' => 'Cargue una foto',
+            'estado.*' => 'Seleccione un estado del donativo',
+        ];
+
+
+        $this->validate($request, $rules, $messages);
+
         if($request->photo){
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos
             ($request->photo, ';')))[1])[1];
@@ -103,8 +122,26 @@ class DonativosController extends BaseController
      * @param  \App\Models\Donativos  $donativos
      * @return \Illuminate\Http\Response
      */
-    public function update(DonativosRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        $rules = [
+            'tipo' => 'required|string|max:50',
+            'detalle' => 'required|string|max:255',
+            'fecha' => 'required|date',
+            'estado' => 'required|string|',
+
+        ];
+    
+        $messages = [
+            'tipo.*' => 'Seleccione un tipo de donativo',
+            'detalle.*' => 'Breve descripción del donativo',
+            'fecha.*' => 'Seleccione fecha de donativo',
+            'estado.*' => 'Seleccione un estado del donativo',
+        ];
+
+
+        $this->validate($request, $rules, $messages);
+
         $tag = $this->donativos->findOrFail($id);
 
         $currentPhoto = $tag->photo;

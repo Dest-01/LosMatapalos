@@ -38,13 +38,6 @@ Route::get('/dashboard', function () {
     return view('admin');
 })->where('dashboard', '[\/\w\.-]*')->middleware('auth');
 
-Route::get('/products', function () {
-    return view('admin');
-})->where('products', '[\/\w\.-]*')->middleware('auth');
-
-Route::get('/product/test', function () {
-    return view('admin');
-})->where('product/test', '[\/\w\.-]*')->middleware('auth');
 /////////////////////----FIN-ADMIN Y PRUEBAS---//////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////

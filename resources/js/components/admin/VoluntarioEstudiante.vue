@@ -476,12 +476,16 @@ export default {
       this.bloquearCamposExtras = false;
       this.bloquearCamposIdVoluntario = true;
       this.formVoluntario.cantidad = this.CantidadActividades.cantidad;
+      this.form.errors.clear();
+      this.formVoluntario.errors.clear();
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
       $("#addNew").modal("show");
       this.showBuscadores = true;
+      this.form.errors.clear();
+      this.formVoluntario.errors.clear();
     },
     abrirModal(data = {}) {
       this.modal = 1;

@@ -100,7 +100,7 @@
                   <label>Cedula Jurídica</label>
                   <input
                     v-model="form.id"
-                    type="text"
+                    type="number"
                     name="id"
                     class="form-control"
                     :disabled="CedulaBloqueo"
@@ -225,12 +225,14 @@ export default {
       this.CedulaBloqueo = true;
       $("#addNew").modal("show");
       this.form.fill(organizacion);
+       this.form.errors.clear();
     },
     newModal() {
       this.editmode = false;
       this.CedulaBloqueo = false;
       this.form.reset();
       $("#addNew").modal("show");
+       this.form.errors.clear();
     },
     limpiar() {
       this.form.nombre = ""
@@ -268,7 +270,7 @@ export default {
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Ocurrio un problema",
+            title: "Cedula existente o campos vacios",
           });
 
           

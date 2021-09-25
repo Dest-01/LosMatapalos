@@ -52,7 +52,6 @@ class OrganizacionesRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'id' => 'required|string|max:18|min:8',
             'nombre' => 'required|string|max:20|min:3',
             'telefono' => 'required',
             'correo' => 'required',

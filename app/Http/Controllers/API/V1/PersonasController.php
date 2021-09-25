@@ -70,9 +70,9 @@ class PersonasController extends BaseController
                     'telefono' => $request->get('telefono'),
                     'correo' => $request->get('correo'),
                 ]);
-                return $this->sendResponse($tag, 'Registro creado');
+                return $this->sendResponse($tag, 'Datos registrados');
             }
-            return $this->sendResponse($tag, 'Registro no creado');
+            return $this->sendResponse($tag, 'Datos no registrados');
     
     }
 
@@ -100,7 +100,7 @@ class PersonasController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Persona Actualizada');
+        return $this->sendResponse($tag, 'Datos actualizados');
     }
 
     /**
@@ -117,6 +117,6 @@ class PersonasController extends BaseController
 
         $personas->delete();
 
-        return $this->sendResponse($personas, 'Persona eliminada');
+        return $this->sendResponse($personas, 'Datos eliminados');
     }
 }

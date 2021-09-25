@@ -105,12 +105,12 @@ background: #fff;
 color: #6172b9;
 }
 
-.nav-dropdown {
-position: absolute;
-display: none;
-z-index: 1;
-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.966);
+.navbar .dropdown-menu a:not(.active) {
+    color: #f8f8f8;
+    font-size: 20px;
+    font-weight: 400;
 }
+
 dropdown-menu{
 background: cadetblue;
 border-radius: 10px;

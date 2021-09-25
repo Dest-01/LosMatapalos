@@ -284,8 +284,6 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-               
-                
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -300,7 +298,7 @@
             >
               <div class="modal-body">
                 <div v-show="show" class="form-group">
-                  <label>Cedula a registrar:</label>
+                  <label>Cédula a consultar:</label>
                   <input
                     v-model="buscador"
                     type="text"
@@ -310,7 +308,16 @@
                   />
                 </div>
                 <div>
-                  <label v-show="showExistenciaCedula" v-text="MensajeCedula" style="color: red"></label>
+                  <label
+                    v-show="showExistenciaCedula"
+                    v-text="MensajeCedula"
+                    style="color: red"
+                  ></label>
+                  <label
+                    v-show="showMensajesCedula2"
+                    v-text="MensajeCedula2"
+                    style="color: green"
+                  ></label>
                 </div>
                 <div v-show="show" class="form-group">
                   <button
@@ -321,6 +328,14 @@
                     "
                   >
                     Comprobar cedula
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger my-4"
+                    @click="cancelarCedula()"
+                    style="width: 100px; height: 40px"
+                  >
+                    Cancelar
                   </button>
                 </div>
                 <div v-show="showIdentificacion" class="form-group">
@@ -375,21 +390,55 @@
                   />
                   <has-error :form="form" field="detalle"></has-error>
                 </div>
+
                 <div class="form-group">
-                  <label for="photo" class="col-sm-2 control-label">Foto</label>
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      @change="updatePhoto"
-                      name="photo"
-                      class="custom-file-input"
-                      :disabled="isDisabled"
-                      id="inputGroupFile01"
-                      :class="{ 'is-invalid': form.errors.has('photo') }"
-                    />
-                    <label class="custom-file-label" for="inputGroupFile01"
-                      >Seleccione un imagen</label
+                  <div>
+                    <div class="row">
+                      <div class="col-8">
+                        <label class="btn btn-default p-0">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            ref="file"
+                            name="photo"
+                            @change="updatePhoto"
+                            :disabled="isDisabled"
+                            :class="{ 'is-invalid': form.errors.has('photo') }"
+                          />
+                          <has-error :form="form" field="photo"></has-error>
+                        </label>
+                      </div>
+                      <div class="col-4"></div>
+                    </div>
+                    <div v-if="currentImage" class="progress">
+                      <div
+                        class="progress-bar progress-bar-info"
+                        role="progressbar"
+                        :aria-valuenow="progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        :style="{ width: progress + '%' }"
+                      >
+                        {{ progress }}%
+                      </div>
+                    </div>
+                    <div v-if="previewImage">
+                      <div>
+                        <img
+                          class="preview my-3"
+                          :src="previewImage"
+                          alt=""
+                          width="100px"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      v-if="message"
+                      class="alert alert-secondary"
+                      role="alert"
                     >
+                      {{ message }}
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -438,6 +487,7 @@
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
+                  :disabled="isDisabled"
                 >
                   Registrar
                 </button>
@@ -452,9 +502,18 @@
 
 <script>
 export default {
+  name: "upload-image",
   data() {
     return {
-      MensajeCedula: "Digite un numero de cedula",
+      currentImage: undefined,
+      previewImage: undefined,
+      progress: 0,
+      message: "",
+      imageInfos: [],
+
+      MensajeCedula2: "Se encontro la cedula!",
+      MensajeCedula: "",
+      showMensajesCedula2: false,
       showExistenciaCedula: false,
       showPersona: true,
       showOrganizacion: false,
@@ -498,6 +557,13 @@ export default {
     };
   },
   methods: {
+    selectImage() {
+      this.currentImage = this.$refs.file.files.item(0);
+      this.previewImage = URL.createObjectURL(this.currentImage);
+      this.progress = 0;
+      this.message = "";
+    },
+
     abrirModal(data = {}) {
       this.modal = 1;
       (this.id = 0), (this.tituloModal = "Registro cliente");
@@ -515,6 +581,8 @@ export default {
     },
     updatePhoto(e) {
       let file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.currentImage = file;
       let reader = new FileReader();
 
       if (file["size"] < 2111775) {
@@ -547,6 +615,8 @@ export default {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
           this.form.idPersona = this.buscador;
+          this.showMensajesCedula2 = true;
+          this.showExistenciaCedula = false;
         }
       }
     },
@@ -556,15 +626,15 @@ export default {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
           this.form.idOrganizacion = this.buscador;
-        
+          this.showMensajesCedula2 = true;
+          this.showExistenciaCedula = false;
         }
       }
     },
     NoexisteCedula() {
       if (this.cedulas.length == 0 && this.cedulasOrg.length == 0) {
         this.showExistenciaCedula = true;
-         this.MensajeCedula =
-          "El numero de cedula no esta registrado";
+        this.MensajeCedula = "El numero de cedula no esta registrado";
       }
       if (this.buscador.length == 0) {
         this.showExistenciaCedula = true;
@@ -590,6 +660,15 @@ export default {
       this.formOrg.telefono = "";
       this.formOrg.correo = "";
       this.formOrg.errors.clear();
+      this.showExistenciaCedula = false;
+      this.showMensajesCedula2 = false;
+    },
+    cancelarCedula() {
+      this.isDisabled = true;
+      this.CedulaBloqueo = false;
+      (this.buscador = ""), (this.showExistenciaCedula = false);
+      this.showMensajesCedula2 = false;
+      this.form.errors.clear();
     },
     ConsultaCedula() {
       this.form
@@ -641,6 +720,8 @@ export default {
       this.show = false;
       this.showIdentificacion = true;
       this.showExistenciaCedula = false;
+      this.showMensajesCedula2 = false;
+      this.form.errors.clear();
     },
     newModal() {
       this.editmode = false;
@@ -652,6 +733,7 @@ export default {
       this.CedulaBloqueo = false;
       this.showIdentificacion = false;
       this.showExistenciaCedula = false;
+      this.form.errors.clear();
     },
 
     cargarDonativos() {
@@ -702,7 +784,7 @@ export default {
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Ocurrio un problema",
+            title: "Cedula existente o campos vacios",
           });
         });
     },
@@ -724,7 +806,7 @@ export default {
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Ocurrio un problema",
+            title: "Cedula existente o campos vacios",
           });
         });
     },
