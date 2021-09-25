@@ -37,6 +37,7 @@ class VoluntarioRequest extends FormRequest
     public function createRules(): array
     {
         return [
+            'id' => 'required|integer|',
             'cantidad' => 'required|integer|',
         ];
     }
@@ -49,12 +50,14 @@ class VoluntarioRequest extends FormRequest
     public function updateRules(): array
     {
         return [
+            'id' => 'required|integer|',
             'cantidad' => 'required|integer|',
         ];
     }
 
     public function messages(){
         return [
+            'id.*' => 'Se requiere un id y solo números',
             'cantidad.*' => 'Se requiere una cantidad y solo números',
         ];
     }

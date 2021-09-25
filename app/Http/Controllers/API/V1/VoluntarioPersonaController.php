@@ -34,12 +34,11 @@ class VoluntarioPersonaController extends BaseController
        
     }
 
-    public function obtenerNombreVoluntario(Request $request)
+    public function obtenerCantidad(Request $request)
     {
-        $filtro = $request->buscadorV;
-        $voluntario = Voluntario::where('nombre', $filtro)->get();
-            return $this->sendResponse($voluntario, 'Voluntario si existe');
-        
+        $filtro = $request->VolCantidad;
+        $cantidad = Voluntario::where('id', $filtro)->get();
+            return $this->sendResponse($cantidad, 'Se encontro el id si existe');
        
     }
 
@@ -66,6 +65,7 @@ class VoluntarioPersonaController extends BaseController
         $tag = $this->voluntarioPersona->create([
             'identificacion' => $request->get('identificacion'),
             'voluntariado_id' => $request->get('voluntariado_id'),
+            'lugar' => $request->get('lugar'),
         ]);
 
         return $this->sendResponse($tag, 'Voluntario persona creado');

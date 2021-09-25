@@ -39,6 +39,7 @@ class VoluntarioPersonasRequest extends FormRequest
         return [
             'identificacion' => 'required|string|',
             'voluntariado_id' => 'required|integer|',
+            'lugar' => 'required|string|',
             
         ];
     }
@@ -51,15 +52,15 @@ class VoluntarioPersonasRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'Universidad' => 'required|string|min:2|max:20',
-            'carrera' => 'required|string|min:2|max:50',
+            'lugar' => 'required|string|',
         ];
     }
 
     public function messages(){
         return [
             'identificacion.*' => 'La cedula se requiere, compruebe si existe',
-            'voluntariado_id.*' => 'El nombre de voluntario se requiere, compruebe si existe',
+            'voluntariado_id.*' => 'Se requiere un id, solo numeros',
+            'lugar.*' => 'Se requiere lugar de procedencia',
         ];
     }
 }

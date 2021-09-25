@@ -35,16 +35,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    v-for="Actividad in Actividades.data"
-                    :key="Actividad.id"
-                    >
+                  <tr v-for="Actividad in Actividades.data" :key="Actividad.id">
                     <td>{{ Actividad.id }}</td>
                     <td class="text-capitalize">{{ Actividad.nombre }}</td>
                     <td class="text-capitalize">{{ Actividad.fecha }}</td>
                     <td class="text-capitalize">{{ Actividad.hora }}</td>
                     <td class="text-capitalize">{{ Actividad.descripcion }}</td>
-                    <td class="text-capitalize">{{ Actividad.cantParticipantes }}</td>
+                    <td class="text-capitalize">
+                      {{ Actividad.cantParticipantes }}
+                    </td>
                     <td>
                       <img
                         v-bind:src="'/images/Actividades/' + Actividad.imagen"
@@ -52,8 +51,12 @@
                         height="50px"
                       />
                     </td>
-                    <td class="text-capitalize">{{ Actividad.listaParticipantes }}</td>
-                    <td class="text-capitalize">{{ Actividad.idvoluntarios }}</td>
+                    <td class="text-capitalize">
+                      {{ Actividad.listaParticipantes }}
+                    </td>
+                    <td class="text-capitalize">
+                      {{ Actividad.idvoluntarios }}
+                    </td>
                     <td>
                       <a href="#" @click="editModal(Actividad)">
                         <i class="fa fa-edit blue"></i>
@@ -155,7 +158,6 @@
                   <has-error :form="form" field="hora"></has-error>
                 </div>
 
-
                 <div class="form-group">
                   <label>Descripcion</label>
                   <input
@@ -175,7 +177,9 @@
                     type="number"
                     name="cantParticipantes"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('cantParticipantes') }"
+                    :class="{
+                      'is-invalid': form.errors.has('cantParticipantes'),
+                    }"
                   />
                   <has-error :form="form" field="cantParticipantes"></has-error>
                 </div>
@@ -196,32 +200,35 @@
                       >Seleccione un imagen</label
                     >
                   </div>
-
-                  <div class="form-group">
+                </div>
+                <div class="form-group">
                   <label>Lista Participantes</label>
                   <input
                     v-model="form.listaParticipantes"
                     type="text"
                     name="listaParticipantes"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('listaParticipantes') }"
-                    />
-                    <has-error :form="form" field="listaParticipantes"></has-error>
-                  </div>
-                  <div class="form-group">
-                    <label>Id Voluntarios</label>
-                    <input
-                      v-model="form.idvoluntarios"
-                      type="number"
-                      name="idvoluntario"
-                      class="form-control"
-                      :class="{ 'is-invalid': form.errors.has('idvoluntarios') }"
-                    />
-                    <has-error :form="form" field="idVoluntarios"></has-error>
-                  </div>
+                    :class="{
+                      'is-invalid': form.errors.has('listaParticipantes'),
+                    }"
+                  />
+                  <has-error
+                    :form="form"
+                    field="listaParticipantes"
+                  ></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Id Voluntarios</label>
+                  <input
+                    v-model="form.idvoluntarios"
+                    type="number"
+                    name="idvoluntario"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('idvoluntarios') }"
+                  />
+                  <has-error :form="form" field="idVoluntarios"></has-error>
                 </div>
               </div>
-
 
               <div class="modal-footer">
                 <button
@@ -257,19 +264,19 @@ export default {
       editmode: false,
       Actividades: {},
       form: new Form({
-        id:"",
+        id: "",
         nombre: "",
         fecha: "",
         hora: "",
-        descripcion:"",
+        descripcion: "",
         cantParticipantes: "",
-        imagen:"",
-        listaParticipantes:"",
-        idvoluntarios:"",
+        imagen: "",
+        listaParticipantes: "",
+        idvoluntarios: "",
       }),
     };
   },
-   methods: {
+  methods: {
     updatePhoto(e) {
       let file = e.target.files[0];
       let reader = new FileReader();
@@ -335,7 +342,7 @@ export default {
       }
     },
 
-    crearActividad(){
+    crearActividad() {
       this.$Progress.start();
       this.form
         .post("/api/actividad")
@@ -412,5 +419,4 @@ export default {
 </script>
 
 <style>
-
 </style>

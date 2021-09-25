@@ -33,7 +33,8 @@
                     <th>Id</th>
                     <th>Cedula de voluntario</th>
                     <th>Id de voluntario</th>
-                     <th>Carrera</th>
+                    <th>Carrera</th>
+                    
                     <th>Foto</th>
                     <th>Funciones</th>
                   </tr>
@@ -47,21 +48,37 @@
                     <td>{{ voluntarioestudiante.identificacion }}</td>
                     <td>{{ voluntarioestudiante.voluntariado_id }}</td>
                     <td>{{ voluntarioestudiante.carrera }}</td>
-                   <td>
+                    
+                    <td>
                       <img
-                        v-bind:src="'/images/voluntariado/' + voluntarioestudiante.photo"
+                        v-bind:src="
+                          '/images/voluntariado/' + voluntarioestudiante.imagen
+                        "
                         width="50px"
                         height="50px"
                       />
                     </td>
                     <td>
-                      <a href="#" @click="editModal(voluntarioestudiante)">
+                      <a
+                        href="#"
+                        @click="
+                          editModal(voluntarioestudiante),
+                            ObtenerCantidad(
+                              voluntarioestudiante.voluntariado_id
+                            )
+                        "
+                      >
                         <i class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a
                         href="#"
-                        @click="eliminarVoluntarioEst(voluntarioestudiante.id)"
+                        @click="
+                          eliminarVoluntarioEst(
+                            voluntarioestudiante.id,
+                            voluntarioestudiante.voluntariado_id
+                          )
+                        "
                       >
                         <i class="fa fa-trash red"></i>
                       </a>
@@ -119,8 +136,7 @@
 
             <form
               @submit.prevent="
-                editmode ? actualizarVoluntarioEst() : crearVoluntario(),
-                  crearVoluntarioEst()
+                editmode ? actualizarVoluntarioEst() : crearVoluntarioEst()
               "
             >
               <div class="modal-body">
@@ -180,13 +196,13 @@
                 <div class="form-group">
                   <label>Id del voluntario</label>
                   <input
-                    :disabled="bloquearCamposExtras"
+                    :disabled="bloquearCamposIdVoluntario"
                     v-model="formVoluntario.id"
                     type="text"
                     name="id"
                     class="form-control"
                     :class="{
-                      'is-invalid': form.errors.has('id'),
+                      'is-invalid': formVoluntario.errors.has('id'),
                     }"
                   />
                   <has-error :form="formVoluntario" field="id"></has-error>
@@ -203,12 +219,20 @@
                   />
                   <has-error :form="form" field="carrera"></has-error>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                   <label for="imagen" class="col-sm-2 control-label"
                     >Imagen</label
                   >
                   <div class="custom-file">
-                    <input @change="updatePhoto" type="file" name="photo" accept="image/*" class="custom-file-input">
+                    <input
+                      type="file"
+                      @change="updatePhoto"
+                      name="imagen"
+                      class="custom-file-input"
+                      :disabled="bloquearCamposExtras"
+                      :class="{ 'is-invalid': form.errors.has('imagen') }"
+                    />
+                    <has-error :form="form" field="imagen"></has-error>
                     <label class="custom-file-label" for="inputGroupFile01"
                       >Seleccione un imagen</label
                     >
@@ -248,6 +272,7 @@
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
+                  :disabled="bloquearCamposExtras"
                 >
                   Registrar
                 </button>
@@ -378,12 +403,14 @@ export default {
       showMensajesCedula2: false,
       bloquearCedulaVoluntario: true,
       bloquearCamposExtras: true,
+      bloquearCamposIdVoluntario: true,
       editmode: false,
       CedulaBloqueo: false,
       buscadorC: "",
       errors: {},
       cedulas: {},
       voluntarios: {},
+      CantidadActividades: {},
       voluntarioEst: {},
       form: new Form({
         id: "",
@@ -410,8 +437,7 @@ export default {
     };
   },
   methods: {
-    
-      updatePhoto(e) {
+    updatePhoto(e) {
       let file = e.target.files[0];
       let reader = new FileReader();
 
@@ -429,10 +455,8 @@ export default {
         });
       }
     },
-
     getResults(page = 1) {
       this.$Progress.start();
-
       axios
         .get("/api/voluntarioEstudiante?page=" + page)
         .then(({ data }) => (this.voluntarioEst = data.data));
@@ -449,6 +473,9 @@ export default {
       this.showMensajesCedula2 = false;
       this.showMensajesCedula = false;
       this.showMensajesVoluntario = false;
+      this.bloquearCamposExtras = false;
+      this.bloquearCamposIdVoluntario = true;
+      this.formVoluntario.cantidad = this.CantidadActividades.cantidad;
     },
     newModal() {
       this.editmode = false;
@@ -465,19 +492,20 @@ export default {
     },
     limpiar() {
       this.form.identificacion = "";
-      this.form.voluntario_id = "";
-      this.form.photo = "";
+      this.form.voluntariado_id = "";
+      this.form.imagen = "";
       this.form.carrera = "";
       this.buscadorC = "";
-      this.buscadorV = "";
-      this.showMensajesVoluntario2 = false;
       this.showMensajesCedula2 = false;
       this.showMensajesCedula = false;
-      this.showMensajesVoluntario = false;
       this.CedulaBloqueo = false;
       this.VoluntarioBloqueo = false;
       this.form.errors.clear();
+      this.formVoluntario.errors.clear();
       this.bloquearCamposExtras = true;
+      this.bloquearCamposIdVoluntario = true;
+      this.formVoluntario.id = "";
+      this.formVoluntario.cantidad = "";
     },
     SiExisteCedula() {
       for (let i = 0; i < this.cedulas.length; i++) {
@@ -487,7 +515,14 @@ export default {
           this.CedulaBloqueo = true;
           this.form.identificacion = this.buscadorC;
           this.bloquearCamposExtras = false;
+          this.bloquearCamposIdVoluntario = false;
         }
+      }
+    },
+    editarVoluntario() {
+      for (let i = 0; i < this.CantidadActividades.length; i++) {
+        this.formVoluntario.id = this.CantidadActividades[i].id;
+        this.formVoluntario.cantidad = this.CantidadActividades[i].cantidad;
       }
     },
     cancelarCedula() {
@@ -496,6 +531,9 @@ export default {
       this.showMensajesCedula2 = false;
       this.form.identificacion = "";
       this.bloquearCamposExtras = true;
+      this.bloquearCamposIdVoluntario = true;
+      this.form.errors.clear();
+      this.formVoluntario.errors.clear();
     },
 
     NoexisteCedula() {
@@ -519,6 +557,16 @@ export default {
         .then(({ data }) => (this.cedulas = data.data))
         .then((response) => {
           this.SiExisteCedula();
+        });
+    },
+    async ObtenerCantidad(VoluntarioId) {
+      this.form
+        .get("/api/voluntarioEstudiante/obtenerCantidad", {
+          params: { VolCantidad: VoluntarioId },
+        })
+        .then(({ data }) => (this.CantidadActividades = data.data))
+        .then((response) => {
+          this.editarVoluntario();
         });
     },
     cargarVoluntarioEst() {
@@ -557,30 +605,10 @@ export default {
           .then(({ data }) => (this.voluntarios = data.data));
       }
     },
-    crearVoluntario() {
-      this.formVoluntario
-        .post("/api/voluntario/")
-        .then((response) => {
-          $("#addNew").modal("hide");
-
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-
-          this.$Progress.finish();
-          this.cargarVoluntario();
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Ocurrio un problema!",
-          });
-        });
-    },
     async crearVoluntarioEst() {
-       this.$Progress.start();
+      this.$Progress.start();
       this.form.voluntariado_id = this.formVoluntario.id;
+      this.formVoluntario.post("/api/voluntario", { params:{id: this.formVoluntario.id}});
       this.form
         .post("/api/voluntarioEstudiante/")
         .then((response) => {
@@ -592,6 +620,7 @@ export default {
           });
 
           this.$Progress.finish();
+          this.cargarVoluntario();
           this.cargarVoluntarioEst();
         })
         .catch(() => {
@@ -603,6 +632,7 @@ export default {
     },
     actualizarVoluntarioEst() {
       this.$Progress.start();
+      this.formVoluntario.put("/api/voluntario/" + this.formVoluntario.id);
       this.form
         .put("/api/voluntarioEstudiante/" + this.form.id)
         .then((response) => {
@@ -614,14 +644,14 @@ export default {
           });
           this.$Progress.finish();
           //  Fire.$emit('AfterCreate');
-
+          this.cargarVoluntario();
           this.cargarVoluntarioEst();
         })
         .catch(() => {
           this.$Progress.fail();
         });
     },
-    eliminarVoluntarioEst(id) {
+    eliminarVoluntarioEst(id, idvoluntaario) {
       Swal.fire({
         title: "Seguro que lo desea eliminar?",
         text: "Esta acción no puede revertirse!",
@@ -632,8 +662,9 @@ export default {
       }).then((result) => {
         // Send request to the server
         if (result.value) {
+          this.form.delete("/api/voluntarioEstudiante/" + id);
           this.form
-            .delete("/api/voluntarioEstudiante/" + id)
+            .delete("/api/voluntario/" + idvoluntaario)
             .then(() => {
               Swal.fire(
                 "Eliminado!",
@@ -656,14 +687,15 @@ export default {
   created() {
     this.$Progress.start();
     this.cargarVoluntarioEst();
+    this.cargarVoluntario();
     this.$Progress.finish();
   },
-   filters: {
+  filters: {
     truncate: function (text, length, suffix) {
       return text.substring(0, length) + suffix;
     },
   },
-    computed: {
+  computed: {
     filteredItems() {
       return this.autocompleteItems.filter((i) => {
         return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;

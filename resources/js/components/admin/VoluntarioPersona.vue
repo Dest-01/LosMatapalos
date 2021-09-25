@@ -31,28 +31,42 @@
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Cedula de persona</th>
+                    <th>Cedula de voluntario</th>
                     <th>Id de voluntario</th>
+                    <th>Lugar</th>
                     <th>Funciones</th>
-                    
                   </tr>
                 </thead>
                 <tbody>
                   <tr
-                    v-for="voluntariopersona in voluntarioPer.data"
-                    :key="voluntariopersona.id"
+                    v-for="voluntariopersonas in voluntarioPer.data"
+                    :key="voluntariopersonas.id"
                   >
-                    <td>{{ voluntariopersona.id }}</td>
-                    <td>{{ voluntariopersona.identificacion }}</td>
-                    <td>{{ voluntariopersona.voluntariado_id }}</td>
+                    <td>{{ voluntariopersonas.id }}</td>
+                    <td>{{ voluntariopersonas.identificacion }}</td>
+                    <td>{{ voluntariopersonas.voluntariado_id }}</td>
+                    <td>{{ voluntariopersonas.lugar }}</td>
                     <td>
-                      <a href="#" @click="editModal(voluntariopersona)">
+                      <a
+                        href="#"
+                        @click="
+                          editModal(voluntariopersonas),
+                            ObtenerCantidad(
+                              voluntariopersonas.voluntariado_id
+                            )
+                        "
+                      >
                         <i class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a
                         href="#"
-                        @click="eliminarVoluntarioPer(voluntariopersona.id)"
+                        @click="
+                          eliminarVoluntarioPer(
+                            voluntariopersonas.id,
+                            voluntariopersonas.voluntariado_id
+                          )
+                        "
                       >
                         <i class="fa fa-trash red"></i>
                       </a>
@@ -100,7 +114,7 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                @click="limpiar(), cancelarCedula()"
+                @click="limpiar()"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -110,7 +124,7 @@
 
             <form
               @submit.prevent="
-                editmode ? actualizarVoluntarioPer() : crearVoluntario(), crearVoluntarioPer()
+                editmode ? actualizarVoluntarioPer() : crearVoluntarioPer()
               "
             >
               <div class="modal-body">
@@ -141,9 +155,7 @@
                     type="button"
                     class="btn btn-success my-4"
                     style="width: 155px; height: 40px"
-                    @click="
-                      ConsultaCedula(), NoexisteCedula()
-                    "
+                    @click="ConsultaCedula(), NoexisteCedula()"
                   >
                     Comprobar cedula
                   </button>
@@ -172,13 +184,13 @@
                 <div class="form-group">
                   <label>Id del voluntario</label>
                   <input
-                    :disabled="bloquearCamposExtras"
+                    :disabled="bloquearCamposIdVoluntario"
                     v-model="formVoluntario.id"
                     type="text"
                     name="id"
                     class="form-control"
                     :class="{
-                      'is-invalid': form.errors.has('id'),
+                      'is-invalid': formVoluntario.errors.has('id'),
                     }"
                   />
                   <has-error :form="formVoluntario" field="id"></has-error>
@@ -186,18 +198,17 @@
                 <div class="form-group">
                   <label>Lugar de procedencia</label>
                   <input
-                    :disabled="bloquearCamposExtras"
                     v-model="form.lugar"
                     type="text"
                     name="lugar"
                     class="form-control"
-                    :class="{
-                      'is-invalid': form.errors.has('lugar'),
-                    }"
+                    :disabled="bloquearCamposExtras"
+                    :class="{ 'is-invalid': form.errors.has('lugar') }"
                   />
                   <has-error :form="form" field="lugar"></has-error>
                 </div>
-                 <div class="form-group">
+                
+                <div class="form-group">
                   <label>Cantidad de actividades</label>
                   <input
                     :disabled="bloquearCamposExtras"
@@ -209,7 +220,10 @@
                       'is-invalid': formVoluntario.errors.has('cantidad'),
                     }"
                   />
-                  <has-error :form="formVoluntario" field="cantidad"></has-error>
+                  <has-error
+                    :form="formVoluntario"
+                    field="cantidad"
+                  ></has-error>
                 </div>
               </div>
               <div class="modal-footer">
@@ -217,7 +231,7 @@
                   type="button"
                   class="btn btn-secondary"
                   data-dismiss="modal"
-                  @click="limpiar(), cancelarCedula()"
+                  @click="limpiar()"
                 >
                   Cancelar
                 </button>
@@ -228,7 +242,7 @@
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
-
+                  :disabled="bloquearCamposExtras"
                 >
                   Registrar
                 </button>
@@ -359,22 +373,20 @@ export default {
       showMensajesCedula2: false,
       bloquearCedulaVoluntario: true,
       bloquearCamposExtras: true,
+      bloquearCamposIdVoluntario: true,
       editmode: false,
       CedulaBloqueo: false,
       buscadorC: "",
       errors: {},
       cedulas: {},
       voluntarios: {},
+      CantidadActividades: {},
       voluntarioPer: {},
       form: new Form({
         id: "",
         identificacion: "",
         voluntariado_id: "",
         lugar: "",
-      }),
-      formVoluntario: new Form({
-        id: "",
-        cantidad: "",
       }),
       formPer: new Form({
         id: "",
@@ -384,6 +396,10 @@ export default {
         telefono: "",
         correo: "",
       }),
+      formVoluntario: new Form({
+        id: "",
+        cantidad: "",
+      }),
       id: 0,
       tituloModal: "",
       modal: 0,
@@ -392,7 +408,6 @@ export default {
   methods: {
     getResults(page = 1) {
       this.$Progress.start();
-
       axios
         .get("/api/voluntarioPersona?page=" + page)
         .then(({ data }) => (this.voluntarioPer = data.data));
@@ -409,6 +424,9 @@ export default {
       this.showMensajesCedula2 = false;
       this.showMensajesCedula = false;
       this.showMensajesVoluntario = false;
+      this.bloquearCamposExtras = false;
+      this.bloquearCamposIdVoluntario = true;
+      this.formVoluntario.cantidad = this.CantidadActividades.cantidad;
     },
     newModal() {
       this.editmode = false;
@@ -425,16 +443,19 @@ export default {
     },
     limpiar() {
       this.form.identificacion = "";
-      this.form.voluntario_id = "";
+      this.form.voluntariado_id = "";
       this.form.lugar = "";
-      this.form.carrera = "";
-      this.formVoluntario.id = "";
-      this.formVoluntario.cantidad = "";
       this.buscadorC = "";
       this.showMensajesCedula2 = false;
       this.showMensajesCedula = false;
       this.CedulaBloqueo = false;
+      this.VoluntarioBloqueo = false;
       this.form.errors.clear();
+      this.formVoluntario.errors.clear();
+      this.bloquearCamposExtras = true;
+      this.bloquearCamposIdVoluntario = true;
+      this.formVoluntario.id = "";
+      this.formVoluntario.cantidad = "";
     },
     SiExisteCedula() {
       for (let i = 0; i < this.cedulas.length; i++) {
@@ -443,8 +464,15 @@ export default {
           this.showMensajesCedula2 = true;
           this.CedulaBloqueo = true;
           this.form.identificacion = this.buscadorC;
-           this.bloquearCamposExtras = false;
+          this.bloquearCamposExtras = false;
+          this.bloquearCamposIdVoluntario = false;
         }
+      }
+    },
+    editarVoluntario() {
+      for (let i = 0; i < this.CantidadActividades.length; i++) {
+        this.formVoluntario.id = this.CantidadActividades[i].id;
+        this.formVoluntario.cantidad = this.CantidadActividades[i].cantidad;
       }
     },
     cancelarCedula() {
@@ -453,21 +481,22 @@ export default {
       this.showMensajesCedula2 = false;
       this.form.identificacion = "";
       this.bloquearCamposExtras = true;
+      this.bloquearCamposIdVoluntario = true;
+      this.form.errors.clear();
+      this.formVoluntario.errors.clear();
     },
+
     NoexisteCedula() {
       if (this.cedulas.length == 0) {
         this.showMensajesCedula = true;
-        this.showMensajesVoluntario2 = false;
         this.MensajeCedula = "La cedula no se encuentra registrada";
       }
       if (this.buscadorC.length == 0) {
         this.showMensajesCedula = true;
-        this.showMensajesVoluntario2 = false;
         this.MensajeCedula =
           "Campo vacio, por favor digite un numero de cedula";
       }
     },
-
     ConsultaCedula() {
       this.form
         .get("/api/voluntarioPersona/obtenerCedula", {
@@ -478,40 +507,22 @@ export default {
           this.SiExisteCedula();
         });
     },
+    async ObtenerCantidad(VoluntarioId) {
+      this.form
+        .get("/api/voluntarioPersona/obtenerCantidad", {
+          params: { VolCantidad: VoluntarioId },
+        })
+        .then(({ data }) => (this.CantidadActividades = data.data))
+        .then((response) => {
+          this.editarVoluntario();
+        });
+    },
     cargarVoluntarioPer() {
       if (this.$gate.isAdmin()) {
         axios
           .get("/api/voluntarioPersona/")
           .then(({ data }) => (this.voluntarioPer = data.data));
       }
-    },
-      cargarVoluntario() {
-      if (this.$gate.isAdmin()) {
-        axios
-          .get("/api/voluntario/")
-          .then(({ data }) => (this.voluntarios = data.data));
-      }
-    },
-       crearVoluntario() {
-      this.formVoluntario
-        .post("/api/voluntario/")
-        .then((response) => {
-          $("#addNew").modal("hide");
-
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-
-          this.$Progress.finish();
-          this.cargarVoluntario();
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Ocurrio un problema!",
-          });
-        });
     },
     crearPersona() {
       this.formPer
@@ -535,8 +546,17 @@ export default {
           });
         });
     },
+    cargarVoluntario() {
+      if (this.$gate.isAdmin()) {
+        axios
+          .get("/api/voluntario/")
+          .then(({ data }) => (this.voluntarios = data.data));
+      }
+    },
     async crearVoluntarioPer() {
-      this.form.voluntariado_id = this.formVoluntario.id
+      this.$Progress.start();
+      this.form.voluntariado_id = this.formVoluntario.id;
+      this.formVoluntario.post("/api/voluntario", { params:{id: this.formVoluntario.id}});
       this.form
         .post("/api/voluntarioPersona/")
         .then((response) => {
@@ -548,6 +568,7 @@ export default {
           });
 
           this.$Progress.finish();
+          this.cargarVoluntario();
           this.cargarVoluntarioPer();
         })
         .catch(() => {
@@ -559,6 +580,7 @@ export default {
     },
     actualizarVoluntarioPer() {
       this.$Progress.start();
+      this.formVoluntario.put("/api/voluntario/" + this.formVoluntario.id);
       this.form
         .put("/api/voluntarioPersona/" + this.form.id)
         .then((response) => {
@@ -570,14 +592,14 @@ export default {
           });
           this.$Progress.finish();
           //  Fire.$emit('AfterCreate');
-
+          this.cargarVoluntario();
           this.cargarVoluntarioPer();
         })
         .catch(() => {
           this.$Progress.fail();
         });
     },
-    eliminarVoluntarioPer(id) {
+    eliminarVoluntarioPer(id, idvoluntaario) {
       Swal.fire({
         title: "Seguro que lo desea eliminar?",
         text: "Esta acción no puede revertirse!",
@@ -588,8 +610,9 @@ export default {
       }).then((result) => {
         // Send request to the server
         if (result.value) {
+          this.form.delete("/api/voluntarioPersona/" + id);
           this.form
-            .delete("/api/voluntarioPersona/" + id)
+            .delete("/api/voluntario/" + idvoluntaario)
             .then(() => {
               Swal.fire(
                 "Eliminado!",
@@ -614,6 +637,18 @@ export default {
     this.cargarVoluntarioPer();
     this.cargarVoluntario();
     this.$Progress.finish();
+  },
+  filters: {
+    truncate: function (text, length, suffix) {
+      return text.substring(0, length) + suffix;
+    },
+  },
+  computed: {
+    filteredItems() {
+      return this.autocompleteItems.filter((i) => {
+        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+      });
+    },
   },
 };
 </script>
