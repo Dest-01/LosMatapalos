@@ -405,17 +405,14 @@ export default {
     width: 100%;
     height: 340px;
     
-    background: hsla(155, 95%, 50%, 0.459);
     /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, hsla(155, 95%, 50%, 0.459), hsla(216, 45%, 52%, 0.664)) ;
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, hsla(155, 95%, 50%, 0.459), hsla(216, 45%, 52%, 0.664)) ;
+
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background-size: cover;
     background-attachment: fixed;
     position: relative;
     margin-bottom: 0;
-   margin-top: 90px;
+   margin-top: 180px;
 }
 .header .textos-header{
     display: flex;
@@ -457,9 +454,9 @@ export default {
     position: absolute;
     z-index: 0;
     width: 100%;
-    height: 340px;
+    height: 500px;
     object-fit: cover;
-    top: -1px;
+    
 }
 .contenedor {
     padding: 60px 0;

@@ -49,8 +49,7 @@ class ActividadesController extends BaseController
             'descripcion' => $request->get('descripcion'),
             'cantParticipantes' => $request->get('cantParticipantes'),
             'imagen' => $request->get('imagen'),
-            'listaParticipantes' => $request->get('listaParticipantes'),
-            'idvoluntarios' => $request->get('idvoluntarios'),
+            'tipo' => $request->get('tipo'),
             
         ]);
         return $this->sendResponse($tag, 'Actividades creado');

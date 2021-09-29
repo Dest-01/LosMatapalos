@@ -80,6 +80,11 @@ Route::get('/admin/actividad', function(){
     return view('admin');
 })->where('admin/actividad', '[\/\w\.-]*')->middleware('auth');
 
+Route::get('/admin/participantes', function(){
+    return view('admin');
+})->where('admin/participantes', '[\/\w\.-]*')->middleware('auth');
+
+
 ///////////////////////////////----FIN--VOLUNTARIADO--///////////////////////
 ///////////////////////////////////////////////////////////////////////////
 //-----------------------RUTAS PARA EL CLIENTE SIN LOGIN-------------------

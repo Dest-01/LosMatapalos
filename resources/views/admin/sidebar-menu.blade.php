@@ -177,6 +177,14 @@
               </p>
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/admin/participantes" class="nav-link">
+              <i class="nav-icon fas fa-handshake orange"></i>
+              <p>
+               Participantes
+              </p>
+            </router-link>
+          </li>
           <!--
           <li class="nav-item">
             <router-link to="/admin/voluntario" class="nav-link">

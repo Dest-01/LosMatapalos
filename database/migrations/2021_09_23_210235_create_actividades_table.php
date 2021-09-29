@@ -21,8 +21,8 @@ class CreateActividadesTable extends Migration
             $table->string('descripcion');
             $table->integer('cantParticipantes');
             $table->string('imagen');
-            $table->string('listaParticipantes');
-            $table->integer('idvoluntarios');
+            $table->string('tipo');
+
             /*$table->unsignedBigInteger('idvoluntarios');
             $table->foreign('idvoluntarios')->references('id')->on('voluntarios');*/
             $table->timestamps();

@@ -30,8 +30,7 @@
                     <th>Descripcion</th>
                     <th>Cantidad Participantes</th>
                     <th>Imagen</th>
-                    <th>Lista Participantes</th>
-                    <th>Id Voluntarios</th>
+                    <th>Tipo de actividad</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,10 +51,7 @@
                       />
                     </td>
                     <td class="text-capitalize">
-                      {{ Actividad.listaParticipantes }}
-                    </td>
-                    <td class="text-capitalize">
-                      {{ Actividad.idvoluntarios }}
+                      {{ Actividad.tipo }}
                     </td>
                     <td>
                       <a href="#" @click="editModal(Actividad)">
@@ -202,31 +198,15 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Lista Participantes</label>
+                  <label>Tipo de actividad</label>
                   <input
-                    v-model="form.listaParticipantes"
+                    v-model="form.tipo"
                     type="text"
-                    name="listaParticipantes"
+                    name="tipo"
                     class="form-control"
-                    :class="{
-                      'is-invalid': form.errors.has('listaParticipantes'),
-                    }"
+                    :class="{ 'is-invalid': form.errors.has('tipo') }"
                   />
-                  <has-error
-                    :form="form"
-                    field="listaParticipantes"
-                  ></has-error>
-                </div>
-                <div class="form-group">
-                  <label>Id Voluntarios</label>
-                  <input
-                    v-model="form.idvoluntarios"
-                    type="number"
-                    name="idvoluntario"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('idvoluntarios') }"
-                  />
-                  <has-error :form="form" field="idVoluntarios"></has-error>
+                  <has-error :form="form" field="tipo"></has-error>
                 </div>
               </div>
 
@@ -271,8 +251,7 @@ export default {
         descripcion: "",
         cantParticipantes: "",
         imagen: "",
-        listaParticipantes: "",
-        idvoluntarios: "",
+        tipo: "",
       }),
     };
   },

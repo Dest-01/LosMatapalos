@@ -34,6 +34,7 @@
                     <th>Cedula de voluntario</th>
                     <th>Id de voluntario</th>
                     <th>Lugar</th>
+                    <th>Cantidad de actividades</th>
                     <th>Funciones</th>
                   </tr>
                 </thead>
@@ -46,6 +47,13 @@
                     <td>{{ voluntariopersonas.identificacion }}</td>
                     <td>{{ voluntariopersonas.voluntariado_id }}</td>
                     <td>{{ voluntariopersonas.lugar }}</td>
+                    <td>
+                      {{
+                        voluntarios.data.find(
+                          (el) => el.id == voluntariopersonas.voluntariado_id
+                        ).cantidad
+                      }}
+                    </td>
                     <td>
                       <a
                         href="#"
@@ -379,6 +387,7 @@ export default {
       cedulas: {},
       voluntarios: {},
       CantidadActividades: {},
+      verificar: "",
       voluntarioPer: {},
       form: new Form({
         id: "",
@@ -459,12 +468,12 @@ export default {
       this.formVoluntario.id = "";
       this.formVoluntario.cantidad = "";
     },
-     limpiarPersona() {
-      this.formPer.nombre = ""
-      this.formPer.apellido1 = ""
-      this.formPer.apellido2 = ""
-      this.formPer.telefono = ""
-      this.formPer.correo = ""
+    limpiarPersona() {
+      this.formPer.nombre = "";
+      this.formPer.apellido1 = "";
+      this.formPer.apellido2 = "";
+      this.formPer.telefono = "";
+      this.formPer.correo = "";
       this.formPer.errors.clear();
     },
 
@@ -553,7 +562,7 @@ export default {
         .catch(() => {
           Toast.fire({
             icon: "error",
-           title: "Cedula existente o campos vacios",
+            title: "Cedula existente o campos vacios",
           });
         });
     },
@@ -566,30 +575,39 @@ export default {
     },
     async crearVoluntarioPer() {
       this.$Progress.start();
-      this.form.voluntariado_id = this.formVoluntario.id;
-      this.formVoluntario.post("/api/voluntario", {
-        params: { id: this.formVoluntario.id },
-      });
-      this.form
-        .post("/api/voluntarioPersona/")
-        .then((response) => {
-          $("#addNew").modal("hide");
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
 
-          this.$Progress.finish();
-          this.cargarVoluntario();
-          this.cargarVoluntarioPer();
-        })
-        .catch(() => {
+        if (this.voluntarios.data.find(v => v.id !=  this.formVoluntario.id)) {
+          this.form.voluntariado_id = this.formVoluntario.id
+          this.formVoluntario.post("/api/voluntario");
+          this.form
+            .post("/api/voluntarioPersona/")
+            .then((response) => {
+              $("#addNew").modal("hide");
+
+              Toast.fire({
+                icon: "success",
+                title: response.data.message,
+              });
+
+              this.$Progress.finish();
+              this.cargarVoluntario();
+              this.cargarVoluntarioPer();
+              this.limpiar();
+            })
+            .catch(() => {
+              Toast.fire({
+                icon: "error",
+                title: "Ocurrio un problema!",
+              });
+            });
+        } else {
           Toast.fire({
             icon: "error",
-            title: "Ocurrio un problema!",
+            title: "El id de voluntario ya existe!",
           });
-        });
+        }
+      
     },
     actualizarVoluntarioPer() {
       this.$Progress.start();

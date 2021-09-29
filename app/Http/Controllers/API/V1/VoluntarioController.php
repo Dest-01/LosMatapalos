@@ -37,18 +37,12 @@ class VoluntarioController extends BaseController
      */
     public function store(VoluntarioRequest $request)
     {
-
-        $filtro = $request->id;
-        $existencia = Voluntario::find($filtro);
-        if(empty($existencia)){
         $tag = $this->voluntario->create([
             'id' => $request->get('id'),
             'cantidad' => $request->get('cantidad')
             
         ]);
         return $this->sendResponse($tag, 'Voluntariado creado');
-        }
-        return $this->sendResponse($tag,'El id ya existe');
     }
 
     /**

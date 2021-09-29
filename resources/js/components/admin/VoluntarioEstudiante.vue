@@ -34,7 +34,7 @@
                     <th>Cedula de voluntario</th>
                     <th>Id de voluntario</th>
                     <th>Carrera</th>
-
+                    <th>Cantidad de actividades</th>
                     <th>Foto</th>
                     <th>Funciones</th>
                   </tr>
@@ -48,6 +48,8 @@
                     <td>{{ voluntarioestudiante.identificacion }}</td>
                     <td>{{ voluntarioestudiante.voluntariado_id }}</td>
                     <td>{{ voluntarioestudiante.carrera }}</td>
+                    <!--<td>{{ voluntarios.data.find(function(el) { return el.id == voluntarioestudiante.voluntariado_id; } ).cantidad }}</td>-->
+                    <td v-if="voluntarios">{{ voluntarios.data.find(el => el.id == voluntarioestudiante.voluntariado_id).cantidad }}</td>
 
                     <td>
                       <img
@@ -450,6 +452,7 @@ export default {
       voluntarios: {},
       CantidadActividades: {},
       voluntarioEst: {},
+      TablaUnion: {},
       form: new Form({
         id: "",
         identificacion: "",
@@ -495,6 +498,7 @@ export default {
         });
       }
     },
+
     getResults(page = 1) {
       this.$Progress.start();
       axios
@@ -633,6 +637,7 @@ export default {
           .then(({ data }) => (this.voluntarioEst = data.data));
       }
     },
+
     crearPersona() {
       this.formPer
         .post("/api/persona", {
@@ -745,8 +750,8 @@ export default {
   },
   created() {
     this.$Progress.start();
-    this.cargarVoluntarioEst();
     this.cargarVoluntario();
+    this.cargarVoluntarioEst();
     this.$Progress.finish();
   },
   filters: {
@@ -755,10 +760,15 @@ export default {
     },
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+    VoluntariosConCantidad: function () {
+      // utilizando se map agrega la propiedad estado por cada elemento del array productos
+      let productosConEstado = this.voluntarios.map((p) => {
+        p.cantidad = this.voluntarioEst.find((el) => {
+          return el.voluntariado_id === p.id;
+        }).cantidad;
+        return p;
       });
+      return productosConEstado;
     },
   },
 };

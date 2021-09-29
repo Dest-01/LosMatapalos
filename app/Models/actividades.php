@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class actividades extends Model
 {
-    protected $fillable = ['id','nombre','fecha','hora','descripcion','cantParticipantes','imagen','listaParticipantes','idvoluntarios'];
+    protected $fillable = ['id','nombre','fecha','hora','descripcion','cantParticipantes','imagen','tipo'];
 }

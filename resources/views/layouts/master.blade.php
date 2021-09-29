@@ -70,14 +70,15 @@
                             <a class="nav-link" href="{{ url('/dashboard') }}">Administrador</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/pruebas') }}">Prueba</a>
+                            <a class="nav-link" href="{{ url('/pruebas') }}">Reservación</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/actividades') }}">Actividades</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/donaciones') }}">Donaciones</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/reservacion') }}">Reservación</a>
-                        </li>
+                       
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">

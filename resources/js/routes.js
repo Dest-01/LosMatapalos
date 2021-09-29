@@ -21,6 +21,8 @@ export default [
     { path: '/admin/voluntarioPersona', component: require('./components/admin/VoluntarioPersona.vue').default },
     { path: '/admin/voluntarioEstudiante', component: require('./components/admin/VoluntarioEstudiante.vue').default },
     { path: '/admin/actividad', component: require('./components/admin/Actividades.vue').default },
+    { path: '/admin/actividadParticipantes', component: require('./components/admin/ActividadesParticipantes.vue').default },
+    { path: '/admin/participantes', component: require('./components/admin/participantes.vue').default },
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //------------------=-------------------------------RUTAS CLIENTE-------------------------------------------------
@@ -30,5 +32,6 @@ export default [
     { path: '/reservacion', component: require('./components/cliente/Reservar.vue').default },
     { path: '/donaciones', component: require('./components/cliente/Donaciones.vue').default },
     { path: '/somos', component: require('./components/cliente/QuienesSomos.vue').default },
+    { path: '/actividades', component: require('./components/cliente/actividades.vue').default },
     { path: '/pruebas', component: require('./components/cliente/pruebas.vue').default },
 ];

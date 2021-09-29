@@ -40,6 +40,8 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     /////////////////////////---VOLUNTARIO--PERSONA---//////////////////////////////////////////////////////////////////
     Route::get('voluntarioPersona/obtenerCedula', 'VoluntarioPersonaController@obtenerCedula');
     Route::get('voluntarioPersona/obtenerCantidad', 'VoluntarioPersonaController@obtenerCantidad');
+
+    Route::get('GetVoluntarios', 'ActividadesParticipantesController@GetVoluntarios');
   
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
@@ -54,6 +56,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'voluntarioEstudiante' => 'VoluntarioEstudiantesController',
         'voluntarioPersona' => 'VoluntarioPersonaController',
         'actividad' => 'ActividadesController',
+        'participantes' => 'ParticipantesController',
     ]);
 });
 
