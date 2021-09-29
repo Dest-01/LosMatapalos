@@ -92,25 +92,8 @@
           </p>
         </a>
         <ul class="nav nav-treeview">
-
           <li class="nav-item">
-            <router-link to="" class="nav-link">
-              <i class="nav-icon fas fa-file-alt green"></i>
-              <p>
-                Reservar Organización
-              </p>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/product/test" class="nav-link">
-              <i class="nav-icon fas fa-file-alt green"></i>
-              <p>
-                Reservar Persona
-              </p>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/product/tag" class="nav-link">
+            <router-link to="/admin/reservar" class="nav-link">
               <i class="nav-icon fas fa-file-alt green"></i>
               <p>
                 Reservas

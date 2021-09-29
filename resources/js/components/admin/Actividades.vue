@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
             <div class="card-header">
-              <h3 class="card-title">Lista de categoria donativos</h3>
+              <h3 class="card-title">Lista de actividades</h3>
 
               <div class="card-tools">
                 <button
@@ -90,6 +90,7 @@
         role="dialog"
         aria-labelledby="addNew"
         aria-hidden="true"
+        @click="limpiar()"
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -181,32 +182,68 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="photo" class="col-sm-2 control-label"
-                    >Imagen</label
-                  >
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      @change="updatePhoto"
-                      name="imagen"
-                      class="custom-file-input"
-                      id="inputGroupFile01"
-                    />
-                    <label class="custom-file-label" for="inputGroupFile01"
-                      >Seleccione un imagen</label
+                  <div>
+                    <div class="row">
+                      <div class="col-8">
+                        <label class="btn btn-default p-0">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            ref="file"
+                            name="imagen"
+                            @change="updatePhoto"
+                            :class="{ 'is-invalid': form.errors.has('imagen') }"
+                          />
+                          <has-error :form="form" field="imagen"></has-error>
+                        </label>
+                      </div>
+                      <div class="col-4"></div>
+                    </div>
+                    <div v-if="currentImage" class="progress">
+                      <div
+                        class="progress-bar progress-bar-info"
+                        role="progressbar"
+                        :aria-valuenow="progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        :style="{ width: progress + '%' }"
+                      >
+                        {{ progress }}%
+                      </div>
+                    </div>
+                    <div v-if="previewImage">
+                      <div>
+                        <img
+                          class="preview my-3"
+                          :src="previewImage"
+                          alt=""
+                          width="100px"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      v-if="message"
+                      class="alert alert-secondary"
+                      role="alert"
                     >
+                      {{ message }}
+                    </div>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label>Tipo de actividad</label>
-                  <input
-                    v-model="form.tipo"
-                    type="text"
-                    name="tipo"
+               
+                   <div class="form-group">
+                  <label>Tipo de donativo</label>
+                  <select
                     class="form-control"
+                    v-model="form.tipo"
                     :class="{ 'is-invalid': form.errors.has('tipo') }"
-                  />
-                  <has-error :form="form" field="tipo"></has-error>
+                  >
+                    <option disabled value="">Seleccione un elemento</option>
+                    <option>Voluntarios</option>
+                    <option>Público</option>
+                  </select>
+
+                  <has-error :form="form" field="estado"></has-error>
                 </div>
               </div>
 
@@ -215,8 +252,9 @@
                   type="button"
                   class="btn btn-secondary"
                   data-dismiss="modal"
+                  @click="limpiar()"
                 >
-                  Cerrar
+                  Cancelar
                 </button>
                 <button v-show="editmode" type="submit" class="btn btn-success">
                   Actualizar
@@ -226,7 +264,7 @@
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Crear
+                  Registrar
                 </button>
               </div>
             </form>
@@ -242,6 +280,11 @@ export default {
   data() {
     return {
       editmode: false,
+      currentImage: undefined,
+      previewImage: undefined,
+      progress: 0,
+      message: "",
+      imageInfos: [],
       Actividades: {},
       form: new Form({
         id: "",
@@ -258,6 +301,8 @@ export default {
   methods: {
     updatePhoto(e) {
       let file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.currentImage = file;
       let reader = new FileReader();
 
       if (file["size"] < 2111775) {
@@ -274,6 +319,10 @@ export default {
         });
       }
     },
+    limpiar() {
+      this.form.errors.clear();
+    },
+
     getResults(page = 1) {
       this.$Progress.start();
       axios

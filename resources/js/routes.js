@@ -23,6 +23,10 @@ export default [
     { path: '/admin/actividad', component: require('./components/admin/Actividades.vue').default },
     { path: '/admin/actividadParticipantes', component: require('./components/admin/ActividadesParticipantes.vue').default },
     { path: '/admin/participantes', component: require('./components/admin/participantes.vue').default },
+    { path: '/admin/reservar', component: require('./components/admin/Reservar.vue').default },
+
+    
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //------------------=-------------------------------RUTAS CLIENTE-------------------------------------------------
@@ -34,4 +38,6 @@ export default [
     { path: '/somos', component: require('./components/cliente/QuienesSomos.vue').default },
     { path: '/actividades', component: require('./components/cliente/actividades.vue').default },
     { path: '/pruebas', component: require('./components/cliente/pruebas.vue').default },
+    { path: '/fauna', component: require('./components/cliente/Fauna.vue').default },
+    { path: '/flora', component: require('./components/cliente/Flora.vue').default },
 ];

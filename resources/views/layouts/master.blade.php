@@ -86,15 +86,15 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                                 style="border-top-radius: 50px; border-bottom-radius: 10px; background: #9f1726d9;">
-                                <li><a class="dropdown-item" href="#">Flora</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/flora') }}">Flora</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Fauna</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/fauna') }}">Fauna</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/libro') }}">¿Quiénes somos?</a>
+                            <a class="nav-link" href="{{ url('/somos') }}">¿Quiénes somos?</a>
                         </li>
                     </ul>
 

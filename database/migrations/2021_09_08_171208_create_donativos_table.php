@@ -16,7 +16,9 @@ class CreateDonativosTable extends Migration
         Schema::create('donativos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('idPersona')->nullable();
+            $table->foreign('idPersona')->references('id')->on('personas');
             $table->string('idOrganizacion')->nullable();
+            $table->foreign('idOrganizacion')->references('id')->on('organizaciones');
             $table->string('tipo');
             $table->string('detalle');
             $table->string('photo');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Models\Voluntario;
 use App\Models\Actividades;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\ActividadRequest;
 
 class ActividadesController extends BaseController
 {
@@ -36,6 +37,32 @@ class ActividadesController extends BaseController
      */
     public function store(Request $request)
     {
+
+        $rules = [
+            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
+            'fecha' => 'required',
+            'hora' => 'required',
+            'descripcion' => 'required|string|max:250',
+            'cantParticipantes' => 'required|integer|',
+            'imagen' => 'required',
+            'tipo' => 'required',
+        ];
+    
+        $messages = [
+            'nombre.regex' => 'Solo letras en el nombre',
+            'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
+            'fecha.*' => 'Seleccione una fecha',
+            'hora.*' => 'Seleccione un hora',
+            'descripcion.*' => 'Se requiere una breve descripción',
+            'cantParticipantes.*' => 'Cantidad de participantes se requiere',
+            'imagen.*' => 'Imagen se requiere',
+            'tipo.*' => 'Tipo se requiere',
+        ];
+
+
+        $this->validate($request, $rules, $messages);
+      
+
         if($request->imagen){
             $name = time().'.' . explode('/', explode(':', substr($request->imagen, 0, strpos
             ($request->imagen, ';')))[1])[1];
@@ -82,8 +109,33 @@ class ActividadesController extends BaseController
      * @param  \App\Models\actividades  $actividades
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
+
+        $rules = [
+            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
+            'fecha' => 'required',
+            'hora' => 'required',
+            'descripcion' => 'required|string|max:250',
+            'cantParticipantes' => 'required|integer|',
+            'imagen' => 'required',
+            'tipo' => 'required',
+        ];
+    
+        $messages = [
+            'nombre.regex' => 'Solo letras en el nombre',
+            'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
+            'fecha.*' => 'Seleccione una fecha',
+            'hora.*' => 'Seleccione un hora',
+            'descripcion.*' => 'Se requiere una breve descripción',
+            'cantParticipantes.*' => 'Cantidad de participantes se requiere',
+            'imagen.*' => 'Imagen se requiere',
+            'tipo.*' => 'Tipo se requiere',
+        ];
+
+
+        $this->validate($request, $rules, $messages);
+
         $tag = $this->actividades->findOrFail($id);
         $currentFoto = $tag->imagen;
         if($request->imagen != $currentFoto){

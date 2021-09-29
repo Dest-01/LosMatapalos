@@ -42,7 +42,9 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('voluntarioPersona/obtenerCantidad', 'VoluntarioPersonaController@obtenerCantidad');
 
     Route::get('GetVoluntarios', 'ActividadesParticipantesController@GetVoluntarios');
-  
+   /////////////////////////---RESERVAS---//////////////////////////////////////////////////////////////////
+    Route::get('reserva/verificar', 'ReservaController@obtenerCedula');
+    Route::get('reserva/verificarOrg', 'ReservaController@obtenerCedulaOrg');
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
@@ -57,6 +59,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'voluntarioPersona' => 'VoluntarioPersonaController',
         'actividad' => 'ActividadesController',
         'participantes' => 'ParticipantesController',
+        'reserva' => 'ReservaController',
     ]);
 });
 

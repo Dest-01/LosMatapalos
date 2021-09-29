@@ -60,9 +60,39 @@
         <ul class="scroll-box">
           <li>
             <a href="">
-              <h3>Title Name</h3>
-              <h1>$ 10</h1>
-              <h4>0 out of 975</h4>
+              <h3>Nombre</h3>
+              <h1>Informacion</h1>
+              <h4></h4>
+              <h5>
+                Description Description Description Description Description
+              </h5>
+            </a>
+          </li>
+           <li>
+            <a href="">
+              <h3>Nombre</h3>
+              <h1>Informacion</h1>
+              <h4></h4>
+              <h5>
+                Description Description Description Description Description
+              </h5>
+            </a>
+          </li>
+           <li>
+            <a href="">
+              <h3>Nombre</h3>
+              <h1>Informacion</h1>
+              <h4></h4>
+              <h5>
+                Description Description Description Description Description
+              </h5>
+            </a>
+          </li>
+           <li>
+            <a href="">
+              <h3>Nombre</h3>
+              <h1>Informacion</h1>
+              <h4></h4>
               <h5>
                 Description Description Description Description Description
               </h5>
@@ -70,39 +100,9 @@
           </li>
           <li>
             <a href="">
-              <h3>Title Name</h3>
-              <h1>$ 10</h1>
-              <h4>0 out of 975</h4>
-              <h5>
-                Description Description Description Description Description
-              </h5>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <h3>Title Name</h3>
-              <h1>$ 10</h1>
-              <h4>0 out of 975</h4>
-              <h5>
-                Description Description Description Description Description
-              </h5>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <h3>Title Name</h3>
-              <h1>$ 10</h1>
-              <h4>0 out of 975</h4>
-              <h5>
-                Description Description Description Description Description
-              </h5>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <h3>Title Name</h3>
-              <h1>$ 10</h1>
-              <h4>0 out of 975</h4>
+              <h3>Nombre</h3>
+              <h1>Informacion</h1>
+              <h4></h4>
               <h5>
                 Description Description Description Description Description
               </h5>
