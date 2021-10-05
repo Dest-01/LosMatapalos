@@ -24,7 +24,7 @@ export default [
     { path: '/admin/actividadParticipantes', component: require('./components/admin/ActividadesParticipantes.vue').default },
     { path: '/admin/participantes', component: require('./components/admin/participantes.vue').default },
     { path: '/admin/reservar', component: require('./components/admin/Reservar.vue').default },
-
+    { path: '/admin/voluntarioActividad', component: require('./components/admin/VoluntarioActividad').default },
     
 
 

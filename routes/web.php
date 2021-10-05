@@ -69,7 +69,6 @@ Route::get('/admin/reservar', function () {
     return view('admin');
 })->where('/admin/reservar', '[\/\w\.-]*')->middleware('auth');
 
-
 ////////////////////////////----FIN-RESERVAR---//////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 //-----------------------VOLUNTARIADO--------------------------------------
@@ -93,6 +92,9 @@ Route::get('/admin/participantes', function(){
     return view('admin');
 })->where('admin/participantes', '[\/\w\.-]*')->middleware('auth');
 
+Route::get('/admin/voluntarioActividad', function(){
+    return view('admin');
+})->where('admin/voluntarioActividad', '[\/\w\.-]*')->middleware('auth');
 
 ///////////////////////////////----FIN--VOLUNTARIADO--///////////////////////
 ///////////////////////////////////////////////////////////////////////////
