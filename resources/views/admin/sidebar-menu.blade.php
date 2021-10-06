@@ -185,6 +185,14 @@
             </p>
          </router-link>
     </li>
+    <li class="nav-item">
+      <router-link to="/admin/voluntarioActividad" class="nav-link">
+         <i class="nav-icon fas fa-calendar-check orange"></i>
+      <p>
+         Voluntario actividad
+      </p>
+   </router-link>
+</li>
         </ul>
       </li>
       <li class="nav-item has-treeview">

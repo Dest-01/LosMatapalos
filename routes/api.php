@@ -45,6 +45,10 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
    /////////////////////////---RESERVAS---//////////////////////////////////////////////////////////////////
     Route::get('reserva/verificar', 'ReservaController@obtenerCedula');
     Route::get('reserva/verificarOrg', 'ReservaController@obtenerCedulaOrg');
+/////////////////////////---VOLUNTARIO ACTIVIDAD---//////////////////////////////////////////////////////////////////
+    Route::get('voluntarioActividad/GetActividades', 'VoluntarioActividadesController@GetActividades');
+    Route::get('voluntarioActividad/GetVoluntarioEstudiantes', 'VoluntarioActividadesController@GetVoluntarioEstudiantes');
+    Route::get('voluntarioActividad/GetVoluntarioPersona', 'VoluntarioActividadesController@GetVoluntarioPersona');
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
@@ -60,6 +64,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'actividad' => 'ActividadesController',
         'participantes' => 'ParticipantesController',
         'reserva' => 'ReservaController',
+        'voluntarioActividad' => 'VoluntarioActividadesController',
     ]);
 });
 
@@ -72,5 +77,6 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',
+        'floraCliente' => 'FloraController',
     ]);
 });
