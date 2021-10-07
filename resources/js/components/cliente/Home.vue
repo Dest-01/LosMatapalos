@@ -284,24 +284,6 @@
         </div>
       </section>
     </main>
-    <footer>
-      <div class="contenedor-footer">
-        <div class="content-foo">
-          <h4>Phone</h4>
-          <p>0000-0000</p>
-        </div>
-        <div class="content-foo">
-          <h4>Email</h4>
-          <p>sendero@una.ac.cr</p>
-        </div>
-        <div class="content-foo">
-          <h4>Location</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, cum?
-          </p>
-        </div>
-      </div>
-    </footer>
   </div>
 </template>
 <script>
@@ -667,6 +649,7 @@ main .sobre-nosotros{
     width: 100%;
     border-radius: 10px;
 }
+
 /* footer */
 
 footer{

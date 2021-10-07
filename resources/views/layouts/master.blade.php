@@ -130,6 +130,33 @@
     </div>
     {{-- ./wrapper --}}
 
+    <footer>
+      <div class="paginacion">
+          <pagination
+            style="font-family: fantasy"
+            :data="donativos"
+            @pagination-change-page="getResults"
+          ></pagination>
+        </div>
+        
+      <div class="contenedor-footer">
+        <div class="content-foo">
+          <h4>Phone</h4>
+          <p>0000-0000</p>
+        </div>
+        <div class="content-foo">
+          <h4>Email</h4>
+          <p>sendero@una.ac.cr</p>
+        </div>
+        <div class="content-foo">
+          <h4>Location</h4>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, cum?
+          </p>
+        </div>
+      </div>
+    </footer >
+
     @auth
         <script>
             window.user = @json(auth()->user())

@@ -1,11 +1,5 @@
 <template>
-  <div style="margin-top:10px;">
-    <div class="container multi">
-       <h2 class="titles">
-        <span class="pull-right">Accesorios</span> Lista de donaciones
-        necesarias
-      </h2>
-    </div>
+  <div style="margin-top:80px;">
     <div class="container multi">
       <h2 class="titles">
         <span class="pull-right">Accesorios</span> Lista de donaciones
