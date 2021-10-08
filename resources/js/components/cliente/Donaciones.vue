@@ -1,55 +1,146 @@
 <template>
-  <div style="margin-top:80px;">
-    <div class="container multi">
-      <h2 class="titles">
-        <span class="pull-right">Accesorios</span> Lista de donaciones
-        necesarias
-      </h2>
-      <div class="row">
-        <!-- Carousel wrapper -->
-        <div
-          id="carouselExampleFade"
-          class="carousel slide carousel-fade"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://dl.dropboxusercontent.com/s/0tbo6rg6t768phx/img%20%2815%29.jpg" class="d-block w-100" alt="" />
+  <div>
+    <div class="portada">
+      <img v-bind:src="portada" v-bind:alt="text" width="100%" height="500px" />
+      <div class="centrado">HAZ UNA DONACIÓN</div>
+    </div>
+    <div class="intro">
+      <span
+        >Su generosa donación y su continuo apoyo marcan una gran ayuda al
+        Sendero Los Matapalos.<br />
+        Su aporte logra una gran contribución con la mejora y el mantenimiento
+        del sendero.</span
+      >
+    </div>
+    <div class="necesarios">
+      <div class="contenedor1 card">
+        <div class="card-body">
+          <h1>Donaciones Necesarias</h1>
+          <h5>
+            Si desea realizar una donacion de tipo material, puede ser de los
+            siguientes que se muestran en las imagenes de la derecha.
+          </h5>
+           <br>
+          <h5>
+            Si desea realizar otra donación distinta a las que se necesitan, se puede poner en contacto con los administradores.
+          </h5>
+          <br>
+          <h5 style="text-align:center">
+            Telefono: 0000-0000 - Email: sendero@una.ac.cr
+          </h5>
+        </div>
+      </div>
+      <div class="contenedor2 card">
+        <div class="card-body">
+          <!-- Carousel wrapper -->
+          <div
+            id="carouselDarkVariant"
+            class="carousel slide carousel-fade carousel-dark"
+            data-mdb-ride="carousel"
+          >
+            <!-- Indicators -->
+            <div class="carousel-indicators">
+              <button
+                data-mdb-target="#carouselDarkVariant"
+                data-mdb-slide-to="0"
+                class="active"
+                aria-current="true"
+                aria-label="Slide 1"
+              ></button>
+              <button
+                data-mdb-target="#carouselDarkVariant"
+                data-mdb-slide-to="1"
+                aria-label="Slide 1"
+              ></button>
+              <button
+                data-mdb-target="#carouselDarkVariant"
+                data-mdb-slide-to="2"
+                aria-label="Slide 1"
+              ></button>
             </div>
-            <div class="carousel-item">
-              <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg" class="d-block w-100" alt="" />
+
+            <!-- Inner -->
+            <div class="carousel-inner">
+              <!-- Single item -->
+              <div class="carousel-item active">
+                <img
+                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(19).jpg"
+                  class="d-block w-100"
+                  alt="..."
+                />
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>First slide label</h5>
+                  <p>
+                    Nulla vitae elit libero, a pharetra augue mollis interdum.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Single item -->
+              <div class="carousel-item">
+                <img
+                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(35).jpg"
+                  class="d-block w-100"
+                  alt="..."
+                />
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>Second slide label</h5>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Single item -->
+              <div class="carousel-item">
+                <img
+                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(40).jpg"
+                  class="d-block w-100"
+                  alt="..."
+                />
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>Third slide label</h5>
+                  <p>
+                    Praesent commodo cursus magna, vel scelerisque nisl
+                    consectetur.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="carousel-item">
-              <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg" class="d-block w-100" alt="" />
-            </div>
+            <!-- Inner -->
+
+            <!-- Controls -->
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-mdb-target="#carouselDarkVariant"
+              data-mdb-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-mdb-target="#carouselDarkVariant"
+              data-mdb-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleFade"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleFade"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+          <!-- Carousel wrapper -->
         </div>
       </div>
     </div>
-
-    <!-- Type-2 -->
-    <div class="container">
-      <h2 class="titles">
-        <span class="pull-right">Perfil</span> Lista de Donadores
-      </h2>
+    <div class="contenedor-donadores">
+      <h2 class="titles"><span class="pull-right"></span>Donadores</h2>
       <div class="row">
         <ul class="scroll-box">
           <li>
@@ -62,7 +153,7 @@
               </h5>
             </a>
           </li>
-           <li>
+          <li>
             <a href="">
               <h3>Nombre</h3>
               <h1>Informacion</h1>
@@ -72,7 +163,7 @@
               </h5>
             </a>
           </li>
-           <li>
+          <li>
             <a href="">
               <h3>Nombre</h3>
               <h1>Informacion</h1>
@@ -82,7 +173,7 @@
               </h5>
             </a>
           </li>
-           <li>
+          <li>
             <a href="">
               <h3>Nombre</h3>
               <h1>Informacion</h1>
@@ -105,75 +196,24 @@
         </ul>
       </div>
     </div>
-
-    <!-- Type-3 -->
-    <div class="container">
-      <h2 class="titles">
-        <span class="pull-right">Donaciones</span> Donaciones Recibidas
-      </h2>
+    <div class="contenedor-donaciones">
+     <h2 class="titles"><span class="pull-right"></span>Donaciones Recibidas</h2>
       <div class="row donation">
-        <div class="col-sm-3">
+        <div
+          v-for="donativo in donativos.data"
+          :key="donativo.id"
+          class="col-sm-3"
+        >
           <a href="" class="card">
-            <h3>Title Full Name 15 characters</h3>
-            <h1>$ 10</h1>
-            <h4>0 out of 975</h4>
-            <h5>Description Description Description Description Description</h5>
-          </a>
-        </div>
-        <div class="col-sm-3">
-          <a href="" class="card">
-            <h3>Title Full Name 15 characters</h3>
-            <h1>$ 10</h1>
-            <h4>0 out of 975</h4>
-            <h5>Description Description Description Description Description</h5>
-          </a>
-        </div>
-        <div class="col-sm-3">
-          <a href="" class="card">
-            <h3>Title Full Name 15 characters</h3>
-            <h1>$ 10</h1>
-            <h4>0 out of 975</h4>
-            <h5>Description Description Description Description Description</h5>
-          </a>
-        </div>
-        <div class="col-sm-3">
-          <a href="" class="card">
-            <h3>Title Full Name 15 characters</h3>
-            <h1>$ 10</h1>
-            <h4>0 out of 975</h4>
-            <h5>Description Description Description Description Description</h5>
-          </a>
-        </div>
-        <div class="col-sm-3">
-          <a href="" class="card">
-            <h3>Title Full Name 15 characters</h3>
-            <h1>$ 10</h1>
-            <h4>0 out of 975</h4>
-            <h5>Description Description Description Description Description</h5>
-          </a>
-        </div>
-        <div class="col-sm-3">
-          <a href="" class="card">
-            <h3>Title Full Name 15 characters</h3>
-            <h1>$ 10</h1>
-            <h4>0 out of 975</h4>
-            <h5>Description Description Description Description Description</h5>
-          </a>
-        </div>
-        <div class="col-sm-3">
-          <a href="" class="card">
-            <h3>Title Full Name 15 characters</h3>
-            <h1>$ 10</h1>
-            <h4>0 out of 975</h4>
-            <h5>Description Description Description Description Description</h5>
-          </a>
-        </div>
-        <div class="col-sm-3">
-          <a href="" class="card">
-            <h3>Title Full Name 15 characters</h3>
-            <h1>$ 10</h1>
-            <h4>0 out of 975</h4>
-            <h5>Description Description Description Description Description</h5>
+            <h3 style="text-align:center">{{donativo.tipo}}</h3>
+             <img
+          v-bind:src="'/images/donativos/' + donativo.photo"
+          width="300px"
+          height="200px"
+          alt=""
+        />
+            <h4>{{donativo.fecha}}</h4>
+            <h5 style="text-align:center">{{donativo.detalle}}</h5>
           </a>
         </div>
       </div>
@@ -185,69 +225,113 @@
 export default {
   data() {
     return {
-      image1: [
-        {
-          url: "../images/donativos/palas.jpg",
-        },
-      ],
-      image2: [
-        {
-          url: "../images/donativos/arboles.jpg",
-        },
-      ],
-      image3: [
-        {
-          url: "../images/donativos/camaraTrampa.jpg",
-        },
-      ],
-      image4: [
-        {
-          url: "../images/donativos/dron.jpg",
-        },
-      ],
-      image5: [
-        {
-          url: "../images/donativos/palas.jpg",
-        },
-      ],
-      image6: [
-        {
-          url: "../images/donativos/palas.jpg",
-        },
-      ],
-      image7: [
-        {
-          url: "../images/donativos/palas.jpg",
-        },
-      ],
-      image8: [
-        {
-          url: "../images/donativos/palas.jpg",
-        },
-      ],
+      portada: "../images/PortadaDonaciones.jpg",
+      text: "Portada",
+      donativos: {},
     };
+  },
+  methods: {
+    getResults(page = 1) {
+      this.$Progress.start();
+      axios
+        .get("/api/donacionesCliente?page=" + page)
+        .then(({ data }) => (this.donativos = data.data));
+      this.$Progress.finish();
+    },
+    cargarDonativos() {
+      axios
+        .get("/api/donacionesCliente/")
+        .then(({ data }) => (this.donativos = data.data));
+    },
+  },
+  created() {
+    this.$Progress.start();
+    this.cargarDonativos();
+    this.$Progress.finish();
   },
 };
 </script>
 
 <style scoped>
-/* Type-1 */
-.multi .carousel-inner .active.left {
-  left: -25%;
+.portada {
+  margin: auto auto 1px auto;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
 }
-.multi .carousel-inner .next {
-  left: 25%;
+.card-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 5px;
 }
-.multi .carousel-inner .prev {
-  left: -25%;
+.centrado {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: white;
+  font-family: "Poppins";
+  font-weight: 600;
 }
-.multi .carousel-control {
-  width: 4%;
+
+.intro {
+  margin: auto auto 40px auto;
+  background: #faf9f7;
+  height: 300px;
+  text-align: center;
+  font-size: 25px;
+  font-family: "Poppins";
+  padding: 80px;
+  border-top: outset;
 }
-.multi .carousel-control.left,
-.multi .carousel-control.right {
-  margin-left: 15px;
-  background-image: none;
+.contenedor-donadores {
+  margin: auto auto 40px auto;
+  background: #faf9f7;
+  height: 400px;
+  text-align: center;
+  font-size: 25px;
+  font-family: "Poppins";
+  padding: 80px;
+  border-top: outset;
+}
+.titulo {
+  margin-top: 100px;
+  font-size: 3rem;
+}
+.necesarios {
+  display: flex;
+  flex-direction: column;
+  flex-flow: row;
+  margin: 40px 90px 40px 90px;
+  justify-content: space-around;
+  align-items: center;
+}
+.contenedor1 {
+  height: 400px;
+  background: #dbd8d873;
+  margin-right: 10px;
+  box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+  width: 510px;
+}
+.contenedor2 {
+  height: auto;
+  width: 1150px;
+  background: #034991;
+  box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+}
+h1 {
+  text-align: center;
+}
+h5 {
+  font-size: 20px;
+  text-align: justify;
+}
+
+.row{
+  margin: 20px 50px 20px 50px;
 }
 /* Type-2 */
 .scroll-box {
@@ -289,6 +373,7 @@ export default {
 .scroll-box a h5 {
   line-height: 20px;
 }
+
 /* Type-3 */
 .donation a.card {
   display: block;
@@ -323,16 +408,78 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px;
+  max-width: 400px;
 }
 /* Heading */
 .titles {
-  background: #034991;
-  border: 8px double #fff;
   padding: 10px;
-  color: #fff;
+  text-align: center;
 }
 .titles span {
   color: rgba(255, 255, 255, 0.6);
+}
+
+@media screen and (max-width: 900px) {
+  .portada {
+    width: 100%;
+  }
+  img {
+    width: 380px;
+    height: 230px;
+    margin-top: 95px;
+  }
+  .intro {
+    font-size: 10px;
+    margin: 5px 5px 5px 5px;
+  }
+  .necesarios {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+  }
+  .contenedor1 {
+    width: 360px;
+    height: 300px;
+    margin: 5px 5px 5px 45px;
+  }
+  .contenedor2 {
+    width: 360px;
+    height: 300px;
+    margin: 5px 5px 5px 45px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .portada {
+    width: 100%;
+  }
+  img {
+    width: 380px;
+    height: 230px;
+    margin-top: 95px;
+  }
+  .intro {
+    font-size: 15px;
+    margin: 5px 5px 5px 5px;
+  }
+  .centrado {
+    font-size: 2rem;
+    margin-top: 60px;
+  }
+  .necesarios {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+  }
+  .contenedor1 {
+    width: 360px;
+    height: 300px;
+    margin: 5px 5px 5px 45px;
+  }
+  .contenedor2 {
+    width: 360px;
+    height: 300px;
+    margin: 5px 5px 5px 45px;
+  }
 }
 </style>

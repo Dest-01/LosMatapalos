@@ -15,57 +15,55 @@
           width="100%"
           height="100%"
           alt=""
+          @click="verImagen(donativo)"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
         />
         <span class="title">{{ donativo.idPersona }}</span>
         <span class="text"
           >Morbi diam viverra mattis sociis magna, habitasse penatibus non
           lectus</span
         >
-        <button
-          type="button"
-          @click="verImagen(donativo)"
-          class="btn btn-success btn-rounded"
-        >
-          VER
-        </button>
       </div>
     </div>
     <div class="paginacion">
       <pagination
-        style="font-family: fantasy"
+        style="font-family: fantasy; color: black"
         :data="donativos"
         @pagination-change-page="getResults"
       ></pagination>
     </div>
+
     <!-- Modal -->
     <div
       class="modal fade"
-      id="addNew"
+      id="exampleModal"
       tabindex="-1"
-      role="dialog"
-      aria-labelledby="addNew"
+      aria-labelledby="exampleModalLabel"
       aria-hidden="true"
-     
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" v-show="!verModal"></h5>
-            <h5 class="modal-title" v-show="verModal">{{form.idPersona}}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="exampleModalLabel">Imagen Completa</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
-          <form>
-            <div class="modal-body">
-              <div>
-                <img
-                  v-bind:src="'/images/donativos/' + form.photo"
-                  width="100%"
-                  height="100%"
-                  alt=""
-                />
-              </div>
+          <div class="modal-body">
+            <div>
+              <img
+                v-bind:src="'/images/donativos/' + form.photo"
+                width="100%"
+                height="100%"
+                alt=""
+              />
             </div>
-          </form>
+          </div>
+          <div class="modal-footer"></div>
         </div>
       </div>
     </div>
@@ -75,7 +73,6 @@
 export default {
   data() {
     return {
-      verModal: false,
       donativos: {},
       form: new Form({
         id: "",
@@ -86,15 +83,9 @@ export default {
   },
   methods: {
     verImagen(donativo) {
-      this.verModal = true;
-      $("#addNew").modal("show");
       this.form.fill(donativo);
-      this.show = false;
     },
-    cerrarModal() {
-      this.verModal = false;
-      this.show = false;
-    },
+
     getResults(page = 1) {
       this.$Progress.start();
       axios
@@ -130,9 +121,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
 }
-.modal-content{
-    width: 1000px;
-    right: 45%;
+.modal-content {
+  width: 1000px;
+  right: 45%;
 }
 
 .total {
@@ -140,17 +131,17 @@ html {
 }
 
 .modal-content {
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    pointer-events: auto;
-    background-color: #ffffffba;
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.2);
-    border-radius: .3rem;
-    outline: 0;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  pointer-events: auto;
+  background-color: #ffffffba;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
 }
 
 footer {
@@ -172,13 +163,13 @@ footer {
   padding: 1em;
   /* padding: 1px; */
   /* border-radius: 0.2rem; */
-  box-shadow: 0 4px 6px 0 rgb(122 122 122);
+  /*box-shadow: 0 4px 6px 0 rgb(122 122 122);*/
   /* position: absolute; */
   /* left: 45%; */
   /* bottom: -250px; */
   /* height: auto; */
   /* width: 150px; */
-  background: #c3c3c373;
+  /* background: #c3c3c373;*/
 }
 ol,
 ul {
@@ -281,7 +272,8 @@ img {
     margin-top: 150px;
   }
   .container-all {
-    margin: 5px 6px auto auto;
+    margin: 5px 5px 1px 120px;
+    width: 1000px;
   }
   .container {
     width: calc(50% - 6px);
@@ -291,11 +283,11 @@ img {
     /* left: 45%; */
     padding-left: 45%;
   }
-    .modal-content{
+  .modal-content {
     width: 100%;
     right: auto;
     top: 200px;
-}
+  }
 }
 @media only screen and (max-width: 400px) {
   .titulo {
@@ -303,6 +295,7 @@ img {
   }
   .container-all {
     margin: 5px 6px auto auto;
+    width: auto;
   }
   .container {
     width: 100%;
@@ -312,10 +305,10 @@ img {
     /* left: 45%; */
     padding-left: 30%;
   }
-  .modal-content{
+  .modal-content {
     width: 100%;
     right: auto;
     top: 200px;
-}
+  }
 }
 </style>

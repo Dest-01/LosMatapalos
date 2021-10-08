@@ -20,26 +20,16 @@
 
     <!-- MATERIAL DESIGN BOOSTRAP -->
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js">
-    </script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 
-<!-- MATERIAL DESIGN BOOSTRAP -->
-
+    <!-- MATERIAL DESIGN BOOSTRAP -->
 
 
 
@@ -80,7 +70,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/donaciones') }}">Donaciones</a>
                         </li>
-                       
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -131,41 +121,39 @@
     {{-- ./wrapper --}}
 
     <footer>
-      <div class="paginacion">
-          <pagination
-            style="font-family: fantasy"
-            :data="donativos"
-            @pagination-change-page="getResults"
-          ></pagination>
+      <div class="
+            paginacion">
+            <pagination style="font-family: fantasy" :data="donativos" @pagination-change-page="getResults">
+            </pagination>
         </div>
-        
-      <div class="contenedor-footer">
-        <div class="content-foo">
-          <h4>Phone</h4>
-          <p>0000-0000</p>
-        </div>
-        <div class="content-foo">
-          <h4>Email</h4>
-          <p>sendero@una.ac.cr</p>
-        </div>
-        <div class="content-foo">
-          <h4>Location</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, cum?
-          </p>
-        </div>
-      </div>
-    </footer >
 
-    @auth
+        <div class="contenedor-footer">
+            <div class="content-foo">
+                <h4>Phone</h4>
+                <p>0000-0000</p>
+            </div>
+            <div class="content-foo">
+                <h4>Email</h4>
+                <p>sendero@una.ac.cr</p>
+            </div>
+            <div class="content-foo">
+                <h4>Location</h4>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, cum?
+                </p>
+            </div>
+        </div>
+        </footer>
+
+        @auth
+            <script>
+                window.user = @json(auth()->user())
+            </script>
+        @endauth
+        <script src="{{ mix('/js/app.js') }}"></script>
         <script>
-            window.user = @json(auth()->user())
-        </script>
-    @endauth
-    <script src="{{ mix('/js/app.js') }}"></script>
-<script>
 
-</script>
+        </script>
 
 </body>
 

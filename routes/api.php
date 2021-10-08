@@ -77,6 +77,7 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',
+        'donacionesCliente' => 'DonacionController',
         'floraCliente' => 'FloraController',
     ]);
 });

@@ -298,3 +298,13 @@ footer{
         font-size: 20px;
     }
 }
+
+.pagination .page-item.active .page-link {
+    color: #000;
+    background-color: #4285f4;
+    border-radius: .125rem;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
