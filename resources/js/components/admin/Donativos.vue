@@ -642,17 +642,9 @@ export default {
       this.form.errors.clear();
     },
     limpiar() {
-      this.formPer.id = "";
-      this.formPer.nombre = "";
-      this.formPer.apellido1 = "";
-      this.formPer.apellido2 = "";
-      this.formPer.telefono = "";
-      this.formPer.correo = "";
+     this.formPer.reset();
+      this.formOrg.reset();
       this.formPer.errors.clear();
-      this.formOrg.id = "";
-      this.formOrg.nombre = "";
-      this.formOrg.telefono = "";
-      this.formOrg.correo = "";
       this.formOrg.errors.clear();
       this.showExistenciaCedula = false;
       this.showMensajesCedula2 = false;

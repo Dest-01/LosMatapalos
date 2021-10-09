@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\client;
 
-use App\Models\ReservarCli;
+use App\Models\Reserva;
 use App\Models\Personas;
 use App\Models\Organizaciones;
 use Illuminate\Http\Request;
@@ -17,12 +17,12 @@ class ReservarCliController extends BaseController
 
     protected $organizaciones = '';
 
-    public function __construct(Personas $personas, ReservarCli $reservarCli, Organizaciones $organizaciones)
+    public function __construct(Personas $personas, Reserva $reserva, Organizaciones $organizaciones)
     {
         
         $this->personas = $personas;
 
-        $this->reservarCli = $reservarCli;
+        $this->reserva = $reserva;
 
         $this->organizaciones = $organizaciones;
     }
@@ -41,15 +41,16 @@ class ReservarCliController extends BaseController
     {
       //  $indentificacionB = $request->buscador;
 
-        $tag = $this->reservarCli->create([
-            'identificacion' => $request->get('identificacion'),
+        $tag = $this->reserva->create([
+            'idPersona' => $request->get('idPersona'),
+            'idOrganizacion' => $request->get('idOrganizacion'),
             'cantidad' => $request->get('cantidad'),
             'fecha' => $request->get('fecha'),
             'horaInicio' => $request->get('horaInicio'),
-            'horaFin' => $request->get('horaFin'),
+            'horaFin' => $request->get('horaFin')
         ]);
 
-        return $this->sendResponse($tag, 'Se reservo con exito');
+        return $this->sendResponse($tag, 'Se reservo con exito!');
     }
 
     
@@ -65,18 +66,23 @@ class ReservarCliController extends BaseController
      */
     public function GuardarPersona(PersonasRequest $request)
     {
-        //$filtro
+     /*   $filtro = $request->id;
+        $existencia = Personas::find($filtro);
 
-        $tag = $this->personas->create([
-            'id' => $request->get('id'),
-            'nombre' => $request->get('nombre'),
-            'apellido1' => $request->get('apellido1'),
-            'apellido2' => $request->get('apellido2'),
-            'telefono' => $request->get('telefono'),
-            'correo' => $request->get('correo'),
-        ]);
-
-        return $this->sendResponse($tag, 'Registro completado con exito');
+        if(empty($existencia)){*/
+            
+                $tag = $this->personas->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'apellido1' => $request->get('apellido1'),
+                    'apellido2' => $request->get('apellido2'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+                return $this->sendResponse($tag, 'Datos registrados');
+                
+        /*    }
+            return $this->sendResponse($existencia, 'Datos no registrados'); */
     }
 
     public function GuardarOrganizacion(Request $request)
@@ -88,7 +94,7 @@ class ReservarCliController extends BaseController
             'correo' => $request->get('correo'),
         ]);
 
-        return $this->sendResponse($tag, 'Registro completado con exito');
+        return $this->sendResponse($tag, 'Registro completado con exito!');
     }
 
     /**
@@ -100,7 +106,7 @@ class ReservarCliController extends BaseController
     public function obtenerCedula(Request $request)
     {
         $filtro = $request->buscador;
-        $persona = Personas::where('id', $filtro)->get('id');
+        $persona = Personas::where('id', $filtro)->get();
             return $this->sendResponse($persona, 'Cedula si existe');
         
        
@@ -108,7 +114,7 @@ class ReservarCliController extends BaseController
     public function obtenerCedulaOrg(Request $request)
     {
         $filtro = $request->buscador;
-        $organizacion = Organizaciones::where('id', $filtro)->get('id');
+        $organizacion = Organizaciones::where('id', $filtro)->get();
         return $this->sendResponse($organizacion, 'Cedula si existe');
     }
 
