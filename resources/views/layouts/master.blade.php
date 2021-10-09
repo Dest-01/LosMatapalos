@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <!-- MATERIAL DESIGN BOOSTRAP -->
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
@@ -43,16 +43,14 @@
 
 <body>
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="images/logo2.png" alt="" width="120" height="60">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                  </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 ">
                         <li class="nav-item">
@@ -62,7 +60,7 @@
                             <a class="nav-link" href="{{ url('/dashboard') }}">Administrador</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/pruebas') }}">Reservación</a>
+                            <a class="nav-link" href="{{ url('/reservacion') }}">Reservación</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/actividades') }}">Actividades</a>

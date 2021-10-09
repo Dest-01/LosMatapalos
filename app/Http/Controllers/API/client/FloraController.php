@@ -23,7 +23,7 @@ class FloraController extends BaseController
      */
     public function index()
     {
-        $donativo = $this->donativos->latest()->paginate(3);
+        $donativo = $this->donativos->latest()->paginate(6);
         
      
 

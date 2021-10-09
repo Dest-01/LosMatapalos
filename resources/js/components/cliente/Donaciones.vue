@@ -20,12 +20,13 @@
             Si desea realizar una donacion de tipo material, puede ser de los
             siguientes que se muestran en las imagenes de la derecha.
           </h5>
-           <br>
+          <br />
           <h5>
-            Si desea realizar otra donación distinta a las que se necesitan, se puede poner en contacto con los administradores.
+            Si desea realizar otra donación distinta a las que se necesitan, se
+            puede poner en contacto con los administradores.
           </h5>
-          <br>
-          <h5 style="text-align:center">
+          <br />
+          <h5 style="text-align: center">
             Telefono: 0000-0000 - Email: sendero@una.ac.cr
           </h5>
         </div>
@@ -197,7 +198,9 @@
       </div>
     </div>
     <div class="contenedor-donaciones">
-     <h2 class="titles"><span class="pull-right"></span>Donaciones Recibidas</h2>
+      <h2 class="titles">
+        <span class="pull-right"></span>Donaciones Recibidas
+      </h2>
       <div class="row donation">
         <div
           v-for="donativo in donativos.data"
@@ -205,15 +208,16 @@
           class="col-sm-3"
         >
           <a href="" class="card">
-            <h3 style="text-align:center">{{donativo.tipo}}</h3>
-             <img
-          v-bind:src="'/images/donativos/' + donativo.photo"
-          width="300px"
-          height="200px"
-          alt=""
-        />
-            <h4>{{donativo.fecha}}</h4>
-            <h5 style="text-align:center">{{donativo.detalle}}</h5>
+            <h3 style="text-align: center">{{ donativo.tipo }}</h3>
+            <img
+              class="imagenes"
+              v-bind:src="'/images/donativos/' + donativo.photo"
+              width="300px"
+              height="200px"
+              alt=""
+            />
+            <h4>{{ donativo.fecha }}</h4>
+            <h5 style="text-align: center">{{ donativo.detalle }}</h5>
           </a>
         </div>
       </div>
@@ -330,7 +334,7 @@ h5 {
   text-align: justify;
 }
 
-.row{
+.row {
   margin: 20px 50px 20px 50px;
 }
 /* Type-2 */
@@ -421,65 +425,111 @@ h5 {
 
 @media screen and (max-width: 900px) {
   .portada {
-    width: 100%;
+    width: 200px;
+    height: 250px;
+    margin-top: 5px;
   }
   img {
-    width: 380px;
-    height: 230px;
-    margin-top: 95px;
+width: 768px;
+    height: 300px;
   }
   .intro {
-    font-size: 10px;
-    margin: 5px 5px 5px 5px;
+    font-size: 15px;
+    margin: 55px 5px 5px 5px;
+  }
+  .centrado {
+    font-size: 2rem;
+    margin-top: 70px;
+    /* margin: auto; */
+    margin-left: 145%;
   }
   .necesarios {
-    width: 250px;
+    margin: 10px 40px 10px 10px;
+    width: auto;
     display: flex;
     flex-direction: column;
   }
   .contenedor1 {
-    width: 360px;
-    height: 300px;
-    margin: 5px 5px 5px 45px;
+    width: 750px;
+    height: auto;
+    margin: auto;
   }
   .contenedor2 {
-    width: 360px;
-    height: 300px;
-    margin: 5px 5px 5px 45px;
+    width: 750px;
+    height: auto;
+    margin: 10px auto auto auto;
+  }
+
+  .contenedor-donadores {
+    margin: auto auto 40px auto;
+    background: #faf9f7;
+    height: 400px;
+    text-align: center;
+    font-size: 25px;
+    font-family: "Poppins";
+    padding: 20px;
+    border-top: outset;
+  }
+  .imagenes {
+    width: 130px;
+    height: auto;
+  }
+  .row {
+    margin: 15px 40px 40px 20px;
   }
 }
 
 @media screen and (max-width: 500px) {
   .portada {
-    width: 100%;
+    width: 200px;
+    height: 250px;
+    margin-top: 5px;
   }
   img {
-    width: 380px;
-    height: 230px;
-    margin-top: 95px;
+    width: 375px;
+    height: 200px;
   }
   .intro {
     font-size: 15px;
-    margin: 5px 5px 5px 5px;
+    margin: 47px 5px 5px 5px;
   }
   .centrado {
     font-size: 2rem;
-    margin-top: 60px;
+    margin-top: 70px;
+    /* margin: auto; */
+    margin-left: 75px;
   }
   .necesarios {
-    width: 250px;
+    margin: 10px 40px 10px 10px;
+    width: auto;
     display: flex;
     flex-direction: column;
   }
   .contenedor1 {
-    width: 360px;
-    height: 300px;
-    margin: 5px 5px 5px 45px;
+    width: 300px;
+    height: auto;
   }
   .contenedor2 {
-    width: 360px;
-    height: 300px;
-    margin: 5px 5px 5px 45px;
+    width: 300px;
+    height: auto;
+  }
+
+  .contenedor-donadores {
+    margin: auto auto 40px auto;
+    background: #faf9f7;
+    height: 400px;
+    text-align: center;
+    font-size: 25px;
+    font-family: "Poppins";
+    padding: 20px;
+    border-top: outset;
+  }
+  .imagenes {
+    width: 200px;
+    height: auto;
+  }
+  .row[data-v-40bca711] {
+    margin: 15px 40px 40px 20px;
   }
 }
 </style>

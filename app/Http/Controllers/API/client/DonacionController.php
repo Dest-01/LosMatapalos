@@ -23,7 +23,7 @@ class DonacionController extends BaseController
      */
     public function index()
     {
-        $donativo = $this->donativos->latest()->paginate(5);
+        $donativo = $this->donativos->latest()->paginate(8);
         
      
 

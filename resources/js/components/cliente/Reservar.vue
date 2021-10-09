@@ -1,318 +1,415 @@
 <template>
-  <div style="background: #fff">
-    <!-- Modal de persona -->
-    <div class="modal" :class="{ mostrar: modal }">
+  <div class="" style="margin-top: 85px">
+    <div class="intro" style="text-align: center">
+      <h2>Reservación del sendero los Matapalos</h2>
+    </div>
+    <div class="contenedor-2">
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-5">
+            <H2 style="text-align: center">Horario Sendero</H2>
+            <div class="horas">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Hora Llegada</th>
+                    <th scope="col">Hora Salida</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>8:00 a.m.</td>
+                    <td>9:00 a.m.</td>
+                    <td>
+                      <button
+                        style="height: 35px; width: 55px"
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora1()"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>9:00 a.m.</td>
+                    <td>10:00 a.m.</td>
+                    <td>
+                      <button
+                        style="height: 35px; width: 55px"
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora2()"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>10:00 a.m.</td>
+                    <td>11:00 a.m.</td>
+                    <td>
+                      <button
+                        style="height: 35px; width: 55px"
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora3()"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>11:00 a.m.</td>
+                    <td>12:00 p.m.</td>
+                    <td>
+                      <button
+                        style="height: 35px; width: 55px"
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora4()"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>12:00 p.m.</td>
+                    <td>01:00 p.m.</td>
+                    <td>
+                      <button
+                        style="height: 35px; width: 55px"
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora5()"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>01:00 p.m.</td>
+                    <td>02:00 p.m.</td>
+                    <td>
+                      <button
+                        style="height: 35px; width: 55px"
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora6()"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>02:00 p.m.</td>
+                    <td>03:00 p.m.</td>
+                    <td>
+                      <button
+                        style="height: 35px; width: 55px"
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora7()"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 class="card-title">Formulario de Reservación</h5>
+              <h6 style="text-align: center; font-size: 20px">
+                Si no esta registrado, puede realizarlo con la siguientes
+                opciones.<br>
+                Si ya esta registrado, puede comprobar su Registro.
+              </h6>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                @click="modalPersona()"
+              >
+                Persona
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                @click="modalGrupo()"
+              >
+                Grupo
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                @click="modalOrganizacion()"
+              >
+                Organización
+              </button>
+              <br />
+              <br />
+              <form class="material-form">
+                <div class="group">
+                  <input
+                    v-model="formReserva.identificacion"
+                    type="text"
+                    required
+                  />
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Cedula o Numero</label>
+                </div>
+                <button type="button" class="btn btn-success">Consultar</button>
+                <br />
+                <br />
+                <div class="group">
+                  <input
+                    v-model="formReserva.cantidad"
+                    type="number"
+                    required
+                  />
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Cantidad de visitantes</label>
+                </div>
+                <div class="group">
+                  <h3>Fecha de llegada</h3>
+                  <br />
+                  <input
+                    v-model="formReserva.fecha"
+                    type="date"
+                    value="Fecha"
+                    required
+                  />
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                </div>
+                <div class="group">
+                  <h3>Hora de llegada</h3>
+                  <br />
+                  <input
+                    v-model="formReserva.HoraInicio"
+                    type="time"
+                    :disabled="bloqueraHoras"
+                    required
+                  />
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label></label>
+                </div>
+                <div class="group">
+                  <h3>Hora de Salida</h3>
+                  <br />
+                  <input
+                    v-model="formReserva.HoraFin"
+                    type="time"
+                    :disabled="bloqueraHoras"
+                    required
+                  />
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label></label>
+                </div>
+
+                <button type="button" class="btn btn-success btn-rounded">
+                  RESERVAR
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
-          <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">{{ tituloModal }}</h4>
+            <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
             <button
-              @click="cerrarMmodal()"
               type="button"
-              class="close"
-              data-dismiss="modal"
-            >
-              &times;
-            </button>
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
-          <!-- Modal body -->
           <div class="modal-body">
-            <div class="form-group">
-              <label>Cedula</label>
+            <!-- MODAL DE PERSONA-->
+            <div v-show="soloPersona" class="group">
               <input
-                v-model="formPer.id"
-                type="text"
                 name="id"
-                class="form-control"
-                :class="{ 'is-invalid': formPer.errors.has('id') }"
+                v-model="formPersona.id"
+                type="text"
+                :class="{ 'is-invalid': formPersona.errors.has('id') }"
               />
-              <has-error :form="formPer" field="id"></has-error>
+              <has-error :form="formPersona" field="id"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Cedula persona</label>
             </div>
-            <div class="form-group">
+            <div v-show="soloPersona" class="group">
+              <input
+                name="nombre"
+                v-model="formPersona.nombre"
+                type="text"
+                :class="{ 'is-invalid': formPersona.errors.has('nombre') }"
+              />
+              <has-error :form="formPersona" field="nombre"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
               <label>Nombre</label>
-              <input
-                v-model="formPer.nombre"
-                type="text"
-                name="nombre"
-                class="form-control"
-                :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-              />
-              <has-error :form="formPer" field="nombre"></has-error>
             </div>
-            <div class="form-group">
-              <label>Primer Apellido</label>
+            <div v-show="soloPersona" class="group">
               <input
-                v-model="formPer.apellido1"
-                type="text"
                 name="apellido1"
-                class="form-control"
-                :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-              />
-              <has-error :form="formPer" field="apellido1"></has-error>
-            </div>
-            <div class="form-group">
-              <label>Segundo Apellido</label>
-              <input
-                v-model="formPer.apellido2"
+                v-model="formPersona.apellido1"
                 type="text"
+                :class="{ 'is-invalid': formPersona.errors.has('apellido1') }"
+              />
+              <has-error :form="formPersona" field="apellido1"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Primer Apellido</label>
+            </div>
+            <div v-show="soloPersona" class="group">
+              <input
                 name="apellido2"
-                class="form-control"
-                :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-              />
-              <has-error :form="formPer" field="apellido2"></has-error>
-            </div>
-            <div class="form-group">
-              <label>Telefono</label>
-              <input
-                v-model="formPer.telefono"
-                type="number"
-                name="telefono"
-                class="form-control"
-                :class="{ 'is-invalid': formPer.errors.has('telefono') }"
-              />
-              <has-error :form="formPer" field="telefono"></has-error>
-            </div>
-            <div class="form-group">
-              <label>Correo</label>
-              <input
-                v-model="formPer.correo"
-                type="email"
-                name="correo"
-                class="form-control"
-                :class="{ 'is-invalid': formPer.errors.has('correo') }"
-              />
-              <has-error :form="formPer" field="correo"></has-error>
-            </div>
-          </div>
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button
-              @click="cerrarMmodal()"
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button
-              @click="crearPersona()"
-              type="button"
-              class="btn btn-success"
-              data-dismiss="modal"
-            >
-              Guardar
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal de organizacion-->
-    <!-- The Modal -->
-    <div class="modal" :class="{ mostrar: modalOrg }">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">{{ tituloModal }}</h4>
-            <button
-              @click="cerrarMmodalOrg()"
-              type="button"
-              class="close"
-              data-dismiss="modal"
-            >
-              &times;
-            </button>
-          </div>
-
-          <!-- Modal body -->
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Cedula Juridica</label>
-              <input
-                v-model="formOrg.id"
+                v-model="formPersona.apellido2"
                 type="text"
+                :class="{ 'is-invalid': formPersona.errors.has('apellido2') }"
+              />
+              <has-error :form="formPersona" field="apellido2"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Segundo Apellido</label>
+            </div>
+            <div v-show="soloPersona" class="group">
+              <input
+                name="telefono"
+                v-model="formPersona.telefono"
+                type="number"
+                :class="{ 'is-invalid': formPersona.errors.has('telefono') }"
+              />
+              <has-error :form="formPersona" field="telefono"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Telefono</label>
+            </div>
+            <div v-show="soloPersona" class="group">
+              <input
+                name="correo"
+                v-model="formPersona.correo"
+                type="email"
+                :class="{ 'is-invalid': formPersona.errors.has('correo') }"
+              />
+              <has-error :form="formPersona" field="correo"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Email</label>
+            </div>
+            <!-- FIN DE MODAL DE PERSONA -->
+            <!-- MODAL DE ORGANIZACION -->
+            <div v-show="soloOrganizacion" class="group">
+              <input
+                v-model="formOrganizacion.id"
                 name="id"
-                class="form-control"
-                :class="{ 'is-invalid': formOrg.errors.has('id') }"
-              />
-              <has-error :form="formOrg" field="id"></has-error>
-            </div>
-            <div class="form-group">
-              <label>Nombre de Organizacion</label>
-              <input
-                v-model="formOrg.nombre"
                 type="text"
+                :class="{ 'is-invalid': formOrganizacion.errors.has('id') }"
+              />
+              <has-error :form="formOrganizacion" field="id"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Cedula organización</label>
+            </div>
+            <div v-show="soloOrganizacion" class="group">
+              <input
+                v-model="formOrganizacion.nombre"
                 name="nombre"
-                class="form-control"
-                :class="{ 'is-invalid': formOrg.errors.has('nombre') }"
+                type="text"
+                :class="{ 'is-invalid': formOrganizacion.errors.has('nombre') }"
               />
-              <has-error :form="formOrg" field="nombre"></has-error>
+              <has-error :form="formOrganizacion" field="nombre"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Nombre de la organización</label>
             </div>
-            <div class="form-group">
-              <label>Telefono</label>
+            <div v-show="soloOrganizacion" class="group">
               <input
-                v-model="formOrg.telefono"
-                type="number"
+                v-model="formOrganizacion.telefono"
                 name="telefono"
-                class="form-control"
-                :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
+                type="number"
+                :class="{
+                  'is-invalid': formOrganizacion.errors.has('telefono'),
+                }"
               />
-              <has-error :form="formOrg" field="telefono"></has-error>
+              <has-error :form="formOrganizacion" field="telefono"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Telefono de la organización</label>
             </div>
-            <div class="form-group">
-              <label>Correo</label>
+            <div v-show="soloOrganizacion" class="group">
               <input
-                v-model="formOrg.correo"
-                type="email"
+                v-model="formOrganizacion.correo"
                 name="correo"
-                class="form-control"
-                :class="{ 'is-invalid': formOrg.errors.has('correo') }"
+                type="email"
+                :class="{ 'is-invalid': formOrganizacion.errors.has('correo') }"
               />
-              <has-error :form="formOrg" field="correo"></has-error>
+              <has-error :form="formOrganizacion" field="correo"></has-error>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Email de la organización</label>
             </div>
+            <!-- FIN DE MODAL DE ORGANIZACION -->
+            <!-- MODAL DE GRUPO -->
+            <div v-show="soloGrupo" class="group">
+              <input type="text" required />
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Numero de grupo</label>
+            </div>
+            <!-- FIN DE MODAL DE GRUPO -->
           </div>
-          <!-- Modal footer -->
           <div class="modal-footer">
             <button
-              @click="cerrarMmodalOrg()"
               type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
             >
               Cancelar
             </button>
+            <button v-show="soloPersona" type="button" class="btn btn-success">
+              Guardar
+            </button>
             <button
-              @click="crearOrganizacion()"
+              v-show="soloOrganizacion"
               type="button"
               class="btn btn-success"
-              data-dismiss="modal"
             >
+              Guardar
+            </button>
+            <button v-show="soloGrupo" type="button" class="btn btn-success">
               Guardar
             </button>
           </div>
         </div>
       </div>
     </div>
-    <!-- formulario de reserva campos-->
-    <main>
-      <div class="form">
-        <div class="title">Reservas</div>
-        <div class="subtitle">Registre su reserva!</div>
-
-        <button @click="abrirModal()" type="button" class="registrarP my-4">
-          Registrar Persona
-        </button>
-
-        <button @click="abrirModalOrg()" type="button" class="registrarP my-4">
-          Registrar Organizacion
-        </button>
-
-        <div class="input-container ic1">
-          <label for="Cedula" class="placeholder">Cedula</label>
-          <input
-            id="Cedula"
-            class="input"
-            type="text"
-            v-model="buscador"
-            name="buscador"
-            :disabled="CedulaBloqueo"
-          />
-      
-        </div>
-        <div class="input-container ic1">
-          <label
-            v-show="showExistenciaCedula"
-            v-text="MensajeCedula"
-            style="color: white"
-          ></label>
-        </div>
-        <button
-          id="consultabtn"
-          type="submit"
-          class="registrarP my-4"
-          @click="ConsultaCedula(), habilitarCampos(), NoexisteCedula()"
-        >
-          Consultar cedula
-        </button>
-        <div class="form-group">
-          <!-- <span class="mensajeCedula" v-if="personas.length == 0">Cedula no registrada o campo vacio!</span> </span>-->
-        </div>
-        <div class="input-container ic2">
-          <label for="">Cantidad de visitantes</label>
-          <input
-            v-model="formReserva.cantidad"
-            :disabled="isDisabled"
-            class="input"
-            type="text"
-            :class="{ 'is-invalid': formReserva.errors.has('cantidad') }"
-          />
-          <has-error :form="formReserva" field="cantidad"></has-error>
-          <div class="cut"></div>
-          <!-- <label for="CantVisitantes" class="placeholder">Cantidad Visitantes</label> -->
-        </div>
-        <div class="input-container ic2">
-          <label for="">Fecha</label>
-          <input
-            v-model="formReserva.fecha"
-            :disabled="isDisabled"
-            class="input"
-            type="date"
-            :class="{ 'is-invalid': formReserva.errors.has('fecha') }"
-          />
-          <has-error :form="formReserva" field="fecha"></has-error>
-          <div class="cut"></div>
-          <!-- <label for="" class="placeholder" ></label> -->
-        </div>
-        <div class="input-container ic2">
-          <label for="">Hora de entrada</label>
-          <input
-            v-model="formReserva.horaInicio"
-            :disabled="isDisabled"
-            class="input"
-            type="time"
-            :class="{ 'is-invalid': formReserva.errors.has('horaInicio') }"
-          />
-          <div class="cut"></div>
-          <!-- <label for="HoraEntrada" class="placeholder">Hora entrada</label> -->
-        </div>
-        <has-error :form="formReserva" field="horaInicio"></has-error>
-        <div class="input-container ic2">
-          <label for="">Hora de salida</label>
-          <input
-            v-model="formReserva.horaFin"
-            :disabled="isDisabled"
-            class="input"
-            type="time"
-            :class="{ 'is-invalid': formReserva.errors.has('horaFin') }"
-          />
-          <has-error :form="formReserva" field="horaFin"></has-error>
-          <div class="cut"></div>
-          <!-- <label for="HoraSalida" class="placeholder">Hora Salida</label> -->
-        </div>
-        <button
-          :disabled="isDisabled"
-          @click="crearReserva()"
-          type="button"
-          class="submit"
-        >
-          Reservar
-        </button>
-        <button
-          type="button"
-          @click="reiniciarCampos(), limpiar()"
-          class="cancel"
-        >
-          Cancelar
-        </button>
-      </div>
-    </main>
-    <footer style="background: rgba(0, 0, 0, 0.3)">
-      <div class="float-right d-none d-sm-block"></div>
-
-      <strong>Copyright &copy; 2021-2022 <a href="">Los Matapalos</a>.</strong>
-      All rights reserved.
-    </footer>
+    <!-- Fin Modal -->
   </div>
 </template>
 
@@ -320,21 +417,19 @@
 export default {
   data() {
     return {
-      MensajeCedula: "Digite un numero de cedula",
-      showExistenciaCedula: false,
-      CedulaBloqueo: false,
-      isDisabled: true,
-      buscador: "",
-      cedulas: {},
-      cedulasOrg: {},
+      bloqueraHoras: true,
+      soloPersona: false,
+      soloOrganizacion: false,
+      soloGrupo: false,
       formReserva: new Form({
+        id: "",
         identificacion: "",
         cantidad: "",
         fecha: "",
-        horaInicio: "",
-        horaFin: "",
+        HoraInicio: "Hora de llegada",
+        HoraFin: "Hora de salida",
       }),
-      formPer: new Form({
+      formPersona: new Form({
         id: "",
         nombre: "",
         apellido1: "",
@@ -342,297 +437,273 @@ export default {
         telefono: "",
         correo: "",
       }),
-      formOrg: new Form({
+      formOrganizacion: new Form({
         id: "",
         nombre: "",
         telefono: "",
         correo: "",
       }),
-      id: 0,
-      modificar: true,
-      modal: 0,
-      modalOrg: 0,
-      tituloModal: "",
+      formGrupo: new Form({
+        id: "",
+        idPersona: "",
+        photo: "",
+      }),
     };
   },
   methods: {
-    reiniciarCampos() {
-      this.CedulaBloqueo = false;
-      this.isDisabled = true;
-      this.buscador = "";
-      this.formReserva.cantidad = "";
-      this.formReserva.fecha = "";
-      this.formReserva.horaInicio = "";
-      this.formReserva.horaFin = "";
-      this.formReserva.identificacion = "";
+    modalPersona() {
+      this.soloPersona = true;
+      this.soloOrganizacion = false;
+      this.soloGrupo = false;
     },
-    habilitarCampos() {
-      for (let i = 0; i < this.cedulas.length; i++) {
-        if (this.cedulas[i].id == this.buscador) {
-          this.isDisabled = false;
-          this.CedulaBloqueo = true;
-          this.formReserva.identificacion = this.buscador;
-        }
-      }
+    modalOrganizacion() {
+      this.soloPersona = false;
+      this.soloOrganizacion = true;
+      this.soloGrupo = false;
     },
-    habilitarCamposOrg() {
-      for (let i = 0; i < this.cedulasOrg.length; i++) {
-        if (this.cedulasOrg[i].id == this.buscador) {
-          this.isDisabled = false;
-          this.CedulaBloqueo = true;
-          this.formReserva.identificacion = this.buscador;
-        }
-      }
+    modalGrupo() {
+      this.soloPersona = false;
+      this.soloOrganizacion = false;
+      this.soloGrupo = true;
     },
-    limpiar() {
-      this.formPer.nombre = "";
-      this.formPer.apellido1 = "";
-      this.formPer.apellido2 = "";
-      this.formPer.telefono = "";
-      this.formPer.correo = "";
-      this.formPer.errors.clear();
+    opcionHora1() {
+      this.formReserva.HoraInicio = "08:00";
+      this.formReserva.HoraFin = "09:00";
     },
-    NoexisteCedula() {
-      if (this.cedulas.length === 0 && this.cedulasOrg.length === 0) {
-        this.showExistenciaCedula = true;
-        this.MensajeCedula = "El numero de cedula no esta registrado";
-      }
-      if (this.buscador.length == 0) {
-        this.showExistenciaCedula = true;
-        this.MensajeCedula =
-          "Campo vacio, por favor digite un número de cedula";
-      }
+    opcionHora2() {
+      this.formReserva.HoraInicio = "09:00";
+      this.formReserva.HoraFin = "10:00";
     },
-
-    ConsultaCedula() {
-      this.$Progress.start();
-      this.formReserva
-        .get("/api/reservarCliente/verificar", {
-          params: { buscador: this.buscador },
-        })
-        .then(({ data }) => (this.cedulas = data.data))
-        .then((response) => {
-          this.habilitarCampos();
-          this.$Progress.finish();
-        });
-      this.formReserva
-        .get("/api/reservarCliente/verificarOrg", {
-          params: { buscador: this.buscador },
-        })
-        .then(({ data }) => (this.cedulasOrg = data.data))
-        .then((response) => {
-          this.habilitarCamposOrg();
-          this.$Progress.finish();
-        });
+    opcionHora3() {
+      this.formReserva.HoraInicio = "10:00";
+      this.formReserva.HoraFin = "11:00";
     },
-
-    abrirModal(data = {}) {
-      this.modal = 1;
-      (this.id = 0), (this.tituloModal = "Registro cliente");
-      //  this.articulo.nombre = "";
+    opcionHora4() {
+      this.formReserva.HoraInicio = "11:00";
+      this.formReserva.HoraFin = "12:00";
     },
-    abrirModalOrg(data = {}) {
-      this.modalOrg = 1;
-      (this.id = 0), (this.tituloModal = "Registro Organizacion");
-      //  this.articulo.nombre = "";
+    opcionHora5() {
+      this.formReserva.HoraInicio = "12:00";
+      this.formReserva.HoraFin = "13:00";
     },
-    cerrarMmodal() {
-      this.modal = 0;
-      this.errores = {};
+    opcionHora6() {
+      this.formReserva.HoraInicio = "13:00";
+      this.formReserva.HoraFin = "14:00";
     },
-    cerrarMmodalOrg() {
-      this.modalOrg = 0;
-      this.errores = {};
-    },
-    crearReserva() {
-      this.formReserva
-        .post("/api/reservarCliente")
-        .then((response) => {
-          $("#addNew").modal("hide");
-
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.reiniciarCampos();
-          //this.cerrarMmodal();
-          //  this.$Progress.finish();
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Ocurrio un problema",
-          });
-        });
-    },
-    crearPersona() {
-      this.formPer
-        .post("/api/reservarCliente/persona")
-        .then((response) => {
-          $("#addNew").modal("hide");
-
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.cerrarMmodal();
-          //  this.$Progress.finish();
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Ocurrio un problema",
-          });
-        });
-    },
-    crearOrganizacion() {
-      this.formOrg
-        .post("/api/reservarCliente/organizacion")
-        .then((response) => {
-          $("#addNew").modal("hide");
-
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.cerrarMmodalOrg();
-          //  this.$Progress.finish();
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Ocurrio un problema",
-          });
-        });
+    opcionHora7() {
+      this.formReserva.HoraInicio = "14:00";
+      this.formReserva.HoraFin = "15:00";
     },
   },
-  mounted() {
-    console.log("Component mounted.");
-  },
-  created() {
-    this.$Progress.start();
-    this.$Progress.finish();
-  },
+  created() {},
 };
 </script>
 
-
 <style scoped>
-.form {
-  margin-left: 35%;
-  background-color: #034991;
-  border-radius: 20px;
-  box-sizing: border-box;
-  height: 700px;
-  padding: 20px;
-  width: 600px;
-  box-shadow: 5px 10px whitesmoke;
-  margin-block: 70px;
-  color: white;
+.modal-content {
+  width: 540px;
+  border: 0;
+  -webkit-box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
 }
-#consultabtn {
-  margin-top: 30px;
+.contenedor-2 {
+  display: flex;
+  margin: 10px;
+  justify-content: space-evenly;
+  margin: 10px;
 }
-.title {
-  color: white;
-  font-family: sans-serif;
+.card {
+  width: 1000px;
+  height: auto;
+  box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 30%);
+}
+
+.intro {
+  margin: auto auto 20px auto;
+  background: #faf9f7;
+  height: 45px;
+  text-align: center;
   font-size: 25px;
-  font-weight: 600;
-  margin-top: 15px;
+  font-family: "Poppins";
+  /* padding: 5px; */
+  border-top: outset;
 }
-
-.subtitle {
-  color: white;
-  font-family: sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  margin-top: 10px;
-}
-
-.input-container {
-  height: 40px;
-  position: relative;
-  width: 100%;
-  padding-top: 5px;
-}
-
-.ic1 {
-  margin-top: 30px;
-}
-
-.ic2 {
-  margin-top: 20px;
-}
-
-.input {
-  font-weight: bold;
-  background-color: #cececed7;
-  color: black;
-  border-radius: 12px;
-  border: 0;
-  box-sizing: border-box;
-  font-size: 18px;
-  height: 100%;
-  padding: 4px 10px 0;
-  width: 100%;
-}
-
-.submit {
-  background-color: #08d;
-  border-radius: 12px;
-  border: 0;
-  box-sizing: border-box;
-  color: #eee;
-  cursor: pointer;
-  font-size: 18px;
-  height: 50px;
-  margin-top: 38px;
-  margin-right: 15px;
-  margin-bottom: 10px;
-  /* // outline: 0; */
-  text-align: center;
-  width: 40%;
-}
-
-.registrarP {
-  font-weight: bolder;
-  margin-top: 4px;
-  background-color: #08d;
-  border-radius: 12px;
+.col-md-5 {
   padding: 5px;
-  border: 0;
-  box-sizing: border-box;
-  color: #eee;
-  cursor: pointer;
+  background: #034991;
+  background-image: url("https://dl.dropbox.com/s/28bvugb6fnxzrhp/logo.png");
+  background-position-x: -100px;
+  background-position-y: 160px;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
+  background-size: 700px;
+  color: white;
+  font-family: "Poppins";
+  padding-top: 20px;
+}
+td {
+  font-weight: bold;
+  font-size: 16px;
+}
+.btn {
+  height: 40px;
+  width: 140px;
+  font-size: 19px;
+  padding: 5px;
 }
 
-.cancel {
-  background-color: rgba(255, 0, 0, 0.829);
-  border-radius: 12px;
-  border: 0;
-  box-sizing: border-box;
-  color: #eee;
-  cursor: pointer;
-  font-size: 18px;
-  height: 50px;
-  margin-top: 38px;
-  margin-left: 15px;
-  margin-bottom: 10px;
-  /* // outline: 0; */
+.horas {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: center;
+}
+.table {
+  color: white;
+  font-size: 16px;
+}
+
+.card-title {
+  /* margin-bottom: .5rem; */
+  font-size: 35px;
   text-align: center;
-  width: 40%;
+  font-weight: 900;
+  padding: 5px;
+}
+h6 {
+  font-family: "Poppins";
+  font-size: 25px;
+  padding: 5px;
+  text-align: center;
 }
 
-.cancel:active {
-  background-color: rgba(255, 0, 0, 0.589);
+/* form starting stylings ------------------------------- */
+.group {
+  position: relative;
+  margin-bottom: 45px;
+}
+input[data-v-4bc2021a] {
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 500px;
+  border: none;
+  border-bottom: 1px solid #757575;
+}
+input:focus {
+  outline: none;
 }
 
-.submit:active {
-  background-color: #06b;
+/* LABEL ======================================= */
+label {
+  color: #999;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
 }
-.mostrar {
-  display: list-item;
-  opacity: 1;
-  background: rgba(121, 120, 120, 0.623);
+h3 {
+  color: #999;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 0px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+input:focus ~ label,
+input:valid ~ label {
+  top: -20px;
+  font-size: 14px;
+  color: #5264ae;
+}
+
+/* BOTTOM BARS ================================= */
+.bar {
+  position: relative;
+  display: block;
+  width: 500px;
+}
+.bar:before,
+.bar:after {
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #5264ae;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+.bar:before {
+  left: 50%;
+}
+.bar:after {
+  right: 50%;
+}
+
+/* active state */
+input:focus ~ .bar:before,
+input:focus ~ .bar:after {
+  width: 50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position: absolute;
+  height: 60%;
+  width: 100px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation: inputHighlighter 0.3s ease;
+  -moz-animation: inputHighlighter 0.3s ease;
+  animation: inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@-moz-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
 }
 </style>
