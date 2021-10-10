@@ -65,24 +65,28 @@ class ReservarCliController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function GuardarPersona(PersonasRequest $request)
-    {
-     /*   $filtro = $request->id;
-        $existencia = Personas::find($filtro);
+    {   
+            $filtro = $request->id;
+            $existencia = Personas::find($filtro);
 
-        if(empty($existencia)){*/
-            
-                $tag = $this->personas->create([
-                    'id' => $request->get('id'),
-                    'nombre' => $request->get('nombre'),
-                    'apellido1' => $request->get('apellido1'),
-                    'apellido2' => $request->get('apellido2'),
-                    'telefono' => $request->get('telefono'),
-                    'correo' => $request->get('correo'),
-                ]);
-                return $this->sendResponse($tag, 'Datos registrados');
-                
-        /*    }
-            return $this->sendResponse($existencia, 'Datos no registrados'); */
+            if(empty($existencia)){
+                try {
+                    $tag = $this->personas->create([
+                        'id' => $request->get('id'),
+                        'nombre' => $request->get('nombre'),
+                        'apellido1' => $request->get('apellido1'),
+                        'apellido2' => $request->get('apellido2'),
+                        'telefono' => $request->get('telefono'),
+                        'correo' => $request->get('correo'),
+                    ]);
+                    return $this->sendResponse($tag, 'Datos registrados!');
+
+                } catch (ModelNotFoundException $exception) {
+           
+            }
+        }
+        
+
     }
 
     public function GuardarOrganizacion(Request $request)

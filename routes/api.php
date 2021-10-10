@@ -65,6 +65,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'participantes' => 'ParticipantesController',
         'reserva' => 'ReservaController',
         'voluntarioActividad' => 'VoluntarioActividadesController',
+        'fauna' => 'FaunaController',
     ]);
 });
 
@@ -79,5 +80,6 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         'reservarCliente' => 'ReservarCliController',
         'donacionesCliente' => 'DonacionController',
         'floraCliente' => 'FloraController',
+        'faunaCliente' => 'FaunaController',
     ]);
 });

@@ -232,7 +232,12 @@
                 <div class="group">
                   <h3>Hora de Salida</h3>
                   <br />
-                  <input v-model="formReserva.horaFin" type="time" required :disabled="bloqueraHoras" />
+                  <input
+                    v-model="formReserva.horaFin"
+                    type="time"
+                    required
+                    :disabled="bloqueraHoras"
+                  />
                   <span class="highlight"></span>
                   <span class="bar"></span>
                   <label></label>
@@ -268,20 +273,18 @@
       aria-labelledby="addNew"
       aria-hidden="true"
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Registro</h5>
+            <h5 class="modal-title">Modal title</h5>
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
+              class="btn-close"
+              data-bs-dismiss="modal"
               aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+            ></button>
           </div>
-          <form @submit.prevent="crearPersona">
+          <form>
             <div class="modal-body">
               <!-- MODAL DE PERSONA-->
               <div v-show="soloPersona" class="group">
@@ -466,6 +469,7 @@
               <button
                 type="button"
                 class="btn btn-danger"
+                data-bs-target="#addNew"
                 data-bs-dismiss="modal"
                 @click="limpiarTodo()"
               >
@@ -474,8 +478,10 @@
               <button
                 v-show="soloPersona"
                 type="button"
-                @click="crearPersona()"
                 class="btn btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#addNew"
+                @click="crearPersona()"
               >
                 Guardar
               </button>
@@ -483,10 +489,18 @@
                 v-show="soloOrganizacion"
                 type="button"
                 class="btn btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#addNew"
               >
                 Guardar
               </button>
-              <button v-show="soloGrupo" type="button" class="btn btn-success">
+              <button
+                v-show="soloGrupo"
+                type="button"
+                class="btn btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#addNew"
+              >
                 Guardar
               </button>
             </div>
@@ -541,6 +555,9 @@ export default {
         idPersona: "",
         photo: "",
       }),
+      id: 0,
+      tituloModal: "",
+      modal: 0,
     };
   },
   methods: {
@@ -626,23 +643,23 @@ export default {
     },
     crearPersona() {
       this.formPersona
-        .post("/api/reservarCliente/persona/", {
+        .post("/api/reservarCliente/persona", {
           params: { id: this.formPersona.id },
         })
         .then((response) => {
+          Swal.fire(
+                "Registrado!",
+                response.data.message,
+                "success"
+              );
           $("#addNew").modal("hide");
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-
-          this.$Progress.finish();
         })
         .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Cedula existente o campos vacios",
-          });
+           Swal.fire(
+                "Error!",
+                "Información ya existente!",
+                "error"
+              );
         });
     },
 
@@ -915,6 +932,29 @@ input:focus ~ .highlight {
   to {
     width: 0;
     background: transparent;
+  }
+}
+@media screen and (max-width: 900px) {
+  input[data-v-4bc2021a] {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 400px;
+    border: none;
+    border-bottom: 1px solid #757575;
+  }
+}
+@media screen and (max-width: 500px) {
+  input[data-v-4bc2021a] {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #757575;
+  }
+  .intro {
+    margin-top: 120px;
   }
 }
 </style>
