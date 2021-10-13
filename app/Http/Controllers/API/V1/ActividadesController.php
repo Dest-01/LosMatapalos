@@ -39,7 +39,7 @@ class ActividadesController extends BaseController
     {
 
         $rules = [
-            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
+            'nombre' => 'required|string|max:20|min:3',
             'fecha' => 'required',
             'hora' => 'required',
             'descripcion' => 'required|string|max:250',
@@ -49,7 +49,7 @@ class ActividadesController extends BaseController
         ];
     
         $messages = [
-            'nombre.regex' => 'Solo letras en el nombre',
+           
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'fecha.*' => 'Seleccione una fecha',
             'hora.*' => 'Seleccione un hora',
@@ -113,7 +113,7 @@ class ActividadesController extends BaseController
     {
 
         $rules = [
-            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
+            'nombre' => 'required|string|max:20|min:3',
             'fecha' => 'required',
             'hora' => 'required',
             'descripcion' => 'required|string|max:250',
@@ -123,7 +123,7 @@ class ActividadesController extends BaseController
         ];
     
         $messages = [
-            'nombre.regex' => 'Solo letras en el nombre',
+          
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'fecha.*' => 'Seleccione una fecha',
             'hora.*' => 'Seleccione un hora',

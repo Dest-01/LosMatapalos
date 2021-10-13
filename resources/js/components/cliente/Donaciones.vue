@@ -33,89 +33,41 @@
       </div>
       <div class="contenedor2 card">
         <div class="card-body">
-          <!-- Carousel wrapper -->
-          <div
-            id="carouselDarkVariant"
-            class="carousel slide carousel-fade carousel-dark"
-            data-mdb-ride="carousel"
-          >
-            <!-- Indicators -->
-            <div class="carousel-indicators">
-              <button
-                data-mdb-target="#carouselDarkVariant"
-                data-mdb-slide-to="0"
-                class="active"
-                aria-current="true"
-                aria-label="Slide 1"
-              ></button>
-              <button
-                data-mdb-target="#carouselDarkVariant"
-                data-mdb-slide-to="1"
-                aria-label="Slide 1"
-              ></button>
-              <button
-                data-mdb-target="#carouselDarkVariant"
-                data-mdb-slide-to="2"
-                aria-label="Slide 1"
-              ></button>
-            </div>
-
-            <!-- Inner -->
+         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-              <!-- Single item -->
               <div class="carousel-item active">
-                <img
-                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(19).jpg"
-                  class="d-block w-100"
-                  alt="..."
-                />
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>First slide label</h5>
-                  <p>
-                    Nulla vitae elit libero, a pharetra augue mollis interdum.
-                  </p>
-                </div>
+                <img  v-bind:src="'/images/PortadaDonaciones2.jpg'" class="d-block w-100"   width="350px"
+                  height="500px" alt="" />
+                  <div class="carousel-caption d-none d-md-block">
+                    <h1>¿Que se necesita?</h1>
+                   <p>Las siguentes son algunas de las cosas necesarias para el progreso del sendero.</p>
+                   </div>
               </div>
-
-              <!-- Single item -->
-              <div class="carousel-item">
+              <div
+                v-for="donativosNecesario in donativosNecesarios.data"
+                :key="donativosNecesario.id"
+                class="carousel-item"
+              >
                 <img
-                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(35).jpg"
+                  v-bind:src="
+                    '/images/CatDonativos/' + donativosNecesario.photo
+                  "
                   class="d-block w-100"
-                  alt="..."
+                  width="350px"
+                  height="500px"
+                  alt=""
                 />
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>Second slide label</h5>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Single item -->
-              <div class="carousel-item">
-                <img
-                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(40).jpg"
-                  class="d-block w-100"
-                  alt="..."
-                />
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>Third slide label</h5>
-                  <p>
-                    Praesent commodo cursus magna, vel scelerisque nisl
-                    consectetur.
-                  </p>
-                </div>
+               <div class="carousel-caption d-none d-md-block">
+                    <h1>{{donativosNecesario.nombre}}</h1>
+                  
+                   </div>
               </div>
             </div>
-            <!-- Inner -->
-
-            <!-- Controls -->
             <button
               class="carousel-control-prev"
               type="button"
-              data-mdb-target="#carouselDarkVariant"
-              data-mdb-slide="prev"
+              data-bs-target="#carouselExampleControls"
+              data-bs-slide="prev"
             >
               <span
                 class="carousel-control-prev-icon"
@@ -126,8 +78,8 @@
             <button
               class="carousel-control-next"
               type="button"
-              data-mdb-target="#carouselDarkVariant"
-              data-mdb-slide="next"
+              data-bs-target="#carouselExampleControls"
+              data-bs-slide="next"
             >
               <span
                 class="carousel-control-next-icon"
@@ -136,7 +88,6 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div>
-          <!-- Carousel wrapper -->
         </div>
       </div>
     </div>
@@ -232,6 +183,7 @@ export default {
       portada: "../images/PortadaDonaciones.jpg",
       text: "Portada",
       donativos: {},
+      donativosNecesarios: {},
     };
   },
   methods: {
@@ -246,6 +198,9 @@ export default {
       axios
         .get("/api/donacionesCliente/")
         .then(({ data }) => (this.donativos = data.data));
+      axios
+        .get("/api/donacionesCliente/donacionesNecesarias/")
+        .then(({ data }) => (this.donativosNecesarios = data.data));
     },
   },
   created() {
@@ -318,11 +273,11 @@ export default {
   background: #dbd8d873;
   margin-right: 10px;
   box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
-  width: 510px;
+  width: 625px;
 }
 .contenedor2 {
   height: auto;
-  width: 1150px;
+  width: 950px;
   background: #034991;
   box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
 }
@@ -430,7 +385,7 @@ h5 {
     margin-top: 5px;
   }
   img {
-width: 768px;
+    width: 768px;
     height: 300px;
   }
   .intro {

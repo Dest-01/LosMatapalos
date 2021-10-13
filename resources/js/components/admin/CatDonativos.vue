@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
             <div class="card-header">
-              <h3 class="card-title">Lista de categoria donativos</h3>
+              <h3 class="card-title">Lista de donativos necesarios</h3>
 
               <div class="card-tools">
                 <button
@@ -111,8 +111,8 @@
             >
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Nombre</label>
-                  <input
+                  <label>Nombre del donativo necesario</label>
+                  <input style="text-transform: capitalize;"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
@@ -130,25 +130,58 @@
                     true-value="yes"
                     false-value="no"
                     v-on:input="checkboxVal = $event.target.value"
+                    @change="mostrarOpcion($event.target.value)"
                   />
-                 
+                 <label v-show="mostrarEstado" v-text="estado">{{estado}}</label>
                   <has-error :form="form" field="estado"></has-error>
                 </div>
                 <div class="form-group">
-                  <label for="photo" class="col-sm-2 control-label"
-                    >Imagen</label
-                  >
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      @change="updatePhoto"
-                      name="photo"
-                      class="custom-file-input"
-                      id="inputGroupFile01"
-                    />
-                    <label class="custom-file-label" for="inputGroupFile01"
-                      >Seleccione un imagen</label
+                  <div>
+                    <div class="row">
+                      <div class="col-8">
+                        <label class="btn btn-default p-0">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            ref="file"
+                            name="photo"
+                            @change="updatePhoto"
+                            :class="{ 'is-invalid': form.errors.has('photo') }"
+                          />
+                          <has-error :form="form" field="photo"></has-error>
+                        </label>
+                      </div>
+                      <div class="col-4"></div>
+                    </div>
+                    <div v-if="currentImage" class="progress">
+                      <div
+                        class="progress-bar progress-bar-info"
+                        role="progressbar"
+                        :aria-valuenow="progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        :style="{ width: progress + '%' }"
+                      >
+                        {{ progress }}%
+                      </div>
+                    </div>
+                    <div v-if="previewImage">
+                      <div>
+                        <img
+                          class="preview my-3"
+                          :src="previewImage"
+                          alt=""
+                          width="100px"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      v-if="message"
+                      class="alert alert-secondary"
+                      role="alert"
                     >
+                      {{ message }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -168,7 +201,7 @@
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Crear
+                  Registrar
                 </button>
               </div>
             </form>
@@ -184,6 +217,13 @@ export default {
   data() {
     return {
       editmode: false,
+      currentImage: undefined,
+      previewImage: undefined,
+      progress: 0,
+      message: "",
+      imageInfos: [],
+      mostrarEstado: true,
+      estado: "No es necesario",
       catDonativos: {},
       form: new Form({
         id: "",
@@ -210,6 +250,14 @@ export default {
           title: "ops...",
           text: "archivo muy grande",
         });
+      }
+    },
+    mostrarOpcion(val){
+       if (this.form.estado == "no") {
+        this.mostrarEstado = true;
+        this.estado = "No es necesario";
+      }else{
+        this.estado = "Necesario";
       }
     },
 
@@ -251,6 +299,7 @@ export default {
     newModal() {
       this.editmode = false;
       this.form.reset();
+      this.estado = "No es necesario";
       $("#addNew").modal("show");
     },
 

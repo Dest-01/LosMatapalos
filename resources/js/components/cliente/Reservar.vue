@@ -1,5 +1,6 @@
 <template>
   <div class="" style="margin-top: 85px">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <div class="intro" style="text-align: center">
       <h2>Reservación del sendero los Matapalos</h2>
     </div>
@@ -27,6 +28,7 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora1()"
+                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -41,6 +43,7 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora2()"
+                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -55,6 +58,7 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora3()"
+                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -69,6 +73,7 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora4()"
+                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -83,6 +88,7 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora5()"
+                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -97,6 +103,7 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora6()"
+                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -111,6 +118,7 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora7()"
+                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -123,11 +131,16 @@
           <div class="col-md-6">
             <div class="card-body">
               <h5 class="card-title">Formulario de Reservación</h5>
-              <h6 style="text-align: center; font-size: 20px">
-                Si no esta registrado, puede realizarlo con la siguientes
-                opciones.<br />
-                Si ya esta registrado, puede comprobar su Registro.
-              </h6>
+              <i class="fas fa-info-circle"> Indicaciones</i><br />
+              <i class="fas fa-angle-right"
+                >Puede registrar cliente, organización o grupo.</i
+              >
+              <i class="fas fa-angle-right"
+                >Es necesario comprobar que esta registrado.</i
+              >
+              <i class="fas fa-angle-right"
+                >Se enviara un correo con la información de la reservación.</i
+              >
               <button
                 type="button"
                 class="btn btn-primary"
@@ -158,16 +171,23 @@
               <br />
               <br />
               <form class="material-form">
+                <br />
                 <div class="group">
-                  <input
-                    v-model="formReserva.identificacion"
-                    name="identificacion"
-                    type="text"
-                    required
-                  />
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label>Cedula o Numero</label>
+                  <i class="fas fa-id-card iconoInput"></i>
+                  <h3>Busqueda identificacion</h3>
+                  <div class="campo1">
+                    <input
+                      style="width: 100%"
+                      v-model="formReserva.identificacion"
+                      name="identificacion"
+                      type="text"
+                      required
+                      :disabled="bloquearConsulta"
+                      maxlength="18"
+                    />
+                    <span style="width: 100%" class="highlight"></span>
+                    <span style="width: 100%" class="bar"></span>
+                  </div>
                   <div>
                     <h2
                       v-text="mensajeExistencia"
@@ -182,74 +202,74 @@
                       {{ mensajeNoExistencia }}
                     </h2>
                   </div>
+                  <button
+                    type="button"
+                    @click="consultarDatos()"
+                    class="Posicionar btn btn-success"
+                  >
+                    Consulta
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  @click="consultarDatos()"
-                  class="btn btn-success"
-                >
-                  Consultar
-                </button>
-                <br />
-                <br />
-                <div class="group">
-                  <input
-                    v-model="formReserva.cantidad"
-                    type="number"
-                    required
-                    :disabled="bloquearCampos"
-                  />
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label>Cantidad de visitantes</label>
+                <div class="group2">
+                  <div class="campo2">
+                    <i class="fas fa-users iconoInput"></i>
+                    <h3>Cantidad de visitantes</h3>
+                    <input
+                      style="width: 100%"
+                      v-model="formReserva.cantidad"
+                      type="number"
+                      required
+                      :disabled="bloquearCampos"
+                    />
+                    <span style="width: 100%" class="highlight"></span>
+                    <span style="width: 100%" class="bar"></span>
+                  </div>
+                  <div class="campo2">
+                    <i class="fas fa-calendar-check iconoInput2 icono"></i>
+                    <h3 class="labelH3">Fecha de llegada</h3>
+                    <input
+                      style="width: 100%"
+                      v-model="formReserva.fecha"
+                      type="date"
+                      value="Fecha"
+                      required
+                      :disabled="bloquearCampos"
+                    />
+                    <span style="width: 100%" class="highlight"></span>
+                    <span style="width: 100%" class="bar"></span>
+                  </div>
                 </div>
-                <div class="group">
-                  <h3>Fecha de llegada</h3>
-                  <br />
-                  <input
-                    v-model="formReserva.fecha"
-                    type="date"
-                    value="Fecha"
-                    required
-                    :disabled="bloquearCampos"
-                  />
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
+                <div class="group2">
+                  <div class="campo2">
+                    <i class="fas fa-clock iconoInput2"></i>
+                    <h3>Hora de llegada</h3>
+                    <input
+                      style="width: 100%"
+                      v-model="formReserva.horaInicio"
+                      type="time"
+                      required
+                      :disabled="bloqueraHoras"
+                    />
+                  </div>
+                  <div class="campo2">
+                    <i class="fas fa-clock iconoInput2 icono"></i>
+                    <h3 class="labelH3">Hora de Salida</h3>
+                    <input
+                      style="width: 100%"
+                      v-model="formReserva.horaFin"
+                      type="time"
+                      required
+                      :disabled="bloqueraHoras"
+                    />
+                  </div>
                 </div>
-                <div class="group">
-                  <h3>Hora de llegada</h3>
-                  <br />
-                  <input
-                    v-model="formReserva.horaInicio"
-                    type="time"
-                    required
-                    :disabled="bloqueraHoras"
-                  />
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label></label>
-                </div>
-                <div class="group">
-                  <h3>Hora de Salida</h3>
-                  <br />
-                  <input
-                    v-model="formReserva.horaFin"
-                    type="time"
-                    required
-                    :disabled="bloqueraHoras"
-                  />
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label></label>
-                </div>
-
                 <button
                   type="button"
                   class="btn btn-success btn-rounded"
                   @click="crearReserva()"
                   :disabled="bloquearCampos"
                 >
-                  RESERVAR
+                  Reservar
                 </button>
                 <button
                   type="button"
@@ -276,7 +296,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
+            <h5 class="modal-title">Registro de información</h5>
             <button
               type="button"
               class="btn-close"
@@ -288,6 +308,7 @@
             <div class="modal-body">
               <!-- MODAL DE PERSONA-->
               <div v-show="soloPersona" class="group">
+                <i class="fas fa-id-card iconoInput"></i>
                 <input
                   name="id"
                   v-model="formPersona.id"
@@ -304,6 +325,7 @@
                 <label>Cedula persona</label>
               </div>
               <div v-show="soloPersona" class="group">
+                <i class="fas fa-user-circle iconoInput"></i>
                 <input
                   name="nombre"
                   v-model="formPersona.nombre"
@@ -320,6 +342,7 @@
                 <label>Nombre</label>
               </div>
               <div v-show="soloPersona" class="group">
+                <i class="fas fa-user-circle iconoInput"></i>
                 <input
                   name="apellido1"
                   v-model="formPersona.apellido1"
@@ -336,6 +359,7 @@
                 <label>Primer Apellido</label>
               </div>
               <div v-show="soloPersona" class="group">
+                <i class="fas fa-user-circle iconoInput"></i>
                 <input
                   name="apellido2"
                   v-model="formPersona.apellido2"
@@ -352,6 +376,7 @@
                 <label>Segundo Apellido</label>
               </div>
               <div v-show="soloPersona" class="group">
+                <i class="fas fa-mobile-alt iconoInput"></i>
                 <input
                   name="telefono"
                   v-model="formPersona.telefono"
@@ -368,6 +393,7 @@
                 <label>Telefono</label>
               </div>
               <div v-show="soloPersona" class="group">
+                <i class="fas fa-at iconoInput"></i>
                 <input
                   name="correo"
                   v-model="formPersona.correo"
@@ -386,6 +412,7 @@
               <!-- FIN DE MODAL DE PERSONA -->
               <!-- MODAL DE ORGANIZACION -->
               <div v-show="soloOrganizacion" class="group">
+                <i class="fas fa-id-card iconoInput"></i>
                 <input
                   v-model="formOrganizacion.id"
                   name="id"
@@ -402,6 +429,7 @@
                 <label>Cedula organización</label>
               </div>
               <div v-show="soloOrganizacion" class="group">
+                <i class="fas fa-user-circle iconoInput"></i>
                 <input
                   v-model="formOrganizacion.nombre"
                   name="nombre"
@@ -420,6 +448,7 @@
                 <label>Nombre de la organización</label>
               </div>
               <div v-show="soloOrganizacion" class="group">
+                <i class="fas fa-mobile-alt iconoInput"></i>
                 <input
                   v-model="formOrganizacion.telefono"
                   name="telefono"
@@ -438,6 +467,7 @@
                 <label>Telefono de la organización</label>
               </div>
               <div v-show="soloOrganizacion" class="group">
+                <i class="fas fa-at iconoInput"></i>
                 <input
                   v-model="formOrganizacion.correo"
                   name="correo"
@@ -491,6 +521,7 @@
                 class="btn btn-success"
                 data-bs-toggle="modal"
                 data-bs-target="#addNew"
+                @click="crearOrganizacion()"
               >
                 Guardar
               </button>
@@ -518,6 +549,7 @@ export default {
     return {
       bloqueraHoras: true,
       bloquearCampos: true,
+      bloquearConsulta: false,
       soloPersona: false,
       soloOrganizacion: false,
       soloGrupo: false,
@@ -582,6 +614,7 @@ export default {
       this.mensajeExistencia = "";
       this.mensajeNoExistencia = "";
       this.bloquearCampos = true;
+      this.bloquearConsulta = false;
     },
     limpiarTodo() {
       this.formPersona.reset();
@@ -595,6 +628,7 @@ export default {
           this.mensajeExistencia = "Si esta registrado";
           this.mensajeNoExistencia = "";
           this.bloquearCampos = false;
+          this.bloquearConsulta = true;
           this.formReserva.idPersona = this.formReserva.identificacion;
         }
       }
@@ -603,6 +637,7 @@ export default {
           this.mensajeExistencia = "Si esta registrado";
           this.mensajeNoExistencia = "";
           this.bloquearCampos = false;
+          this.bloquearConsulta = true;
           this.formReserva.idOrganizacion = this.formReserva.identificacion;
         }
       }
@@ -612,12 +647,14 @@ export default {
         this.mensajeExistencia = "";
         this.mensajeNoExistencia = "No esta registrado";
         this.bloquearCampos = true;
+        this.bloquearConsulta = false;
       }
       if (this.formReserva.identificacion.length == 0) {
         this.mensajeExistencia = "";
         this.mensajeNoExistencia =
           "Campo vacio, por favor digite la información";
         this.bloquearCampos = true;
+        this.bloquearConsulta = false;
       }
     },
     consultarDatos() {
@@ -641,25 +678,45 @@ export default {
           this.noExiste();
         });
     },
-    crearPersona() {
-      this.formPersona
+    async crearPersona() {
+      await this.formPersona
         .post("/api/reservarCliente/persona", {
           params: { id: this.formPersona.id },
         })
         .then((response) => {
-          Swal.fire(
-                "Registrado!",
-                response.data.message,
-                "success"
-              );
-          $("#addNew").modal("hide");
+          if (response.data == true) {
+            $("#addNew").modal("hide");
+          }
+          Swal.fire("Registrado!", response.data.message, "success");
+          this.limpiarTodo();
         })
-        .catch(() => {
-           Swal.fire(
-                "Error!",
-                "Información ya existente!",
-                "error"
-              );
+        .catch((error) => {
+          Swal.fire(
+            "Error!",
+            "Ya existe en el registro o campos vacios!",
+            "error"
+          );
+        });
+    },
+
+    async crearOrganizacion() {
+      await this.formOrganizacion
+        .post("/api/reservarCliente/organizacion", {
+          params: { id: this.formOrganizacion.id },
+        })
+        .then((response) => {
+          if (response.data == true) {
+            $("#addNew").modal("hide");
+          }
+          Swal.fire("Registrado!", response.data.message, "success");
+          this.limpiarTodo();
+        })
+        .catch((error) => {
+          Swal.fire(
+            "Error!",
+            "Ya existe en el registro o campos vacios!",
+            "error"
+          );
         });
     },
 
@@ -667,20 +724,20 @@ export default {
       this.formReserva
         .post("/api/reservarCliente")
         .then((response) => {
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
+          Swal.fire("Reservación Realizada!", response.data.message, "success");
           this.formReserva.reset();
           this.formReserva.errors.clear();
           this.mensajeExistencia = "";
+          this.bloquearCampos = true;
+          this.bloquearConsulta = false;
           this.$Progress.finish();
         })
         .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "No se realizo la reservacion",
-          });
+          Swal.fire(
+            "Error!",
+            "No se realizo la reservación, revise los campos",
+            "error"
+          );
         });
     },
 
@@ -721,6 +778,28 @@ export default {
 </script>
 
 <style scoped>
+.iconoInput {
+  color: #e8e8e8;
+  font-size: 26px;
+  position: absolute;
+  left: 10px;
+  padding-top: 11px;
+}
+
+.Posicionar {
+  position: absolute;
+  left: 350px;
+  top: 3px;
+}
+
+.iconoInput2 {
+  color: #e8e8e8;
+  font-size: 26px;
+  position: absolute;
+  left: 7px;
+  padding-top: 11px;
+}
+
 input:focus ~ label[data-v-4bc2021a],
 input:valid ~ label[data-v-4bc2021a] {
   top: -20px;
@@ -759,7 +838,7 @@ input:valid ~ label[data-v-4bc2021a] {
 .col-md-5 {
   padding: 5px;
   background: #034991;
-  background-image: url("https://dl.dropbox.com/s/28bvugb6fnxzrhp/logo.png");
+  background-image: url('/images/logo.png');
   background-position-x: -100px;
   background-position-y: 160px;
   background-repeat: no-repeat;
@@ -778,6 +857,7 @@ td {
   width: 140px;
   font-size: 19px;
   padding: 5px;
+  text-transform: capitalize;
 }
 
 .horas {
@@ -793,7 +873,6 @@ td {
 }
 
 .card-title {
-  /* margin-bottom: .5rem; */
   font-size: 35px;
   text-align: center;
   font-weight: 900;
@@ -809,16 +888,49 @@ h6 {
 /* form starting stylings ------------------------------- */
 .group {
   position: relative;
-  margin-bottom: 45px;
+  margin-bottom: 40px;
 }
-input[data-v-4bc2021a] {
+.group2 {
+  position: relative;
+  margin-bottom: 40px;
+  position: relative;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 500px;
+}
+input {
   font-size: 18px;
-  padding: 10px 10px 10px 5px;
+  padding: 10px 10px 10px 45px;
   display: block;
   width: 500px;
   border: none;
   border-bottom: 1px solid #757575;
+  text-transform: capitalize;
 }
+
+.InputGroup {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.campo1 {
+  width: 350px;
+}
+.campo2 {
+  width: 500px;
+  margin-right: 10px;
+}
+
+.labelH3 {
+  left: 250px;
+}
+
+.icono {
+  left: 255px;
+}
+
 input:focus {
   outline: none;
 }
@@ -835,6 +947,7 @@ label {
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;
+  padding: 1px 1px 1px 45px;
 }
 h3 {
   color: #999;
@@ -843,7 +956,7 @@ h3 {
   position: absolute;
   pointer-events: none;
   left: 5px;
-  top: 0px;
+  top: -25px;
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;
@@ -855,6 +968,12 @@ input:valid ~ label {
   top: -20px;
   font-size: 14px;
   color: #5264ae;
+}
+.indicaciones {
+  text-align: justify;
+  margin-bottom: 1px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* BOTTOM BARS ================================= */
@@ -934,27 +1053,228 @@ input:focus ~ .highlight {
     background: transparent;
   }
 }
-@media screen and (max-width: 900px) {
-  input[data-v-4bc2021a] {
-    font-size: 18px;
-    padding: 10px 10px 10px 5px;
+/***********RESPONSIVE MODE***************************/ 
+@media only screen and (min-device-width: 900px) and (max-device-width: 1365px) {
+.contenedor-2{
+      margin: 15px 10px 25% 10px;
+}
+.card{
+  margin: 100px 10px 100px 10px;
+}
+}
+@media only screen and (min-device-width: 568px) and (max-device-width: 900px) {
+  input{
+    width: 100%;
+  }
+ .btn{
+    margin-top: 5px;
+  }
+  .intro {
+    margin-top: 80px;
+  }
+  .bar {
+    width: 100%;
+  }
+  .Posicionar {
+    width: 100px;
+    left: 70%;
+  }
+  .InputGroup {
     display: block;
-    width: 400px;
-    border: none;
-    border-bottom: 1px solid #757575;
+    margin-top: 20px;
+  }
+  .group2 {
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+  }
+  .campo1 {
+    width: 235px;
+  }
+  .campo2 {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .labelH3 {
+    left: 1px;
+    top: 50px;
+  }
+  .icono {
+    left: 5px;
+  }
+  .modal-content {
+    width: 100%;
+    height: auto;
   }
 }
-@media screen and (max-width: 500px) {
-  input[data-v-4bc2021a] {
-    font-size: 18px;
-    padding: 10px 10px 10px 5px;
-    display: block;
-    width: 300px;
-    border: none;
-    border-bottom: 1px solid #757575;
+@media only screen and (min-device-width: 412px) and (max-device-width: 567px) {
+  input{
+    width: 100%;
+  }
+ .btn{
+    margin-top: 5px;
   }
   .intro {
     margin-top: 120px;
   }
+  .bar {
+    width: 100%;
+  }
+  .Posicionar {
+    width: 100px;
+    left: 70%;
+  }
+  .InputGroup {
+    display: block;
+    margin-top: 20px;
+  }
+  .group2 {
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+  }
+  .campo1 {
+    width: 230px;
+  }
+  .campo2 {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .labelH3 {
+    left: 1px;
+    top: 50px;
+  }
+  .icono {
+    left: 5px;
+  }
+  .modal-content {
+    width: 100%;
+    height: auto;
+  }
 }
+@media only screen and (min-device-width: 320px) and (max-device-width: 411px) {
+  input{
+    width: 100%;
+  }
+  .btn{
+    margin-top: 5px;
+  }
+  .intro {
+    margin-top: 120px;
+  }
+  .bar {
+    width: 100%;
+  }
+  .Posicionar {
+    width: 100px;
+    left: 70%;
+  }
+  .InputGroup {
+    display: block;
+    margin-top: 20px;
+  }
+  .group2 {
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+  }
+  .campo1 {
+    width: 200px;
+  }
+  .campo2 {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .labelH3 {
+    left: 1px;
+    top: 50px;
+  }
+  .icono {
+    left: 5px;
+  }
+  .modal-content {
+    width: 100%;
+    height: auto;
+  }
+}
+@media only screen and (max-device-width: 320px) {
+  input{
+    width: 100%;
+  }
+ .btn{
+    margin-top: 5px;
+  }
+  .intro {
+    margin-top: 120px;
+  }
+  .bar {
+    width: 100%;
+  }
+  .Posicionar {
+    width: 100px;
+    left: 65%;
+  }
+  .InputGroup {
+    display: block;
+    margin-top: 20px;
+  }
+  .group2 {
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+  }
+  .campo1 {
+    width: 170px;
+  }
+  .campo2 {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .labelH3 {
+    left: 1px;
+    top: 50px;
+  }
+  .icono {
+    left: 5px;
+  }
+  .modal-content {
+    margin: 5px;
+    width: 100%;
+    height: auto;
+  }
+}
+@media only screen and (max-device-width: 280px) {
+  input{
+    width: 100%;
+  }
+  .Posicionar {
+    width: 100px;
+    left: 60%;
+  }
+
+  .campo1 {
+    width: 130px;
+  }
+ .table>:not(caption)>*>* {
+     padding: 0.1rem 0.1rem; 
+}
+
+}
+
+
+@media only screen and (min-device-width: 640px) and (max-device-width: 736px) {
+  input{
+    width: 100%;
+  }
+  .campo1{
+    width: 480px;
+  }
+  .Posicionar{
+    left: 85%;
+  }
+  .btn{
+    display: block;
+  }
+}
+
 </style>

@@ -75,11 +75,13 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
     Route::get('reservarCliente/verificarOrg', 'ReservarCliController@obtenerCedulaOrg');
     Route::post('reservarCliente/persona', 'ReservarCliController@GuardarPersona');
     Route::post('reservarCliente/organizacion', 'ReservarCliController@GuardarOrganizacion');
+    Route::get('donacionesCliente/donacionesNecesarias', 'DonacionController@cargarCategoriaDonativos');
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',
         'donacionesCliente' => 'DonacionController',
         'floraCliente' => 'FloraController',
         'faunaCliente' => 'FaunaController',
+        'actividadCliente' => 'ActividadController',
     ]);
 });

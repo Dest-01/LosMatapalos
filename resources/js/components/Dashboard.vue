@@ -1,234 +1,123 @@
 <template>
-  <ul class="cards">
-    <li class="cards__item">
-      <div class="card1">
-      <!--  <img class="image fit" v-bind:key="image" v-for="image in images1" :src="image.url"/> -->
-        <div class="card__content">
-          <div class="card__title">Registro Organización</div>
-          <p class="card__text">
-            This is the shorthand for flex-grow, flex-shrink and flex-basis
-            combined. The second and third parameters (flex-shrink and
-            flex-basis) are optional. Default is 0 1 auto.
-          </p>
-          <button class="btn btn--block card__btn">Button</button>
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div class="col">
+        <div class="card h-100">
+          <img
+            src="https://mdbootstrap.com/img/new/standard/city/041.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title">Registro</h5>
+            <p class="card-text">
+              This is a longer card with supporting text below as a natural
+              lead-in to additional content. This content is a little bit
+              longer.
+            </p>
+          </div>
         </div>
       </div>
-    </li>
-    <li class="cards__item">
-      <div class="card1">
-     <!--   <img class="image fit" v-bind:key="image" v-for="image in images2" :src="image.url"/> -->
-        <div class="card__content">
-          <div class="card__title">Registro Cliente</div>
-          <p class="card__text">
-            This defines the ability for a flex item to grow if necessary. It
-            accepts a unitless value that serves as a proportion. It dictates
-            what amount of the available space inside the flex container the
-            item should take up.
-          </p>
-          <button class="btn btn--block card__btn">Button</button>
+      <div class="col">
+        <div class="card h-100">
+          <img
+            src="https://mdbootstrap.com/img/new/standard/city/042.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title">Donaciones</h5>
+            <p class="card-text">This is a short card.</p>
+          </div>
         </div>
       </div>
-    </li>
-    <li class="cards__item">
-      <div class="card1">
-       <!--  <img class="image fit" v-bind:key="image" v-for="image in images3" :src="image.url"/> -->
-        <div class="card__content">
-          <div class="card__title">Donativos</div>
-          <p class="card__text">
-            This defines the ability for a flex item to shrink if necessary.
-            Negative numbers are invalid.
-          </p>
-          <button class="btn btn--block card__btn">Button</button>
+      <div class="col">
+        <div class="card h-100">
+          <img
+            src="https://mdbootstrap.com/img/new/standard/city/043.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title">Reservas</h5>
+            <p class="card-text">
+              This is a longer card with supporting text below as a natural
+              lead-in to additional content.
+            </p>
+          </div>
         </div>
       </div>
-    </li>
-    <li class="cards__item">
-      <div class="card1">
-     <!--    <img class="image fit" v-bind:key="image" v-for="image in images4" :src="image.url"/> -->
-
-        <div class="card__content">
-          <div class="card__title">Categoria Donativos</div>
-          <p class="card__text">
-            This defines the default size of an element before the remaining
-            space is distributed. It can be a length (e.g. 20%, 5rem, etc.) or a
-            keyword. The auto keyword means "look at my width or height
-            property."
-          </p>
-          <button class="btn btn--block card__btn">Button</button>
+      <div class="col">
+        <div class="card h-100">
+          <img
+            src="https://mdbootstrap.com/img/new/standard/city/044.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title">Biodiversidad</h5>
+            <p class="card-text">
+              This is a longer card with supporting text below as a natural
+              lead-in to additional content. This content is a little bit
+              longer.
+            </p>
+          </div>
         </div>
       </div>
-    </li>
-  </ul>
+      <div class="card2 card">
+        <div class="card-body">
+          <h5 class="card-title">Voluntariado</h5>
+          <p class="card-text">
+            With supporting text below as a natural lead-in to additional
+            content.
+          </p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      <div class="card2 card">
+        <div class="card-body">
+          <h5 class="card-title">Repositorio</h5>
+          <p class="card-text">
+            With supporting text below as a natural lead-in to additional
+            content.
+          </p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      <div class="card2 card">
+        <div class="card-body">
+          <h5 class="card-title">Reportes</h5>
+          <p class="card-text">
+            With supporting text below as a natural lead-in to additional
+            content.
+          </p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      images: [
-        {
-          url: "../images/test2.png",
-          name: "My Image 1",
-        },
-      ],
-      images1: [
-        {
-          url: "../images/donation.png",
-          name: "My Image 1",
-          
-        },
-      ],
-      images2: [
-        {
-          url: "../images/reservation.png",
-          name: "My Image 1",
-          
-        },
-      ],
-      images3: [
-        {
-          url: "../images/donation.png",
-          name: "My Image 1",
-          
-        },
-      ],
-      images4: [
-        {
-          url: "../images/donation.png",
-          name: "My Image 1",
-          
-        },
-      ],
-    };
-  },
-};
-</script>
-
-<style>
-html {
-  background-color: #f0f0f0;
+<style scoped>
+.container {
+  margin: 10px 10px 10px 5%;
 }
-body {
- /* color: #999999; */
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-/*
-img {
-  height: auto;
-  max-width: 100%;
-  vertical-align: middle;
-  height: 200px;
-
-}
-*/
-.btn {
-  
-  border: 1px solid #cccccc;
-  
-  padding: 0.5rem;
-  text-transform: lowercase;
-}
-.btn--block {
-  display: block;
-  width: 100%;
-}
-.cards {
+.row {
   display: flex;
   flex-wrap: wrap;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  margin-right: -15px;
+  margin-left: -15px;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px;
+}
+.col {
+  padding: 10px;
 }
 
-.cards__item {
-  display: flex;
-  padding: 10px;
-  border-radius: 20%;
-}
-@media (min-width: 40rem) {
-  .cards__item {
-    width: 50%;
-  }
-}
-@media (min-width: 56rem) {
-  .cards__item {
-    width: 25%;
-  }
-}
-@media (min-height: 56rem) {
-  .cards__item {
-    width: 25%;
-  }
-}
-.card1 {
-  background-color: rgb(184 184 184);
-  border-radius: 0.25rem;
-  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.card:hover .card__image {
-  filter: contrast(100%);
-}
-.card__content {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  padding: 1rem;
-}
-.card__image {
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
-  filter: contrast(70%);
-  overflow: hidden;
-  position: relative;
-  transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
-}
-.card__image::before {
-  content: "";
-  display: block;
-  padding-top: 56.25%;
-}
-@media (min-width: 40rem) {
-  .card__image::before {
-    padding-top: 66.6%;
-  }
-}
-.card__image--flowers {
-  background-image: url(https://unsplash.it/800/600?image=82);
-}
-.card__image--river {
-  background-image: url(https://unsplash.it/800/600?image=11);
-}
-.card__image--record {
-  background-image: url(https://unsplash.it/800/600?image=39);
-}
-.card__image--fence {
-  background-image: url(https://unsplash.it/800/600?image=59);
-}
-.card__title {
-  color: #696969;
-  font-size: 1.25rem;
-  font-weight: 300;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-.card__text {
-  flex: 1 1 auto;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
+.card2{
+
+    margin: 1px 10px 10px 60px;
 }
 </style>
-
-

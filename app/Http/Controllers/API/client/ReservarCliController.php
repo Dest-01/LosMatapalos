@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API\client;
 
-use App\Models\Reserva;
-use App\Models\Personas;
-use App\Models\Organizaciones;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Admin\PersonasRequest;
+use App\Http\Requests\Admin\OrganizacionesRequest;
+use App\Models\Organizaciones;
+use App\Models\Personas;
+use App\Models\Reserva;
+use Illuminate\Http\Request;
 
 class ReservarCliController extends BaseController
 {
@@ -19,7 +19,7 @@ class ReservarCliController extends BaseController
 
     public function __construct(Personas $personas, Reserva $reserva, Organizaciones $organizaciones)
     {
-        
+
         $this->personas = $personas;
 
         $this->reserva = $reserva;
@@ -33,13 +33,13 @@ class ReservarCliController extends BaseController
      */
     public function index($cedula)
     {
-       //
+        //
 
     }
 
     public function store(Request $request)
     {
-      //  $indentificacionB = $request->buscador;
+        //  $indentificacionB = $request->buscador;
 
         $tag = $this->reserva->create([
             'idPersona' => $request->get('idPersona'),
@@ -47,16 +47,11 @@ class ReservarCliController extends BaseController
             'cantidad' => $request->get('cantidad'),
             'fecha' => $request->get('fecha'),
             'horaInicio' => $request->get('horaInicio'),
-            'horaFin' => $request->get('horaFin')
+            'horaFin' => $request->get('horaFin'),
         ]);
 
         return $this->sendResponse($tag, 'Se reservo con exito!');
     }
-
-    
-
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -65,40 +60,39 @@ class ReservarCliController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function GuardarPersona(PersonasRequest $request)
-    {   
-            $filtro = $request->id;
-            $existencia = Personas::find($filtro);
+    {
 
-            if(empty($existencia)){
-                try {
-                    $tag = $this->personas->create([
-                        'id' => $request->get('id'),
-                        'nombre' => $request->get('nombre'),
-                        'apellido1' => $request->get('apellido1'),
-                        'apellido2' => $request->get('apellido2'),
-                        'telefono' => $request->get('telefono'),
-                        'correo' => $request->get('correo'),
-                    ]);
-                    return $this->sendResponse($tag, 'Datos registrados!');
+        try {
+            $tag = $this->personas->create([
+                'id' => $request->get('id'),
+                'nombre' => $request->get('nombre'),
+                'apellido1' => $request->get('apellido1'),
+                'apellido2' => $request->get('apellido2'),
+                'telefono' => $request->get('telefono'),
+                'correo' => $request->get('correo'),
+            ]);
+            return $this->sendResponse($tag, 'Datos registrados!');
+        } catch (ModelNotFoundException $exception) {
 
-                } catch (ModelNotFoundException $exception) {
-           
-            }
+            return $this->sendResponse($exception, 'Ya existe el registro!');
+
         }
-        
 
     }
 
-    public function GuardarOrganizacion(Request $request)
+    public function GuardarOrganizacion(OrganizacionesRequest $request)
     {
-        $tag = $this->organizaciones->create([
-            'id' => $request->get('id'),
-            'nombre' => $request->get('nombre'),
-            'telefono' => $request->get('telefono'),
-            'correo' => $request->get('correo'),
-        ]);
-
-        return $this->sendResponse($tag, 'Registro completado con exito!');
+        try {
+            $tag = $this->organizaciones->create([
+                'id' => $request->get('id'),
+                'nombre' => $request->get('nombre'),
+                'telefono' => $request->get('telefono'),
+                'correo' => $request->get('correo'),
+            ]);
+            return $this->sendResponse($tag, 'Datos registrados!');
+        } catch (ModelNotFoundException $exception) {
+            return $this->sendResponse($exception, 'Ya existe el registro!');
+        }
     }
 
     /**
@@ -111,15 +105,15 @@ class ReservarCliController extends BaseController
     {
         $filtro = $request->buscador;
         $persona = Personas::where('id', $filtro)->get();
-            return $this->sendResponse($persona, 'Cedula si existe');
-        
-       
+        return $this->sendResponse($persona, 'Cedula si existe');
+
     }
     public function obtenerCedulaOrg(Request $request)
     {
         $filtro = $request->buscador;
         $organizacion = Organizaciones::where('id', $filtro)->get();
         return $this->sendResponse($organizacion, 'Cedula si existe');
+
     }
 
     /**

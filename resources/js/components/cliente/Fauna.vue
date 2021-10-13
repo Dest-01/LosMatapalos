@@ -15,16 +15,13 @@
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         />
-        <span class="title">{{ fauna.nombreComun }}</span>
+        <span class="title">Nombre comun: {{ fauna.nombreComun }}</span>
         <span class="text posicion1"
           >Nombre Cientifico: {{ fauna.nombreCientifico }}</span
         >
-        <span class="text posicion2">Tipo de especie: {{ fauna.tipo }}</span>
+        <span class="text posicion2">Tipo: {{ fauna.tipo }}</span>
         <span class="text posicion3"
-          >Familia de especie: {{ fauna.familiaCientifca }}</span
-        >
-        <span class="text posicion4"
-          >descripcion: {{ fauna.descripcion | truncate(30, "...") }}</span
+          >Familia: {{ fauna.familiaCientifca }}</span
         >
       </div>
     </div>
@@ -48,7 +45,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              Nombre comun: {{ form.nombreComun }}
+              Nombre Cientifico: {{ form.nombreCientifico }}
             </h5>
             <button
               type="button"
@@ -68,16 +65,11 @@
             </div>
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label"
-                >Descripcion</label
+                >Descripcion:</label
               >
-              <textarea
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-                v-model="form.descripcion"
-                :disabled="bloquearCampo"
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >{{form.descripcion}}</label
               >
-              </textarea>
             </div>
           </div>
         </div>
@@ -94,6 +86,7 @@ export default {
       form: new Form({
         id: "",
         nombreComun: "",
+        nombreCientifico: "",
         descripcion: "",
         imagen: "",
       }),
@@ -165,7 +158,8 @@ html {
   border: 1px solid rgb(0 0 0 / 0%);
   border-radius: 0.3rem;
   outline: 0;
-      box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 20%);
+  box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 20%);
+  width: 850px;
 }
 .modal-title {
     color: white;
@@ -287,16 +281,16 @@ img {
   transform: translate(-50%, -50%);
 }
 .posicion1 {
-  top: 40%;
-}
-.posicion2 {
   top: 50%;
 }
+.posicion2 {
+  top: 70%;
+}
 .posicion3 {
-  top: 60%;
+  top: 80%;
 }
 .posicion4 {
-  top: 75%;
+  top: 90%;
 }
 .btn {
   position: absolute;
