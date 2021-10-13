@@ -111,7 +111,7 @@
 
                 <div class="form-group">
                   <label>Nombre organización</label>
-                  <input
+                  <input style="text-transform: capitalize;"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"

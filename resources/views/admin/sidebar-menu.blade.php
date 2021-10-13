@@ -116,7 +116,7 @@
         <ul class="nav nav-treeview">
 
           <li class="nav-item">
-            <router-link to="" class="nav-link">
+            <router-link to="/admin/flora" class="nav-link">
               <i class="nav-icon fas fa-seedling green"></i>
               <p>
                 Flora

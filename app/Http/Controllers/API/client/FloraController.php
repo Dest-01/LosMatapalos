@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\API\client;
 
-use App\Models\Donativos;
+use App\Models\Flora;
 use Illuminate\Http\Request;
 
 
 class FloraController extends BaseController
 {
 
-    protected $donativos = '';
+    protected $flora = '';
 
-    public function __construct(Donativos $donativos)
+    public function __construct(Flora $flora)
     {
-        $this->donativos = $donativos;
+        $this->flora = $flora;
     }
 
     /**
@@ -23,11 +23,11 @@ class FloraController extends BaseController
      */
     public function index()
     {
-        $donativo = $this->donativos->latest()->paginate(6);
+        $floras = $this->flora->latest()->paginate(6);
         
      
 
-        return $this->sendResponse($donativo, 'Lista Donativos');
+        return $this->sendResponse($floras, 'Lista Flora');
     }
 
 

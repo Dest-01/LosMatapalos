@@ -109,7 +109,7 @@
             <div class="modal-header">
               <h4 class="modal-title">{{ tituloModal }}</h4>
               <button
-                @click="cerrarModal()"
+                
                 type="button"
                 class="close"
                 data-dismiss="modal"
@@ -572,6 +572,7 @@ export default {
     },
     cerrarModal() {
       this.modal = 0;
+      this.limpiar();
     },
     updatePhoto(e) {
       let file = e.target.files[0];
@@ -720,6 +721,8 @@ export default {
       this.showIdentificacion = false;
       this.showExistenciaCedula = false;
       this.form.errors.clear();
+      this.MensajeCedula = "";
+      this.MensajeCedula2 = "";
     },
 
     cargarDonativos() {

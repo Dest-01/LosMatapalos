@@ -1,35 +1,34 @@
 <template>
   <div class="Total">
     <div class="titulo">
-      <h1>GALERIA</h1>
+      <h1>GALERIA FLORA</h1>
     </div>
 
     <div class="container-all">
-      <div
-        v-for="donativo in donativos.data"
-        :key="donativo.id"
-        class="container"
-      >
+      <div v-for="flora in floras.data" :key="flora.id" class="container">
         <img
-          v-bind:src="'/images/donativos/' + donativo.photo"
+          v-bind:src="'/images/flora/' + flora.photo"
           width="100%"
           height="100%"
           alt=""
-          @click="verImagen(donativo)"
+          @click="verImagen(flora)"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         />
-        <span class="title">{{ donativo.idPersona }}</span>
-        <span class="text"
-          >Morbi diam viverra mattis sociis magna, habitasse penatibus non
-          lectus</span
+        <span class="title">Nombre comun: {{ flora.nom_comun }}</span>
+       <span class="text posicion1"
+          >Nombre Cientifico: {{ flora.nom_cientifico }}</span
+        >
+        <span class="text posicion2">Tipo: {{ flora.tipo }}</span>
+        <span class="text posicion3"
+          >Familia: {{ flora.fam_cientifica }}</span
         >
       </div>
     </div>
     <div class="paginacion">
       <pagination
         style="font-family: fantasy; color: black"
-        :data="donativos"
+        :data="floras"
         @pagination-change-page="getResults"
       ></pagination>
     </div>
@@ -45,10 +44,12 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Imagen Completa</h5>
+          <h5 class="modal-title" id="exampleModalLabel">
+              Nombre Cientifico: {{ form.nom_cientifico }}
+            </h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -56,53 +57,68 @@
           <div class="modal-body">
             <div>
               <img
-                v-bind:src="'/images/donativos/' + form.photo"
+                v-bind:src="'/images/flora/' + form.photo"
                 width="100%"
                 height="100%"
                 alt=""
               />
             </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Descripcion:</label
+              >
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >{{form.descripcion}}</label
+              >
+            </div>
           </div>
-          <div class="modal-footer"></div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
     return {
-      donativos: {},
+      floras: {},
       form: new Form({
         id: "",
-        idPersona: "",
+        nom_comun: "",
+        nom_cientifico: "",
+        descripcion: "",
         photo: "",
       }),
     };
   },
   methods: {
-    verImagen(donativo) {
-      this.form.fill(donativo);
+    verImagen(flora) {
+      this.form.fill(flora);
     },
 
     getResults(page = 1) {
       this.$Progress.start();
       axios
         .get("/api/floraCliente?page=" + page)
-        .then(({ data }) => (this.donativos = data.data));
+        .then(({ data }) => (this.floras = data.data));
       this.$Progress.finish();
     },
-    cargarDonativos() {
+    cargarFlora() {
       axios
         .get("/api/floraCliente")
-        .then(({ data }) => (this.donativos = data.data));
+        .then(({ data }) => (this.floras = data.data));
     },
   },
   created() {
     this.$Progress.start();
-    this.cargarDonativos();
+    this.cargarFlora();
     this.$Progress.finish();
+  },
+  filters: {
+    truncate: function (text, length, suffix) {
+      return text.substring(0, length) + suffix;
+    },
   },
 };
 </script>
@@ -122,8 +138,8 @@ html {
   min-height: 100vh;
 }
 .modal-content {
-  width: 1000px;
-  right: 45%;
+  width: 900px;
+  right: 40%;
 }
 
 .total {
@@ -137,11 +153,33 @@ html {
   -ms-flex-direction: column;
   flex-direction: column;
   pointer-events: auto;
-  background-color: #ffffffba;
+  background-color: #00000000;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgb(0 0 0 / 0%);
   border-radius: 0.3rem;
   outline: 0;
+  box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 20%);
+  width: 850px;
+}
+.modal-title {
+    color: white;
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+.form-label {
+    font-family: 'Poppins';
+    margin-bottom: .5rem;
+    color: rgb(255 255 255);
+    font-weight: 700;
+}
+.form-control[data-v-82d23cc6]:disabled, .form-control[data-v-82d23cc6]:read-only {
+    background-color: #fff7f712;
+    opacity: 1;
+    border: 1px solid rgb(0 0 0 / 0%);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 footer {
@@ -212,34 +250,47 @@ img {
   display: block;
   overflow: hidden;
   cursor: pointer;
+  box-shadow: 3px 3px 3px 2px rgb(0 0 0 / 20%);
 }
 .title {
   position: absolute;
   display: block;
   cursor: pointer;
-  top: 35%;
+  top: 25%;
   display: none;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
   font-weight: bold;
-  font-size: 1.6em;
+  font-size: 1.8em;
   text-shadow: 1px 5px 10px black;
   transition-duration: 0.3s;
 }
 .text {
   position: absolute;
-  top: 70%;
+  top: 40%;
   cursor: pointer;
   max-width: 80%;
   text-align: center;
   left: 50%;
   text-shadow: 1px 5px 10px black;
-  font-size: 1em;
+  font-size: 23px;
   display: none;
   margin-right: -50%;
   transition-duration: 0.3s;
   transform: translate(-50%, -50%);
+}
+.posicion1 {
+  top: 50%;
+}
+.posicion2 {
+  top: 70%;
+}
+.posicion3 {
+  top: 80%;
+}
+.posicion4 {
+  top: 90%;
 }
 .btn {
   position: absolute;

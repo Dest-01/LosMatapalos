@@ -2,8 +2,8 @@
   <div class="Total">
     <div class="titulo">
       <h1>GALERIA FAUNA</h1>
+      <div class="opciones"></div>
     </div>
-
     <div class="container-all">
       <div v-for="fauna in faunas.data" :key="fauna.id" class="container">
         <img
@@ -67,9 +67,9 @@
               <label for="exampleFormControlTextarea1" class="form-label"
                 >Descripcion:</label
               >
-              <label for="exampleFormControlTextarea1" class="form-label"
-                >{{form.descripcion}}</label
-              >
+              <label for="exampleFormControlTextarea1" class="form-label">{{
+                form.descripcion
+              }}</label>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@
 export default {
   data() {
     return {
-        bloquearCampo: true,
+      bloquearCampo: true,
       faunas: {},
       form: new Form({
         id: "",
@@ -141,11 +141,29 @@ html {
   width: 900px;
   right: 40%;
 }
-
 .total {
   margin: 85px;
 }
-
+.opciones {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn {
+  position: inherit;
+  top: 30%;
+  cursor: pointer;
+  max-width: 80%;
+  text-align: center;
+  left: 50%;
+  text-shadow: 1px 5px 10px black;
+  font-size: 1em;
+  transition-duration: 0.3s;
+  margin: 40px 50px 1px 5px;
+  text-transform: capitalize;
+  width: 150px;
+}
 .modal-content {
   position: relative;
   display: -ms-flexbox;
@@ -162,32 +180,16 @@ html {
   width: 850px;
 }
 .modal-title {
-    color: white;
-    margin-bottom: 0;
-    line-height: 1.6;
+  color: white;
+  margin-bottom: 0;
+  line-height: 1.6;
 }
-
 .form-label {
-    font-family: 'Poppins';
-    margin-bottom: .5rem;
-    color: rgb(255 255 255);
-    font-weight: 700;
+  font-family: "Poppins";
+  margin-bottom: 0.5rem;
+  color: rgb(255 255 255);
+  font-weight: 700;
 }
-.form-control[data-v-82d23cc6]:disabled, .form-control[data-v-82d23cc6]:read-only {
-    background-color: #fff7f712;
-    opacity: 1;
-    border: 1px solid rgb(0 0 0 / 0%);
-    color: white;
-    font-size: 15px;
-    font-weight: 500;
-}
-
-footer {
-  margin-top: 40px;
-  width: 100%;
-  float: left;
-}
-
 .titulo {
   font-family: sans-serif;
   margin-top: 90px;
@@ -199,22 +201,7 @@ footer {
 .paginacion {
   margin: 5px 70px 55px 70px;
   padding: 1em;
-  /* padding: 1px; */
-  /* border-radius: 0.2rem; */
-  /*box-shadow: 0 4px 6px 0 rgb(122 122 122);*/
-  /* position: absolute; */
-  /* left: 45%; */
-  /* bottom: -250px; */
-  /* height: auto; */
-  /* width: 150px; */
-  /* background: #c3c3c373;*/
 }
-ol,
-ul {
-  /* left: 45%; */
-  padding-left: 50%;
-}
-
 h1 {
   text-align: center;
   color: black;
@@ -236,7 +223,7 @@ h1 {
   position: relative;
   float: left;
   padding: 5px;
-  margin: 68px 5px 68px 5px;
+  margin: 5px 5px 68px 5px;
   border-radius: 0.2rem;
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.3);
   counter-reset: pagination;
@@ -292,20 +279,6 @@ img {
 .posicion4 {
   top: 90%;
 }
-.btn {
-  position: absolute;
-  top: 80%;
-  cursor: pointer;
-  max-width: 80%;
-  text-align: center;
-  left: 50%;
-  text-shadow: 1px 5px 10px black;
-  font-size: 1em;
-
-  margin-right: -50%;
-  transition-duration: 0.3s;
-  transform: translate(-50%, -50%);
-}
 
 .container:hover img {
   transform: scale(1.2);
@@ -318,48 +291,100 @@ img {
   display: block;
   transition-duration: 0.3s;
 }
-@media only screen and (max-width: 900px) {
+
+@media only screen and (max-device-width: 320px) {
   .titulo {
-    margin-top: 150px;
+    margin-top: 120px;
   }
   .container-all {
-    margin: 5px 5px 1px 120px;
-    width: 1000px;
-  }
-  .container {
-    width: calc(50% - 6px);
-  }
-  ol,
-  ul {
-    /* left: 45%; */
-    padding-left: 45%;
-  }
-  .modal-content {
-    width: 100%;
-    right: auto;
-    top: 200px;
-  }
-}
-@media only screen and (max-width: 400px) {
-  .titulo {
-    margin-top: 150px;
-  }
-  .container-all {
-    margin: 5px 6px auto auto;
+    margin: 5px 5px 5px 15px;
     width: auto;
   }
   .container {
     width: 100%;
   }
-  ol,
-  ul {
-    /* left: 45%; */
-    padding-left: 30%;
+  .modal-content {
+    width: 100%;
+    right: auto;
+  }
+  .title {
+    font-size: 15px;
+  }
+  .text {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (min-device-width: 321px) and (max-device-width: 400px) {
+  .titulo {
+    margin-top: 150px;
+  }
+  .container-all {
+    width: auto;
+  }
+  .container {
+    width: 100%;
+    margin-right: 10px;
   }
   .modal-content {
     width: 100%;
     right: auto;
-    top: 200px;
+  }
+  .title {
+    font-size: 15px;
+  }
+  .text {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (min-device-width: 401px) and (max-device-width: 768px) {
+  .titulo {
+    margin-top: 150px;
+  }
+  .container-all {
+    margin: 5px 6px 5px 40px;
+  }
+  .container {
+    width: 100%;
+    margin-right: 10px;
+  }
+  .modal-content {
+    width: 500px;
+    right: -1%;
+  }
+  .title {
+    font-size: 2rem;
+  }
+  .text {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+  .container-all {
+    margin: 5px 15px 5px 5px;
+    width: auto;
+  }
+  .container {
+    width: 100%;
+    margin-right: 10px;
+  }
+  .title {
+    font-size: 2.5rem;
+  }
+  .text {
+    font-size: 2.5rem;
+  }
+  .modal-content {
+    width: 800px;
+    right: 10%;
+  }
+}
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1280px) {
+  .container-all {
+    margin: 5px 15px 5px 45px;
+    width: auto;
   }
 }
 </style>

@@ -225,7 +225,7 @@ ul .booking-card .informations-container .title::after {
   left: 0;
   right: 0;
   height: 3px;
-  width: 50px;
+  width: 100%;
   margin: auto;
   background: #0a4870;
 }

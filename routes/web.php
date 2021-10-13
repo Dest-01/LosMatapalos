@@ -103,6 +103,10 @@ Route::get('/admin/voluntarioActividad', function(){
 Route::get('/admin/fauna', function(){
     return view('admin');
 })->where('admin/fauna', '[\/\w\.-]*')->middleware('auth');
+
+Route::get('/admin/flora', function () {
+    return view('admin');
+})->where('admin/flora', '[\/\w\.-]*')->middleware('auth');
 ///////////////////////////////----FIN--BIODIVERSIDAD--///////////////////////
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
