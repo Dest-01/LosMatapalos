@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class actividades extends Model
+class Actividades extends Model
 {
     protected $fillable = ['id','nombre','fecha','hora','descripcion','cantParticipantes','imagen','tipo'];
 }

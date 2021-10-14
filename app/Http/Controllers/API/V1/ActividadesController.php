@@ -94,10 +94,10 @@ class ActividadesController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\actividades  $actividades
+     * @param  \App\Models\Actividades  $actividades
      * @return \Illuminate\Http\Response
      */
-    public function show(actividades $actividades)
+    public function show(Actividades $actividades)
     {
         //
     }
@@ -157,7 +157,7 @@ class ActividadesController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\actividades  $actividades
+     * @param  \App\Models\Actividades  $actividades
      * @return \Illuminate\Http\Response
      */
 
