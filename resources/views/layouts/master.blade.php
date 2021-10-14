@@ -85,7 +85,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/somos') }}">¿Quiénes somos?</a>
+                            <a class="nav-link" href="{{ url('/AboutUs') }}">¿Quiénes somos?</a>
                         </li>
                     </ul>
 

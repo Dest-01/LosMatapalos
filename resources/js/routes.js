@@ -27,6 +27,7 @@ export default [
     { path: '/admin/voluntarioActividad', component: require('./components/admin/VoluntarioActividad').default },
     { path: '/admin/fauna', component: require('./components/admin/Fauna').default },
     { path: '/admin/flora', component: require('./components/admin/flora.vue').default },
+    { path: '/admin/articulos', component: require('./components/admin/Articulos.vue').default },
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,5 +41,6 @@ export default [
     { path: '/actividades', component: require('./components/cliente/actividades.vue').default },
     { path: '/pruebas', component: require('./components/cliente/pruebas.vue').default },
     { path: '/fauna', component: require('./components/cliente/Fauna.vue').default },
-    { path: '/flora', component: require('./components/cliente/Flora.vue').default }, 
+    { path: '/flora', component: require('./components/cliente/Flora.vue').default },
+    { path: '/AboutUs', component: require('./components/cliente/AboutUs.vue').default },
 ];

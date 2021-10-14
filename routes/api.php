@@ -67,6 +67,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'voluntarioActividad' => 'VoluntarioActividadesController',
         'fauna' => 'FaunaController',
         'flora' => 'FloraController',
+        'articulos'=>'ArticuloController',
     ]);
 });
 
