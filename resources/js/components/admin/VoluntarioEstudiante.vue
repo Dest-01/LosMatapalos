@@ -484,7 +484,7 @@ export default {
       this.currentImage = file;
       let reader = new FileReader();
 
-      if (file["size"] < 2111775) {
+      if (file["size"] < 9111775) {
         reader.onloadend = (file) => {
           //console.log('RESULT', reader.result)
           this.form.imagen = reader.result;

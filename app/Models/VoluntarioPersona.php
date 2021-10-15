@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VoluntarioPersona extends Model
 {
+    use HasFactory;
+    
     protected $fillable = ['id','identificacion', 'voluntariado_id', 'lugar'];
 }

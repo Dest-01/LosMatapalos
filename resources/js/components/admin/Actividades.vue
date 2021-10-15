@@ -232,7 +232,7 @@
                 </div>
                
                    <div class="form-group">
-                  <label>Tipo de donativo</label>
+                  <label>Tipo de actividad</label>
                   <select
                     class="form-control"
                     v-model="form.tipo"
@@ -304,8 +304,9 @@ export default {
       this.previewImage = URL.createObjectURL(file);
       this.currentImage = file;
       let reader = new FileReader();
-
-      if (file["size"] < 2111775) {
+          // 2111775 = 2 MB en base64
+          // 9111775
+      if (file["size"] < 9111775) {
         reader.onloadend = (file) => {
           //console.log('RESULT', reader.result)
           this.form.imagen = reader.result;

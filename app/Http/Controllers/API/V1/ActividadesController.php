@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\Voluntario;
 use App\Models\Actividades;
+use App\Models\Voluntario;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\ActividadRequest;
 
 class ActividadesController extends BaseController
 {
@@ -17,7 +16,7 @@ class ActividadesController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(Actividades $actividades,Voluntario $voluntario)
+    public function __construct(Actividades $actividades, Voluntario $voluntario)
     {
         $this->middleware('auth:api');
         $this->actividades = $actividades;
@@ -25,8 +24,8 @@ class ActividadesController extends BaseController
     }
     public function index()
     {
-           $actividad = $this->actividades->latest()->paginate(10);
-           return $this->sendResponse($actividad, 'Lista de Actividades');
+        $actividad = $this->actividades->latest()->paginate(10);
+        return $this->sendResponse($actividad, 'Lista de Actividades');
     }
 
     /**
@@ -37,56 +36,58 @@ class ActividadesController extends BaseController
      */
     public function store(Request $request)
     {
+        try {
+            $rules = [
+                'nombre' => 'required|string|max:20|min:3',
+                'fecha' => 'required',
+                'hora' => 'required',
+                'descripcion' => 'required|string|max:250',
+                'cantParticipantes' => 'required|integer|',
+                'imagen' => 'required',
+                'tipo' => 'required',
+            ];
 
-        $rules = [
-            'nombre' => 'required|string|max:20|min:3',
-            'fecha' => 'required',
-            'hora' => 'required',
-            'descripcion' => 'required|string|max:250',
-            'cantParticipantes' => 'required|integer|',
-            'imagen' => 'required',
-            'tipo' => 'required',
-        ];
-    
-        $messages = [
-           
-            'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
-            'fecha.*' => 'Seleccione una fecha',
-            'hora.*' => 'Seleccione un hora',
-            'descripcion.*' => 'Se requiere una breve descripción',
-            'cantParticipantes.*' => 'Cantidad de participantes se requiere',
-            'imagen.*' => 'Imagen se requiere',
-            'tipo.*' => 'Tipo se requiere',
-        ];
+            $messages = [
 
+                'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
+                'fecha.*' => 'Seleccione una fecha',
+                'hora.*' => 'Seleccione un hora',
+                'descripcion.*' => 'Se requiere una breve descripción',
+                'cantParticipantes.*' => 'Cantidad de participantes se requiere',
+                'imagen.*' => 'Imagen se requiere',
+                'tipo.*' => 'Tipo se requiere',
+            ];
 
-        $this->validate($request, $rules, $messages);
-      
+            $this->validate($request, $rules, $messages);
 
-        if($request->imagen){
-            $name = time().'.' . explode('/', explode(':', substr($request->imagen, 0, strpos
-            ($request->imagen, ';')))[1])[1];
-           \Image::make($request->imagen)->save(public_path('images/Actividades/').$name);
-           $request->merge(['imagen' => $name]);
+            if ($request->imagen) {
+                $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos($request->imagen, ';')))[1])[1];
+                (!file_exists(public_path().'/images/Actividades/')) ? mkdir(public_path().'/images/Actividades/',0777,true) : null;
+                \Image::make($request->imagen)->save(public_path('images/Actividades/') . $name);
+                $request->merge(['imagen' => $name]);
+            }
+            $tag = $this->actividades->create([
+                'nombre' => $request->get('nombre'),
+                'fecha' => $request->get('fecha'),
+                'hora' => $request->get('hora'),
+                'descripcion' => $request->get('descripcion'),
+                'cantParticipantes' => $request->get('cantParticipantes'),
+                'imagen' => $request->get('imagen'),
+                'tipo' => $request->get('tipo'),
+
+            ]);
+            return $this->sendResponse($tag, 'Actividad Creada');
+        } catch (\PDOException | Exception $e) {
+            return response()->json(["errors" => $e->getMessage()], 500);
         }
-        $tag = $this->actividades->create([
-            'nombre' => $request->get('nombre'),
-            'fecha' => $request->get('fecha'),
-            'hora' => $request->get('hora'),
-            'descripcion' => $request->get('descripcion'),
-            'cantParticipantes' => $request->get('cantParticipantes'),
-            'imagen' => $request->get('imagen'),
-            'tipo' => $request->get('tipo'),
-            
-        ]);
-        return $this->sendResponse($tag, 'Actividades creado');
     }
 
-    public function obtenerVoluntarios(){
-        $voluntario =  Voluntario::get();
+    public function obtenerVoluntarios()
+    {
+        $voluntario = Voluntario::get();
         /*foreach($voluntario as $key => $value):
-            $voluntario[$key]->id = Voluntario::find($value->id,['id','nombre']);
-        endforeach;*/   
+        $voluntario[$key]->id = Voluntario::find($value->id,['id','nombre']);
+        endforeach;*/
 
         return $voluntario;
     }
@@ -121,9 +122,9 @@ class ActividadesController extends BaseController
             'imagen' => 'required',
             'tipo' => 'required',
         ];
-    
+
         $messages = [
-          
+
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'fecha.*' => 'Seleccione una fecha',
             'hora.*' => 'Seleccione un hora',
@@ -133,22 +134,21 @@ class ActividadesController extends BaseController
             'tipo.*' => 'Tipo se requiere',
         ];
 
-
         $this->validate($request, $rules, $messages);
 
         $tag = $this->actividades->findOrFail($id);
         $currentFoto = $tag->imagen;
-        if($request->imagen != $currentFoto){
-         $name = time().'.' . explode('/', explode(':', substr($request->imagen, 0, strpos
-         ($request->imagen, ';')))[1])[1];
- 
-         \Image::make($request->imagen)->save(public_path('images/Actividades/').$name);
-          $request->merge(['imagen' => $name]);
- 
-          $actividadFoto = public_path('images/Actividades/').$currentFoto;
-          if(file_exists($actividadFoto)){
-              @unlink($actividadFoto);
-          }
+        if ($request->imagen != $currentFoto) {
+            $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos
+                ($request->imagen, ';')))[1])[1];
+
+            \Image::make($request->imagen)->save(public_path('images/Actividades/') . $name);
+            $request->merge(['imagen' => $name]);
+
+            $actividadFoto = public_path('images/Actividades/') . $currentFoto;
+            if (file_exists($actividadFoto)) {
+                @unlink($actividadFoto);
+            }
         }
         $tag->update($request->all());
         return $this->sendResponse($tag, 'Actividad Actualizada');
@@ -165,16 +165,16 @@ class ActividadesController extends BaseController
     {
         $this->authorize('isAdmin');
         $actividades = Actividades::FindOrFail($id);
-        if(file_exists('images/Actividades/'.$actividades->imagen) AND !empty($actividades->imagen)){
-            unlink('images/Actividades/'.$actividades->imagen);
-        }try{
+        if (file_exists('images/Actividades/' . $actividades->imagen) and !empty($actividades->imagen)) {
+            unlink('images/Actividades/' . $actividades->imagen);
+        }try {
             $actividades->delete();
             $bug = 0;
-        }catch(\Exception $e){
+        } catch (\Exception$e) {
             $bug = $e->errorInfo[1];
-        }if($bug==0){
+        }if ($bug == 0) {
             echo "success";
-        }else{
+        } else {
             echo 'error';
         }
     }

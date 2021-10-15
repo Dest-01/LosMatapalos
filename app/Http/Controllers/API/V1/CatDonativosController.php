@@ -24,7 +24,7 @@ class CatDonativosController extends BaseController
     {
         $catDonativo = $this->catDonativos->latest()->paginate(10);
 
-        return $this->sendResponse($catDonativo, 'Categoria de donativos');
+        return $this->sendResponse($catDonativo, 'Lista de donativos necesarios');
     }
 
     /**
@@ -35,10 +35,10 @@ class CatDonativosController extends BaseController
      */
     public function store(Request $request)
     {
+        try{
         if($request->photo){
-            $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos
-            ($request->photo, ';')))[1])[1];
-            
+            $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+            (!file_exists(public_path().'/images/CatDonativos/')) ? mkdir(public_path().'/images/CatDonativos/',0777,true) : null;
            \Image::make($request->photo)->save(public_path('images/CatDonativos/').$name);
            $request->merge(['photo' => $name]);
 
@@ -50,7 +50,11 @@ class CatDonativosController extends BaseController
             'photo' => $request->get('photo')
             
         ]);
-        return $this->sendResponse($tag, 'Categoria donativo creado');
+        return $this->sendResponse($tag, 'donativo necesario creado');
+    }
+    catch(\PDOException | Exception $e){
+        return response()->json(["errors" => $e->getMessage()],500);
+    } 
     }
 
     /**
@@ -93,7 +97,7 @@ class CatDonativosController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Categoria Donativo Actualizado');
+        return $this->sendResponse($tag, 'Donativo Necesario Actualizado');
     }
 
     /**

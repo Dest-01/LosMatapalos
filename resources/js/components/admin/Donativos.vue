@@ -732,6 +732,7 @@ export default {
           .then(({ data }) => (this.donativos = data.data));
       }
     },
+    
 
     crearDonativo() {
       this.$Progress.start();
