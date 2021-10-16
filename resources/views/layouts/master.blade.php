@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -38,7 +38,7 @@
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/navbar.js') }}"></script>
     <script src="{{ asset('/js/utilitarios.js') }}"></script>
-
+    <link rel="shortcut icon" href="images/icono.png">
 
 
 </head>
@@ -50,10 +50,12 @@
                 <a class="navbar-brand" href="#">
                     <img src="images/logo2.png" alt="" width="120" height="60">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
                     </span>
-                  </button>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 ">
                         <li class="nav-item">
@@ -122,7 +124,7 @@
     {{-- ./wrapper --}}
 
     <footer>
-      <div class="
+        <div class="
             paginacion">
             <pagination style="font-family: fantasy" :data="donativos" @pagination-change-page="getResults">
             </pagination>
@@ -144,17 +146,17 @@
                 </p>
             </div>
         </div>
-        </footer>
+    </footer>
 
-        @auth
-            <script>
-                window.user = @json(auth()->user())
-            </script>
-        @endauth
-        <script src="{{ asset('/js/app.js') }}"></script>
+    @auth
         <script>
-
+            window.user = @json(auth()->user())
         </script>
+    @endauth
+    <script src="{{ asset('/js/app.js') }}"></script>
+    <script>
+
+    </script>
 
 </body>
 

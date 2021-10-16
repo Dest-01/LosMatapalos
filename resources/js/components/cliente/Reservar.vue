@@ -80,21 +80,6 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>12:00 p.m.</td>
-                    <td>01:00 p.m.</td>
-                    <td>
-                      <button
-                        style="height: 35px; width: 55px"
-                        type="button"
-                        class="btn btn-danger btn-sm px-3"
-                        @click="opcionHora5()"
-                        :disabled="bloquearCampos"
-                      >
-                        <i class="fas fa-plus"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
                     <td>01:00 p.m.</td>
                     <td>02:00 p.m.</td>
                     <td>
@@ -310,6 +295,7 @@
               <div v-show="soloPersona" class="group">
                 <i class="fas fa-id-card iconoInput"></i>
                 <input
+                style="text-transform: inherit"
                   name="id"
                   v-model="formPersona.id"
                   type="text"
@@ -395,6 +381,7 @@
               <div v-show="soloPersona" class="group">
                 <i class="fas fa-at iconoInput"></i>
                 <input
+                style="text-transform: inherit"
                   name="correo"
                   v-model="formPersona.correo"
                   type="email"
@@ -469,6 +456,7 @@
               <div v-show="soloOrganizacion" class="group">
                 <i class="fas fa-at iconoInput"></i>
                 <input
+                  style="text-transform: inherit"
                   v-model="formOrganizacion.correo"
                   name="correo"
                   type="email"
@@ -838,7 +826,7 @@ input:valid ~ label[data-v-4bc2021a] {
 .col-md-5 {
   padding: 5px;
   background: #034991;
-  background-image: url('/images/logo.png');
+  background-image: url("/images/logo.png");
   background-position-x: -100px;
   background-position-y: 160px;
   background-repeat: no-repeat;
@@ -1053,20 +1041,20 @@ input:focus ~ .highlight {
     background: transparent;
   }
 }
-/***********RESPONSIVE MODE***************************/ 
+/***********RESPONSIVE MODE***************************/
 @media only screen and (min-device-width: 900px) and (max-device-width: 1365px) {
-.contenedor-2{
-      margin: 15px 10px 25% 10px;
-}
-.card{
-  margin: 100px 10px 100px 10px;
-}
+  .contenedor-2 {
+    margin: 15px 10px 25% 10px;
+  }
+  .card {
+    margin: 100px 10px 100px 10px;
+  }
 }
 @media only screen and (min-device-width: 568px) and (max-device-width: 900px) {
-  input{
+  input {
     width: 100%;
   }
- .btn{
+  .btn {
     margin-top: 5px;
   }
   .intro {
@@ -1108,10 +1096,10 @@ input:focus ~ .highlight {
   }
 }
 @media only screen and (min-device-width: 412px) and (max-device-width: 567px) {
-  input{
+  input {
     width: 100%;
   }
- .btn{
+  .btn {
     margin-top: 5px;
   }
   .intro {
@@ -1153,10 +1141,10 @@ input:focus ~ .highlight {
   }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 411px) {
-  input{
+  input {
     width: 100%;
   }
-  .btn{
+  .btn {
     margin-top: 5px;
   }
   .intro {
@@ -1198,10 +1186,10 @@ input:focus ~ .highlight {
   }
 }
 @media only screen and (max-device-width: 320px) {
-  input{
+  input {
     width: 100%;
   }
- .btn{
+  .btn {
     margin-top: 5px;
   }
   .intro {
@@ -1244,7 +1232,7 @@ input:focus ~ .highlight {
   }
 }
 @media only screen and (max-device-width: 280px) {
-  input{
+  input {
     width: 100%;
   }
   .Posicionar {
@@ -1255,26 +1243,23 @@ input:focus ~ .highlight {
   .campo1 {
     width: 130px;
   }
- .table>:not(caption)>*>* {
-     padding: 0.1rem 0.1rem; 
+  .table > :not(caption) > * > * {
+    padding: 0.1rem 0.1rem;
+  }
 }
-
-}
-
 
 @media only screen and (min-device-width: 640px) and (max-device-width: 736px) {
-  input{
+  input {
     width: 100%;
   }
-  .campo1{
+  .campo1 {
     width: 480px;
   }
-  .Posicionar{
+  .Posicionar {
     left: 85%;
   }
-  .btn{
+  .btn {
     display: block;
   }
 }
-
 </style>

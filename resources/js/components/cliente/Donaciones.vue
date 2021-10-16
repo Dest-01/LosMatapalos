@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="portada">
-      <img v-bind:src="portada" v-bind:alt="text" width="100%" height="500px" />
+      <img class="portadaImagen" v-bind:src="portada" v-bind:alt="text" />
       <div class="centrado">HAZ UNA DONACIÓN</div>
     </div>
     <div class="intro">
@@ -33,15 +33,27 @@
       </div>
       <div class="contenedor2 card">
         <div class="card-body">
-         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+          <div
+            id="carouselExampleControls"
+            class="carousel slide"
+            data-bs-ride="carousel"
+          >
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img  v-bind:src="'/images/PortadaDonaciones2.jpg'" class="d-block w-100"   width="350px"
-                  height="500px" alt="" />
-                  <div class="carousel-caption d-none d-md-block">
-                    <h1>¿Que se necesita?</h1>
-                   <p>Las siguentes son algunas de las cosas necesarias para el progreso del sendero.</p>
-                   </div>
+                <img
+                  v-bind:src="'/images/PortadaDonaciones2.jpg'"
+                  class="d-block w-100"
+                  width="350px"
+                  height="500px"
+                  alt=""
+                />
+                <div class="carousel-caption d-none d-md-block">
+                  <h1>¿Que se necesita?</h1>
+                  <p>
+                    Las siguentes son algunas de las cosas necesarias para el
+                    progreso del sendero.
+                  </p>
+                </div>
               </div>
               <div
                 v-for="donativosNecesario in donativosNecesarios.data"
@@ -53,14 +65,13 @@
                     '/images/CatDonativos/' + donativosNecesario.photo
                   "
                   class="d-block w-100"
-                  width="350px"
-                  height="500px"
+                  width="100%"
+                  height="100"
                   alt=""
                 />
-               <div class="carousel-caption d-none d-md-block">
-                    <h1>{{donativosNecesario.nombre}}</h1>
-                  
-                   </div>
+                <div class="carousel-caption d-none d-md-block">
+                  <h1>{{ donativosNecesario.nombre }}</h1>
+                </div>
               </div>
             </div>
             <button
@@ -225,6 +236,10 @@ export default {
   flex: 1 1 auto;
   padding: 5px;
 }
+img{
+  width: 100%;
+  height: auto;
+}
 .centrado {
   position: absolute;
   top: 50%;
@@ -236,6 +251,10 @@ export default {
   font-weight: 600;
 }
 
+.portadaImagen {
+  width: 100%;
+  height: 500px;
+}
 .intro {
   margin: auto auto 40px auto;
   background: #faf9f7;
@@ -378,113 +397,145 @@ h5 {
   color: rgba(255, 255, 255, 0.6);
 }
 
-@media screen and (max-width: 900px) {
-  .portada {
-    width: 200px;
-    height: 250px;
-    margin-top: 5px;
-  }
+@media (max-width: 639px) {
   img {
-    width: 768px;
-    height: 300px;
+    width: 100%;
+    height: 200px;
   }
-  .intro {
-    font-size: 15px;
-    margin: 55px 5px 5px 5px;
+  .portada {
+    margin: 100px auto auto auto;
+  }
+  .portadaImagen {
+    width: 100%;
+    height: 200px;
   }
   .centrado {
-    font-size: 2rem;
-    margin-top: 70px;
-    /* margin: auto; */
-    margin-left: 145%;
+    font-size: 35px;
+  }
+  .intro {
+    width: 100%;
+    padding: 50px;
+    font-size: 15px;
   }
   .necesarios {
-    margin: 10px 40px 10px 10px;
-    width: auto;
     display: flex;
     flex-direction: column;
+    flex-flow: row;
+    margin: 10px 5px 5px 10px;
+    flex-wrap: wrap;
   }
   .contenedor1 {
-    width: 750px;
-    height: auto;
-    margin: auto;
+    height: 450px;
+    width: 100%;
+    margin-right: 5px;
+    margin-left: 2px;
   }
   .contenedor2 {
-    width: 750px;
-    height: auto;
-    margin: 10px auto auto auto;
-  }
-
-  .contenedor-donadores {
-    margin: auto auto 40px auto;
-    background: #faf9f7;
-    height: 400px;
-    text-align: center;
-    font-size: 25px;
-    font-family: "Poppins";
-    padding: 20px;
-    border-top: outset;
-  }
-  .imagenes {
-    width: 130px;
-    height: auto;
+    top: 20px;
   }
   .row {
-    margin: 15px 40px 40px 20px;
+    margin: 10px 11px 1px 1px;
+  }
+  .contenedor-donadores {
+    padding: 10px;
+    margin-top: 30px;
   }
 }
 
-@media screen and (max-width: 500px) {
-  .portada {
-    width: 200px;
-    height: 250px;
-    margin-top: 5px;
-  }
+@media only screen and (min-device-width: 640px) and (max-device-width: 767px) {
   img {
-    width: 375px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
   }
-  .intro {
-    font-size: 15px;
-    margin: 47px 5px 5px 5px;
+  .portadaImagen {
+    width: 100%;
+    height: 230px;
   }
   .centrado {
-    font-size: 2rem;
-    margin-top: 70px;
-    /* margin: auto; */
-    margin-left: 75px;
+    font-size: 30px;
+    top: 60%;
+  }
+  .intro{
+    font-size: 20px;
+    margin-top: 1px;
+  }
+  .necesarios{
+        display: flex;
+    flex-direction: column;
+    flex-flow: row;
+    margin: 10px 10px 10px 10px;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .contenedor1{
+    height: auto;
+    width: 100%;
+  }
+  .contenedor2{
+        top: 10px;
+  }
+  .row{
+    margin: 1px 15px 1px 1px;
+  }
+  .col-sm-3 {
+    width: 50%;
+}
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .portadaImagen {
+    width: 100%;
+    height: 300px;
+  }
+  .centrado {
+    font-size: 2.6rem;
+    top: 65%;
   }
   .necesarios {
-    margin: 10px 40px 10px 10px;
-    width: auto;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 10px 20px 20px 10px;
+    height: 600px;
   }
   .contenedor1 {
-    width: 300px;
     height: auto;
+    width: 100%;
+    margin: 1px 1px 1px 1px;
   }
   .contenedor2 {
-    width: 300px;
+    top: 10px;
+    width: 100%;
     height: auto;
   }
-
   .contenedor-donadores {
-    margin: auto auto 40px auto;
-    background: #faf9f7;
-    height: 400px;
-    text-align: center;
-    font-size: 25px;
-    font-family: "Poppins";
-    padding: 20px;
-    border-top: outset;
+    margin-top: 200px;
   }
-  .imagenes {
-    width: 200px;
-    height: auto;
+  .row {
+    margin: 20px 10px 20px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
   }
-  .row[data-v-40bca711] {
-    margin: 15px 40px 40px 20px;
+  .col-sm-3 {
+    width: 50%;
+  }
+  .donation a.card {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-device-width: 1025px) and (max-device-width: 1284px) {
+  img {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

@@ -247,4 +247,20 @@ ul{
    line-height:20px; 
    font-weight:400;
 }
+@media (max-width: 768px) {
+img{
+  width: 100%;
+  height: auto;
+}
+.datos{
+  margin-top: 150px;
+}
+.row{
+  display: flex;
+  flex-direction: column;
+}
+.col-6 {
+    width: 100%;
+}
+}
 </style>

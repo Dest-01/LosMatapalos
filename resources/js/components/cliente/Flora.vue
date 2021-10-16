@@ -16,13 +16,11 @@
           data-bs-target="#exampleModal"
         />
         <span class="title">Nombre comun: {{ flora.nom_comun }}</span>
-       <span class="text posicion1"
+        <span class="text posicion1"
           >Nombre Cientifico: {{ flora.nom_cientifico }}</span
         >
         <span class="text posicion2">Tipo: {{ flora.tipo }}</span>
-        <span class="text posicion3"
-          >Familia: {{ flora.fam_cientifica }}</span
-        >
+        <span class="text posicion3">Familia: {{ flora.fam_cientifica }}</span>
       </div>
     </div>
     <div class="paginacion">
@@ -44,7 +42,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
+            <h5 class="modal-title" id="exampleModalLabel">
               Nombre Cientifico: {{ form.nom_cientifico }}
             </h5>
             <button
@@ -67,9 +65,9 @@
               <label for="exampleFormControlTextarea1" class="form-label"
                 >Descripcion:</label
               >
-              <label for="exampleFormControlTextarea1" class="form-label"
-                >{{form.descripcion}}</label
-              >
+              <label for="exampleFormControlTextarea1" class="form-label">{{
+                form.descripcion
+              }}</label>
             </div>
           </div>
         </div>
@@ -162,24 +160,25 @@ html {
   width: 850px;
 }
 .modal-title {
-    color: white;
-    margin-bottom: 0;
-    line-height: 1.6;
+  color: white;
+  margin-bottom: 0;
+  line-height: 1.6;
 }
 
 .form-label {
-    font-family: 'Poppins';
-    margin-bottom: .5rem;
-    color: rgb(255 255 255);
-    font-weight: 700;
+  font-family: "Poppins";
+  margin-bottom: 0.5rem;
+  color: rgb(255 255 255);
+  font-weight: 700;
 }
-.form-control[data-v-82d23cc6]:disabled, .form-control[data-v-82d23cc6]:read-only {
-    background-color: #fff7f712;
-    opacity: 1;
-    border: 1px solid rgb(0 0 0 / 0%);
-    color: white;
-    font-size: 15px;
-    font-weight: 500;
+.form-control[data-v-82d23cc6]:disabled,
+.form-control[data-v-82d23cc6]:read-only {
+  background-color: #fff7f712;
+  opacity: 1;
+  border: 1px solid rgb(0 0 0 / 0%);
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 footer {
@@ -220,30 +219,35 @@ h1 {
   color: black;
 }
 .container-all {
-  width: fit-content;
-  margin: 10px 70px 30px 70px;
-  height: auto;
-  display: flex; /* o inline-flex */
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: flex-start;
+width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 10px 70px 30px 70px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 }
 .container {
-  background: #66666699;
-  width: calc(33% - 6px);
-  overflow: hidden;
-  display: block;
-  position: relative;
-  float: left;
-  padding: 5px;
-  margin: 68px 5px 68px 5px;
-  border-radius: 0.2rem;
-  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.3);
-  counter-reset: pagination;
-  text-align: center;
+background: #66666699;
+    width: 550px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    float: left;
+    padding: 5px;
+    margin: 45px 5px 45px 5px;
+    border-radius: 0.2rem;
+    box-shadow: 0 4px 6px 0 rgb(0 0 0 / 30%);
+    counter-reset: pagination;
+    text-align: center;
 }
 
 img {
+  height: auto;
   width: 100%;
   transition-duration: 0.3s;
   max-width: 100%;
@@ -318,48 +322,110 @@ img {
   display: block;
   transition-duration: 0.3s;
 }
-@media only screen and (max-width: 900px) {
-  .titulo {
-    margin-top: 150px;
+@media (max-width: 280px) {
+  img {
+    width: 100%;
+    height: auto;
   }
+  .titulo{
+        margin-top: 150px;
+  }
+
   .container-all {
-    margin: 5px 5px 1px 120px;
-    width: 1000px;
+    width: 100%;
+    margin: 1px;
   }
-  .container {
-    width: calc(50% - 6px);
-  }
-  ol,
-  ul {
-    /* left: 45%; */
-    padding-left: 45%;
+  .container{
+    width: 100%;
+    height: auto;
   }
   .modal-content {
     width: 100%;
     right: auto;
-    top: 200px;
+    margin-top: 35%;
+  }
+  .container:hover span{
+    font-size: 15px;
   }
 }
-@media only screen and (max-width: 400px) {
-  .titulo {
-    margin-top: 150px;
-  }
-  .container-all {
-    margin: 5px 6px auto auto;
-    width: auto;
-  }
-  .container {
+
+@media (max-width: 767px) {
+  img {
     width: 100%;
+    height: auto;
   }
-  ol,
-  ul {
-    /* left: 45%; */
-    padding-left: 30%;
+  .titulo{
+        margin-top: 150px;
+  }
+
+  .container-all {
+    width: 100%;
+    margin: 1px;
+  }
+  .container{
+    width: 100%;
+    height: auto;
   }
   .modal-content {
     width: 100%;
     right: auto;
-    top: 200px;
+    margin-top: 35%;
+  }
+  .container:hover span{
+    font-size: 17px;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1023px) {
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .titulo{
+        margin-top: 150px;
+  }
+
+  .container-all {
+    width: 100%;
+    margin: 1px;
+  }
+  .container{
+    width: 100%;
+    height: auto;
+  }
+  .modal-content {
+width: 700px;
+    right: 20%;
+    margin-top: 1%;
+  }
+  .container:hover span{
+    font-size: 25px;
+  }
+}
+
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1280px) {
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .titulo{
+        margin-top: 150px;
+  }
+
+  .container-all {
+    width: 100%;
+    margin: 1px;
+  }
+  .container{
+    width: 100%;
+    height: auto;
+  }
+  .modal-content {
+width: 900px;
+    right: 40%;
+    margin-top: 1%;
+  }
+  .container:hover span{
+    font-size: 35px;
   }
 }
 </style>

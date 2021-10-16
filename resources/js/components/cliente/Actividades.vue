@@ -1,11 +1,14 @@
 <template>
-  <div style="margin-top: 100px">
+  <div class="contenedor-principal">
     <h1>Actividades del Sendero los Matapalos</h1>
     <ul class="contenedor-todo">
-      <div v-for="actividad in actividades.data" :key="actividad.id">
+      <div class="contenedor-contenido" v-for="actividad in actividades.data" :key="actividad.id">
         <li
           class="booking-card"
-         :style="{ 'background-image': 'url(images/actividades/' + actividad.imagen + ')' }"
+          :style="{
+            'background-image':
+              'url(images/actividades/' + actividad.imagen + ')',
+          }"
         >
           <div class="book-container">
             <div class="content">
@@ -13,12 +16,9 @@
             </div>
           </div>
           <div class="informations-container">
-            <h2 class="title">{{actividad.nombre}}</h2>
-            <p class="sub-title">Para: {{actividad.tipo}}</p>
-            <p class="sub-title">
-
-            Hora: {{actividad.hora}}
-            </p>
+            <h2 class="title">{{ actividad.nombre }}</h2>
+            <p class="sub-title">Para: {{ actividad.tipo }}</p>
+            <p class="sub-title">Hora: {{ actividad.hora }}</p>
             <div class="more-information">
               <div class="info-and-date-container">
                 <div class="box info">
@@ -32,8 +32,8 @@
                       d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
                     />
                   </svg>
-                   <p>Cantidad de participantes</p>
-                  <p>{{actividad.cantParticipantes}}</p>
+                  <p>Cantidad de participantes</p>
+                  <p>{{ actividad.cantParticipantes }}</p>
                 </div>
                 <div class="box date">
                   <svg
@@ -47,11 +47,11 @@
                     />
                   </svg>
                   <p>Fecha de actividad</p>
-                  <p>{{actividad.fecha}}</p>
+                  <p>{{ actividad.fecha }}</p>
                 </div>
               </div>
               <p class="disclaimer">
-                {{actividad.descripcion}}
+                {{ actividad.descripcion }}
               </p>
             </div>
           </div>
@@ -104,33 +104,34 @@ export default {
 };
 </script>
 <style scoped>
+.contenedor-principal {
+  margin-top: 100px;
+}
 .contenedor-todo {
-display: flex;
-    /* padding-block: 20px; */
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    align-content: space-around;
-    margin: 1px 10px 5px 10px;
-
+  display: flex;
+  /* padding-block: 20px; */
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: space-around;
+  margin: 1px 10px 5px 10px;
 }
 
 .paginacion {
-  margin: 5px 70px 5px 70px;
+  margin: 5px 80px 5px 80px;
   padding: 1em;
-padding-left: 40%;
 }
 
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
-.sub-title{
-      font-family: 'Poppins';
-    font-weight: 600;
+.sub-title {
+  font-family: "Poppins";
+  font-weight: 600;
 }
 
 h2 {
@@ -200,9 +201,9 @@ ul .booking-card .book-container .content .btn {
 }
 ul .booking-card .book-container .content .btn:hover {
   background: none;
-   border: 3px solid white;
- color: white;
- cursor: pointer;
+  border: 3px solid white;
+  color: white;
+  cursor: pointer;
 }
 ul .booking-card .informations-container {
   flex: 1 0 auto;
@@ -304,6 +305,14 @@ ul .booking-card:hover .informations-container .more-information {
 }
 
 @media (max-width: 768px) {
+  .contenedor-principal {
+    margin-top: 140px;
+  }
+
+  .paginacion {
+    margin: 5px 5px 5px 6px;
+    padding: 1em;
+  }
   ul .booking-card::before {
     background: rgba(10, 72, 112, 0.6);
   }
@@ -321,6 +330,43 @@ ul .booking-card:hover .informations-container .more-information {
 
 h1 {
   margin: 10px 20px;
-      text-align: center;
+  text-align: center;
+}
+
+@media only screen and (max-device-width: 280px) {
+  .contenedor-principal {
+    margin-top: 140px;
+    margin-left: 24px;
+  }
+  .contenedor-contenido{
+    width: auto;
+    margin-right: 45px;
+  }
+
+  .paginacion {
+    margin: 5px 5px 5px 6px;
+    padding: 1em;
+  }
+  ul .booking-card{
+    margin: 1px;
+  }
+  ul .booking-card::before {
+    background: rgba(10, 72, 112, 0.6);
+  }
+  ul .booking-card .book-container .content {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  ul .booking-card .informations-container {
+    transform: translateY(0px);
+  }
+  ul .booking-card .informations-container .more-information {
+    opacity: 1;
+  }
+}
+
+h1 {
+  margin: 10px 20px;
+  text-align: center;
 }
 </style>
