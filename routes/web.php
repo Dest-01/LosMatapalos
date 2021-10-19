@@ -28,7 +28,8 @@ Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->na
 Route::get('/cliente', [App\Http\Controllers\ClienteController::class, 'index'])->name('cliente');
 
 Route::get('admin', function () {
-    return redirect('/dashboard');
+    return view('admin');
+    return redirect('/dashboard')->middleware('auth');
 });
 
 ////////////////////////////////////////////////////////////////////////////
@@ -109,9 +110,9 @@ Route::get('/admin/flora', function () {
 })->where('admin/flora', '[\/\w\.-]*')->middleware('auth');
 ///////////////////////////////----FIN--BIODIVERSIDAD--///////////////////////
 ///////////////////////////////////////////////////////////////////////////
-Route::get('/admin/Articulos', function(){
+Route::get('/admin/articulos', function(){
     return view('admin');
-})->where('/admin/articulos', '[\/\w\.-]*');
+})->where('/admin/articulos', '[\/\w\.-]*')->middleware('auth');
 ///////////////////////////////////////////////////////////////////////////
 //-----------------------RUTAS PARA EL CLIENTE SIN LOGIN-------------------
 ///////////////////////////////////////////////////////////////////////////

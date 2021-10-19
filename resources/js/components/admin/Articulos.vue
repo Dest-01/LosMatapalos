@@ -152,6 +152,55 @@
                     >
                   </div>
                 </div>
+                 <div class="form-group">
+                  <div>
+                    <div class="row">
+                      <div class="col-8">
+                        <label class="btn btn-default p-0">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            ref="file"
+                            name="Image"
+                            @change="updatePhoto"
+                            :class="{ 'is-invalid': form.errors.has('Image') }"
+                          />
+                          <has-error :form="form" field="Image"></has-error>
+                        </label>
+                      </div>
+                      <div class="col-4"></div>
+                    </div>
+                    <div v-if="currentImage" class="progress">
+                      <div
+                        class="progress-bar progress-bar-info"
+                        role="progressbar"
+                        :aria-valuenow="progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        :style="{ width: progress + '%' }"
+                      >
+                        {{ progress }}%
+                      </div>
+                    </div>
+                    <div v-if="previewImage">
+                      <div>
+                        <img
+                          class="preview my-3"
+                          :src="previewImage"
+                          alt=""
+                          width="100px"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      v-if="message"
+                      class="alert alert-secondary"
+                      role="alert"
+                    >
+                      {{ message }}
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="modal-footer">
                 <button
@@ -185,6 +234,11 @@ export default {
   data() {
     return {
       editmode: false,
+      currentImage: undefined,
+      previewImage: undefined,
+      progress: 0,
+      message: "",
+      imageInfos: [],
       Articulos: {},
       form: new Form({
         id: "",
@@ -197,9 +251,12 @@ export default {
   methods: {
     updatePhoto(e) {
       let file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.currentImage = file;
       let reader = new FileReader();
-
-      if (file["size"] < 2111775) {
+          // 2111775 = 2 MB en base64
+          // 9111775
+      if (file["size"] < 9111775) {
         reader.onloadend = (file) => {
           //console.log('RESULT', reader.result)
           this.form.Image = reader.result;

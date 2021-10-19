@@ -38,8 +38,8 @@ class ArticuloController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'Name' => 'required',
-            'Type' => 'required|min:10|max:20',
+            'Name' => 'required|min:3|max:20',
+            'Type' => 'required|min:3|max:20',
             'Image' => 'required',
         ];
     
@@ -93,8 +93,8 @@ class ArticuloController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'Name' => 'required',
-            'Type' => 'required|min:10|max:20',
+            'Name' => 'required|min:3|max:20',
+            'Type' => 'required|min:3|max:20',
             'Image' => 'required',
         ];
     
@@ -115,7 +115,7 @@ class ArticuloController extends BaseController
 
         if($request->Image != $currentPhoto){
             $name = time().'.' . explode('/', explode(':', substr($request->Image, 0, strpos($request->Image, ';')))[1])[1];
-
+            (!file_exists(public_path().'/images/Articulos/')) ? mkdir(public_path().'/images/Articulos/',0777,true) : null;
             \Image::make($request->Image)->save(public_path('images/Articulos/').$name);
             $request->merge(['Image' => $name]);
 
