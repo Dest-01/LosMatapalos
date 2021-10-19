@@ -41,4 +41,5 @@ export default [
     { path: '/fauna', component: require('./components/cliente/Fauna.vue').default },
     { path: '/flora', component: require('./components/cliente/Flora.vue').default },
     { path: '/AboutUs', component: require('./components/cliente/AboutUs.vue').default },
+    { path: '/productos', component: require('./components/cliente/Productos.vue').default },
 ];
