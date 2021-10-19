@@ -42,4 +42,5 @@ export default [
     { path: '/flora', component: require('./components/cliente/Flora.vue').default },
     { path: '/AboutUs', component: require('./components/cliente/AboutUs.vue').default },
     { path: '/productos', component: require('./components/cliente/Productos.vue').default },
+    { path: '/repositorio', component: require('./components/cliente/Repositorio.vue').default },
 ];

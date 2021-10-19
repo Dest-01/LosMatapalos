@@ -1,5 +1,19 @@
 <template>
   <section class="content">
+        <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Personas</h1>
+             <ol class="breadcrumb float-sm-left">
+               <li class="breadcrumb-item active"><a style="color:black" href="/dashboard">Inicio</a></li>
+              <li class="breadcrumb-item"><a href="#">Personas</a></li>
+             
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
@@ -209,6 +223,7 @@ export default {
       editmode: false,
       errors: {},
       personas: {},
+      total: "",
       form: new Form({
         id: "",
         nombre: "",
@@ -226,7 +241,6 @@ export default {
       axios
         .get("/api/persona?page=" + page)
         .then(({ data }) => (this.personas = data.data));
-
       this.$Progress.finish();
     },
     actualizarPersona() {

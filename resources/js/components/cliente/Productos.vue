@@ -1,6 +1,6 @@
 <template>
     <div class="contenedor">
-      <h1>Nuestros Productos</h1>
+      <h1 style="text-align: center;">Nuestros Productos</h1>
         <div class="card-container">
           
           <div class="grid">

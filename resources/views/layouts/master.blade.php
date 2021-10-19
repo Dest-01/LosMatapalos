@@ -89,6 +89,9 @@
                             </ul>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/repositorio') }}">repositorio</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url('/productos') }}">Marca</a>
                         </li>
                         <li class="nav-item">
