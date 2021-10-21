@@ -1,25 +1,29 @@
 <template>
   <section class="content">
-        <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Personas</h1>
-             <ol class="breadcrumb float-sm-left">
-               <li class="breadcrumb-item active"><a style="color:black" href="/dashboard">Inicio</a></li>
-              <li class="breadcrumb-item"><a href="#">Personas</a></li>
-             
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
     <div class="container-fluid">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Personas</h4>
+              </li>
+              <li class="breadcrumb-item bcrumb-1">
+                <a href="/dashboard">
+                  <i class="fas fa-home"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="breadcrumb-item active">Personas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
-              <h3 class="card-title">Listado de Registro de los clientes</h3>
+              <h3 class="card-title">Listado de los clientes</h3>
 
               <div class="card-tools">
                 <button
@@ -43,7 +47,7 @@
                     <th>Segundo Apellido</th>
                     <th>Teléfono</th>
                     <th>Correo</th>
-                     <th>Funciones</th>
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -79,7 +83,7 @@
         </div>
       </div>
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -95,8 +99,12 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode">Registro de cliente</h5>
-              <h5 class="modal-title" v-show="editmode">Actualización de cliente</h5>
+              <h5 class="modal-title" v-show="!editmode">
+                Registro de cliente
+              </h5>
+              <h5 class="modal-title" v-show="editmode">
+                Actualización de cliente
+              </h5>
               <button
                 type="button"
                 class="close"
@@ -114,6 +122,7 @@
               @submit.prevent="editmode ? actualizarPersona() : crearPersona()"
             >
               <div class="modal-body">
+                
                 <div class="form-group">
                   <label>Cédula</label>
                   <input
@@ -123,18 +132,23 @@
                     class="form-control"
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('id') }"
+                    placeholder="Cedula"
+                    pattern = "[0-9]{8}"
                   />
                   <has-error :form="form" field="id"></has-error>
                 </div>
 
+
                 <div class="form-group">
                   <label>Nombre</label>
                   <input
+                    style="text-transform: capitalize"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
+                    placeholder="Nombre"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -142,11 +156,13 @@
                 <div class="form-group">
                   <label>Primer Apellido</label>
                   <input
+                    style="text-transform: capitalize"
                     v-model="form.apellido1"
                     type="text"
                     name="apellido1"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido1') }"
+                    placeholder="Primer Apellido"
                   />
                   <has-error :form="form" field="apellido1"></has-error>
                 </div>
@@ -154,11 +170,13 @@
                 <div class="form-group">
                   <label>Segundo Apellido</label>
                   <input
+                    style="text-transform: capitalize"
                     v-model="form.apellido2"
                     type="text"
                     name="apellido2"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido2') }"
+                    placeholder="Segundo Apellido"
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -167,10 +185,15 @@
                   <label>Teléfono</label>
                   <input
                     v-model="form.telefono"
-                    type="number"
+                    type="tel"
                     name="telefono"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
+                    id="phone"
+                    size="20"
+                     min="10000000"
+                    placeholder="12345678"
+                   pattern = "[0-9]{8,12}"
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -182,6 +205,11 @@
                     name="correo"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
+                    size="32"
+                    placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   />
                   <has-error :form="form" field="correo"></has-error>
                 </div>
@@ -269,26 +297,26 @@ export default {
       this.form.reset();
       $("#addNew").modal("show");
       this.form.fill(persona);
-       this.form.errors.clear();
+      this.form.errors.clear();
     },
     newModal() {
       this.editmode = false;
       this.CedulaBloqueo = false;
       this.form.reset();
       $("#addNew").modal("show");
-       this.form.errors.clear();
+      this.form.errors.clear();
     },
     limpiar() {
-      this.form.nombre = ""
-      this.form.apellido1 = ""
-      this.form.apellido2 = ""
-      this.form.telefono = ""
-      this.form.correo = ""
+      this.form.nombre = "";
+      this.form.apellido1 = "";
+      this.form.apellido2 = "";
+      this.form.telefono = "";
+      this.form.correo = "";
       this.form.errors.clear();
     },
 
     cargarPersona() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/persona/")
           .then(({ data }) => (this.personas = data.data));
@@ -301,20 +329,27 @@ export default {
           params: { id: this.form.id },
         })
         .then((response) => {
-          $("#addNew").modal("hide");
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Cedula ya existe!",
+            });
+          } else {
+            $("#addNew").modal("hide");
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
 
-          this.$Progress.finish();
-          this.cargarPersona();
+            this.$Progress.finish();
+            this.cargarPersona();
+          }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Cedula existente o campos vacios",
+            title: "Complete los campos!",
           });
         });
     },

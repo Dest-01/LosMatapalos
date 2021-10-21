@@ -27,10 +27,7 @@ Auth::routes(['verify' => true]);
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
 Route::get('/cliente', [App\Http\Controllers\ClienteController::class, 'index'])->name('cliente');
 
-Route::get('admin', function () {
-    return view('admin');
-    return redirect('/dashboard')->middleware('auth');
-});
+
 
 ////////////////////////////////////////////////////////////////////////////
 //-----------------------RUTAS ADMIN Y PRUEBAS------------------------------
@@ -38,6 +35,10 @@ Route::get('admin', function () {
 Route::get('/dashboard', function () {
     return view('admin');
 })->where('dashboard', '[\/\w\.-]*')->middleware('auth');
+
+Route::get('/users', function () {
+    return view('admin');
+})->where('users', '[\/\w\.-]*')->middleware('auth');
 
 /////////////////////----FIN-ADMIN Y PRUEBAS---//////////////////////////////
 

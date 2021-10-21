@@ -205,9 +205,13 @@
                       type="number"
                       required
                       :disabled="bloquearCampos"
+                      min="1" max="30"
+                       :class="{ 'is-invalid': formReserva.errors.has('cantidad') }"
                     />
+                     <has-error :form="formReserva" field="cantidad"></has-error>
                     <span style="width: 100%" class="highlight"></span>
                     <span style="width: 100%" class="bar"></span>
+                   
                   </div>
                   <div class="campo2">
                     <i class="fas fa-calendar-check iconoInput2 icono"></i>
@@ -219,6 +223,7 @@
                       value="Fecha"
                       required
                       :disabled="bloquearCampos"
+                      
                     />
                     <span style="width: 100%" class="highlight"></span>
                     <span style="width: 100%" class="bar"></span>
@@ -766,6 +771,11 @@ export default {
 </script>
 
 <style scoped>
+
+.is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {
+    display: block;
+    margin-top: 1px;
+}
 .iconoInput {
   color: #e8e8e8;
   font-size: 26px;

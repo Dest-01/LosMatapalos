@@ -12,8 +12,7 @@
 
 
   <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
-
-
+  <link rel="stylesheet" href="{{ asset('/css/extras.css') }}">
   <script src="{{ asset('/js/utilitarios.js') }}"></script>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -78,7 +77,7 @@
   </aside>
 
   {{-- Content Wrapper. Contains page content --}}
-  <div class="content-wrapper">
+  <div style="background: #e9ecef" class="content-wrapper">
     {{-- Main content --}}
     
     <!-- Content Header (Page header) -->

@@ -1,23 +1,29 @@
 <template>
-  <div class="">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard</h1>
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+  <div class="Principal">
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+        <div class="block-header">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <ul class="breadcrumb breadcrumb-style">
+                <li class="breadcrumb-item">
+                  <h4 class="page-title">Dashboard</h4>
+                </li>
+                <li class="breadcrumb-item bcrumb-1">
+                  <a href="">
+                    <i class="fas fa-home"></i>
+                    Inicio
+                  </a>
+                </li>
+                  <li class="breadcrumb-item active">
+                    Dashboard
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-12 col-sm-6 col-md-3">
@@ -76,7 +82,7 @@
               ></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Ususarios</span>
+                <span class="info-box-text">Personas</span>
                 <span class="info-box-number">{{ totalPersonas }}</span>
               </div>
               <!-- /.info-box-content -->
@@ -86,6 +92,7 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
+        
       </div>
       <!-- /.container-fluid -->
       <!-- TABLE: LATEST ORDERS -->
@@ -100,14 +107,14 @@
                 class="btn btn-tool"
                 data-card-widget="collapse"
               >
-                <i class="fas fa-minus"></i>
+                <i style="color: white" class="fas fa-minus"></i>
               </button>
               <button
                 type="button"
                 class="btn btn-tool"
                 data-card-widget="remove"
               >
-                <i class="fas fa-times"></i>
+                <i style="color: white" class="fas fa-times"></i>
               </button>
             </div>
           </div>
@@ -124,30 +131,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">132312132</a></td>
-                    <td>2021-10-18</td>
-                    <td><span class="badge badge-info">Total: 20</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">132312132</a></td>
-                    <td>2021-10-18</td>
-                    <td><span class="badge badge-info">Total: 20</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">132312132</a></td>
-                    <td>iPhone 6 Plus</td>
-                    <td><span class="badge badge-info">Total: 20</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">132312132</a></td>
-                    <td>2021-10-18</td>
-                    <td><span class="badge badge-info">Total: 20</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">132312132</a></td>
-                    <td>2021-10-18</td>
-                    <td><span class="badge badge-info">Total: 20</span></td>
+                  <tr v-for="reserva in reservaciones.data" :key="reserva.id">
+                    <td>
+                      <a href="pages/examples/invoice.html"
+                        >{{ reserva.idPersona }} {{ reserva.idOrganizacion }}</a
+                      >
+                    </td>
+                    <td>{{ reserva.fecha }}</td>
+                    <td>
+                      <span class="badge badge-info">{{
+                        reserva.cantidad
+                      }}</span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -157,16 +152,16 @@
           <!-- /.card-body -->
           <div class="card-footer clearfix">
             <a
-              href="javascript:void(0)"
+              href="/admin/reservar"
               class="btn btn-sm btn-secondary float-right"
               >Ver todas las reservas</a
             >
           </div>
           <!-- /.card-footer -->
         </div>
-        <!-- USERS LIST -->
+
         <div class="card">
-          <div class="card-header">
+          <div class="card-header border-transparent">
             <h3 class="card-title">Ultimas Donaciones</h3>
 
             <div class="card-tools">
@@ -175,52 +170,53 @@
                 class="btn btn-tool"
                 data-card-widget="collapse"
               >
-                <i class="fas fa-minus"></i>
+                <i style="color: white" class="fas fa-minus"></i>
               </button>
               <button
                 type="button"
                 class="btn btn-tool"
                 data-card-widget="remove"
               >
-                <i class="fas fa-times"></i>
+                <i style="color: white" class="fas fa-times"></i>
               </button>
             </div>
           </div>
           <!-- /.card-header -->
+
           <div class="card-body p-0">
-            <ul class="users-list clearfix">
-              <li>
-                <img v-bind:src="'/images/profile.png'" alt="User Image" />
-                <a class="users-list-name" href="#">Alexander Pierce</a>
-                <span class="users-list-date">Today</span>
-              </li>
-              <li>
-                <img v-bind:src="'/images/profile.png'" alt="User Image" />
-                <a class="users-list-name" href="#">Norman</a>
-                <span class="users-list-date">Yesterday</span>
-              </li>
-              <li>
-                <img v-bind:src="'/images/profile.png'" alt="User Image" />
-                <a class="users-list-name" href="#">Jane</a>
-                <span class="users-list-date">12 Jan</span>
-              </li>
-              <li>
-                <img v-bind:src="'/images/profile.png'" alt="User Image" />
-                <a class="users-list-name" href="#">John</a>
-                <span class="users-list-date">12 Jan</span>
-              </li>
-              <li>
-                <img v-bind:src="'/images/profile.png'" alt="User Image" />
-                <a class="users-list-name" href="#">Alexander</a>
-                <span class="users-list-date">13 Jan</span>
-              </li>
-            </ul>
-            <!-- /.users-list -->
+            <div class="table-responsive">
+              <table class="table m-0">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="donacion in donaciones.data" :key="donacion.id">
+                    <td>
+                      <a href="pages/examples/invoice.html"
+                        >{{ donacion.idPersona }}
+                        {{ donacion.idOrganizacion }}</a
+                      >
+                    </td>
+                    <td>{{ donacion.fecha }}</td>
+                    <td>
+                      <span class="badge badge-success">{{
+                        donacion.tipo
+                      }}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
           </div>
           <!-- /.card-body -->
-          <div class="card-footer text-center">
+          <div class="card-footer clearfix">
             <a
-              href="javascript:void(0)"
+              href="/admin/donativos"
               class="btn btn-sm btn-secondary float-right"
               >Ver todas las donaciones</a
             >
@@ -238,14 +234,14 @@
                 class="btn btn-tool"
                 data-card-widget="collapse"
               >
-                <i class="fas fa-minus"></i>
+                <i style="color: white" class="fas fa-minus"></i>
               </button>
               <button
                 type="button"
                 class="btn btn-tool"
                 data-card-widget="remove"
               >
-                <i class="fas fa-times"></i>
+                <i style="color: white" class="fas fa-times"></i>
               </button>
             </div>
           </div>
@@ -262,41 +258,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">Caminata</a></td>
-                    <td>2021-10-18</td>
-                    <td><span class="badge badge-success">Publico</span></td>
-                  </tr>
-                  <tr>
+                  <tr v-for="actividad in actividades.data" :key="actividad.id">
                     <td>
-                      <a href="pages/examples/invoice.html">Recolección</a>
+                      <a href="pages/examples/invoice.html">{{
+                        actividad.nombre
+                      }}</a>
                     </td>
-                    <td>2021-10-18</td>
+                    <td>{{ actividad.fecha }}</td>
                     <td>
-                      <span class="badge badge-warning">Voluntarios</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">Caminta</a></td>
-                    <td>2021-10-18</td>
-                    <td><span class="badge badge-success">Publico</span></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="pages/examples/invoice.html">Recolección</a>
-                    </td>
-                    <td>2021-10-18</td>
-                    <td>
-                      <span class="badge badge-warning">Voluntarios</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="pages/examples/invoice.html">Recolección</a>
-                    </td>
-                    <td>2021-10-18</td>
-                    <td>
-                      <span class="badge badge-warning">Voluntarios</span>
+                      <span class="badge badge-success">{{
+                        actividad.tipo
+                      }}</span>
                     </td>
                   </tr>
                 </tbody>
@@ -307,7 +279,7 @@
           <!-- /.card-body -->
           <div class="card-footer clearfix">
             <a
-              href="javascript:void(0)"
+              href="/admin/actividad"
               class="btn btn-sm btn-secondary float-right"
               >Ver todas las actividades</a
             >
@@ -317,7 +289,6 @@
 
         <!-- /.col -->
       </div>
-      <!-- /.card -->
     </section>
     <!-- /.content -->
   </div>
@@ -333,23 +304,39 @@ export default {
       totalActividades: "0",
       totalDonaciones: "0",
       totalReservaciones: "0",
+      reservaciones: {},
+      donaciones: {},
+      actividades: {},
     };
   },
   methods: {
-   async TotalDatos() {
+    async TotalDatos() {
       if (this.$gate.isAdmin()) {
-       await axios
+        await axios
           .get("/api/dashboard/TotalPersonas")
           .then(({ data }) => (this.totalPersonas = data.data));
-      await  axios
+        await axios
           .get("/api/dashboard/TotalActividades")
           .then(({ data }) => (this.totalActividades = data.data));
-      await  axios
+        await axios
           .get("/api/dashboard/TotalDonaciones")
           .then(({ data }) => (this.totalDonaciones = data.data));
-      await  axios
+        await axios
           .get("/api/dashboard/TotalReservaciones")
           .then(({ data }) => (this.totalReservaciones = data.data));
+      }
+    },
+    cargarReservas() {
+      if (this.$gate.isAdmin()) {
+        axios
+          .get("/api/dashboard/ultimasReservaciones")
+          .then(({ data }) => (this.reservaciones = data.data));
+        axios
+          .get("/api/dashboard/ultimasDonaciones")
+          .then(({ data }) => (this.donaciones = data.data));
+        axios
+          .get("/api/dashboard/ultimasActividades")
+          .then(({ data }) => (this.actividades = data.data));
       }
     },
   },
@@ -357,19 +344,37 @@ export default {
   created() {
     this.$Progress.start();
     this.TotalDatos();
+    this.cargarReservas();
     this.$Progress.finish();
   },
 };
 </script>
 
 <style scoped>
+.Principal{
+  background: #e9ecef;
+  height: 100%;
+}
+.Navegador {
+  display: flex;
+}
+
+.content-header {
+  padding: 10px 0.1rem;
+}
 .contenedor-tablas {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-content: center;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-evenly;
+  font-size: 1.1rem;
+}
+.users-list > li img {
+  border-radius: 50%;
+  /* height: auto; */
+  max-width: 100%;
 }
 
 img {
@@ -387,13 +392,62 @@ img {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
-  width: 400px;
-  margin-left: 15px;
+  width: 30%;
+  margin: 10px;
+  border-radius: 1rem;
 }
+
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgb(56 193 114);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  color: white;
+  border-radius: 1rem 1rem 1px 1px;
+      font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.info-box {
+  box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+  border-radius: 1rem;
+  background-color: #fff;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 1rem;
+  min-height: 100px;
+  padding: 0.5rem;
+  position: relative;
+  width: 100%;
+    font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.info-box .info-box-icon {
+  border-radius: 0.25rem;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.875rem;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+}
+
 
 @media only screen and (max-device-width: 768px) {
   .contenedor-tablas {
-    margin-right: 15px;
+    margin-right: 20px;
+  }
+  .card {
+    width: 100%;
   }
 }
 </style>

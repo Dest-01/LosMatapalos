@@ -19,14 +19,6 @@ class PersonasController extends BaseController
         $this->personas = $personas;
     }
 
-    public function list()
-    {
-        $persona = $this->personas->pluck('id', 'id');
-
-        return $this->sendResponse($persona, 'Lista Personas');
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -57,22 +49,28 @@ class PersonasController extends BaseController
      */
     public function store(PersonasRequest $request)
     {
-        $filtro = $request->id;
-        $existencia = Personas::find($filtro);
-
-        if(empty($existencia)){
-            
-                $tag = $this->personas->create([
-                    'id' => $request->get('id'),
-                    'nombre' => $request->get('nombre'),
-                    'apellido1' => $request->get('apellido1'),
-                    'apellido2' => $request->get('apellido2'),
-                    'telefono' => $request->get('telefono'),
-                    'correo' => $request->get('correo'),
-                ]);
-                return $this->sendResponse($tag, 'Datos registrados');
+            try {
+                $filtro = $request->id;
+                $existencia = Personas::where('id', '=', $filtro)->first();
+                if ($existencia === null) {
+                    $tag = $this->personas->create([
+                        'id' => $request->get('id'),
+                        'nombre' => $request->get('nombre'),
+                        'apellido1' => $request->get('apellido1'),
+                        'apellido2' => $request->get('apellido2'),
+                        'telefono' => $request->get('telefono'),
+                        'correo' => $request->get('correo'),
+                    ]);
+    
+                    return $this->sendResponse($tag, 'Registro exitoso!');
+                }else{
+                    return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                }
+    
+            } catch (\Exception $e) {
+                return $e->getMessage();
             }
-            return $this->sendResponse($tag, 'Datos no registrados');
+    
     
     }
 

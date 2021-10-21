@@ -20,10 +20,16 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->where('email', 'admin@gmail.com')->delete();
 
         DB::table('users')->insert([
-            'name' => 'Erick',
+            'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('071234567'),
             'type' => 'admin',
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Usuario',
+            'email' => 'usuario@gmail.com',
+            'password' => bcrypt('123456'),
+            'type' => 'usuario',
         ]);
     }
 }

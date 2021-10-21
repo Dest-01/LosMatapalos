@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\client;
 
 use App\Http\Requests\Admin\PersonasRequest;
 use App\Http\Requests\Admin\OrganizacionesRequest;
+use App\Http\Requests\Admin\ReservaRequest;
 use App\Models\Organizaciones;
 use App\Models\Personas;
 use App\Models\Reserva;
@@ -37,7 +38,7 @@ class ReservarCliController extends BaseController
 
     }
 
-    public function store(Request $request)
+    public function store(ReservaRequest $request)
     {
         //  $indentificacionB = $request->buscador;
 

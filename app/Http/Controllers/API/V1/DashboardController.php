@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends BaseController
 {
 
+    protected $actividades = '';
+
     public function TotalPersonas()
     {
         $total = DB::table('personas')->count();
@@ -28,5 +30,18 @@ class DashboardController extends BaseController
     {
         $total = DB::table('donativos')->count();
         return $this->sendResponse($total, 'Total de donaciones');
+    }
+
+    public function ultimasReservaciones(){
+        $ultimas = DB::table('reservas')->latest()->paginate(5);
+        return $this->sendResponse($ultimas, 'Ultimas 5 reservaciones');
+    }
+    public function ultimasDonaciones(){
+        $ultimas = DB::table('donativos')->latest()->paginate(5);
+        return $this->sendResponse($ultimas, 'Ultimas 5 donativos');
+    }
+    public function ultimasActividades(){
+        $ultimas = DB::table('actividades')->latest()->paginate(5);
+        return $this->sendResponse($ultimas, 'Ultimas 5 actividades');
     }
 }

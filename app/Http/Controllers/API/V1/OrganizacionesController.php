@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 class OrganizacionesController extends BaseController
 {
 
-    
     protected $organizaciones = '';
 
     public function __construct(Organizaciones $organizaciones)
@@ -17,7 +16,6 @@ class OrganizacionesController extends BaseController
         $this->middleware('auth:api');
         $this->organizaciones = $organizaciones;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -31,8 +29,7 @@ class OrganizacionesController extends BaseController
         return $this->sendResponse($organizacion, 'Lista de Organizaciones');
     }
 
-    public function list()
-    {
+    function list() {
         $organizacion = $this->organizaciones->pluck('id', 'id');
 
         return $this->sendResponse($organizacion, 'Lista Organizaciones');
@@ -46,21 +43,26 @@ class OrganizacionesController extends BaseController
      */
     public function store(OrganizacionesRequest $request)
     {
-        $filtro = $request->id;
-        $existencia = Organizaciones::find($filtro);
+        try {
+            $filtro = $request->id;
+            $existencia = Organizaciones::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->organizaciones->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
 
-        if(empty($existencia)){
-            
-            $tag = $this->organizaciones->create([
-                'id' => $request->get('id'),
-                'nombre' => $request->get('nombre'),
-                'telefono' => $request->get('telefono'),
-                'correo' => $request->get('correo'),
-            ]);
-    
-            return $this->sendResponse($tag, 'Datos creados');
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            }else{
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
             }
-            return $this->sendError($tag, 'La cedula ya existe');
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 
     /**
@@ -98,8 +100,6 @@ class OrganizacionesController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
-
         $organizaciones = $this->organizaciones->findOrFail($id);
 
         $organizaciones->delete();

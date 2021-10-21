@@ -9,25 +9,19 @@
             </router-link>
         </li>
 
-        @can('isAdmin')
+
             <li class="nav-item">
                 <router-link to="/admin/organizaciones" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
                     <p>Registro Organización</p>
                 </router-link>
             </li>
-        @endcan
-
-        @can('isAdmin')
             <li class="nav-item">
                 <router-link to="/admin/personas" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
                     <p>Registro Cliente</p>
                 </router-link>
             </li>
-        @endcan
-
-
         @can('isAdmin')
             <li class="nav-item">
                 <router-link to="/users" class="nav-link">
@@ -45,8 +39,6 @@
             </li>
         @endcan
 
-
-        @can('isAdmin')
             <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-people-carry green"></i>
@@ -78,11 +70,6 @@
                     </li>
                 </ul>
             </li>
-
-        @endcan
-
-
-        @can('isAdmin')
             <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                     <i class="nav-icon far fa-edit green"></i>
@@ -102,9 +89,6 @@
                     </li>
                 </ul>
             </li>
-        @endcan
-
-        @can('isAdmin')
             <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-leaf green"></i>
@@ -252,7 +236,6 @@
                   </p>
               </router-link>
           </li>
-        @endcan
         <li class="nav-item">
             <a href="#" class="nav-link" onclick="event.preventDefault();
           document.getElementById('logout-form').submit();">

@@ -1,33 +1,30 @@
 <template>
   <section class="content">
     <div class="container-fluid">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Donativos</h4>
+              </li>
+              <li class="breadcrumb-item bcrumb-1">
+                <a href="/dashboard">
+                  <i class="fas fa-home"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="breadcrumb-item active">Donativos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
               <h3 class="card-title">Lista de donativos</h3>
-              <div class="card-tools">
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="abrirModal()"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Registro Donante
-                </button>
-              </div>
-              <div class="card-tools"></div>
-              <div class="card-tools">
-                <button
-                  style="margin-right: 20px"
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="abrirModalOrg()"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Registro organización
-                </button>
-              </div>
+
               <div class="card-tools">
                 <button
                   style="margin-right: 20px"
@@ -37,6 +34,23 @@
                 >
                   <i class="fa fa-plus-square"></i>
                   agregar nuevo
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="abrirModal()"
+                >
+                  <i class="fa fa-plus-square"></i>
+                  Registro Donante
+                </button>
+                <button
+                  style="margin-right: 20px"
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="abrirModalOrg()"
+                >
+                  <i class="fa fa-plus-square"></i>
+                  Registro organización
                 </button>
               </div>
             </div>
@@ -97,7 +111,7 @@
         </div>
       </div>
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -108,12 +122,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
               <h4 class="modal-title">{{ tituloModal }}</h4>
-              <button
-                
-                type="button"
-                class="close"
-                data-dismiss="modal"
-              >
+              <button type="button" class="close" data-dismiss="modal">
                 &times;
               </button>
             </div>
@@ -127,39 +136,47 @@
                   name="id"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('id') }"
+                   placeholder="Cedula"
+                    pattern = "[0-9]{8}"
                 />
                 <has-error :form="formPer" field="id"></has-error>
               </div>
               <div v-show="showPersona" class="form-group">
                 <label>Nombre</label>
                 <input
+                  style="text-transform: capitalize"
                   v-model="formPer.nombre"
                   type="text"
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                  placeholder="Nombre persona"
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
               <div v-show="showPersona" class="form-group">
                 <label>Primer Apellido</label>
                 <input
+                  style="text-transform: capitalize"
                   v-model="formPer.apellido1"
                   type="text"
                   name="apellido1"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                   placeholder="Primer Apellido"
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
               <div v-show="showPersona" class="form-group">
                 <label>Segundo Apellido</label>
                 <input
+                  style="text-transform: capitalize"
                   v-model="formPer.apellido2"
                   type="text"
                   name="apellido2"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                   placeholder="Segundo Apellido"
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
               </div>
@@ -171,6 +188,11 @@
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('telefono') }"
+                   id="phone"
+                    size="20"
+                     min="10000000"
+                    placeholder="12345678"
+                   pattern = "[0-9]{8,12}"
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
               </div>
@@ -182,6 +204,11 @@
                   name="correo"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                    size="32"
+                    placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                 />
                 <has-error :form="formPer" field="correo"></has-error>
               </div>
@@ -190,7 +217,7 @@
                 <label>Cedula Juridica</label>
                 <input
                   v-model="formOrg.id"
-                  type="text"
+                  type="number"
                   name="id"
                   class="form-control"
                   :class="{ 'is-invalid': formOrg.errors.has('id') }"
@@ -510,8 +537,7 @@ export default {
       progress: 0,
       message: "",
       imageInfos: [],
-
-      MensajeCedula2: "Se encontro la cedula!",
+      MensajeCedula2: "",
       MensajeCedula: "",
       showMensajesCedula2: false,
       showExistenciaCedula: false,
@@ -557,7 +583,6 @@ export default {
     };
   },
   methods: {
-  
     abrirModal(data = {}) {
       this.modal = 1;
       (this.id = 0), (this.tituloModal = "Registro cliente");
@@ -612,6 +637,7 @@ export default {
           this.form.idPersona = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
+          this.MensajeCedula2 = "Se encontro la cedula";
         }
       }
     },
@@ -623,6 +649,7 @@ export default {
           this.form.idOrganizacion = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
+          this.MensajeCedula2 = "Se encontro la cedula";
         }
       }
     },
@@ -643,7 +670,7 @@ export default {
       this.form.errors.clear();
     },
     limpiar() {
-     this.formPer.reset();
+      this.formPer.reset();
       this.formOrg.reset();
       this.formPer.errors.clear();
       this.formOrg.errors.clear();
@@ -726,13 +753,12 @@ export default {
     },
 
     cargarDonativos() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/donativo")
           .then(({ data }) => (this.donativos = data.data));
       }
     },
-    
 
     crearDonativo() {
       this.$Progress.start();
@@ -762,6 +788,12 @@ export default {
           params: { id: this.formPer.id },
         })
         .then((response) => {
+           if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Cedula ya existe!",
+            });
+          } else {
           $("#addNew").modal("hide");
 
           Toast.fire({
@@ -769,12 +801,13 @@ export default {
             title: response.data.message,
           });
           this.cerrarModal();
-          //  this.$Progress.finish();
+          this.$Progress.finish();
+          }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Cedula existente o campos vacios",
+            title: "Campos Vacios!",
           });
         });
     },
@@ -858,5 +891,9 @@ export default {
   display: list-item;
   opacity: 1;
   background: rgba(121, 120, 120, 0.623);
+}
+.btn{
+  margin-top: 10px;
+  margin-right: 20px;
 }
 </style>

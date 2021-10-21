@@ -41,8 +41,8 @@ class PersonasRequest extends FormRequest
             'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'telefono' => 'required',
-            'correo' => 'required',
+            'telefono' => 'required|numeric',
+            'correo' => 'required|email|',
         ];
     }
 
@@ -58,8 +58,8 @@ class PersonasRequest extends FormRequest
             'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'telefono' => 'required',
-            'correo' => 'required',
+            'telefono' => 'required|numeric',
+            'correo' => 'required|email|',
         ];
     }
 
@@ -72,8 +72,8 @@ class PersonasRequest extends FormRequest
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 20',
             'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 20',
-            'telefono.*' => 'Telefono se requiere',
-            'correo.*' => 'Correo se requiere',
+            'telefono.*' => 'Telefono se requiere, mínimo 8 números',
+            'correo.*' => 'Correo se requiere, ejemplo: examen@gmail.com',
         ];
     }
 }

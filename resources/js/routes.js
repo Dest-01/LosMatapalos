@@ -22,13 +22,12 @@ export default [
     { path: '/admin/voluntarioEstudiante', component: require('./components/admin/VoluntarioEstudiante.vue').default },
     { path: '/admin/actividad', component: require('./components/admin/Actividades.vue').default },
     { path: '/admin/actividadParticipantes', component: require('./components/admin/ActividadesParticipantes.vue').default },
-    { path: '/admin/participantes', component: require('./components/admin/participantes.vue').default },
+    { path: '/admin/participantes', component: require('./components/admin/Participantes.vue').default },
     { path: '/admin/reservar', component: require('./components/admin/Reservar.vue').default },
     { path: '/admin/voluntarioActividad', component: require('./components/admin/VoluntarioActividad').default },
     { path: '/admin/fauna', component: require('./components/admin/Fauna').default },
     { path: '/admin/flora', component: require('./components/admin/flora.vue').default },
     { path: '/admin/articulos', component: require('./components/admin/Articulos.vue').default },
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //------------------=-------------------------------RUTAS CLIENTE-------------------------------------------------
@@ -37,7 +36,7 @@ export default [
     { path: '/home', component: require('./components/cliente/Home.vue').default },
     { path: '/reservacion', component: require('./components/cliente/Reservar.vue').default },
     { path: '/donaciones', component: require('./components/cliente/Donaciones.vue').default },
-    { path: '/actividades', component: require('./components/cliente/actividades.vue').default },
+    { path: '/actividades', component: require('./components/cliente/Actividades.vue').default },
     { path: '/fauna', component: require('./components/cliente/Fauna.vue').default },
     { path: '/flora', component: require('./components/cliente/Flora.vue').default },
     { path: '/AboutUs', component: require('./components/cliente/AboutUs.vue').default },

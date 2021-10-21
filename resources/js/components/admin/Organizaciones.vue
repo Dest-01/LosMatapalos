@@ -1,28 +1,29 @@
 <template>
-
   <section class="content">
-        <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Organizaciones</h1>
-             <ol class="breadcrumb float-sm-left">
-               <li class="breadcrumb-item active"><a style="color:black" href="/dashboard">Inicio</a></li>
-              <li class="breadcrumb-item"><a href="#">Organizaciones</a></li>
-             
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
     <div class="container-fluid">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Organizaciones</h4>
+              </li>
+              <li class="breadcrumb-item bcrumb-1">
+                <a href="/dashboard">
+                  <i class="fas fa-home"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="breadcrumb-item active">Organizaciones</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
-              <h3 class="card-title">Listado de Organizaciones</h3>
+              <h3 class="card-title">Listado de organizaciones</h3>
 
               <div class="card-tools">
                 <button
@@ -48,7 +49,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="organizacion in organizaciones.data" :key="organizacion.id">
+                  <tr
+                    v-for="organizacion in organizaciones.data"
+                    :key="organizacion.id"
+                  >
                     <td>{{ organizacion.id }}</td>
                     <td class="text-capitalize">{{ organizacion.nombre }}</td>
                     <td>{{ organizacion.telefono }}</td>
@@ -58,7 +62,10 @@
                         <i class="fa fa-edit blue"></i>
                       </a>
                       /
-                      <a href="#" @click="eliminarOrganizacion(organizacion.id)">
+                      <a
+                        href="#"
+                        @click="eliminarOrganizacion(organizacion.id)"
+                      >
                         <i class="fa fa-trash red"></i>
                       </a>
                     </td>
@@ -78,7 +85,7 @@
         </div>
       </div>
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -94,8 +101,12 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode">Registrar nueva organización</h5>
-              <h5 class="modal-title" v-show="editmode">Actualizar datos de la organización</h5>
+              <h5 class="modal-title" v-show="!editmode">
+                Registrar nueva organización
+              </h5>
+              <h5 class="modal-title" v-show="editmode">
+                Actualizar datos de la organización
+              </h5>
               <button
                 type="button"
                 class="close"
@@ -110,7 +121,9 @@
             <!-- <form @submit.prevent="createUser"> -->
 
             <form
-              @submit.prevent="editmode ? actualizarOrganizacion() : crearOrganizacion()"
+              @submit.prevent="
+                editmode ? actualizarOrganizacion() : crearOrganizacion()
+              "
             >
               <div class="modal-body">
                 <div class="form-group">
@@ -122,18 +135,21 @@
                     class="form-control"
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('id') }"
+                    placeholder="Cedula Jurídica"
                   />
                   <has-error :form="form" field="id"></has-error>
                 </div>
 
                 <div class="form-group">
                   <label>Nombre organización</label>
-                  <input style="text-transform: capitalize;"
+                  <input
+                    style="text-transform: capitalize"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
+                    placeholder="Nombre de organización"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -146,6 +162,9 @@
                     name="telefono"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
+                    min="10000000"
+                    placeholder="12345678"
+                    pattern="[0-9]{8,12}"
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -157,6 +176,11 @@
                     name="correo"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
+                    size="32"
+                     placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   />
                   <has-error :form="form" field="correo"></has-error>
                 </div>
@@ -242,26 +266,26 @@ export default {
       this.CedulaBloqueo = true;
       $("#addNew").modal("show");
       this.form.fill(organizacion);
-       this.form.errors.clear();
+      this.form.errors.clear();
     },
     newModal() {
       this.editmode = false;
       this.CedulaBloqueo = false;
       this.form.reset();
       $("#addNew").modal("show");
-       this.form.errors.clear();
+      this.form.errors.clear();
     },
     limpiar() {
-      this.form.nombre = ""
-      this.form.apellido1 = ""
-      this.form.apellido2 = ""
-      this.form.telefono = ""
-      this.form.correo = ""
+      this.form.nombre = "";
+      this.form.apellido1 = "";
+      this.form.apellido2 = "";
+      this.form.telefono = "";
+      this.form.correo = "";
       this.form.errors.clear();
     },
 
     cargarOrganizacion() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/organizacion/")
           .then(({ data }) => (this.organizaciones = data.data));
@@ -270,27 +294,31 @@ export default {
 
     crearOrganizacion() {
       this.form
-        .post("/api/organizacion/",{
+        .post("/api/organizacion/", {
           params: { id: this.form.id },
         })
         .then((response) => {
-          $("#addNew").modal("hide");
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Cedula ya existe!",
+            });
+          } else {
+            $("#addNew").modal("hide");
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-
-          this.$Progress.finish();
-          this.cargarOrganizacion();
+            this.$Progress.finish();
+            this.cargarOrganizacion();
+          }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Cedula existente o campos vacios",
+            title: "Complete los campos!",
           });
-
-          
         });
     },
 
@@ -405,5 +433,4 @@ export default {
 .selectHide {
   display: none;
 }
-
 </style>

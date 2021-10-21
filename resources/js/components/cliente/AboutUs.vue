@@ -30,7 +30,7 @@
     <ul class="row">
       <li class="col-6 col-sm-4">
           <div class="cnt-block equal-hight" style="height: 349px;">
-            <figure><img src="/images/face2.jpg" class="img-responsive" alt=""></figure>
+            <figure><img src="/images/Persona1.png" class="img-responsive" alt=""></figure>
             <h3><a href="mailto:yerry.rodriguez.barquero@est.una.ac.cr">Persona 1</a></h3>
             <p>Profesional ambiental</p>
             <ul class="follow-us clearfix">
@@ -40,7 +40,7 @@
       </li>
       <li class="col-6 col-sm-4">
           <div class="cnt-block equal-hight" style="height: 349px;">
-            <figure><img src="/images/bird2.jpg" class="img-responsive" alt=""></figure>
+            <figure><img src="/images/Persona2.png" class="img-responsive" alt=""></figure>
             <h3><a href="mailto:yerry.rodriguez.barquero@est.una.ac.cr">Persona 2</a></h3>
             <p>Director academico</p>
             <ul class="follow-us clearfix">

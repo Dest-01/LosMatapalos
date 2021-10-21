@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Requests\Admin\ReservaRequest;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
 use App\Models\Donativos;
@@ -55,7 +56,7 @@ class ReservaController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReservaRequest $request)
     {
         $tag = $this->reserva->create([
             'idPersona' => $request->get('idPersona'),
@@ -87,7 +88,7 @@ class ReservaController extends BaseController
      * @param  \App\Models\Reserva  $reserva
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ReservaRequest $request, $id)
     {
         $tag = $this->reserva->findOrFail($id);
 

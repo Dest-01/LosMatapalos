@@ -1,6 +1,24 @@
 <template>
   <section class="content">
     <div class="container-fluid">
+            <div class="block-header">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Marca</h4>
+              </li>
+              <li class="breadcrumb-item bcrumb-1">
+                <a href="/dashboard">
+                  <i class="fas fa-home"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="breadcrumb-item active">Marca</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
@@ -133,24 +151,6 @@
                     :class="{ 'is-invalid': form.errors.has('Type') }"
                   />
                   <has-error :form="form" field="Type"></has-error>
-                </div>
-                
-                <div class="form-group">
-                  <label for="Image" class="col-sm-2 control-label"
-                    >Imagen</label
-                  >
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      @change="updatePhoto"
-                      name="Image"
-                      class="custom-file-input"
-                      id="inputGroupFile01"
-                    />
-                    <label class="custom-file-label" for="inputGroupFile01"
-                      >Seleccione un imagen</label
-                    >
-                  </div>
                 </div>
                  <div class="form-group">
                   <div>

@@ -1,33 +1,31 @@
 <template>
   <section class="content">
     <div class="container-fluid">
+            <div class="block-header">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Reservas</h4>
+              </li>
+              <li class="breadcrumb-item bcrumb-1">
+                <a href="/dashboard">
+                  <i class="fas fa-home"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="breadcrumb-item active">Reservas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
             <div class="card-header">
               <h3 class="card-title">Lista de reservas</h3>
-              <div class="card-tools">
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="abrirModal()"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Registro Persona
-                </button>
-              </div>
-              <div class="card-tools"></div>
-              <div class="card-tools">
-                <button
-                  style="margin-right: 20px"
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="abrirModalOrg()"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Registro organización
-                </button>
-              </div>
+              
+              
               <div class="card-tools">
                 <button
                   style="margin-right: 20px"
@@ -37,6 +35,23 @@
                 >
                   <i class="fa fa-plus-square"></i>
                   agregar reserva
+                </button>
+                <button
+                  style="margin-right: 20px"
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="abrirModalOrg()"
+                >
+                  <i class="fa fa-plus-square"></i>
+                  Registro organización
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="abrirModal()"
+                >
+                  <i class="fa fa-plus-square"></i>
+                  Registro Persona
                 </button>
               </div>
             </div>
@@ -760,5 +775,9 @@ export default {
   display: list-item;
   opacity: 1;
   background: rgba(121, 120, 120, 0.623);
+}
+.btn{
+  margin-top: 10px;
+  margin-right: 20px;
 }
 </style>

@@ -1,19 +1,37 @@
 <template>
   <section class="content">
     <div class="container-fluid">
+         <div class="block-header" v-if="$gate.isAdmin()">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Usuarios</h4>
+              </li>
+              <li class="breadcrumb-item bcrumb-1">
+                <a href="/dashboard">
+                  <i class="fas fa-home"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="breadcrumb-item active">Usuarios</li>
+            </ul>
+          </div>
+        </div>
+      </div>
         <div class="row">
 
           <div class="col-12">
         
             <div class="card" v-if="$gate.isAdmin()">
               <div class="card-header">
-                <h3 class="card-title">User List</h3>
+                <h3 class="card-title">Lista de Usuarios</h3>
 
                 <div class="card-tools">
                   
                   <button type="button" class="btn btn-sm btn-primary" @click="newModal">
                       <i class="fa fa-plus-square"></i>
-                      Add New
+                      Agregar Nuevo
                   </button>
                 </div>
               </div>
@@ -23,12 +41,11 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Type</th>
-                      <th>Name</th>
+                      <th>Tipo</th>
+                      <th>Nombre</th>
                       <th>Email</th>
-                      <th>Email Verified?</th>
-                      <th>Created</th>
-                      <th>Action</th>
+                      <th>Email Verificado?</th>
+                      <th>Funciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -39,7 +56,6 @@
                       <td class="text-capitalize">{{user.name}}</td>
                       <td>{{user.email}}</td>
                       <td :inner-html.prop="user.email_verified_at | yesno"></td>
-                      <td>{{user.created_at}}</td>
 
                       <td>
 
@@ -74,8 +90,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" v-show="!editmode">Create New User</h5>
-                    <h5 class="modal-title" v-show="editmode">Update User's Info</h5>
+                    <h5 class="modal-title" v-show="!editmode">Crear nuevo usuario</h5>
+                    <h5 class="modal-title" v-show="editmode">Actualizar usuario</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -86,7 +102,7 @@
                 <form @submit.prevent="editmode ? updateUser() : createUser()">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Nombre</label>
                             <input v-model="form.name" type="text" name="name"
                                 class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                             <has-error :form="form" field="name"></has-error>
@@ -99,26 +115,26 @@
                         </div>
                     
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>Contraseña</label>
                             <input v-model="form.password" type="password" name="password"
                                 class="form-control" :class="{ 'is-invalid': form.errors.has('password') }" autocomplete="false">
                             <has-error :form="form" field="password"></has-error>
                         </div>
                     
                         <div class="form-group">
-                            <label>User Role</label>
+                            <label>Rol de usuario</label>
                             <select name="type" v-model="form.type" id="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
-                                <option value="">Select User Role</option>
+                                <option value="">Seleccione el rol del usuario</option>
                                 <option value="admin">Admin</option>
-                                <option value="user">Standard User</option>
+                                <option value="usuario">Usuario</option>
                             </select>
                             <has-error :form="form" field="type"></has-error>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
-                        <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button v-show="editmode" type="submit" class="btn btn-success">Actualizar</button>
+                        <button v-show="!editmode" type="submit" class="btn btn-primary">Crear</button>
                     </div>
                   </form>
                 </div>

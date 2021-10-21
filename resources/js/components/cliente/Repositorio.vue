@@ -113,7 +113,6 @@ export default {
 .principal {
   margin-top: 150px;
   margin-block: 100px;
-  height: auto;
   margin-left: 120px;
   margin-right: 120px;
 }
@@ -162,7 +161,25 @@ border-color: #d9d9d970;
     border-bottom: groove;
     border-bottom-color: #b7b7b72e;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
+  .secundario{
+    width: 100%;
+  }
+  .titulo{
+    font-size: 1rem;
+    width: 100%;
+  }
+  .btn{
+        width: 100px;
+        font-size: 10px;
+    }
+}
+
+@media only screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+  img{
+    width: 25px;
+    height: 25px;
+  }
     .secundario{
         width: 100%;
         margin-left: 1px;
@@ -170,38 +187,16 @@ border-color: #d9d9d970;
     .btn{
         width: 100px;
         font-size: 10px;
+        padding: 1px;
     }
     .table>:not(caption)>*>* {
     padding: 1px 1px;
+}
+.nombre{
+  width: 100px;
 }
 }
 
-@media screen and (max-width: 1023px) {
-    .secundario{
-        width: 100%;
-        margin-left: 1px;
-    }
-    .btn{
-        width: 100px;
-        font-size: 10px;
-    }
-    .table>:not(caption)>*>* {
-    padding: 1px 1px;
-}
-}
 
-@media only screen and (max-device-width: 1024px){
-        .secundario{
-        width: 100%;
-        margin-left: 1px;
-    }
-    .btn{
-        width: 100px;
-        font-size: 10px;
-    }
-    .table>:not(caption)>*>* {
-    padding: 1px 1px;
-}
-}
 
 </style>
