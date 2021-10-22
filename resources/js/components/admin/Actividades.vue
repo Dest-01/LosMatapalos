@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header">
+      <div class="block-header">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  agregar nuevo
+                  Agregar Nuevo
                 </button>
               </div>
             </div>
@@ -45,7 +45,7 @@
                     <th>Nombre</th>
                     <th>Fecha</th>
                     <th>Hora</th>
-                    <th>Descripcion</th>
+                    <th>Descripción</th>
                     <th>Cantidad Participantes</th>
                     <th>Imagen</th>
                     <th>Tipo de actividad</th>
@@ -57,7 +57,7 @@
                     <td class="text-capitalize">{{ Actividad.nombre }}</td>
                     <td class="text-capitalize">{{ Actividad.fecha }}</td>
                     <td class="text-capitalize">{{ Actividad.hora }}</td>
-                    <td class="text-capitalize">{{ Actividad.descripcion }}</td>
+                    <td>{{ Actividad.descripcion | truncate(30, "...") }}</td>
                     <td class="text-capitalize">
                       {{ Actividad.cantParticipantes }}
                     </td>
@@ -138,13 +138,18 @@
             >
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Nombre</label>
+                  <label>Nombre de actividaad</label>
                   <input
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
+                    placeholder="Nombre de la actividad"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[a-zA-Z'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -157,6 +162,8 @@
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fecha') }"
+                    required
+                    placeholder="Fecha de actividad"
                   />
                   <has-error :form="form" field="fecha"></has-error>
                 </div>
@@ -169,19 +176,24 @@
                     name="hora"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('hora') }"
+                    required
                   />
                   <has-error :form="form" field="hora"></has-error>
                 </div>
-
                 <div class="form-group">
-                  <label>Descripcion</label>
-                  <input
+                  <label>Descripción</label>
+                  <textarea
                     v-model="form.descripcion"
-                    type="text"
-                    name="Descripcion"
                     class="form-control"
+                    name="descripcion"
                     :class="{ 'is-invalid': form.errors.has('descripcion') }"
-                  />
+                    placeholder="Breve descripción"
+                    minlength="3"
+                    maxlength="255"
+                    id=""
+                    rows="3"
+                    required
+                  ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
 
@@ -195,6 +207,10 @@
                     :class="{
                       'is-invalid': form.errors.has('cantParticipantes'),
                     }"
+                    min="1"
+                    max="30"
+                    required
+                    placeholder="Cantidad de participantes"
                   />
                   <has-error :form="form" field="cantParticipantes"></has-error>
                 </div>
@@ -211,6 +227,8 @@
                             name="imagen"
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('imagen') }"
+                            id="SubirImagen"
+                            required
                           />
                           <has-error :form="form" field="imagen"></has-error>
                         </label>
@@ -248,13 +266,14 @@
                     </div>
                   </div>
                 </div>
-               
-                   <div class="form-group">
+
+                <div class="form-group">
                   <label>Tipo de actividad</label>
                   <select
                     class="form-control"
                     v-model="form.tipo"
                     :class="{ 'is-invalid': form.errors.has('tipo') }"
+                    required
                   >
                     <option disabled value="">Seleccione un elemento</option>
                     <option>Voluntarios</option>
@@ -322,8 +341,8 @@ export default {
       this.previewImage = URL.createObjectURL(file);
       this.currentImage = file;
       let reader = new FileReader();
-          // 2111775 = 2 MB en base64
-          // 9111775
+      // 2111775 = 2 MB en base64
+      // 9111775
       if (file["size"] < 9111775) {
         reader.onloadend = (file) => {
           //console.log('RESULT', reader.result)
@@ -372,12 +391,16 @@ export default {
     editModal(Actividad) {
       this.editmode = true;
       this.form.reset();
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
       this.form.fill(Actividad);
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
     },
 

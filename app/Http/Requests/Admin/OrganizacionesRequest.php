@@ -39,8 +39,8 @@ class OrganizacionesRequest extends FormRequest
         return [
             'id' => 'required|string|max:18|min:8',
             'nombre' => 'required|string|min:3|max:20',
-            'telefono' => 'required|numeric',
-            'correo' => 'required|email|',
+            'telefono' => 'required|numeric|regex:/[0-9]{8}/',
+            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }
 
@@ -53,8 +53,8 @@ class OrganizacionesRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string|min:3|max:20',
-            'telefono' => 'required|numeric',
-            'correo' => 'required|email|',
+            'telefono' => 'required|numeric|regex:/[0-9]{8}/',
+            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }
 
@@ -62,7 +62,7 @@ class OrganizacionesRequest extends FormRequest
         return [
             'id.*'=>'Cedula requiere mínimo 8 caracteres y máximo 18',
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
-            'telefono.*' => 'Telefono se requiere, 0000 0000',
+            'telefono.*' => 'Telefono se requiere, mínimo 8 números',
             'correo.*' => 'Correo se requiere, ejemplo: examen@gmail.com',
         ];
     }

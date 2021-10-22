@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -21,7 +21,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
               <h3 class="card-title">Listado de estudiantes voluntarios</h3>
               <div class="card-tools">
@@ -67,7 +67,13 @@
                     <td>{{ voluntarioestudiante.voluntariado_id }}</td>
                     <td>{{ voluntarioestudiante.carrera }}</td>
                     <!--<td>{{ voluntarios.data.find(function(el) { return el.id == voluntarioestudiante.voluntariado_id; } ).cantidad }}</td>-->
-                    <td v-if="voluntarios">{{ voluntarios.data.find(el => el.id == voluntarioestudiante.voluntariado_id).cantidad }}</td>
+                    <td v-if="voluntarios">
+                      {{
+                        voluntarios.data.find(
+                          (el) => el.id == voluntarioestudiante.voluntariado_id
+                        ).cantidad
+                      }}
+                    </td>
 
                     <td>
                       <img
@@ -119,7 +125,7 @@
           <!-- /.card -->
         </div>
       </div>
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -168,6 +174,7 @@
                     name="buscadorC"
                     class="form-control"
                     :disabled="CedulaBloqueo"
+                   placeholder="Numero de cedula a consultar"
                   />
                 </div>
                 <div v-show="showBuscadores">
@@ -217,16 +224,20 @@
                   <label>Id del voluntario</label>
                   <input
                     :disabled="bloquearCamposIdVoluntario"
-                    v-model="formVoluntario.id"
+                    v-model="form.idVoluntario"
                     type="number"
-                    name="id"
+                    name="idVoluntario"
                     class="form-control"
                     :class="{
-                      'is-invalid': formVoluntario.errors.has('id'),
+                      'is-invalid': form.errors.has('idVoluntario'),
                     }"
+                    required
+                    min="1"
+                    placeholder="1"
                   />
-                  <has-error :form="formVoluntario" field="id"></has-error>
+                  <has-error :form="form" field="idVoluntario"></has-error>
                 </div>
+
                 <div class="form-group">
                   <label>Carrera universitaria</label>
                   <input
@@ -236,6 +247,10 @@
                     class="form-control"
                     :disabled="bloquearCamposExtras"
                     :class="{ 'is-invalid': form.errors.has('carrera') }"
+                    required
+                    min="3"
+                    maxlength="50"
+                    placeholder="Carrera universitaria del estudiante"
                   />
                   <has-error :form="form" field="carrera"></has-error>
                 </div>
@@ -253,6 +268,8 @@
                             @change="updatePhoto"
                             :disabled="bloquearCamposExtras"
                             :class="{ 'is-invalid': form.errors.has('imagen') }"
+                            required
+                            id="SubirImagen"
                           />
                           <has-error :form="form" field="imagen"></has-error>
                         </label>
@@ -294,18 +311,18 @@
                   <label>Cantidad de actividades</label>
                   <input
                     :disabled="bloquearCamposExtras"
-                    v-model="formVoluntario.cantidad"
+                    v-model="form.cantidad"
                     type="number"
                     name="cantidad"
                     class="form-control"
                     :class="{
-                      'is-invalid': formVoluntario.errors.has('cantidad'),
+                      'is-invalid': form.errors.has('cantidad'),
                     }"
+                    required
+                    min="1"
+                    placeholder="Cantidad de actividades realizadas"
                   />
-                  <has-error
-                    :form="formVoluntario"
-                    field="cantidad"
-                  ></has-error>
+                  <has-error :form="form" field="cantidad"></has-error>
                 </div>
               </div>
               <div class="modal-footer">
@@ -333,114 +350,156 @@
           </div>
         </div>
       </div>
+
       <!-- Modal de persona -->
-      <div class="modal" :class="{ mostrar: modal }">
-        <div class="modal-dialog">
+      <div
+        class="modal fade"
+        id="personaModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="personaModal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
-              <h4 class="modal-title">{{ tituloModal }}</h4>
+              <h5 class="modal-title">Registro de estudiante</h5>
               <button
-                @click="cerrarModal(), limpiarPersona()"
                 type="button"
                 class="close"
                 data-dismiss="modal"
-              >
-                &times;
-              </button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Cedula</label>
-                <input
-                  v-model="formPer.id"
-                  type="text"
-                  name="id"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('id') }"
-                />
-                <has-error :form="formPer" field="id"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Nombre</label>
-                <input
-                  v-model="formPer.nombre"
-                  type="text"
-                  name="nombre"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                />
-                <has-error :form="formPer" field="nombre"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Primer Apellido</label>
-                <input
-                  v-model="formPer.apellido1"
-                  type="text"
-                  name="apellido1"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                />
-                <has-error :form="formPer" field="apellido1"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Segundo Apellido</label>
-                <input
-                  v-model="formPer.apellido2"
-                  type="text"
-                  name="apellido2"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                />
-                <has-error :form="formPer" field="apellido2"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Telefono</label>
-                <input
-                  v-model="formPer.telefono"
-                  type="number"
-                  name="telefono"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('telefono') }"
-                />
-                <has-error :form="formPer" field="telefono"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Correo</label>
-                <input
-                  v-model="formPer.correo"
-                  type="email"
-                  name="correo"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('correo') }"
-                />
-                <has-error :form="formPer" field="correo"></has-error>
-              </div>
-            </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button
+                aria-label="Close"
                 @click="cerrarModal(), limpiarPersona()"
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
               >
-                Cancelar
-              </button>
-              <button
-                @click="crearPersona()"
-                type="button"
-                class="btn btn-success"
-                data-dismiss="modal"
-              >
-                Guardar
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
+
+            <!-- <form @submit.prevent="createUser"> -->
+
+            <form @submit.prevent="crearPersona()">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Cedula de estudiante</label>
+                  <input
+                    v-model="formPer.id"
+                    type="text"
+                    name="id"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('id') }"
+                    required
+                    minlength="8"
+                    maxlength="18"
+                    placeholder="Cedula del estudiante"
+                  />
+                  <has-error :form="formPer" field="id"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input
+                    style="text-transform: capitalize"
+                    v-model="formPer.nombre"
+                    type="text"
+                    name="nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[a-zA-Z'-'\s]*"
+                    placeholder="Nombre del estudiante"
+                  />
+                  <has-error :form="formPer" field="nombre"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Primer Apellido</label>
+                  <input
+                    style="text-transform: capitalize"
+                    v-model="formPer.apellido1"
+                    type="text"
+                    name="apellido1"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[a-zA-Z'-'\s]*"
+                    placeholder="Primer apellido del estudiante"
+                  />
+                  <has-error :form="formPer" field="apellido1"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Segundo Apellido</label>
+                  <input
+                    style="text-transform: capitalize"
+                    v-model="formPer.apellido2"
+                    type="text"
+                    name="apellido2"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[a-zA-Z'-'\s]*"
+                    placeholder="Segundo apellido del estudiante"
+                  />
+                  <has-error :form="formPer" field="apellido2"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Telefono</label>
+                  <input
+                    v-model="formPer.telefono"
+                    type="number"
+                    name="telefono"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('telefono') }"
+                    size="20"
+                    min="10000000"
+                    placeholder="12345678"
+                    pattern="[0-9]{8,12}"
+                    required
+                  />
+                  <has-error :form="formPer" field="telefono"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Correo</label>
+                  <input
+                    v-model="formPer.correo"
+                    type="email"
+                    name="correo"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                    size="32"
+                    placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                    required
+                  />
+                  <has-error :form="formPer" field="correo"></has-error>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  @click="limpiarPersona()"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button
+                  @click="crearPersona()"
+                  type="submit"
+                  class="btn btn-success"
+                >
+                  Guardar
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <!-- Modal -->
     </div>
   </section>
 </template>
@@ -477,6 +536,8 @@ export default {
         voluntariado_id: "",
         carrera: "",
         imagen: "",
+        idVoluntario: "",
+        cantidad: "",
       }),
       formPer: new Form({
         id: "",
@@ -528,6 +589,8 @@ export default {
     editModal(voluntarioEstudiante) {
       this.editmode = true;
       this.form.reset();
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
       this.form.fill(voluntarioEstudiante);
       this.showBuscadores = false;
@@ -544,6 +607,8 @@ export default {
     newModal() {
       this.editmode = false;
       this.form.reset();
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
       this.showBuscadores = true;
       this.form.errors.clear();
@@ -554,9 +619,8 @@ export default {
       this.bloquearCamposExtras = true;
       this.bloquearCamposIdVoluntario = true;
     },
-    abrirModal(data = {}) {
-      this.modal = 1;
-      (this.id = 0), (this.tituloModal = "Registro de persona");
+    abrirModal() {
+      $("#personaModal").modal("show");
     },
     cerrarModal() {
       this.modal = 0;
@@ -600,8 +664,8 @@ export default {
     },
     editarVoluntario() {
       for (let i = 0; i < this.CantidadActividades.length; i++) {
-        this.formVoluntario.id = this.CantidadActividades[i].id;
-        this.formVoluntario.cantidad = this.CantidadActividades[i].cantidad;
+          this.form.idVoluntario = this.CantidadActividades[i].id;
+        this.form.cantidad = this.CantidadActividades[i].cantidad;
       }
     },
     cancelarCedula() {
@@ -649,7 +713,7 @@ export default {
         });
     },
     cargarVoluntarioEst() {
-      if (this.$gate.isAdmin()) {
+     if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/voluntarioEstudiante/")
           .then(({ data }) => (this.voluntarioEst = data.data));
@@ -658,42 +722,50 @@ export default {
 
     crearPersona() {
       this.formPer
-        .post("/api/persona", {
+        .post("/api/voluntarioEstudiante/guardarPersona/", {
           params: { id: this.formPer.id },
         })
         .then((response) => {
-          $("#addNew").modal("hide");
-
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.cerrarModal();
-          //  this.$Progress.finish();
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Cedula ya existe!",
+            });
+          } else {
+            $("#personaModal").modal("hide");
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$Progress.finish();
+          }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Cedula existente o campos vacios",
+            title: "Campos vacios!",
           });
         });
     },
     cargarVoluntario() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/voluntario/")
           .then(({ data }) => (this.voluntarios = data.data));
       }
     },
-    async crearVoluntarioEst() {
+    crearVoluntarioEst() {
       this.$Progress.start();
-      this.form.voluntariado_id = this.formVoluntario.id;
-      this.formVoluntario.post("/api/voluntario", {
-        params: { id: this.formVoluntario.id },
-      });
+     this.form.voluntariado_id = this.form.idVoluntario;
       this.form
         .post("/api/voluntarioEstudiante/")
         .then((response) => {
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Id del voluntario ya existe!",
+            });
+          } else {
           $("#addNew").modal("hide");
 
           Toast.fire({
@@ -704,6 +776,7 @@ export default {
           this.$Progress.finish();
           this.cargarVoluntario();
           this.cargarVoluntarioEst();
+          }
         })
         .catch(() => {
           Toast.fire({
@@ -714,6 +787,8 @@ export default {
     },
     actualizarVoluntarioEst() {
       this.$Progress.start();
+      this.formVoluntario.id = this.form.idVoluntario;
+      this.formVoluntario.cantidad = this.form.cantidad;
       this.formVoluntario.put("/api/voluntario/" + this.formVoluntario.id);
       this.form
         .put("/api/voluntarioEstudiante/" + this.form.id)
@@ -797,5 +872,7 @@ export default {
   display: list-item;
   opacity: 1;
   background: rgba(121, 120, 120, 0.623);
+  overflow: hidden;
+  position: fixed;
 }
 </style>

@@ -109,7 +109,7 @@ class PersonasController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+        /*$this->authorize('isAdmin'); */
 
         $personas = $this->personas->findOrFail($id);
 

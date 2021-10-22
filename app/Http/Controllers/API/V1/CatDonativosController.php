@@ -35,6 +35,20 @@ class CatDonativosController extends BaseController
      */
     public function store(Request $request)
     {
+        $rules = [
+            'nombre' => 'required|string|max:20',
+            'photo' => 'required',
+
+        ];
+
+        $messages = [
+            'nombre.*' => 'Escriba un nombre, maximo 20 caracteres',
+            'photo.*' => 'Cargue una foto',
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+
         try{
         if($request->photo){
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
@@ -77,6 +91,20 @@ class CatDonativosController extends BaseController
      */
     public function update(Request $request, $id)
     {
+        $rules = [
+            'nombre' => 'required|string|max:20',
+            'photo' => 'required',
+
+        ];
+
+        $messages = [
+            'nombre.*' => 'Escriba un nombre, maximo 20 caracteres',
+            'photo.*' => 'Cargue una foto',
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        
         $tag = $this->catDonativos->findOrFail($id);
 
         $currentPhoto = $tag->photo;
@@ -108,7 +136,7 @@ class CatDonativosController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+       
 
         $catDonativos = CatDonativos::FindOrFail($id);  
         if(file_exists('images/CatDonativos/'.$catDonativos->photo) AND !empty($catDonativos->photo)){ 

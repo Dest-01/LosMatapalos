@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar nuevo
+                  Agregar Nuevo
                 </button>
               </div>
             </div>
@@ -133,7 +133,8 @@
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('id') }"
                     placeholder="Cedula"
-                    pattern = "[0-9]{8}"
+                    required
+                    minlength="8"
                   />
                   <has-error :form="form" field="id"></has-error>
                 </div>
@@ -149,6 +150,10 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
                     placeholder="Nombre"
+                    minlength="3"
+                    maxlength="20"
+                    required
+                    pattern="[a-zA-Z'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -163,6 +168,10 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido1') }"
                     placeholder="Primer Apellido"
+                    minlength="3"
+                    maxlength="20"
+                    required
+                    pattern="[a-zA-Z'-'\s]*"
                   />
                   <has-error :form="form" field="apellido1"></has-error>
                 </div>
@@ -177,6 +186,10 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido2') }"
                     placeholder="Segundo Apellido"
+                    minlength="3"
+                    maxlength="20"
+                    required
+                    pattern="[a-zA-Z'-'\s]*"
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -194,6 +207,7 @@
                      min="10000000"
                     placeholder="12345678"
                    pattern = "[0-9]{8,12}"
+                    required
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -210,6 +224,7 @@
                     minlength="3"
                     maxlength="64"
                     pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                    required
                   />
                   <has-error :form="form" field="correo"></has-error>
                 </div>

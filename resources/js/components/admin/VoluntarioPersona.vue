@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -21,9 +21,9 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
-              <h3 class="card-title">Listado de personas voluntarios</h3>
+              <h3 class="card-title">Listado de personas voluntariadas</h3>
               <div class="card-tools">
                 <button
                   type="button"
@@ -31,7 +31,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar nuevo
+                  Agregar Nuevo
                 </button>
                 <button
                   type="button"
@@ -111,7 +111,7 @@
           <!-- /.card -->
         </div>
       </div>
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -160,6 +160,7 @@
                     name="buscadorC"
                     class="form-control"
                     :disabled="CedulaBloqueo"
+                     placeholder="Numero de cedula a consultar"
                   />
                 </div>
                 <div v-show="showBuscadores">
@@ -201,6 +202,7 @@
                     name="identificacion"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                   
                   />
                   <has-error :form="form" field="identificacion"></has-error>
                 </div>
@@ -209,15 +211,19 @@
                   <label>Id del voluntario</label>
                   <input
                     :disabled="bloquearCamposIdVoluntario"
-                    v-model="formVoluntario.id"
-                    type="text"
-                    name="id"
+                    v-model="form.idVoluntario"
+                    type="number"
+                    name="idVoluntario"
                     class="form-control"
                     :class="{
-                      'is-invalid': formVoluntario.errors.has('id'),
+                      'is-invalid': form.errors.has('idVoluntario'),
                     }"
+                    required
+                    min="1"
+                    placeholder="1"
+
                   />
-                  <has-error :form="formVoluntario" field="id"></has-error>
+                  <has-error :form="form" field="idVoluntario"></has-error>
                 </div>
                 <div class="form-group">
                   <label>Lugar de procedencia</label>
@@ -228,6 +234,10 @@
                     class="form-control"
                     :disabled="bloquearCamposExtras"
                     :class="{ 'is-invalid': form.errors.has('lugar') }"
+                    required
+                    minlength="3"
+                    maxlength="50"
+                    placeholder="Lugar de procedencia de la personas"
                   />
                   <has-error :form="form" field="lugar"></has-error>
                 </div>
@@ -236,18 +246,19 @@
                   <label>Cantidad de actividades</label>
                   <input
                     :disabled="bloquearCamposExtras"
-                    v-model="formVoluntario.cantidad"
-                    type="text"
+                    v-model="form.cantidad"
+                    type="number"
                     name="cantidad"
                     class="form-control"
                     :class="{
-                      'is-invalid': formVoluntario.errors.has('cantidad'),
+                      'is-invalid': form.errors.has('cantidad'),
                     }"
+                    required
+                    min="1"
+                    placeholder="Cantidad de actividades realizadas"
+
                   />
-                  <has-error
-                    :form="formVoluntario"
-                    field="cantidad"
-                  ></has-error>
+                  <has-error :form="form" field="cantidad"></has-error>
                 </div>
               </div>
               <div class="modal-footer">
@@ -276,7 +287,7 @@
         </div>
       </div>
       <!-- Modal de persona -->
-      <div class="modal" :class="{ mostrar: modal }">
+      <div class="modal" id="modalPersona" :class="{ mostrar: modal }">
         <div class="modal-dialog">
           <div class="modal-content">
             <!-- Modal Header -->
@@ -301,6 +312,10 @@
                   name="id"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('id') }"
+                  required
+                  minlength="8"
+                  maxlength="18"
+                  placeholder="Cedula de la persona"
                 />
                 <has-error :form="formPer" field="id"></has-error>
               </div>
@@ -312,6 +327,11 @@
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                  pattern="[a-zA-Z'-'\s]*"
+                  placeholder="Nombre de la persona"
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -323,6 +343,11 @@
                   name="apellido1"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                  pattern="[a-zA-Z'-'\s]*"
+                  placeholder="Primer apellido de la persona"
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -334,17 +359,26 @@
                   name="apellido2"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                  pattern="[a-zA-Z'-'\s]*"
+                  placeholder="Segundo apellido de la persona"
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
               </div>
               <div class="form-group">
-                <label>Telefono</label>
+                <label>Teléfono</label>
                 <input
                   v-model="formPer.telefono"
                   type="number"
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('telefono') }"
+                  min="10000000"
+                  placeholder="12345678"
+                  pattern="[0-9]{8,12}"
+                  required
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
               </div>
@@ -356,6 +390,12 @@
                   name="correo"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                  size="32"
+                  placeholder="ejemplo@gmail.com"
+                  minlength="3"
+                  maxlength="64"
+                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                  required
                 />
                 <has-error :form="formPer" field="correo"></has-error>
               </div>
@@ -409,9 +449,11 @@ export default {
       voluntarioPer: {},
       form: new Form({
         id: "",
+        idVoluntario: "",
         identificacion: "",
         voluntariado_id: "",
         lugar: "",
+        cantidad: "",
       }),
       formPer: new Form({
         id: "",
@@ -441,6 +483,7 @@ export default {
     },
     editModal(voluntarioPersona) {
       this.editmode = true;
+      
       this.form.reset();
       $("#addNew").modal("show");
       this.form.fill(voluntarioPersona);
@@ -454,6 +497,7 @@ export default {
       this.formVoluntario.cantidad = this.CantidadActividades.cantidad;
       this.form.errors.clear();
       this.formVoluntario.errors.clear();
+      
     },
     newModal() {
       this.editmode = false;
@@ -462,6 +506,7 @@ export default {
       this.showBuscadores = true;
       this.form.errors.clear();
       this.formVoluntario.errors.clear();
+      this.limpiar();
     },
     abrirModal(data = {}) {
       this.modal = 1;
@@ -509,8 +554,8 @@ export default {
     },
     editarVoluntario() {
       for (let i = 0; i < this.CantidadActividades.length; i++) {
-        this.formVoluntario.id = this.CantidadActividades[i].id;
-        this.formVoluntario.cantidad = this.CantidadActividades[i].cantidad;
+        this.form.idVoluntario = this.CantidadActividades[i].id;
+        this.form.cantidad = this.CantidadActividades[i].cantidad;
       }
     },
     cancelarCedula() {
@@ -545,7 +590,7 @@ export default {
           this.SiExisteCedula();
         });
     },
-    async ObtenerCantidad(VoluntarioId) {
+    ObtenerCantidad(VoluntarioId) {
       this.form
         .get("/api/voluntarioPersona/obtenerCantidad", {
           params: { VolCantidad: VoluntarioId },
@@ -556,7 +601,7 @@ export default {
         });
     },
     cargarVoluntarioPer() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/voluntarioPersona/")
           .then(({ data }) => (this.voluntarioPer = data.data));
@@ -564,71 +609,76 @@ export default {
     },
     crearPersona() {
       this.formPer
-        .post("/api/persona", {
-          params: { id: this.formPer.id },
+        .post("/api/voluntarioPersona/guardarPersona/", {
+          params: { id: this.formPer.idVoluntario },
         })
         .then((response) => {
-          $("#addNew").modal("hide");
-
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.cerrarModal();
-          //  this.$Progress.finish();
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Cedula ya existe!",
+            });
+          } else {
+            $("#addNew").modal("hide");
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.cerrarModal();
+            this.$Progress.finish();
+          }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Cedula existente o campos vacios",
+            title: "Campos vacios",
           });
         });
     },
     cargarVoluntario() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
-          .get("/api/voluntario/")
+          .get("/api/voluntarioPersona/cargarVoluntarios/")
           .then(({ data }) => (this.voluntarios = data.data));
       }
     },
-    async crearVoluntarioPer() {
+    crearVoluntarioPer() {
       this.$Progress.start();
-
-
-        if (this.voluntarios.data.find(v => v.id !=  this.formVoluntario.id)) {
-          this.form.voluntariado_id = this.formVoluntario.id
-          this.formVoluntario.post("/api/voluntario");
-          this.form
-            .post("/api/voluntarioPersona/")
-            .then((response) => {
-              $("#addNew").modal("hide");
-
-              Toast.fire({
-                icon: "success",
-                title: response.data.message,
-              });
-
-              this.$Progress.finish();
-              this.cargarVoluntario();
-              this.cargarVoluntarioPer();
-              this.limpiar();
-            })
-            .catch(() => {
-              Toast.fire({
-                icon: "error",
-                title: "Ocurrio un problema!",
-              });
+      this.form.voluntariado_id = this.form.idVoluntario;
+      this.form
+        .post("/api/voluntarioPersona/", {
+          params: { id: this.form.id },
+        })
+        .then((response) => {
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Id del voluntario ya existe!",
             });
-        } else {
+          } else {
+            $("#addNew").modal("hide");
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+
+            this.$Progress.finish();
+            this.cargarVoluntario();
+            this.cargarVoluntarioPer();
+            this.limpiar();
+          }
+        })
+        .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "El id de voluntario ya existe!",
+            title: "Ocurrio un problema!",
           });
-        }
-      
+        });
     },
     actualizarVoluntarioPer() {
       this.$Progress.start();
+      this.formVoluntario.id = this.form.idVoluntario;
+      this.formVoluntario.cantidad = this.form.cantidad;
       this.formVoluntario.put("/api/voluntario/" + this.formVoluntario.id);
       this.form
         .put("/api/voluntarioPersona/" + this.form.id)

@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\Flora;
+use App\Models\Fauna;
 use Illuminate\Http\Request;
 
-class FloraController extends BaseController
+class FaunaController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    protected $flora = '';
-    public function __construct(Flora $flora)
+    protected $fauna = '';
+    public function __construct(Fauna $fauna)
     {
         $this->middleware('auth:api');
-        $this->flora = $flora;
+        $this->fauna = $fauna;
     }
     public function index()
     {
-        $flora = $this->flora->latest()->paginate(10);
+        $fauna = $this->fauna->latest()->paginate(10);
 
-        return $this->sendResponse($flora, 'Lista flora');
+        return $this->sendResponse($fauna, 'Lista de fauna');
     }
 
     /**
@@ -35,45 +35,55 @@ class FloraController extends BaseController
     {
         try {
             $rules = [
-                'nom_comun' => 'required|string|',
-                'nom_cientifico' => 'required|string|',
-                'descripcion' => 'required|string|max:255',
-                'tipo' => 'required|string|max:50',
-                'fecha_registro' => 'required|date',
-                'photo' => 'required',
-                'fam_cientifica' => 'required|string|',
-
+                'nombreComun' => 'required|string|min:3|max:30',
+                'nombreCientifico' => 'required|string|min:3|max:30',
+                'descripcion' => 'required|string|max:255|min:3',
+                'tipo' => 'required|string|max:50|min:3',
+                'fechaRegistro' => 'required|date',
+                'imagen' => 'required',
+                'familiaCientifca' => 'required|string|min:3|max:30',
+    
             ];
-
+        
             $messages = [
-                'nom_comun' => 'Escriba el nombre comun de la especie',
-                'nom_cientifico' => 'Escriba el nombre cientifico de la especie',
+                'nombreComun.min' =>'Minimo 3 caracteres',
+                'nombreComun.max' => 'Maximo 30 caracteres',
+                'nombreComun.*' => 'Escriba el nombre común de la especie',
+                'nombreCientifico.min' =>'Minimo 3 caracteres',
+                'nombreCientifico.max' => 'Maximo 30 caracteres',
+                'nombreCientifico.*' => 'Escriba el nombre científico de la especie',
+                'descripcion.min' =>'Minimo 3 caracteres',
                 'descripcion.*' => 'Breve descripción de la especie',
-                'tipo.*' => 'Seleccione un tipo de flora',
-                'fecha_registro.*' => 'Seleccione fecha de registro',
-                'photo.*' => 'Cargue una foto',
-                'fam_cientifica.*' => 'Seleccione un la familia cientifica de la especie',
+                'tipo.min' =>'Minimo 3 caracteres',
+                'tipo.max' => 'Maximo 30 caracteres',
+                'tipo.*' => 'Nombre del tipo de especie',
+                'fechaRegistro.*' => 'Seleccione fecha de registro',
+                'imagen.*' => 'Cargue una foto',
+                'familiaCientifca.min' =>'Minimo 3 caracteres',
+                'familiaCientifca.max' => 'Maximo 30 caracteres',
+                'familiaCientifca.*' => 'Nombre de la familia científca',
             ];
-
+    
+    
             $this->validate($request, $rules, $messages);
 
-            if ($request->photo) {
-                $name = time() . '.' . explode('/', explode(':', substr($request->photo, 0, strpos ($request->photo, ';')))[1])[1];
-                (!file_exists(public_path().'/images/flora/')) ? mkdir(public_path().'/images/flora/',0777,true) : null;
+            if ($request->imagen) {
+                $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos ($request->imagen, ';')))[1])[1];
+                (!file_exists(public_path().'/images/Fauna/')) ? mkdir(public_path().'/images/Fauna/',0777,true) : null;
 
-                \Image::make($request->photo)->save(public_path('images/flora/') . $name);
-                $request->merge(['photo' => $name]);
+                \Image::make($request->imagen)->save(public_path('images/Fauna/') . $name);
+                $request->merge(['imagen' => $name]);
 
             }
 
-            $tag = $this->flora->create([
-                'nom_comun' => $request->get('nom_comun'),
-                'nom_cientifico' => $request->get('nom_cientifico'),
+            $tag = $this->fauna->create([
+                'nombreComun' => $request->get('nombreComun'),
+                'nombreCientifico' => $request->get('nombreCientifico'),
                 'descripcion' => $request->get('descripcion'),
                 'tipo' => $request->get('tipo'),
-                'photo' => $request->get('photo'),
-                'fecha_registro' => $request->get('fecha_registro'),
-                'fam_cientifica' => $request->get('fam_cientifica'),
+                'imagen' => $request->get('imagen'),
+                'fechaRegistro' => $request->get('fechaRegistro'),
+                'familiaCientifca' => $request->get('familiaCientifca'),
 
             ]);
             return $this->sendResponse($tag, 'datos registrados');
@@ -103,39 +113,49 @@ class FloraController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'nom_comun' => 'required|string|',
-            'nom_cientifico' => 'required|string|',
-            'descripcion' => 'required|string|max:255',
-            'tipo' => 'required|string|max:50',
-            'fecha_registro' => 'required|date',
-            'photo' => 'required',
-            'fam_cientifica' => 'required|string|',
+            'nombreComun' => 'required|string|min:3|max:30',
+            'nombreCientifico' => 'required|string|min:3|max:30',
+            'descripcion' => 'required|string|max:255|min:3',
+            'tipo' => 'required|string|max:50|min:3',
+            'fechaRegistro' => 'required|date',
+            'imagen' => 'required',
+            'familiaCientifca' => 'required|string|min:3|max:30',
 
         ];
-
+    
         $messages = [
-            'nom_comun' => 'Escriba el nombre comun de la especie',
-            'nom_cientifico' => 'Escriba el nombre cientifico de la especie',
+            'nombreComun.min' =>'Minimo 3 caracteres',
+            'nombreComun.max' => 'Maximo 30 caracteres',
+            'nombreComun.*' => 'Escriba el nombre común de la especie',
+            'nombreCientifico.min' =>'Minimo 3 caracteres',
+            'nombreCientifico.max' => 'Maximo 30 caracteres',
+            'nombreCientifico.*' => 'Escriba el nombre científico de la especie',
+            'descripcion.min' =>'Minimo 3 caracteres',
             'descripcion.*' => 'Breve descripción de la especie',
-            'tipo.*' => 'Seleccione un tipo de flora',
-            'fecha_registro.*' => 'Seleccione fecha de registro',
-            'photo.*' => 'Cargue una foto',
-            'fam_cientifica.*' => 'Seleccione un la familia cientifica de la especie',
+            'tipo.min' =>'Minimo 3 caracteres',
+            'tipo.max' => 'Maximo 30 caracteres',
+            'tipo.*' => 'Nombre del tipo de especie',
+            'fechaRegistro.*' => 'Seleccione fecha de registro',
+            'imagen.*' => 'Cargue una foto',
+            'familiaCientifca.min' =>'Minimo 3 caracteres',
+            'familiaCientifca.max' => 'Maximo 30 caracteres',
+            'familiaCientifca.*' => 'Nombre de la familia científca',
         ];
+
 
         $this->validate($request, $rules, $messages);
 
-        $tag = $this->flora->findOrFail($id);
+        $tag = $this->fauna->findOrFail($id);
 
-        $currentPhoto = $tag->photo;
+        $currentPhoto = $tag->imagen;
 
-        if ($request->photo != $currentPhoto) {
-            $name = time() . '.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+        if ($request->imagen != $currentPhoto) {
+            $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos($request->imagen, ';')))[1])[1];
 
-            \Image::make($request->photo)->save(public_path('images/flora/') . $name);
-            $request->merge(['photo' => $name]);
+            \Image::make($request->imagen)->save(public_path('images/Fauna/') . $name);
+            $request->merge(['imagen' => $name]);
 
-            $userPhoto = public_path('images/flora/') . $currentPhoto;
+            $userPhoto = public_path('images/Fauna/') . $currentPhoto;
             if (file_exists($userPhoto)) {
                 @unlink($userPhoto);
             }
@@ -155,15 +175,14 @@ class FloraController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
 
-        $flora = Flora::FindOrFail($id);
-        if (file_exists('images/flora/' . $flora->photo) and !empty($flora->photo)) {
-            unlink('images/flora/' . $flora->photo);
+        $fauna = Fauna::FindOrFail($id);
+        if (file_exists('images/Fauna/' . $fauna->imagen) and !empty($fauna->imagen)) {
+            unlink('images/Fauna/' . $fauna->imagen);
         }
         try {
 
-            $flora->delete();
+            $fauna->delete();
             $bug = 0;
         } catch (\Exception$e) {
             $bug = $e->errorInfo[1];

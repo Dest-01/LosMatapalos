@@ -39,7 +39,9 @@ class VoluntarioPersonasRequest extends FormRequest
         return [
             'identificacion' => 'required|string|',
             'voluntariado_id' => 'required|integer|',
-            'lugar' => 'required|string|',
+            'lugar' => 'required|string|min:3|max:50',
+            'idVoluntario' => 'required|integer|min:1',
+            'cantidad' => 'required|integer|',
             
         ];
     }
@@ -53,6 +55,7 @@ class VoluntarioPersonasRequest extends FormRequest
     {
         return [
             'lugar' => 'required|string|',
+            'cantidad' => 'required|integer|',
         ];
     }
 
@@ -61,6 +64,10 @@ class VoluntarioPersonasRequest extends FormRequest
             'identificacion.*' => 'La cedula se requiere, compruebe si existe',
             'voluntariado_id.*' => 'Se requiere un id, solo numeros',
             'lugar.*' => 'Se requiere lugar de procedencia',
+            'idVoluntario.min' => 'minimo un numero en el id del voluntario',
+            'idVoluntario.*' => 'Se requiere un id de voluntario',
+            'cantidad.*' => 'Se requiere la cantidad de actividades',
+            
         ];
     }
 }

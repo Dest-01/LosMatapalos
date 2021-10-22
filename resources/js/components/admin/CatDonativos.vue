@@ -1,12 +1,12 @@
             <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
               <li class="breadcrumb-item">
-                <h4 class="page-title">Donativos Necesaros</h4>
+                <h4 class="page-title">Donativos Necesarios</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
                 <a href="/dashboard">
@@ -21,7 +21,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
               <h3 class="card-title">Lista de donativos necesarios</h3>
 
@@ -45,7 +45,7 @@
                     <th>Nombre</th>
                     <th>Estado</th>
                     <th>Imagen</th>
-                    <th>Acciones</th>
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -55,7 +55,8 @@
                   >
                     <td>{{ catDonativo.id }}</td>
                     <td class="text-capitalize">{{ catDonativo.nombre }}</td>
-                    <td>{{ catDonativo.estado }}</td>
+                    <td v-if="catDonativo.estado == 0">No es necesario</td>
+                    <td v-else>Es necesario</td>
                     <td>
                       <img
                         v-bind:src="'/images/CatDonativos/' + catDonativo.photo"
@@ -88,7 +89,7 @@
         </div>
       </div>
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -105,10 +106,10 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-show="!editmode">
-                Crear nueva categoria donativo
+                Crear donativo necesario
               </h5>
               <h5 class="modal-title" v-show="editmode">
-                Actualizar categoria donativo
+                Actualizar donativo necesario
               </h5>
               <button
                 type="button"
@@ -130,12 +131,14 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label>Nombre del donativo necesario</label>
-                  <input style="text-transform: capitalize;"
+                  <input
+                    style="text-transform: capitalize"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
+                    placeholder="Nombre del donativo necesario"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -145,12 +148,14 @@
                     id="checkbox"
                     type="checkbox"
                     v-model="form.estado"
-                    true-value="yes"
-                    false-value="no"
+                    true-value="1"
+                    false-value="0"
                     v-on:input="checkboxVal = $event.target.value"
                     @change="mostrarOpcion($event.target.value)"
                   />
-                 <label v-show="mostrarEstado" v-text="estado">{{estado}}</label>
+                  <label v-show="mostrarEstado" v-text="estado">{{
+                    estado
+                  }}</label>
                   <has-error :form="form" field="estado"></has-error>
                 </div>
                 <div class="form-group">
@@ -246,7 +251,7 @@ export default {
       form: new Form({
         id: "",
         nombre: "",
-        estado: "",
+        estado: 0,
         photo: "",
       }),
     };
@@ -270,11 +275,11 @@ export default {
         });
       }
     },
-    mostrarOpcion(val){
-       if (this.form.estado == "no") {
+    mostrarOpcion(val) {
+      if (this.form.estado == 0) {
         this.mostrarEstado = true;
         this.estado = "No es necesario";
-      }else{
+      } else {
         this.estado = "Necesario";
       }
     },
@@ -311,18 +316,19 @@ export default {
     editModal(catdonativo) {
       this.editmode = true;
       this.form.reset();
+      this.form.errors.clear();
       $("#addNew").modal("show");
       this.form.fill(catdonativo);
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
+      this.form.errors.clear();
       this.estado = "No es necesario";
       $("#addNew").modal("show");
     },
-
     cargarCatDonativos() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/catDonativo")
           .then(({ data }) => (this.catDonativos = data.data));
@@ -347,7 +353,7 @@ export default {
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Ocurrio un error!",
+            title: "Campos vacios!",
           });
         });
     },

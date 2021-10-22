@@ -3,7 +3,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
+      <div class="container-fluid"  v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="block-header">
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -96,7 +96,7 @@
       </div>
       <!-- /.container-fluid -->
       <!-- TABLE: LATEST ORDERS -->
-      <div class="contenedor-tablas">
+      <div class="contenedor-tablas"  v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="card">
           <div class="card-header border-transparent">
             <h3 class="card-title">Ultimas Reservaciones</h3>
@@ -291,6 +291,9 @@
       </div>
     </section>
     <!-- /.content -->
+    <div v-if="!$gate.isAdmin() && !$gate.isUser()">
+        <not-found></not-found>
+      </div>
   </div>
 </template>
 
@@ -310,24 +313,24 @@ export default {
     };
   },
   methods: {
-    async TotalDatos() {
-      if (this.$gate.isAdmin()) {
-        await axios
+     TotalDatos() {
+     if (this.$gate.isAdmin() || (this.$gate.isUser())) {
+         axios
           .get("/api/dashboard/TotalPersonas")
           .then(({ data }) => (this.totalPersonas = data.data));
-        await axios
+         axios
           .get("/api/dashboard/TotalActividades")
           .then(({ data }) => (this.totalActividades = data.data));
-        await axios
+         axios
           .get("/api/dashboard/TotalDonaciones")
           .then(({ data }) => (this.totalDonaciones = data.data));
-        await axios
+         axios
           .get("/api/dashboard/TotalReservaciones")
           .then(({ data }) => (this.totalReservaciones = data.data));
       }
     },
     cargarReservas() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || (this.$gate.isUser())) {
         axios
           .get("/api/dashboard/ultimasReservaciones")
           .then(({ data }) => (this.reservaciones = data.data));

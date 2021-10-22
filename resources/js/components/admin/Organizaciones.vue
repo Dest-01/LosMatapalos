@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar nuevo
+                  Agregar Nuevo
                 </button>
               </div>
             </div>
@@ -136,6 +136,7 @@
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('id') }"
                     placeholder="Cedula Jurídica"
+                    required
                   />
                   <has-error :form="form" field="id"></has-error>
                 </div>
@@ -150,6 +151,9 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
                     placeholder="Nombre de organización"
+                    required
+                    minlength="3"
+                    maxlength="30"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -165,6 +169,7 @@
                     min="10000000"
                     placeholder="12345678"
                     pattern="[0-9]{8,12}"
+                    required
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -181,6 +186,7 @@
                     minlength="3"
                     maxlength="64"
                     pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                    required
                   />
                   <has-error :form="form" field="correo"></has-error>
                 </div>

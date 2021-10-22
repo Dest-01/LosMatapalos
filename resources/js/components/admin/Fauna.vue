@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container-fluid">
-            <div class="block-header">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -21,7 +21,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
               <h3 class="card-title">Lista de fauna</h3>
 
@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  agregar nuevo
+                  Agregar Nuevo
                 </button>
               </div>
             </div>
@@ -42,12 +42,12 @@
                 <thead>
                   <tr>
                     <th>Id Fauna</th>
-                    <th>Nombre Comun</th>
-                    <th>Nombre Cientifico</th>
-                    <th>Descripcion</th>
+                    <th>Nombre Común</th>
+                    <th>Nombre Científico</th>
+                    <th>Descripción</th>
                     <th>Tipo</th>
                     <th>Imagen</th>
-                    <th>Familia cientifica</th>
+                    <th>Familia científica</th>
                     <th>Fecha de registro</th>
                     <th>Funciones</th>
                   </tr>
@@ -59,7 +59,7 @@
                     <td class="text-capitalize">
                       {{ fauna.nombreCientifico }}
                     </td>
-                      <td>{{fauna.descripcion | truncate(30, '...')}}</td>
+                    <td>{{ fauna.descripcion | truncate(30, "...") }}</td>
                     <td class="text-capitalize">{{ fauna.tipo }}</td>
                     <td>
                       <img
@@ -99,7 +99,7 @@
         </div>
       </div>
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
       <!-- Modal -->
@@ -115,8 +115,10 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode">Crear nueva fauna</h5>
-              <h5 class="modal-title" v-show="editmode">Actualizar fauna</h5>
+              <h5 class="modal-title" v-show="!editmode">
+                Crear nueva especie
+              </h5>
+              <h5 class="modal-title" v-show="editmode">Actualizar especie</h5>
               <button
                 type="button"
                 class="close"
@@ -132,18 +134,22 @@
             <form @submit.prevent="editmode ? actualizarFauna() : crearFauna()">
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Nombre Comun</label>
+                  <label>Nombre Común</label>
                   <input
                     v-model="form.nombreComun"
                     type="text"
                     name="nombreComun"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombreComun') }"
+                    placeholder="Nombre común de la especie"
+                    minlength="3"
+                    maxlength="30"
+                    required
                   />
                   <has-error :form="form" field="nombreComun"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Nombre Cientifico</label>
+                  <label>Nombre Científico</label>
                   <input
                     v-model="form.nombreCientifico"
                     type="text"
@@ -152,28 +158,39 @@
                     :class="{
                       'is-invalid': form.errors.has('nombreCientifico'),
                     }"
+                    placeholder="Nombre científico de la especie"
+                    minlength="3"
+                    maxlength="30"
+                    required
                   />
                   <has-error :form="form" field="nombreCientifico"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Descripcion</label>
-                  <input
+                  <label>Descripción</label>
+                  <textarea
                     v-model="form.descripcion"
-                    type="text"
-                    name="descripcion"
                     class="form-control"
+                    name="descripcion"
                     :class="{ 'is-invalid': form.errors.has('descripcion') }"
-                  />
+                    placeholder="Breve descripción"
+                    minlength="3"
+                    maxlength="255"
+                    id=""
+                    rows="3"
+                    required
+                  ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Tipo especie</label>
+                  <label>Tipo de especie</label>
                   <input
                     v-model="form.tipo"
                     type="text"
                     name="tipo"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('tipo') }"
+                    placeholder="Nombre del tipo de especie"
+                    required
                   />
                   <has-error :form="form" field="tipo"></has-error>
                 </div>
@@ -189,6 +206,7 @@
                             name="imagen"
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('imagen') }"
+                            id="SubirImagen"
                           />
                           <has-error :form="form" field="imagen"></has-error>
                         </label>
@@ -227,7 +245,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Familia cientifica</label>
+                  <label>Familia científica</label>
                   <input
                     v-model="form.familiaCientifca"
                     type="text"
@@ -236,6 +254,10 @@
                     :class="{
                       'is-invalid': form.errors.has('familiaCientifca'),
                     }"
+                    placeholder="Nombre de la familia científica"
+                    required
+                    minlength="3"
+                    maxlength="30"
                   />
                   <has-error :form="form" field="familiaCientifca"></has-error>
                 </div>
@@ -247,6 +269,7 @@
                     name="fechaRegistro"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fechaRegistro') }"
+                    required
                   />
                   <has-error :form="form" field="fechaRegistro"></has-error>
                 </div>
@@ -327,12 +350,16 @@ export default {
     editModal(Fauna) {
       this.editmode = true;
       this.form.reset();
+       $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
       this.form.fill(Fauna);
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
+       $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
     },
     getResults(page = 1) {
@@ -345,10 +372,8 @@ export default {
       this.$Progress.finish();
     },
     cargarFauna() {
-      if (this.$gate.isAdmin()) {
-        axios
-          .get("/api/fauna/")
-          .then(({ data }) => (this.faunas = data.data));
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios.get("/api/fauna/").then(({ data }) => (this.faunas = data.data));
       }
     },
     crearFauna() {
@@ -413,21 +438,21 @@ export default {
               this.cargarFauna();
             })
             .catch((data) => {
-              Swal.fire("Fallo!", data.message, "warning");
+              Swal.fire("Fallo!", "Acción no autorizada", "warning");
             });
         }
       });
     },
   },
   mounted() {
-      console.log("Component mounted.");
-    },
-    created() {
-      this.$Progress.start();
-      this.cargarFauna();
-      this.$Progress.finish();
-    },
-      filters: {
+    console.log("Component mounted.");
+  },
+  created() {
+    this.$Progress.start();
+    this.cargarFauna();
+    this.$Progress.finish();
+  },
+  filters: {
     truncate: function (text, length, suffix) {
       return text.substring(0, length) + suffix;
     },

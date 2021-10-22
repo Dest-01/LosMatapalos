@@ -80,7 +80,7 @@ class VoluntarioController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+    
 
         $voluntario = $this->voluntario->findOrFail($id);
 

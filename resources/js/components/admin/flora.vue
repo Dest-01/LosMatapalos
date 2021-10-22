@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -21,9 +21,9 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
-              <h3 class="card-title">Lista flora</h3>
+              <h3 class="card-title">Lista de flora</h3>
 
               <div class="card-tools">
                 <button
@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  agregar nuevo
+                  Agregar Nuevo
                 </button>
               </div>
             </div>
@@ -42,14 +42,13 @@
                 <thead>
                   <tr>
                     <th>Id Flora</th>
-                    <th>Nombre comun</th>
-                    <th>Nombre cientifico</th>
-                    <th>Descripcion</th>
+                    <th>Nombre común</th>
+                    <th>Nombre científico</th>
+                    <th>Descripción</th>
                     <th>Tipo</th>
-                    <th>Photo</th>
-                    <th>Familia cientifica</th>
-                    <th>Fecha registro</th>   
-                    
+                    <th>Imagen</th>
+                    <th>Familia científico</th>
+                    <th>Fecha registro</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -57,7 +56,7 @@
                     <td>{{ Flora.id }}</td>
                     <td class="text-capitalize">{{ Flora.nom_comun }}</td>
                     <td class="text-capitalize">{{ Flora.nom_cientifico }}</td>
-                     <td>{{Flora.descripcion | truncate(30, '...')}}</td>
+                    <td>{{ Flora.descripcion | truncate(30, "...") }}</td>
                     <td class="text-capitalize">{{ Flora.tipo }}</td>
                     <td>
                       <img
@@ -68,8 +67,7 @@
                     </td>
                     <td class="text-capitalize">{{ Flora.fam_cientifica }}</td>
                     <td class="text-capitalize">{{ Flora.fecha_registro }}</td>
-                    
-                    
+
                     <td>
                       <a href="#" @click="editModal(Flora)">
                         <i class="fa fa-edit blue"></i>
@@ -95,7 +93,7 @@
         </div>
       </div>
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -115,9 +113,7 @@
               <h5 class="modal-title" v-show="!editmode">
                 Registrar nueva especie
               </h5>
-              <h5 class="modal-title" v-show="editmode">
-                Actualizar especie
-              </h5>
+              <h5 class="modal-title" v-show="editmode">Actualizar especie</h5>
               <button
                 type="button"
                 class="close"
@@ -130,46 +126,54 @@
 
             <!-- <form @submit.prevent="createUser"> -->
 
-            <form
-              @submit.prevent="
-                editmode ? actualizarFlora() : crearFlora()
-              "
-            >
+            <form @submit.prevent="editmode ? actualizarFlora() : crearFlora()">
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Nombre comun</label>
+                  <label>Nombre común</label>
                   <input
                     v-model="form.nom_comun"
                     type="text"
                     name="nom_comun"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nom_comun') }"
+                    placeholder="Nombre común de la especie"
+                    minlength="3"
+                    maxlength="30"
+                    required
                   />
                   <has-error :form="form" field="nom_comun"></has-error>
                 </div>
-                
-                
+
                 <div class="form-group">
-                  <label>Nombre cientifico</label>
+                  <label>Nombre científico</label>
                   <input
                     v-model="form.nom_cientifico"
                     type="text"
                     name="nom_cientifico"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nom_cientifico') }"
+                    placeholder="Nombre científico de la especie"
+                    minlength="3"
+                    maxlength="30"
+                    required
                   />
                   <has-error :form="form" field="nom_cientifico"></has-error>
                 </div>
 
                 <div class="form-group">
-                  <label>Descripcion</label>
-                  <input
+                  <label>Descripción</label>
+                  <textarea
                     v-model="form.descripcion"
-                    type="text"
-                    name="Descripcion"
                     class="form-control"
+                    name="Descripcion"
                     :class="{ 'is-invalid': form.errors.has('descripcion') }"
-                  />
+                    placeholder="Breve descripción"
+                    minlength="3"
+                    maxlength="255"
+                    id=""
+                    rows="3"
+                    required
+                  ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
 
@@ -178,7 +182,9 @@
                   <select
                     class="form-control"
                     v-model="form.tipo"
-                    :class="{ 'is-invalid': form.errors.has('tipo') }">
+                    :class="{ 'is-invalid': form.errors.has('tipo') }"
+                    required
+                  >
                     <option disabled value="">Seleccione un elemento</option>
                     <option>Plantas leñosas</option>
                     <option>Plantas herbaceas</option>
@@ -199,6 +205,8 @@
                             name="photo"
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
+                            required
+                            id="SubirImagen"
                           />
                           <has-error :form="form" field="photo"></has-error>
                         </label>
@@ -212,7 +220,8 @@
                         :aria-valuenow="progress"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                        :style="{ width: progress + '%' }">
+                        :style="{ width: progress + '%' }"
+                      >
                         {{ progress }}%
                       </div>
                     </div>
@@ -235,15 +244,17 @@
                     </div>
                   </div>
                 </div>
-               
-               <div class="form-group">
-                  <label>Familia cientifica</label>
+
+                <div class="form-group">
+                  <label>Familia científica</label>
                   <input
                     v-model="form.fam_cientifica"
                     type="text"
                     name="fam_cientifica"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fam_cientifica') }"
+                    placeholder="Nombre de la familia científica"
+                    required
                   />
                   <has-error :form="form" field="fam_cientifica"></has-error>
                 </div>
@@ -256,10 +267,10 @@
                     name="fecha_registro"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fecha_registro') }"
+                    required
                   />
                   <has-error :form="form" field="fecha_registro"></has-error>
                 </div>
-       
               </div>
 
               <div class="modal-footer">
@@ -267,7 +278,8 @@
                   type="button"
                   class="btn btn-secondary"
                   data-dismiss="modal"
-                  @click="limpiar()">
+                  @click="limpiar()"
+                >
                   Cancelar
                 </button>
                 <button v-show="editmode" type="submit" class="btn btn-success">
@@ -276,7 +288,8 @@
                 <button
                   v-show="!editmode"
                   type="submit"
-                  class="btn btn-primary">
+                  class="btn btn-primary"
+                >
                   Registrar
                 </button>
               </div>
@@ -366,20 +379,22 @@ export default {
     editModal(Flora) {
       this.editmode = true;
       this.form.reset();
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
       this.form.fill(Flora);
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
     },
 
     cargarFlora() {
-      if (this.$gate.isAdmin()) {
-        axios
-          .get("/api/flora")
-          .then(({ data }) => (this.flora = data.data));
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios.get("/api/flora").then(({ data }) => (this.flora = data.data));
       }
     },
 
@@ -444,7 +459,7 @@ export default {
     this.cargarFlora();
     this.$Progress.finish();
   },
-      filters: {
+  filters: {
     truncate: function (text, length, suffix) {
       return text.substring(0, length) + suffix;
     },

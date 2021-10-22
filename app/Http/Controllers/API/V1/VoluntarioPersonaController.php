@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\VoluntarioPersona;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\PersonasRequest;
 use App\Http\Requests\admin\VoluntarioPersonasRequest;
 use App\Models\Personas;
 use App\Models\Voluntario;
-
-
+use App\Models\VoluntarioPersona;
+use Illuminate\Http\Request;
 
 class VoluntarioPersonaController extends BaseController
 {
@@ -29,17 +28,16 @@ class VoluntarioPersonaController extends BaseController
     {
         $filtro = $request->buscadorC;
         $persona = Personas::where('id', $filtro)->get('id');
-            return $this->sendResponse($persona, 'Cedula si existe');
-        
-       
+        return $this->sendResponse($persona, 'Cedula si existe');
+
     }
 
     public function obtenerCantidad(Request $request)
     {
         $filtro = $request->VolCantidad;
         $cantidad = Voluntario::where('id', $filtro)->get();
-            return $this->sendResponse($cantidad, 'Se encontro el id si existe');
-       
+        return $this->sendResponse($cantidad, 'Se encontro el id si existe');
+
     }
 
     /**
@@ -54,6 +52,38 @@ class VoluntarioPersonaController extends BaseController
         return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
     }
 
+    public function cargarVoluntarios()
+    {
+        $voluntario = $this->voluntarios->latest()->paginate(10);
+
+        return $this->sendResponse($voluntario, 'Lista de voluntariado');
+    }
+
+    public function guardarPersona(PersonasRequest $request)
+    {
+        try {
+            $filtro = $request->id;
+            $existencia = Personas::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->personas->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'apellido1' => $request->get('apellido1'),
+                    'apellido2' => $request->get('apellido2'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+            }
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -62,13 +92,28 @@ class VoluntarioPersonaController extends BaseController
      */
     public function store(VoluntarioPersonasRequest $request)
     {
-        $tag = $this->voluntarioPersona->create([
-            'identificacion' => $request->get('identificacion'),
-            'voluntariado_id' => $request->get('voluntariado_id'),
-            'lugar' => $request->get('lugar'),
-        ]);
+        try {
+            $filtro = $request->idVoluntario;
+            $existencia = Voluntario::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->voluntarios->create([
+                    'id' => $request->get('idVoluntario'),
+                    'cantidad' => $request->get('cantidad'),
+                ]);
+                $tag = $this->voluntarioPersona->create([
+                    'identificacion' => $request->get('identificacion'),
+                    'voluntariado_id' => $request->get('voluntariado_id'),
+                    'lugar' => $request->get('lugar'),
+                ]);
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'El id del voluntario ya existe!']);
+            }
 
-        return $this->sendResponse($tag, 'Voluntario persona creado');
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
+
     }
 
     /**
@@ -91,13 +136,13 @@ class VoluntarioPersonaController extends BaseController
      */
     public function update(VoluntarioPersonasRequest $request, $id)
     {
+        
         $tag = $this->voluntarioPersona->findOrFail($id);
 
         $tag->update($request->all());
 
         return $this->sendResponse($tag, 'Voluntario Persona Actualizada');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -106,8 +151,6 @@ class VoluntarioPersonaController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
-
         $voluntarioPer = $this->voluntarioPersona->findOrFail($id);
 
         $voluntarioPer->delete();

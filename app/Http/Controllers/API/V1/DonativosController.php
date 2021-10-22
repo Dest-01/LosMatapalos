@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Requests\Admin\PersonasRequest;
+use App\Http\Requests\Admin\OrganizacionesRequest;
 use App\Models\Donativos;
 use App\Models\Organizaciones;
 use App\Models\Personas;
@@ -50,6 +52,55 @@ class DonativosController extends BaseController
         $filtro = $request->buscador;
         $organizacion = Organizaciones::where('id', $filtro)->get('id');
         return $this->sendResponse($organizacion, 'Cedula si existe');
+    }
+
+    public function guardarPersona(PersonasRequest $request)
+    {
+        try {
+            $filtro = $request->id;
+            $existencia = Personas::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->personas->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'apellido1' => $request->get('apellido1'),
+                    'apellido2' => $request->get('apellido2'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+            }
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function guardarOrganizacion(OrganizacionesRequest $request)
+    {
+        try {
+            $filtro = $request->id;
+            $existencia = Organizaciones::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->organizaciones->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+            }
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
+
     }
 
     /**
@@ -171,7 +222,6 @@ class DonativosController extends BaseController
     public function destroy($id)
     {
         $this->authorize('isAdmin');
-
         $donativos = Donativos::FindOrFail($id);
         if (file_exists('images/donativos/' . $donativos->photo) and !empty($donativos->photo)) {
             unlink('images/donativos/' . $donativos->photo);
@@ -180,13 +230,16 @@ class DonativosController extends BaseController
 
             $donativos->delete();
             $bug = 0;
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             $bug = $e->errorInfo[1];
+
         }
         if ($bug == 0) {
             echo "success";
         } else {
             echo 'error';
+
         }
+        
     }
 }

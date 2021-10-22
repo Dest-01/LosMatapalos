@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Requests\Admin\PersonasRequest;
+use App\Http\Requests\Admin\OrganizacionesRequest;
 use App\Http\Requests\Admin\ReservaRequest;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
@@ -48,6 +50,55 @@ class ReservaController extends BaseController
         $filtro = $request->buscador;
         $organizacion = Organizaciones::where('id', $filtro)->get('id');
         return $this->sendResponse($organizacion, 'Cedula si existe');
+    }
+
+    public function guardarPersona(PersonasRequest $request)
+    {
+        try {
+            $filtro = $request->id;
+            $existencia = Personas::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->personas->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'apellido1' => $request->get('apellido1'),
+                    'apellido2' => $request->get('apellido2'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+            }
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function guardarOrganizacion(OrganizacionesRequest $request)
+    {
+        try {
+            $filtro = $request->id;
+            $existencia = Organizaciones::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->organizaciones->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+            }
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
+
     }
 
     /**

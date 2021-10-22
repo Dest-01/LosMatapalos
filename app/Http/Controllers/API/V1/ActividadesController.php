@@ -41,21 +41,26 @@ class ActividadesController extends BaseController
                 'nombre' => 'required|string|max:20|min:3',
                 'fecha' => 'required',
                 'hora' => 'required',
-                'descripcion' => 'required|string|max:250',
-                'cantParticipantes' => 'required|integer|',
+                'descripcion' => 'required|string|max:255|min:3',
+                'cantParticipantes' => 'required|integer|min:1|max:30',
                 'imagen' => 'required',
                 'tipo' => 'required',
             ];
 
             $messages = [
-
-                'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
+                'nombre.min' => 'Mínimo 3 caracteres',
+                'nombre.max' => 'Maximo 20 caracteres',
+                'nombre.*' => 'Nombre requiere',
                 'fecha.*' => 'Seleccione una fecha',
                 'hora.*' => 'Seleccione un hora',
+                'descripcion.min' => 'Mínimo 3 caracteres',
+                'descripcion.max' => 'Maximo 20 caracteres',
                 'descripcion.*' => 'Se requiere una breve descripción',
+                'cantParticipantes.min' => 'Mínimo 1 participante',
+                'cantParticipantes.max' => 'Maximo 30 participantes',
                 'cantParticipantes.*' => 'Cantidad de participantes se requiere',
-                'imagen.*' => 'Imagen se requiere',
-                'tipo.*' => 'Tipo se requiere',
+                'imagen.*' => 'Cargue una imagen',
+                'tipo.*' => 'Seleccione el tipo de actividad',
             ];
 
             $this->validate($request, $rules, $messages);

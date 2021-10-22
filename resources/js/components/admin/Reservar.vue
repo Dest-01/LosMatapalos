@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -21,11 +21,10 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
               <h3 class="card-title">Lista de reservas</h3>
-              
-              
+
               <div class="card-tools">
                 <button
                   style="margin-right: 20px"
@@ -40,7 +39,7 @@
                   style="margin-right: 20px"
                   type="button"
                   class="btn btn-sm btn-primary"
-                  @click="abrirModalOrg()"
+                  @click="modalOrganizacion()"
                 >
                   <i class="fa fa-plus-square"></i>
                   Registro organización
@@ -48,7 +47,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
-                  @click="abrirModal()"
+                  @click="modalPersona()"
                 >
                   <i class="fa fa-plus-square"></i>
                   Registro Persona
@@ -103,174 +102,223 @@
           <!-- /.card -->
         </div>
       </div>
-
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
       <!-- Modal de persona -->
-      <div class="modal" :class="{ mostrar: modal }">
-        <div class="modal-dialog">
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="modalExtra"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="modalExtra"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
-              <h4 class="modal-title">{{ tituloModal }}</h4>
+              <h5 class="modal-title" v-show="!modalExtra">
+                Registrar Personas
+              </h5>
+              <h5 class="modal-title" v-show="modalExtra">
+                Registrar Organizacion
+              </h5>
               <button
-                @click="cerrarModal()"
                 type="button"
                 class="close"
                 data-dismiss="modal"
+                aria-label="Close"
               >
-                &times;
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-              <div v-show="showPersona" class="form-group">
-                <label>Cedula</label>
-                <input
-                  v-model="formPer.id"
-                  type="text"
-                  name="id"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('id') }"
-                />
-                <has-error :form="formPer" field="id"></has-error>
+
+            <!-- <form @submit.prevent="createUser"> -->
+
+            <form>
+              <div class="modal-body">
+                <div v-show="showPersona" class="form-group">
+                  <label>Cedula</label>
+                  <input
+                    v-model="formPer.id"
+                    type="text"
+                    name="id"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('id') }"
+                    placeholder="Cedula de la persona"
+                  />
+                  <has-error :form="formPer" field="id"></has-error>
+                </div>
+                <div v-show="showPersona" class="form-group">
+                  <label>Nombre</label>
+                  <input
+                    style="text-transform: capitalize"
+                    v-model="formPer.nombre"
+                    type="text"
+                    name="nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                    placeholder="Nombre de persona"
+                    required
+                  />
+                  <has-error :form="formPer" field="nombre"></has-error>
+                </div>
+                <div v-show="showPersona" class="form-group">
+                  <label>Primer Apellido</label>
+                  <input
+                    style="text-transform: capitalize"
+                    v-model="formPer.apellido1"
+                    type="text"
+                    name="apellido1"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                    placeholder="Primer Apellido"
+                    required
+                  />
+                  <has-error :form="formPer" field="apellido1"></has-error>
+                </div>
+                <div v-show="showPersona" class="form-group">
+                  <label>Segundo Apellido</label>
+                  <input
+                    style="text-transform: capitalize"
+                    v-model="formPer.apellido2"
+                    type="text"
+                    name="apellido2"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                    placeholder="Segundo Apellido"
+                    required
+                  />
+                  <has-error :form="formPer" field="apellido2"></has-error>
+                </div>
+                <div v-show="showPersona" class="form-group">
+                  <label>Telefono</label>
+                  <input
+                    v-model="formPer.telefono"
+                    type="number"
+                    name="telefono"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('telefono') }"
+                    size="20"
+                    min="10000000"
+                    placeholder="12345678"
+                    pattern="[0-9]{8,12}"
+                    required
+                  />
+                  <has-error :form="formPer" field="telefono"></has-error>
+                </div>
+                <div v-show="showPersona" class="form-group">
+                  <label>Correo</label>
+                  <input
+                    v-model="formPer.correo"
+                    type="email"
+                    name="correo"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                    size="32"
+                    placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                    required
+                  />
+                  <has-error :form="formPer" field="correo"></has-error>
+                </div>
+                <!-- PARTE DE ORGANIZACION EN EL MISMO MODAL -->
+                <div v-show="showOrganizacion" class="form-group">
+                  <label>Cedula Jurídica</label>
+                  <input
+                    v-model="formOrg.id"
+                    type="text"
+                    name="id"
+                    class="form-control"
+                    :class="{ 'is-invalid': formOrg.errors.has('id') }"
+                    placeholder="Cedula jurídica de la organización"
+                    required
+                  />
+                  <has-error :form="formOrg" field="id"></has-error>
+                </div>
+                <div v-show="showOrganizacion" class="form-group">
+                  <label>Nombre de Organización</label>
+                  <input
+                    v-model="formOrg.nombre"
+                    type="text"
+                    name="nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': formOrg.errors.has('nombre') }"
+                    placeholder="Nombre de la organización"
+                    required
+                  />
+                  <has-error :form="formOrg" field="nombre"></has-error>
+                </div>
+                <div v-show="showOrganizacion" class="form-group">
+                  <label>Telefono Organización</label>
+                  <input
+                    v-model="formOrg.telefono"
+                    type="number"
+                    name="telefono"
+                    class="form-control"
+                    :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
+                    size="20"
+                    min="10000000"
+                    placeholder="12345678"
+                    pattern="[0-9]{8,12}"
+                    required
+                  />
+                  <has-error :form="formOrg" field="telefono"></has-error>
+                </div>
+                <div v-show="showOrganizacion" class="form-group">
+                  <label>Correo Organización</label>
+                  <input
+                    v-model="formOrg.correo"
+                    type="email"
+                    name="correo"
+                    class="form-control"
+                    :class="{ 'is-invalid': formOrg.errors.has('correo') }"
+                    size="32"
+                    placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                    required
+                  />
+                  <has-error :form="formOrg" field="correo"></has-error>
+                </div>
               </div>
-              <div v-show="showPersona" class="form-group">
-                <label>Nombre</label>
-                <input
-                  v-model="formPer.nombre"
-                  type="text"
-                  name="nombre"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                />
-                <has-error :form="formPer" field="nombre"></has-error>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                  @click="limpiar()"
+                >
+                  Cancelar
+                </button>
+                <button
+                  v-show="modalExtra"
+                  type="button"
+                  class="btn btn-success"
+                  @click="crearOrganizacion()"
+                >
+                  Registrar
+                </button>
+                <button
+                  v-show="!modalExtra"
+                  type="button"
+                  class="btn btn-success"
+                  @click="crearPersona()"
+                >
+                  Registrar
+                </button>
               </div>
-              <div v-show="showPersona" class="form-group">
-                <label>Primer Apellido</label>
-                <input
-                  v-model="formPer.apellido1"
-                  type="text"
-                  name="apellido1"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                />
-                <has-error :form="formPer" field="apellido1"></has-error>
-              </div>
-              <div v-show="showPersona" class="form-group">
-                <label>Segundo Apellido</label>
-                <input
-                  v-model="formPer.apellido2"
-                  type="text"
-                  name="apellido2"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                />
-                <has-error :form="formPer" field="apellido2"></has-error>
-              </div>
-              <div v-show="showPersona" class="form-group">
-                <label>Telefono</label>
-                <input
-                  v-model="formPer.telefono"
-                  type="number"
-                  name="telefono"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('telefono') }"
-                />
-                <has-error :form="formPer" field="telefono"></has-error>
-              </div>
-              <div v-show="showPersona" class="form-group">
-                <label>Correo</label>
-                <input
-                  v-model="formPer.correo"
-                  type="email"
-                  name="correo"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('correo') }"
-                />
-                <has-error :form="formPer" field="correo"></has-error>
-              </div>
-              <!-- PARTE DE ORGANIZACION EN EL MISMO MODAL -->
-              <div v-show="showOrganizacion" class="form-group">
-                <label>Cedula Juridica</label>
-                <input
-                  v-model="formOrg.id"
-                  type="text"
-                  name="id"
-                  class="form-control"
-                  :class="{ 'is-invalid': formOrg.errors.has('id') }"
-                />
-                <has-error :form="formOrg" field="id"></has-error>
-              </div>
-              <div v-show="showOrganizacion" class="form-group">
-                <label>Nombre de Organizacion</label>
-                <input
-                  v-model="formOrg.nombre"
-                  type="text"
-                  name="nombre"
-                  class="form-control"
-                  :class="{ 'is-invalid': formOrg.errors.has('nombre') }"
-                />
-                <has-error :form="formOrg" field="nombre"></has-error>
-              </div>
-              <div v-show="showOrganizacion" class="form-group">
-                <label>Telefono Organización</label>
-                <input
-                  v-model="formOrg.telefono"
-                  type="number"
-                  name="telefono"
-                  class="form-control"
-                  :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
-                />
-                <has-error :form="formOrg" field="telefono"></has-error>
-              </div>
-              <div v-show="showOrganizacion" class="form-group">
-                <label>Correo Organización</label>
-                <input
-                  v-model="formOrg.correo"
-                  type="email"
-                  name="correo"
-                  class="form-control"
-                  :class="{ 'is-invalid': formOrg.errors.has('correo') }"
-                />
-                <has-error :form="formOrg" field="correo"></has-error>
-              </div>
-            </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button
-                @click="cerrarModal(), limpiar()"
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button
-                v-show="showPersona"
-                @click="crearPersona()"
-                type="button"
-                class="btn btn-success"
-                data-dismiss="modal"
-              >
-                Guardar
-              </button>
-              <button
-                v-show="showOrganizacion"
-                @click="crearOrganizacion()"
-                type="button"
-                class="btn btn-success"
-                data-dismiss="modal"
-              >
-                Guardar
-              </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
-      <!-- Modal -->
+
       <div
         class="modal fade"
         id="addNew"
@@ -299,9 +347,7 @@
             <!-- <form @submit.prevent="createUser"> -->
 
             <form
-              @submit.prevent="
-                editmode ? actualizarReserva() : crearReserva()
-              "
+              @submit.prevent="editmode ? actualizarReserva() : crearReserva()"
             >
               <div class="modal-body">
                 <div v-show="show" class="form-group">
@@ -378,12 +424,15 @@
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('cantidad') }"
+                    required
+                    min="1"
+                    max="30"
                   />
                   <has-error :form="form" field="cantidad"></has-error>
                 </div>
 
                 <div class="form-group">
-                    <label>Fecha de reservación</label>
+                  <label>Fecha de reservación</label>
                   <input
                     v-model="form.fecha"
                     type="date"
@@ -391,10 +440,11 @@
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('fecha') }"
+                    required
                   />
                   <has-error :form="form" field="fecha"></has-error>
                 </div>
-               
+
                 <div class="form-group">
                   <label>Hora incial de reservación</label>
                   <input
@@ -404,6 +454,7 @@
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('horaInicio') }"
+                    required
                   />
                   <has-error :form="form" field="horaInicio"></has-error>
                 </div>
@@ -416,6 +467,7 @@
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('horaFin') }"
+                    required
                   />
                   <has-error :form="form" field="horaFin"></has-error>
                 </div>
@@ -467,6 +519,7 @@ export default {
       cedulas: {},
       cedulasOrg: {},
       editmode: false,
+      modalExtra: false,
       reservas: {},
       form: new Form({
         id: "",
@@ -491,28 +544,10 @@ export default {
         telefono: "",
         correo: "",
       }),
-      id: 0,
       tituloModal: "",
-      modal: 0,
     };
   },
   methods: {
-    abrirModal(data = {}) {
-      this.modal = 1;
-      (this.id = 0), (this.tituloModal = "Registro cliente");
-      this.showPersona = true;
-      this.showOrganizacion = false;
-    },
-    abrirModalOrg(data = {}) {
-      this.modal = 1;
-      (this.id = 0), (this.tituloModal = "Registro Organización");
-      this.showPersona = false;
-      this.showOrganizacion = true;
-    },
-    cerrarModal() {
-      this.modal = 0;
-    },
-
     getResults(page = 1) {
       this.$Progress.start();
 
@@ -649,8 +684,26 @@ export default {
       this.form.errors.clear();
     },
 
+    modalPersona() {
+      this.modalExtra = false;
+      this.form.reset();
+      $("#modalExtra").modal("show");
+      this.showPersona = true;
+      this.showOrganizacion = false;
+    },
+    modalOrganizacion() {
+      this.modalExtra = true;
+      this.form.reset();
+      $("#modalExtra").modal("show");
+      this.showPersona = false;
+      this.showOrganizacion = true;
+    },
+    cerrarModal() {
+      this.modal = 0;
+    },
+
     cargarReservas() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/reserva")
           .then(({ data }) => (this.reservas = data.data));
@@ -681,45 +734,57 @@ export default {
     },
     crearPersona() {
       this.formPer
-        .post("/api/persona", {
+        .post("/api/reserva/guardarPersona/", {
           params: { id: this.formPer.id },
         })
         .then((response) => {
-          $("#addNew").modal("hide");
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Cedula ya existe!",
+            });
+          } else {
+            $("#modalExtra").modal("hide");
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.cerrarModal();
-          //  this.$Progress.finish();
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$Progress.finish();
+          }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Cedula existente o campos vacios",
+            title: "Campos vacios!",
           });
         });
     },
     crearOrganizacion() {
       this.formOrg
-        .post("/api/organizacion", {
+        .post("/api/reserva/guardarOrganizacion/", {
           params: { id: this.formOrg.id },
         })
         .then((response) => {
-          $("#addNew").modal("hide");
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Cedula ya existe!",
+            });
+          } else {
+            $("#modalExtra").modal("hide");
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.cerrarModal();
-          //  this.$Progress.finish();
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$Progress.finish();
+          }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Cedula existente o campos vacios",
+            title: "Campos vacios!",
           });
         });
     },
@@ -776,7 +841,7 @@ export default {
   opacity: 1;
   background: rgba(121, 120, 120, 0.623);
 }
-.btn{
+.btn {
   margin-top: 10px;
   margin-right: 20px;
 }

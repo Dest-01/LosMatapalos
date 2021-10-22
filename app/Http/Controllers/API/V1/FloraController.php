@@ -34,24 +34,31 @@ class FloraController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'nom_comun' => 'required|string|',
-            'nom_cientifico' => 'required|string|',
-            'descripcion' => 'required|string|max:255',
+            'nom_comun' => 'required|string|min:3|max:30',
+            'nom_cientifico' => 'required|string|min:3|max:30',
+            'descripcion' => 'required|string|max:255|min:3',
             'tipo' => 'required|string|max:50',
             'fecha_registro' => 'required|date',
             'photo' => 'required',
-            'fam_cientifica' => 'required|string|',
+            'fam_cientifica' => 'required|string|min:3|max:30',
 
         ];
     
         $messages = [
-            'nom_comun' => 'Escriba el nombre comun de la especie',
-            'nom_cientifico' => 'Escriba el nombre cientifico de la especie',
+            'nom_comun.min' =>'Minimo 3 caracteres',
+            'nom_comun.max' => 'Maximo 30 caracteres',
+            'nom_comun.*' => 'Escriba el nombre común de la especie',
+            'nom_cientifico.min' =>'Minimo 3 caracteres',
+            'nom_cientifico.max' => 'Maximo 30 caracteres',
+            'nom_cientifico.*' => 'Escriba el nombre científico de la especie',
+            'descripcion.min' =>'Minimo 3 caracteres',
             'descripcion.*' => 'Breve descripción de la especie',
             'tipo.*' => 'Seleccione un tipo de flora',
             'fecha_registro.*' => 'Seleccione fecha de registro',
             'photo.*' => 'Cargue una foto',
-            'fam_cientifica.*' => 'Seleccione un la familia cientifica de la especie',
+            'fam_cientifica.min' =>'Minimo 3 caracteres',
+            'fam_cientifica.max' => 'Maximo 30 caracteres',
+            'fam_cientifica.*' => 'Nombre de la familia científca',
         ];
 
 
@@ -100,25 +107,28 @@ class FloraController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'nom_comun' => 'required|string|',
-            'nom_cientifico' => 'required|string|',
-            'descripcion' => 'required|string|max:255',
+            'nom_comun' => 'required|string|min:3|max:30',
+            'nom_cientifico' => 'required|string|min:3|max:30',
+            'descripcion' => 'required|string|max:255|min:3',
             'tipo' => 'required|string|max:50',
             'fecha_registro' => 'required|date',
             'photo' => 'required',
-            'fam_cientifica' => 'required|string|',
+            'fam_cientifica' => 'required|string|min:3|max:30',
 
         ];
     
         $messages = [
-            'nom_comun' => 'Escriba el nombre comun de la especie',
-            'nom_cientifico' => 'Escriba el nombre cientifico de la especie',
+            'nom_comun.*' => 'Escriba el nombre común de la especie',
+            'nom_comun.min' =>'Minimo 3 caracteres',
+            'nom_comun.max' => 'Maximo 30 caracteres',
+            'nom_cientifico.*' => 'Escriba el nombre científico de la especie',
             'descripcion.*' => 'Breve descripción de la especie',
             'tipo.*' => 'Seleccione un tipo de flora',
             'fecha_registro.*' => 'Seleccione fecha de registro',
             'photo.*' => 'Cargue una foto',
-            'fam_cientifica.*' => 'Seleccione un la familia cientifica de la especie',
+            'fam_cientifica.*' => 'Nombre de la familia científca',
         ];
+
 
         $this->validate($request, $rules, $messages);
 

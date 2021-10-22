@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Requests\Admin\PersonasRequest;
 use App\Models\Personas;
 use App\Models\Voluntario;
 use App\Models\VoluntarioEstudiantes;
@@ -48,6 +49,31 @@ class VoluntarioEstudiantesController extends BaseController
         return $this->sendResponse($voluntarioEst, 'Lista de estudiantes');
     }
 
+    public function guardarPersona(PersonasRequest $request)
+    {
+        try {
+            $filtro = $request->id;
+            $existencia = Personas::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->personas->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'apellido1' => $request->get('apellido1'),
+                    'apellido2' => $request->get('apellido2'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+            }
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -56,42 +82,57 @@ class VoluntarioEstudiantesController extends BaseController
      */
     public function store(Request $request)
     {
-        try {
-            $rules = [
-                'carrera' => 'required|string|max:50',
-                'voluntariado_id' => 'required|integer|',
-                'imagen' => 'required',
-            ];
 
-            $messages = [
-                'voluntariado_id.*' => 'Se requiere un id de voluntario y solo números',
-                'carrera.*' => 'Se requiere la carrera de la universidad, maximo 50 caracteres',
-                'imagen.*' => 'Se requiere la foto del estudiante',
-            ];
+        $rules = [
+            'carrera' => 'required|string|max:50',
+            'voluntariado_id' => 'required|integer|',
+            'imagen' => 'required',
+            'idVoluntario' => 'required|integer|min:1',
+            'cantidad' => 'required|integer|',
+        ];
 
-            $this->validate($request, $rules, $messages);
+        $messages = [
+            'voluntariado_id.*' => 'Se requiere un id de voluntario y solo números',
+            'carrera.*' => 'Se requiere la carrera de la universidad, maximo 50 caracteres',
+            'imagen.*' => 'Se requiere la foto del estudiante',
+            'idVoluntario.min' => 'minimo un numero en el id del voluntario',
+            'idVoluntario.*' => 'Se requiere un id de voluntario',
+            'cantidad.*' => 'Se requiere la cantidad de actividades',
+        ];
 
-            if ($request->imagen) {
-                $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos($request->imagen, ';')))[1])[1];
-                (!file_exists(public_path().'/images/voluntariado/')) ? mkdir(public_path().'/images/voluntariado/',0777,true) : null;
+        $this->validate($request, $rules, $messages);
 
-                \Image::make($request->imagen)->save(public_path('images/voluntariado/') . $name);
-                $request->merge(['imagen' => $name]);
+        if ($request->imagen) {
+            $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos($request->imagen, ';')))[1])[1];
+            (!file_exists(public_path() . '/images/voluntariado/')) ? mkdir(public_path() . '/images/voluntariado/', 0777, true) : null;
 
-            }
+            \Image::make($request->imagen)->save(public_path('images/voluntariado/') . $name);
+            $request->merge(['imagen' => $name]);
 
-            $tag = $this->voluntarioEstudiantes->create([
-                'identificacion' => $request->get('identificacion'),
-                'voluntariado_id' => $request->get('voluntariado_id'),
-                'carrera' => $request->get('carrera'),
-                'imagen' => $request->get('imagen'),
-
-            ]);
-            return $this->sendResponse($tag, 'Voluntario Estudiantes Creado');
-        } catch (\PDOException | Exception $e) {
-            return response()->json(["errors" => $e->getMessage()], 500);
         }
 
+        try {
+            $filtro = $request->idVoluntario;
+            $existencia = Voluntario::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->voluntarios->create([
+                    'id' => $request->get('idVoluntario'),
+                    'cantidad' => $request->get('cantidad'),
+                ]);
+                $tag = $this->voluntarioEstudiantes->create([
+                    'identificacion' => $request->get('identificacion'),
+                    'voluntariado_id' => $request->get('voluntariado_id'),
+                    'carrera' => $request->get('carrera'),
+                    'imagen' => $request->get('imagen'),
+                ]);
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'El id del voluntario ya existe!']);
+            }
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -158,7 +199,6 @@ class VoluntarioEstudiantesController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
 
         $voluntarioEst = $this->voluntarioEstudiantes->findOrFail($id);
 
