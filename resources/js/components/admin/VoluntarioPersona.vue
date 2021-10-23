@@ -608,13 +608,13 @@ export default {
     cargarVoluntarioPer() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
-          .get("/api/voluntarioPersona/")
+          .get("/api/voluntarioPersona")
           .then(({ data }) => (this.voluntarioPer = data.data));
       }
     },
     crearPersona() {
       this.formPer
-        .post("/api/voluntarioPersona/guardarPersona/", {
+        .post("/api/voluntarioPersona/guardarPersona", {
           params: { id: this.formPer.idVoluntario },
         })
         .then((response) => {
@@ -642,7 +642,7 @@ export default {
     cargarVoluntario() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
-          .get("/api/voluntarioPersona/cargarVoluntarios/")
+          .get("/api/voluntarioPersona/cargarVoluntarios")
           .then(({ data }) => (this.voluntarios = data.data));
       }
     },
@@ -650,7 +650,7 @@ export default {
       this.$Progress.start();
       this.form.voluntariado_id = this.form.idVoluntario;
       this.form
-        .post("/api/voluntarioPersona/", {
+        .post("/api/voluntarioPersona", {
           params: { id: this.form.id },
         })
         .then((response) => {

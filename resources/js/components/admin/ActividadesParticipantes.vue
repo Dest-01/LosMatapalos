@@ -202,14 +202,14 @@ export default {
     cargarVoluntario() {
       if (this.$gate.isAdmin()) {
         axios
-          .get("/api/actividadesparticipantes/")
+          .get("/api/actividadesparticipantes")
           .then(({ data }) => (this.voluntarios = data.data));
           console.log("hola", this.voluntarios);
       }
     },
     crearVoluntario() {
       this.form
-        .post("/api/actividadesparticipantes/")
+        .post("/api/actividadesparticipantes")
         .then((response) => {
           $("#addNew").modal("hide");
           Toast.fire({

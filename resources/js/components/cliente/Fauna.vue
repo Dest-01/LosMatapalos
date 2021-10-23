@@ -232,11 +232,12 @@ h1 {
   box-shadow: 0 4px 6px 0 rgb(0 0 0 / 30%);
   counter-reset: pagination;
   text-align: center;
+  height: 400px;
 }
 
 img {
   width: 100%;
-  height: auto;
+  height: 100%;
   transition-duration: 0.3s;
   max-width: 100%;
   display: block;

@@ -315,14 +315,14 @@ export default {
     cargarParticipantes() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
-          .get("/api/participantes/")
+          .get("/api/participantes")
           .then(({ data }) => (this.participantes = data.data));
       }
     },
 
     crearParticipante() {
       this.form
-        .post("/api/participantes/", {
+        .post("/api/participantes", {
           params: { id: this.form.id },
         })
         .then((response) => {

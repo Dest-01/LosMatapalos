@@ -129,8 +129,6 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#addNew"
                 @click="modalPersona()"
               >
                 Persona
@@ -138,8 +136,6 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#addNew"
                 @click="modalGrupo()"
               >
                 Grupo
@@ -147,8 +143,6 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#addNew"
                 @click="modalOrganizacion()"
               >
                 Organización
@@ -205,13 +199,19 @@
                       type="number"
                       required
                       :disabled="bloquearCampos"
-                      min="1" max="30"
-                       :class="{ 'is-invalid': formReserva.errors.has('cantidad') }"
+                      min="1"
+                      max="30"
+                      :class="{
+                        'is-invalid': formReserva.errors.has('cantidad'),
+                      }"
                     />
-                     <has-error :form="formReserva" field="cantidad"></has-error>
                     <span style="width: 100%" class="highlight"></span>
                     <span style="width: 100%" class="bar"></span>
-                   
+                    <has-error
+                      style=""
+                      :form="formReserva"
+                      field="cantidad"
+                    ></has-error>
                   </div>
                   <div class="campo2">
                     <i class="fas fa-calendar-check iconoInput2 icono"></i>
@@ -223,10 +223,17 @@
                       value="Fecha"
                       required
                       :disabled="bloquearCampos"
-                      
+                      :class="{
+                        'is-invalid': formReserva.errors.has('fecha'),
+                      }"
                     />
                     <span style="width: 100%" class="highlight"></span>
                     <span style="width: 100%" class="bar"></span>
+                    <has-error
+                      style=""
+                      :form="formReserva"
+                      field="fecha"
+                    ></has-error>
                   </div>
                 </div>
                 <div class="group2">
@@ -239,7 +246,15 @@
                       type="time"
                       required
                       :disabled="bloqueraHoras"
+                      :class="{
+                        'is-invalid': formReserva.errors.has('horaInicio'),
+                      }"
                     />
+                    <has-error
+                      style=""
+                      :form="formReserva"
+                      field="horaInicio"
+                    ></has-error>
                   </div>
                   <div class="campo2">
                     <i class="fas fa-clock iconoInput2 icono"></i>
@@ -250,7 +265,15 @@
                       type="time"
                       required
                       :disabled="bloqueraHoras"
+                      :class="{
+                        'is-invalid': formReserva.errors.has('horaFin'),
+                      }"
                     />
+                    <has-error
+                      style=""
+                      :form="formReserva"
+                      field="horaFin"
+                    ></has-error>
                   </div>
                 </div>
                 <button
@@ -274,24 +297,28 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal -->
     <!-- Modal -->
     <div
       class="modal fade"
-      id="addNew"
+      id="modal"
       tabindex="-1"
-      role="dialog"
-      aria-labelledby="addNew"
+      aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Registro de información</h5>
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ tituloModal }}
+            </h5>
             <button
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              @click="limpiarTodo()"
             ></button>
           </div>
           <form>
@@ -300,7 +327,7 @@
               <div v-show="soloPersona" class="group">
                 <i class="fas fa-id-card iconoInput"></i>
                 <input
-                style="text-transform: inherit"
+                  style="text-transform: inherit"
                   name="id"
                   v-model="formPersona.id"
                   type="text"
@@ -383,13 +410,14 @@
                 <span class="bar"></span>
                 <label>Telefono</label>
               </div>
+
               <div v-show="soloPersona" class="group">
                 <i class="fas fa-at iconoInput"></i>
                 <input
-                style="text-transform: inherit"
+                  style="text-transform: inherit"
                   name="correo"
                   v-model="formPersona.correo"
-                  type="email"
+                  type="text"
                   :class="{ 'is-invalid': formPersona.errors.has('correo') }"
                 />
                 <has-error
@@ -492,47 +520,34 @@
               <button
                 type="button"
                 class="btn btn-danger"
-                data-bs-target="#addNew"
                 data-bs-dismiss="modal"
                 @click="limpiarTodo()"
               >
                 Cancelar
               </button>
               <button
+                type="button"
                 v-show="soloPersona"
-                type="button"
                 class="btn btn-success"
-                data-bs-toggle="modal"
-                data-bs-target="#addNew"
-                @click="crearPersona()"
+                data-bs-dismiss="modal"
+                @click="crearPersona"
               >
-                Guardar
+                Registrar
               </button>
               <button
+                type="button"
                 v-show="soloOrganizacion"
-                type="button"
                 class="btn btn-success"
-                data-bs-toggle="modal"
-                data-bs-target="#addNew"
-                @click="crearOrganizacion()"
+                data-bs-dismiss="modal"
+                @click="crearOrganizacion"
               >
-                Guardar
-              </button>
-              <button
-                v-show="soloGrupo"
-                type="button"
-                class="btn btn-success"
-                data-bs-toggle="modal"
-                data-bs-target="#addNew"
-              >
-                Guardar
+                Registrar
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <!-- Fin Modal -->
   </div>
 </template>
 
@@ -546,6 +561,8 @@ export default {
       soloPersona: false,
       soloOrganizacion: false,
       soloGrupo: false,
+
+      tituloModal: "",
       persona: {},
       organizacion: {},
       grupo: {},
@@ -580,26 +597,32 @@ export default {
         idPersona: "",
         photo: "",
       }),
-      id: 0,
-      tituloModal: "",
-      modal: 0,
     };
   },
   methods: {
     modalPersona() {
+      var modal = document.getElementById("modal");
+      new bootstrap.Modal(modal).show();
       this.soloPersona = true;
       this.soloOrganizacion = false;
       this.soloGrupo = false;
+      this.tituloModal = "Registro de persona";
     },
     modalOrganizacion() {
+      var modal = document.getElementById("modal");
+      new bootstrap.Modal(modal).show();
       this.soloPersona = false;
       this.soloOrganizacion = true;
       this.soloGrupo = false;
+      this.tituloModal = "Registro de organizacion";
     },
     modalGrupo() {
+      var modal = document.getElementById("modal");
+      new bootstrap.Modal(modal).show();
       this.soloPersona = false;
       this.soloOrganizacion = false;
       this.soloGrupo = true;
+      this.tituloModal = "Registro de grupo";
     },
     cancelarConsulta() {
       this.formReserva.reset();
@@ -671,45 +694,40 @@ export default {
           this.noExiste();
         });
     },
-    async crearPersona() {
-      await this.formPersona
+    crearPersona() {
+      this.formPersona
         .post("/api/reservarCliente/persona", {
           params: { id: this.formPersona.id },
         })
         .then((response) => {
-          if (response.data == true) {
-            $("#addNew").modal("hide");
+          if (response.data.success == false) {
+            Swal.fire("Error!", "Cedula ya existe!", "error");
+          } else {
+            Swal.fire("Registrado!", response.data.message, "success");
+            this.limpiarTodo();
           }
-          Swal.fire("Registrado!", response.data.message, "success");
-          this.limpiarTodo();
         })
         .catch((error) => {
-          Swal.fire(
-            "Error!",
-            "Ya existe en el registro o campos vacios!",
-            "error"
-          );
+          Swal.fire("Error!", "Complete los campos!", "error");
         });
     },
 
-    async crearOrganizacion() {
-      await this.formOrganizacion
+    crearOrganizacion() {
+      this.formOrganizacion
         .post("/api/reservarCliente/organizacion", {
           params: { id: this.formOrganizacion.id },
         })
         .then((response) => {
-          if (response.data == true) {
+          if (response.data.success == false) {
+            Swal.fire("Error!", "Cedula ya existe!", "error");
+          } else {
             $("#addNew").modal("hide");
+            Swal.fire("Registrado!", response.data.message, "success");
+            this.limpiarTodo();
           }
-          Swal.fire("Registrado!", response.data.message, "success");
-          this.limpiarTodo();
         })
         .catch((error) => {
-          Swal.fire(
-            "Error!",
-            "Ya existe en el registro o campos vacios!",
-            "error"
-          );
+          Swal.fire("Error!", "Complete los campos!", "error");
         });
     },
 
@@ -771,11 +789,6 @@ export default {
 </script>
 
 <style scoped>
-
-.is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {
-    display: block;
-    margin-top: 1px;
-}
 .iconoInput {
   color: #e8e8e8;
   font-size: 26px;
@@ -810,6 +823,7 @@ input:valid ~ label[data-v-4bc2021a] {
   border: 0;
   -webkit-box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
   box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+  height: auto;
 }
 .contenedor-2 {
   display: flex;
@@ -887,12 +901,18 @@ h6 {
 .group {
   position: relative;
   margin-bottom: 40px;
+  padding-top: 10px;
+  margin-top: 10px;
+  padding-block: 10px;
+}
+.is-invalid ~ .invalid-feedback {
+  margin-top: 1px;
 }
 .group2 {
   position: relative;
   margin-bottom: 40px;
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

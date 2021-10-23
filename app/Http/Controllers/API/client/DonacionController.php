@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\API\client;
 
-use App\Models\Donativos;
 use App\Models\CatDonativos;
-use Illuminate\Http\Request;
-
+use App\Models\Donativos;
+use Illuminate\Support\Facades\DB;
 
 class DonacionController extends BaseController
 {
@@ -27,24 +26,24 @@ class DonacionController extends BaseController
     public function index()
     {
         $donativo = $this->donativos->latest()->paginate(8);
-        
+
         return $this->sendResponse($donativo, 'Lista Donativos');
     }
     public function cargarCategoriaDonativos()
     {
         $catDonativos = $this->catDonativos->latest()->paginate(3);
-        
+
         return $this->sendResponse($catDonativos, 'Lista Donativos Necesarios');
     }
 
-    public function list()
+    public function Donadores()
     {
-        //
+
     }
 
     public function show($id)
     {
-       //
+        //
     }
 
 }

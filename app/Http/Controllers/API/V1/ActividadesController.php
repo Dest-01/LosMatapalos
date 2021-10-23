@@ -67,8 +67,8 @@ class ActividadesController extends BaseController
 
             if ($request->imagen) {
                 $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos($request->imagen, ';')))[1])[1];
-                (!file_exists(public_path().'/images/Actividades/')) ? mkdir(public_path().'/images/Actividades/',0777,true) : null;
-                \Image::make($request->imagen)->save(public_path('images/Actividades/') . $name);
+                (!file_exists(public_path().'/images/Actividades/')) ? mkdir(public_path().'/images/actividades/',0777,true) : null;
+                \Image::make($request->imagen)->save(public_path('images/actividades/') . $name);
                 $request->merge(['imagen' => $name]);
             }
             $tag = $this->actividades->create([
@@ -147,10 +147,10 @@ class ActividadesController extends BaseController
             $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos
                 ($request->imagen, ';')))[1])[1];
 
-            \Image::make($request->imagen)->save(public_path('images/Actividades/') . $name);
+            \Image::make($request->imagen)->save(public_path('images/actividades/') . $name);
             $request->merge(['imagen' => $name]);
 
-            $actividadFoto = public_path('images/Actividades/') . $currentFoto;
+            $actividadFoto = public_path('images/actividades/') . $currentFoto;
             if (file_exists($actividadFoto)) {
                 @unlink($actividadFoto);
             }
@@ -170,8 +170,8 @@ class ActividadesController extends BaseController
     {
         $this->authorize('isAdmin');
         $actividades = Actividades::FindOrFail($id);
-        if (file_exists('images/Actividades/' . $actividades->imagen) and !empty($actividades->imagen)) {
-            unlink('images/Actividades/' . $actividades->imagen);
+        if (file_exists('images/actividades/' . $actividades->imagen) and !empty($actividades->imagen)) {
+            unlink('images/actividades/' . $actividades->imagen);
         }try {
             $actividades->delete();
             $bug = 0;

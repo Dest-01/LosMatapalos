@@ -293,14 +293,14 @@ export default {
     cargarOrganizacion() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
-          .get("/api/organizacion/")
+          .get("/api/organizacion")
           .then(({ data }) => (this.organizaciones = data.data));
       }
     },
 
     crearOrganizacion() {
       this.form
-        .post("/api/organizacion/", {
+        .post("/api/organizacion", {
           params: { id: this.form.id },
         })
         .then((response) => {
@@ -320,11 +320,12 @@ export default {
             this.cargarOrganizacion();
           }
         })
-        .catch(() => {
+        .catch((error) => {
           Toast.fire({
             icon: "error",
             title: "Complete los campos!",
           });
+          console.log(error.message);
         });
     },
 

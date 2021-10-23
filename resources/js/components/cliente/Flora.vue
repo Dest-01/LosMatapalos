@@ -232,22 +232,23 @@ width: -webkit-fit-content;
     align-items: center;
 }
 .container {
-background: #66666699;
-    width: 550px;
-    overflow: hidden;
-    display: block;
-    position: relative;
-    float: left;
-    padding: 5px;
-    margin: 45px 5px 45px 5px;
-    border-radius: 0.2rem;
-    box-shadow: 0 4px 6px 0 rgb(0 0 0 / 30%);
-    counter-reset: pagination;
-    text-align: center;
+  background: #66666699;
+  width: 550px;
+  overflow: hidden;
+  display: block;
+  position: relative;
+  float: left;
+  padding: 5px;
+  margin: 45px 5px 45px 5px;
+  border-radius: 0.2rem;
+  box-shadow: 0 4px 6px 0 rgb(0 0 0 / 30%);
+  counter-reset: pagination;
+  text-align: center;
+  height: 400px;
 }
 
 img {
-  height: auto;
+  height: 100%;
   width: 100%;
   transition-duration: 0.3s;
   max-width: 100%;

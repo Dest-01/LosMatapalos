@@ -713,7 +713,7 @@ export default {
     crearReserva() {
       this.$Progress.start();
       this.form
-        .post("/api/reserva/")
+        .post("/api/reserva")
         .then((response) => {
           $("#addNew").modal("hide");
 
@@ -734,7 +734,7 @@ export default {
     },
     crearPersona() {
       this.formPer
-        .post("/api/reserva/guardarPersona/", {
+        .post("/api/reserva/guardarPersona", {
           params: { id: this.formPer.id },
         })
         .then((response) => {
@@ -762,7 +762,7 @@ export default {
     },
     crearOrganizacion() {
       this.formOrg
-        .post("/api/reserva/guardarOrganizacion/", {
+        .post("/api/reserva/guardarOrganizacion", {
           params: { id: this.formOrg.id },
         })
         .then((response) => {

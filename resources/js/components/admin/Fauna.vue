@@ -373,7 +373,7 @@ export default {
     },
     cargarFauna() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios.get("/api/fauna/").then(({ data }) => (this.faunas = data.data));
+        axios.get("/api/fauna").then(({ data }) => (this.faunas = data.data));
       }
     },
     crearFauna() {

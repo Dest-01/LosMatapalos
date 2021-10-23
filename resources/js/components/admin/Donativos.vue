@@ -122,7 +122,7 @@
         role="dialog"
         aria-labelledby="modalExtra"
         aria-hidden="true"
-      >
+        >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -332,6 +332,7 @@
         role="dialog"
         aria-labelledby="addNew"
         aria-hidden="true"
+        
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -793,7 +794,7 @@ export default {
     crearDonativo() {
       this.$Progress.start();
       this.form
-        .post("/api/donativo/")
+        .post("/api/donativo")
         .then((response) => {
           $("#addNew").modal("hide");
 
@@ -814,7 +815,7 @@ export default {
     },
     crearPersona() {
       this.formPer
-        .post("/api/donativo/guardarPersona/", {
+        .post("/api/donativo/guardarPersona", {
           params: { id: this.formPer.id },
         })
         .then((response) => {
@@ -842,7 +843,7 @@ export default {
     },
     crearOrganizacion() {
       this.formOrg
-        .post("/api/donativo/guardarOrganizacion/", {
+        .post("/api/donativo/guardarOrganizacion", {
           params: { id: this.formOrg.id },
         })
         .then((response) => {

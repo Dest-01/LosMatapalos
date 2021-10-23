@@ -195,6 +195,7 @@ export default {
       text: "Portada",
       donativos: {},
       donativosNecesarios: {},
+      donadores: {},
     };
   },
   methods: {
@@ -207,11 +208,14 @@ export default {
     },
     cargarDonativos() {
       axios
-        .get("/api/donacionesCliente/")
+        .get("/api/donacionesCliente")
         .then(({ data }) => (this.donativos = data.data));
       axios
-        .get("/api/donacionesCliente/donacionesNecesarias/")
+        .get("/api/donacionesCliente/donacionesNecesarias")
         .then(({ data }) => (this.donativosNecesarios = data.data));
+        axios
+        .get("/api/donacionesCliente/Donadores")
+        .then(({ data }) => (this.donadores = data.data));
     },
   },
   created() {
@@ -236,7 +240,7 @@ export default {
   flex: 1 1 auto;
   padding: 5px;
 }
-img{
+img {
   width: 100%;
   height: auto;
 }
@@ -455,12 +459,12 @@ h5 {
     font-size: 30px;
     top: 60%;
   }
-  .intro{
+  .intro {
     font-size: 20px;
     margin-top: 1px;
   }
-  .necesarios{
-        display: flex;
+  .necesarios {
+    display: flex;
     flex-direction: column;
     flex-flow: row;
     margin: 10px 10px 10px 10px;
@@ -468,19 +472,19 @@ h5 {
     align-items: center;
     flex-wrap: wrap;
   }
-  .contenedor1{
+  .contenedor1 {
     height: auto;
     width: 100%;
   }
-  .contenedor2{
-        top: 10px;
+  .contenedor2 {
+    top: 10px;
   }
-  .row{
+  .row {
     margin: 1px 15px 1px 1px;
   }
   .col-sm-3 {
     width: 50%;
-}
+  }
 }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {

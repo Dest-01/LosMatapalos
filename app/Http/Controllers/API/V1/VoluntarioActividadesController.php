@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Models\VoluntarioActividades;
-use App\Models\actividades;
+use App\Models\Actividades;
 use App\Models\VoluntarioPersona;
 use App\Models\VoluntarioEstudiantes;
 use Illuminate\Http\Request;

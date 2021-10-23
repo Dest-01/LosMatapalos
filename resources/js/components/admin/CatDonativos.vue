@@ -170,6 +170,7 @@
                             name="photo"
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
+                             id="SubirImagen"
                           />
                           <has-error :form="form" field="photo"></has-error>
                         </label>

@@ -58,9 +58,8 @@ class ArticuloController extends BaseController
         $this->validate($request, $rules, $messages);
 
         if($request->Image){
-            $name = time().'.' . explode('/', explode(':', substr($request->Image, 0, strpos
-            ($request->Image, ';')))[1])[1];
-            
+            $name = time().'.' . explode('/', explode(':', substr($request->Image, 0, strpos($request->Image, ';')))[1])[1];
+            (!file_exists(public_path().'/images/Articulos/')) ? mkdir(public_path().'/images/Articulos/',0777,true) : null;
            \Image::make($request->Image)->save(public_path('images/Articulos/').$name);
            $request->merge(['Image' => $name]);
 

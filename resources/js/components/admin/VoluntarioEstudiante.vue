@@ -268,7 +268,6 @@
                             @change="updatePhoto"
                             :disabled="bloquearCamposExtras"
                             :class="{ 'is-invalid': form.errors.has('imagen') }"
-                            required
                             id="SubirImagen"
                           />
                           <has-error :form="form" field="imagen"></has-error>
@@ -719,7 +718,7 @@ export default {
 
     crearPersona() {
       this.formPer
-        .post("/api/voluntarioEstudiante/guardarPersona/", {
+        .post("/api/voluntarioEstudiante/guardarPersona", {
           params: { id: this.formPer.id },
         })
         .then((response) => {
@@ -747,7 +746,7 @@ export default {
     cargarVoluntario() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
-          .get("/api/voluntario/")
+          .get("/api/voluntario")
           .then(({ data }) => (this.voluntarios = data.data));
       }
     },
@@ -755,7 +754,7 @@ export default {
       this.$Progress.start();
      this.form.voluntariado_id = this.form.idVoluntario;
       this.form
-        .post("/api/voluntarioEstudiante/")
+        .post("/api/voluntarioEstudiante")
         .then((response) => {
           if (response.data.success == false) {
             Toast.fire({
@@ -826,6 +825,7 @@ export default {
                 "success"
               );
               // Fire.$emit('AfterCreate');
+               this.cargarVoluntario();
               this.cargarVoluntarioEst();
             })
             .catch((data) => {

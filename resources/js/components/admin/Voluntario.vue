@@ -211,13 +211,13 @@ export default {
     cargarVoluntario() {
       if (this.$gate.isAdmin()) {
         axios
-          .get("/api/voluntario/")
+          .get("/api/voluntario")
           .then(({ data }) => (this.voluntarios = data.data));
       }
     },
     crearVoluntario() {
       this.form
-        .post("/api/voluntario/")
+        .post("/api/voluntario")
         .then((response) => {
           $("#addNew").modal("hide");
 

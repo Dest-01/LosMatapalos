@@ -87,7 +87,7 @@ export default {
     },
     cargarActividades() {
       axios
-        .get("/api/actividadCliente/")
+        .get("/api/actividadCliente")
         .then(({ data }) => (this.actividades = data.data));
     },
   },

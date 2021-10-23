@@ -333,14 +333,14 @@ export default {
     cargarPersona() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
-          .get("/api/persona/")
+          .get("/api/persona")
           .then(({ data }) => (this.personas = data.data));
       }
     },
 
     crearPersona() {
       this.form
-        .post("/api/persona/", {
+        .post("/api/persona", {
           params: { id: this.form.id },
         })
         .then((response) => {
