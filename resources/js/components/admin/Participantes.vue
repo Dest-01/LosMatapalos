@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -21,9 +21,9 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
-              <h3 class="card-title">Listado de Registro de los participantes</h3>
+              <h3 class="card-title">Listado de los participantes</h3>
 
               <div class="card-tools">
                 <button
@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar nuevo
+                  Agregar Nuevo
                 </button>
               </div>
             </div>
@@ -46,12 +46,15 @@
                     <th>Primer Apellido</th>
                     <th>Segundo Apellido</th>
                     <th>Nacionalidad</th>
-                    
-                     <th>Funciones</th>
+
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="participante in participantes.data" :key="participante.id">
+                  <tr
+                    v-for="participante in participantes.data"
+                    :key="participante.id"
+                  >
                     <td>{{ participante.id }}</td>
                     <td class="text-capitalize">{{ participante.nombre }}</td>
                     <td>{{ participante.apellido1 }}</td>
@@ -62,7 +65,10 @@
                         <i class="fa fa-edit blue"></i>
                       </a>
                       /
-                      <a href="#" @click="eliminarParticipante(participante.id)">
+                      <a
+                        href="#"
+                        @click="eliminarParticipante(participante.id)"
+                      >
                         <i class="fa fa-trash red"></i>
                       </a>
                     </td>
@@ -82,7 +88,7 @@
         </div>
       </div>
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -98,8 +104,12 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode">Registro de cliente</h5>
-              <h5 class="modal-title" v-show="editmode">Actualización de cliente</h5>
+              <h5 class="modal-title" v-show="!editmode">
+                Registro de participante
+              </h5>
+              <h5 class="modal-title" v-show="editmode">
+                Actualización de participante
+              </h5>
               <button
                 type="button"
                 class="close"
@@ -114,7 +124,9 @@
             <!-- <form @submit.prevent="createUser"> -->
 
             <form
-              @submit.prevent="editmode ? actualizarParticipantes() : crearParticipante()"
+              @submit.prevent="
+                editmode ? actualizarParticipantes() : crearParticipante()
+              "
             >
               <div class="modal-body">
                 <div class="form-group">
@@ -126,6 +138,10 @@
                     class="form-control"
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('id') }"
+                    required
+                    minlength="8"
+                    maxlength="18"
+                    placeholder="Cedula del participante"
                   />
                   <has-error :form="form" field="id"></has-error>
                 </div>
@@ -138,6 +154,11 @@
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    placeholder="Nombre del participante"
+                    pattern="[a-zA-Z'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -150,6 +171,11 @@
                     name="apellido1"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido1') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    placeholder="Primer apellido del participante"
+                    pattern="[a-zA-Z'-'\s]*"
                   />
                   <has-error :form="form" field="apellido1"></has-error>
                 </div>
@@ -162,6 +188,11 @@
                     name="apellido2"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido2') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    placeholder="Segundo apellido del participante"
+                    pattern="[a-zA-Z'-'\s]*"
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -174,10 +205,13 @@
                     name="nacionalidad"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nacionalidad') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    placeholder="Nacionalidad del participante"
                   />
                   <has-error :form="form" field="nacionalidad"></has-error>
                 </div>
-             
               </div>
 
               <div class="modal-footer">
@@ -261,25 +295,25 @@ export default {
       this.form.reset();
       $("#addNew").modal("show");
       this.form.fill(participante);
-       this.form.errors.clear();
+      this.form.errors.clear();
     },
     newModal() {
       this.editmode = false;
       this.CedulaBloqueo = false;
       this.form.reset();
       $("#addNew").modal("show");
-       this.form.errors.clear();
+      this.form.errors.clear();
     },
     limpiar() {
-      this.form.nombre = ""
-      this.form.apellido1 = ""
-      this.form.apellido2 = ""
-      this.form.nacionalidad = ""
+      this.form.nombre = "";
+      this.form.apellido1 = "";
+      this.form.apellido2 = "";
+      this.form.nacionalidad = "";
       this.form.errors.clear();
     },
 
     cargarParticipantes() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/participantes/")
           .then(({ data }) => (this.participantes = data.data));
@@ -292,20 +326,27 @@ export default {
           params: { id: this.form.id },
         })
         .then((response) => {
-          $("#addNew").modal("hide");
+          if (response.data.success == false) {
+            Toast.fire({
+              icon: "error",
+              title: "Cedula ya existe!",
+            });
+          } else {
+            $("#addNew").modal("hide");
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
 
-          this.$Progress.finish();
-          this.cargarParticipantes();
+            this.$Progress.finish();
+            this.cargarParticipantes();
+          }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Cedula existente o campos vacios",
+            title: "Campos vacios",
           });
         });
     },

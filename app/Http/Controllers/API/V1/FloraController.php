@@ -163,7 +163,7 @@ class FloraController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+       
 
         $flora = Flora::FindOrFail($id);  
         if(file_exists('images/flora/'.$flora->photo) AND !empty($flora->photo)){ 

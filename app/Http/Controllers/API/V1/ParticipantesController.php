@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Requests\Admin\ParticipanteRequest;
 use App\Models\participantes;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\ParticipanteRequest;
 
 class ParticipantesController extends BaseController
 {
@@ -35,22 +35,26 @@ class ParticipantesController extends BaseController
      */
     public function store(ParticipanteRequest $request)
     {
-        $filtro = $request->id;
-        $existencia = participantes::find($filtro);
-
-        if(empty($existencia)){
-            
+        try {
+            $filtro = $request->id;
+            $existencia = participantes::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
                 $tag = $this->participantes->create([
                     'id' => $request->get('id'),
                     'nombre' => $request->get('nombre'),
                     'apellido1' => $request->get('apellido1'),
                     'apellido2' => $request->get('apellido2'),
                     'nacionalidad' => $request->get('nacionalidad'),
-                    
+
                 ]);
-                return $this->sendResponse($tag, 'Datos registrados');
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
             }
-            return $this->sendResponse($tag, 'Datos no registrados');
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -88,8 +92,6 @@ class ParticipantesController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
-
         $participantes = $this->participantes->findOrFail($id);
 
         $participantes->delete();

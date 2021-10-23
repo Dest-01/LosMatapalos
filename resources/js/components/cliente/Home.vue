@@ -3,7 +3,7 @@
 <div class="header">
    <section class="textos-header">
      <h1>Sendero Los Matapalos</h1>
-        <h2>Estamos encantados de recibirle</h2>
+        <h2>Aprendemos de la naturaleza</h2>
          <img v-bind:key="image" v-for="image in image17" :src="image.url" />
    </section>
    <div class="wave" style="height: 150px; top: 195px; overflow: hidden">

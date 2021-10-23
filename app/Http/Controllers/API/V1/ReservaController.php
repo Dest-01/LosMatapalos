@@ -118,7 +118,7 @@ class ReservaController extends BaseController
             'horaFin' => $request->get('horaFin')
             
         ]);
-        return $this->sendResponse($tag, 'Datos creados');
+        return $this->sendResponse($tag, 'Reserva realizada!');
     }
 
     /**
@@ -145,7 +145,7 @@ class ReservaController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Datos Actualizados');
+        return $this->sendResponse($tag, 'Reserva actualizada!');
     }
 
     /**
@@ -162,6 +162,6 @@ class ReservaController extends BaseController
 
         $reserva->delete();
 
-        return $this->sendResponse($reserva, 'Datos eliminado');
+        return $this->sendResponse($reserva, 'Reserva eliminada!');
     }
 }

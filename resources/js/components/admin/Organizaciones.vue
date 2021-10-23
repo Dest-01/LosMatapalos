@@ -351,7 +351,7 @@ export default {
               this.cargarOrganizacion();
             })
             .catch((data) => {
-              Swal.fire("Fallo!", data.message, "warning");
+              Swal.fire("Fallo!", "Acción no autorizada!", "warning");
             });
         }
       });

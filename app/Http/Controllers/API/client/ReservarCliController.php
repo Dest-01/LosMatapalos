@@ -64,19 +64,25 @@ class ReservarCliController extends BaseController
     {
 
         try {
-            $tag = $this->personas->create([
-                'id' => $request->get('id'),
-                'nombre' => $request->get('nombre'),
-                'apellido1' => $request->get('apellido1'),
-                'apellido2' => $request->get('apellido2'),
-                'telefono' => $request->get('telefono'),
-                'correo' => $request->get('correo'),
-            ]);
-            return $this->sendResponse($tag, 'Datos registrados!');
-        } catch (ModelNotFoundException $exception) {
+            $filtro = $request->id;
+            $existencia = Personas::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->personas->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'apellido1' => $request->get('apellido1'),
+                    'apellido2' => $request->get('apellido2'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
 
-            return $this->sendResponse($exception, 'Ya existe el registro!');
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            }else{
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+            }
 
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
 
     }
@@ -84,15 +90,23 @@ class ReservarCliController extends BaseController
     public function GuardarOrganizacion(OrganizacionesRequest $request)
     {
         try {
-            $tag = $this->organizaciones->create([
-                'id' => $request->get('id'),
-                'nombre' => $request->get('nombre'),
-                'telefono' => $request->get('telefono'),
-                'correo' => $request->get('correo'),
-            ]);
-            return $this->sendResponse($tag, 'Datos registrados!');
-        } catch (ModelNotFoundException $exception) {
-            return $this->sendResponse($exception, 'Ya existe el registro!');
+            $filtro = $request->id;
+            $existencia = Organizaciones::where('id', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->organizaciones->create([
+                    'id' => $request->get('id'),
+                    'nombre' => $request->get('nombre'),
+                    'telefono' => $request->get('telefono'),
+                    'correo' => $request->get('correo'),
+                ]);
+
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            }else{
+                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+            }
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
     }
 

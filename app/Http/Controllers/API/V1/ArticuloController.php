@@ -44,7 +44,11 @@ class ArticuloController extends BaseController
         ];
     
         $messages = [
+            'Name.max'=>'Minimo 3 caracteres',
+            'Name.min'=>'Maximo 20 caracteres',
             'Name.*'=>'Digite el nombre del articulo',
+            'Type.max'=>'Minimo 3 caracteres',
+            'Type.min'=>'Maximo 20 caracteres',
             'Type.*' => 'Indique tipo de articulo a publicar',
             'Image.*' => 'Cargue una foto del Articulo',
 
@@ -99,7 +103,11 @@ class ArticuloController extends BaseController
         ];
     
         $messages = [
+            'Name.max'=>'Minimo 3 caracteres',
+            'Name.min'=>'Maximo 20 caracteres',
             'Name.*'=>'Digite el nombre del articulo',
+            'Type.max'=>'Minimo 3 caracteres',
+            'Type.min'=>'Maximo 20 caracteres',
             'Type.*' => 'Indique tipo de articulo a publicar',
             'Image.*' => 'Cargue una foto del Articulo',
 

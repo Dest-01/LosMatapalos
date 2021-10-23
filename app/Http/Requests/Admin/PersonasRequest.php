@@ -73,7 +73,7 @@ class PersonasRequest extends FormRequest
             'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 20',
             'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 20',
             'telefono.*' => 'Telefono se requiere, mínimo 8 números',
-            'correo.*' => 'Correo se requiere, ejemplo: examen@gmail.com',
+            'correo.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
         ];
     }
 }

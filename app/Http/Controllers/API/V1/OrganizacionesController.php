@@ -100,6 +100,8 @@ class OrganizacionesController extends BaseController
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
+        
         $organizaciones = $this->organizaciones->findOrFail($id);
 
         $organizaciones->delete();

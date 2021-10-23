@@ -41,7 +41,7 @@ class ParticipanteRequest extends FormRequest
             'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'nacionalidad' => 'required',
+            'nacionalidad' => 'required|min:3|max:20',
             
         ];
     }
@@ -72,7 +72,7 @@ class ParticipanteRequest extends FormRequest
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 20',
             'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 20',
-            'nacionalidad.*' => 'Telefono se requiere',
+            'nacionalidad.*' => 'Se requiere la nacionalidad',
            
         ];
     }

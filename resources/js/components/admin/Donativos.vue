@@ -585,6 +585,7 @@ export default {
       cedulas: {},
       cedulasOrg: {},
       editmode: false,
+      modalExtra: false,
       donativos: {},
       form: new Form({
         id: "",

@@ -62,7 +62,7 @@
                             <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/dashboard') }}">Administrador</a>
+                            <a class="nav-link" href="{{ url('/login') }}">Administrador</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/reservacion') }}">Reservación</a>
@@ -89,7 +89,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/repositorio') }}">repositorio</a>
+                            <a class="nav-link" href="{{ url('/repositorio') }}">Repositorio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/productos') }}">Marca</a>

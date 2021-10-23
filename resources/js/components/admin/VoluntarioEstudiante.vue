@@ -319,7 +319,7 @@
                       'is-invalid': form.errors.has('cantidad'),
                     }"
                     required
-                    min="1"
+                    min="0"
                     placeholder="Cantidad de actividades realizadas"
                   />
                   <has-error :form="form" field="cantidad"></has-error>
@@ -359,7 +359,7 @@
         role="dialog"
         aria-labelledby="personaModal"
         aria-hidden="true"
-      >
+        >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -622,9 +622,6 @@ export default {
     abrirModal() {
       $("#personaModal").modal("show");
     },
-    cerrarModal() {
-      this.modal = 0;
-    },
     limpiar() {
       this.form.identificacion = "";
       this.form.voluntariado_id = "";
@@ -702,7 +699,7 @@ export default {
           this.SiExisteCedula();
         });
     },
-    async ObtenerCantidad(VoluntarioId) {
+     ObtenerCantidad(VoluntarioId) {
       this.form
         .get("/api/voluntarioEstudiante/obtenerCantidad", {
           params: { VolCantidad: VoluntarioId },

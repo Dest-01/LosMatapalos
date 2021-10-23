@@ -36,6 +36,14 @@
                   agregar reserva
                 </button>
                 <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click="modalPersona()"
+                >
+                  <i class="fa fa-plus-square"></i>
+                  Registro Persona
+                </button>
+                <button
                   style="margin-right: 20px"
                   type="button"
                   class="btn btn-sm btn-primary"
@@ -44,14 +52,7 @@
                   <i class="fa fa-plus-square"></i>
                   Registro organización
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="modalPersona()"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Registro Persona
-                </button>
+                
               </div>
             </div>
             <!-- /.card-header -->
@@ -610,6 +611,7 @@ export default {
       this.formOrg.errors.clear();
       this.showExistenciaCedula = false;
       this.showMensajesCedula2 = false;
+      
     },
     cancelarCedula() {
       this.isDisabled = true;
@@ -681,6 +683,7 @@ export default {
       this.CedulaBloqueo = false;
       this.showIdentificacion = false;
       this.showExistenciaCedula = false;
+      this.showMensajesCedula2 = false;
       this.form.errors.clear();
     },
 
@@ -697,9 +700,6 @@ export default {
       $("#modalExtra").modal("show");
       this.showPersona = false;
       this.showOrganizacion = true;
-    },
-    cerrarModal() {
-      this.modal = 0;
     },
 
     cargarReservas() {

@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header">
+            <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -21,7 +21,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="$gate.isAdmin()">
+          <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
               <h3 class="card-title">Lista de Articulos</h3>
 
@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  agregar nuevo
+                  Agregar Nuevo
                 </button>
               </div>
             </div>
@@ -45,7 +45,7 @@
                     <th>Nombre</th>
                     <th>Tipo</th>
                     <th>Imagen</th>
-                    <th>Acciones</th>
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
 
@@ -136,6 +136,10 @@
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('Name') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    placeholder="Nombre del articulo"
                   />
                   <has-error :form="form" field="Name"></has-error>
                 </div>
@@ -149,6 +153,10 @@
                     name="tipo"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('Type') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    placeholder="Tipo de articulo"
                   />
                   <has-error :form="form" field="Type"></has-error>
                 </div>
@@ -164,6 +172,8 @@
                             name="Image"
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('Image') }"
+                            required
+                            id="SubirImagen"
                           />
                           <has-error :form="form" field="Image"></has-error>
                         </label>
@@ -208,7 +218,7 @@
                   class="btn btn-secondary"
                   data-dismiss="modal"
                 >
-                  Cerrar
+                  Cancelar
                 </button>
                 <button v-show="editmode" type="submit" class="btn btn-success">
                   Actualizar
@@ -218,7 +228,7 @@
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Crear
+                  Registrar
                 </button>
               </div>
             </form>
@@ -303,17 +313,23 @@ export default {
     editModal(articulo) {
       this.editmode = true;
       this.form.reset();
+      this.form.errors.clear();
+       $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
       this.form.fill(articulo);
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
+      this.form.errors.clear();
+       $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
     },
 
     cargarArticulos() {
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/articulos")
           .then(({ data }) => (this.Articulos = data.data));

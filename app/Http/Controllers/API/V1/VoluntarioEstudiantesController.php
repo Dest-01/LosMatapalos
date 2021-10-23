@@ -88,7 +88,7 @@ class VoluntarioEstudiantesController extends BaseController
             'voluntariado_id' => 'required|integer|',
             'imagen' => 'required',
             'idVoluntario' => 'required|integer|min:1',
-            'cantidad' => 'required|integer|',
+            'cantidad' => 'required|integer|min:0',
         ];
 
         $messages = [
@@ -97,6 +97,7 @@ class VoluntarioEstudiantesController extends BaseController
             'imagen.*' => 'Se requiere la foto del estudiante',
             'idVoluntario.min' => 'minimo un numero en el id del voluntario',
             'idVoluntario.*' => 'Se requiere un id de voluntario',
+            'cantidad..min' => 'minimo 0 actividades',
             'cantidad.*' => 'Se requiere la cantidad de actividades',
         ];
 
@@ -155,16 +156,23 @@ class VoluntarioEstudiantesController extends BaseController
      */
     public function update(Request $request, $id)
     {
+      
         $rules = [
             'carrera' => 'required|string|max:50',
             'voluntariado_id' => 'required|integer|',
             'imagen' => 'required',
+            'idVoluntario' => 'required|integer|min:1',
+            'cantidad' => 'required|integer|min:0',
         ];
 
         $messages = [
             'voluntariado_id.*' => 'Se requiere un id de voluntario y solo números',
             'carrera.*' => 'Se requiere la carrera de la universidad, maximo 50 caracteres',
             'imagen.*' => 'Se requiere la foto del estudiante',
+            'idVoluntario.min' => 'minimo un numero en el id del voluntario',
+            'idVoluntario.*' => 'Se requiere un id de voluntario',
+            'cantidad..min' => 'minimo 0 actividades',
+            'cantidad.*' => 'Se requiere la cantidad de actividades',
         ];
 
         $this->validate($request, $rules, $messages);

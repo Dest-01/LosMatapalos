@@ -286,143 +286,152 @@
           </div>
         </div>
       </div>
-      <!-- Modal de persona -->
-      <div class="modal" id="modalPersona" :class="{ mostrar: modal }">
-        <div class="modal-dialog">
+       <!-- Modal de persona -->
+      <div
+        class="modal fade"
+        id="personaModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="personaModal"
+        aria-hidden="true"
+        >
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
-              <h4 class="modal-title">{{ tituloModal }}</h4>
+              <h5 class="modal-title">Registro de estudiante</h5>
               <button
-                @click="cerrarModal(), limpiarPersona()"
                 type="button"
                 class="close"
                 data-dismiss="modal"
-              >
-                &times;
-              </button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Cedula</label>
-                <input
-                  v-model="formPer.id"
-                  type="text"
-                  name="id"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('id') }"
-                  required
-                  minlength="8"
-                  maxlength="18"
-                  placeholder="Cedula de la persona"
-                />
-                <has-error :form="formPer" field="id"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Nombre</label>
-                <input
-                  v-model="formPer.nombre"
-                  type="text"
-                  name="nombre"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                  required
-                  minlength="3"
-                  maxlength="20"
-                  pattern="[a-zA-Z'-'\s]*"
-                  placeholder="Nombre de la persona"
-                />
-                <has-error :form="formPer" field="nombre"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Primer Apellido</label>
-                <input
-                  v-model="formPer.apellido1"
-                  type="text"
-                  name="apellido1"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                  required
-                  minlength="3"
-                  maxlength="20"
-                  pattern="[a-zA-Z'-'\s]*"
-                  placeholder="Primer apellido de la persona"
-                />
-                <has-error :form="formPer" field="apellido1"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Segundo Apellido</label>
-                <input
-                  v-model="formPer.apellido2"
-                  type="text"
-                  name="apellido2"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                  required
-                  minlength="3"
-                  maxlength="20"
-                  pattern="[a-zA-Z'-'\s]*"
-                  placeholder="Segundo apellido de la persona"
-                />
-                <has-error :form="formPer" field="apellido2"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Teléfono</label>
-                <input
-                  v-model="formPer.telefono"
-                  type="number"
-                  name="telefono"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('telefono') }"
-                  min="10000000"
-                  placeholder="12345678"
-                  pattern="[0-9]{8,12}"
-                  required
-                />
-                <has-error :form="formPer" field="telefono"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Correo</label>
-                <input
-                  v-model="formPer.correo"
-                  type="email"
-                  name="correo"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('correo') }"
-                  size="32"
-                  placeholder="ejemplo@gmail.com"
-                  minlength="3"
-                  maxlength="64"
-                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                  required
-                />
-                <has-error :form="formPer" field="correo"></has-error>
-              </div>
-            </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button
+                aria-label="Close"
                 @click="cerrarModal(), limpiarPersona()"
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
               >
-                Cancelar
-              </button>
-              <button
-                @click="crearPersona()"
-                type="button"
-                class="btn btn-success"
-                data-dismiss="modal"
-              >
-                Guardar
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
+
+            <!-- <form @submit.prevent="createUser"> -->
+
+            <form @submit.prevent="crearPersona()">
+              <div class="modal-body">
+                <div class="form-group">
+                    <label>Cedula</label>
+                    <input
+                      v-model="formPer.id"
+                      type="text"
+                      name="id"
+                      class="form-control"
+                      :class="{ 'is-invalid': formPer.errors.has('id') }"
+                      required
+                      minlength="8"
+                      maxlength="18"
+                      placeholder="Cedula de la persona"
+                    />
+                    <has-error :form="formPer" field="id"></has-error>
+                  </div>
+                  <div class="form-group">
+                    <label>Nombre</label>
+                    <input
+                      v-model="formPer.nombre"
+                      type="text"
+                      name="nombre"
+                      class="form-control"
+                      :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                      required
+                      minlength="3"
+                      maxlength="20"
+                      pattern="[a-zA-Z'-'\s]*"
+                      placeholder="Nombre de la persona"
+                    />
+                    <has-error :form="formPer" field="nombre"></has-error>
+                  </div>
+                  <div class="form-group">
+                    <label>Primer Apellido</label>
+                    <input
+                      v-model="formPer.apellido1"
+                      type="text"
+                      name="apellido1"
+                      class="form-control"
+                      :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                      required
+                      minlength="3"
+                      maxlength="20"
+                      pattern="[a-zA-Z'-'\s]*"
+                      placeholder="Primer apellido de la persona"
+                    />
+                    <has-error :form="formPer" field="apellido1"></has-error>
+                  </div>
+                  <div class="form-group">
+                    <label>Segundo Apellido</label>
+                    <input
+                      v-model="formPer.apellido2"
+                      type="text"
+                      name="apellido2"
+                      class="form-control"
+                      :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                      required
+                      minlength="3"
+                      maxlength="20"
+                      pattern="[a-zA-Z'-'\s]*"
+                      placeholder="Segundo apellido de la persona"
+                    />
+                    <has-error :form="formPer" field="apellido2"></has-error>
+                  </div>
+                  <div class="form-group">
+                    <label>Teléfono</label>
+                    <input
+                      v-model="formPer.telefono"
+                      type="number"
+                      name="telefono"
+                      class="form-control"
+                      :class="{ 'is-invalid': formPer.errors.has('telefono') }"
+                      min="10000000"
+                      placeholder="12345678"
+                      pattern="[0-9]{8,12}"
+                      required
+                    />
+                    <has-error :form="formPer" field="telefono"></has-error>
+                  </div>
+                  <div class="form-group">
+                    <label>Correo</label>
+                    <input
+                      v-model="formPer.correo"
+                      type="email"
+                      name="correo"
+                      class="form-control"
+                      :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                      size="32"
+                      placeholder="ejemplo@gmail.com"
+                      minlength="3"
+                      maxlength="64"
+                      pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                      required
+                    />
+                    <has-error :form="formPer" field="correo"></has-error>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  @click="limpiarPersona()"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button
+                  @click="crearPersona()"
+                  type="submit"
+                  class="btn btn-success"
+                >
+                  Guardar
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <!-- Modal -->
+    
     </div>
   </section>
 </template>
@@ -508,12 +517,8 @@ export default {
       this.formVoluntario.errors.clear();
       this.limpiar();
     },
-    abrirModal(data = {}) {
-      this.modal = 1;
-      (this.id = 0), (this.tituloModal = "Registro de persona");
-    },
-    cerrarModal() {
-      this.modal = 0;
+   abrirModal() {
+      $("#personaModal").modal("show");
     },
     limpiar() {
       this.form.identificacion = "";
@@ -619,12 +624,11 @@ export default {
               title: "Cedula ya existe!",
             });
           } else {
-            $("#addNew").modal("hide");
+            $("#personaModal").modal("hide");
             Toast.fire({
               icon: "success",
               title: response.data.message,
             });
-            this.cerrarModal();
             this.$Progress.finish();
           }
         })

@@ -49,6 +49,8 @@ class UserController extends BaseController
      */
     public function store(UserRequest $request)
     {
+        $this->authorize('isAdmin');
+        
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -70,6 +72,8 @@ class UserController extends BaseController
      */
     public function update(UserRequest $request, $id)
     {
+        $this->authorize('isAdmin');
+
         $user = User::findOrFail($id);
 
         if (!empty($request->password)) {

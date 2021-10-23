@@ -63,7 +63,7 @@ class OrganizacionesRequest extends FormRequest
             'id.*'=>'Cedula requiere mínimo 8 caracteres y máximo 18',
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'telefono.*' => 'Telefono se requiere, mínimo 8 números',
-            'correo.*' => 'Correo se requiere, ejemplo: examen@gmail.com',
+            'correo.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
         ];
     }
 }
