@@ -106,53 +106,13 @@
       <h2 class="titles"><span class="pull-right"></span>Donadores</h2>
       <div class="row">
         <ul class="scroll-box">
-          <li>
-            <a href="">
-              <h3>Nombre</h3>
-              <h1>Informacion</h1>
+          <li v-for="donador in donadores.data" v-bind:key="donador">
+            <a href="#">
+              <h3>{{donador.nombre}} {{donador.apellido1}}</h3>
+              <h1 v-if="donador.id = donativos.idPersonas">{{donativo.fecha}}</h1>
               <h4></h4>
               <h5>
-                Description Description Description Description Description
-              </h5>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <h3>Nombre</h3>
-              <h1>Informacion</h1>
-              <h4></h4>
-              <h5>
-                Description Description Description Description Description
-              </h5>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <h3>Nombre</h3>
-              <h1>Informacion</h1>
-              <h4></h4>
-              <h5>
-                Description Description Description Description Description
-              </h5>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <h3>Nombre</h3>
-              <h1>Informacion</h1>
-              <h4></h4>
-              <h5>
-                Description Description Description Description Description
-              </h5>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <h3>Nombre</h3>
-              <h1>Informacion</h1>
-              <h4></h4>
-              <h5>
-                Description Description Description Description Description
+                Descripción
               </h5>
             </a>
           </li>
@@ -222,6 +182,13 @@ export default {
     this.$Progress.start();
     this.cargarDonativos();
     this.$Progress.finish();
+  },
+  computed:{
+    soloDonadores: function () {
+    return this.donadores.filter(function (donador) {
+      return this.donadores.id == this.donativos.idPersonas
+    })
+  }
   },
 };
 </script>

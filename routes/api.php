@@ -103,5 +103,6 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         'floraCliente' => 'FloraController',
         'faunaCliente' => 'FaunaController',
         'actividadCliente' => 'ActividadController',
+        'articulosCliente' => 'ArticuloController',
     ]);
 });

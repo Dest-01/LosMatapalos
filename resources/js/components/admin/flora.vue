@@ -186,8 +186,8 @@
                     required
                   >
                     <option disabled value="">Seleccione un elemento</option>
-                    <option>Plantas leñosas</option>
-                    <option>Plantas herbaceas</option>
+                    <option value="Plantas leñosas">Plantas leñosas</option>
+                    <option value="Plantas herbaceas">Plantas herbaceas</option>
                   </select>
 
                   <has-error :form="form" field="tipo"></has-error>

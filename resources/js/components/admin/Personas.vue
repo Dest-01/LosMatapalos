@@ -135,6 +135,8 @@
                     placeholder="Cedula"
                     required
                     minlength="8"
+                    maxlength="18"
+                     pattern = "[0-9]{8,18}"
                   />
                   <has-error :form="form" field="id"></has-error>
                 </div>
@@ -153,7 +155,7 @@
                     minlength="3"
                     maxlength="20"
                     required
-                    pattern="[a-zA-Z'-'\s]*"
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -171,7 +173,7 @@
                     minlength="3"
                     maxlength="20"
                     required
-                    pattern="[a-zA-Z'-'\s]*"
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="apellido1"></has-error>
                 </div>
@@ -189,7 +191,7 @@
                     minlength="3"
                     maxlength="20"
                     required
-                    pattern="[a-zA-Z'-'\s]*"
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -205,6 +207,7 @@
                     id="phone"
                     size="20"
                      min="10000000"
+                     maxlength="12"
                     placeholder="12345678"
                    pattern = "[0-9]{8,12}"
                     required

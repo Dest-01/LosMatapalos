@@ -153,7 +153,7 @@
                 <br />
                 <div class="group">
                   <i class="fas fa-id-card iconoInput"></i>
-                  <h3>Busqueda identificacion</h3>
+                  <h3>Busqueda identificación</h3>
                   <div class="campo1">
                     <input
                       style="width: 100%"
@@ -217,7 +217,7 @@
                     <i class="fas fa-calendar-check iconoInput2 icono"></i>
                     <h3 class="labelH3">Fecha de llegada</h3>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; text-transform: inherit;"
                       v-model="formReserva.fecha"
                       type="date"
                       value="Fecha"

@@ -38,7 +38,7 @@ class ActividadRequest extends FormRequest
     {
         return [
             
-            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'fecha' => 'required|date|',
             'hora' => 'required|time|',
             'descripcion' => 'required|string|max:250',
@@ -57,7 +57,7 @@ class ActividadRequest extends FormRequest
     {
         return [
            
-            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'fecha' => 'required|date|',
             'hora' => 'required|time|',
             'descripcion' => 'required|string|max:250',

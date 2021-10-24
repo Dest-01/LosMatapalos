@@ -106,6 +106,7 @@ export default {
 <style scoped>
 .contenedor-principal {
   margin-top: 100px;
+  height: 600px;
 }
 .contenedor-todo {
   display: flex;

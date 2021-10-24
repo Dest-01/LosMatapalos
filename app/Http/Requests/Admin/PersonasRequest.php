@@ -38,10 +38,10 @@ class PersonasRequest extends FormRequest
     {
         return [
             'id' => 'required|string|max:18|min:8',
-            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'telefono' => 'required|numeric|regex:/[0-9]{8}/',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'telefono' => 'required|integer|min:10000000|max:99999999|regex:/[0-9]{8,12}/',
             'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }
@@ -55,10 +55,10 @@ class PersonasRequest extends FormRequest
     {
         return [
            
-            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'telefono' => 'required|numeric|regex:/[0-9]{8}/',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'telefono' => 'required|integer|min:10000000|max:99999999|regex:/[0-9]{8,12}/',
             'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }

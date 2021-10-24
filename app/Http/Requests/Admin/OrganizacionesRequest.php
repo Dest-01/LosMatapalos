@@ -38,8 +38,8 @@ class OrganizacionesRequest extends FormRequest
     {
         return [
             'id' => 'required|string|max:18|min:8',
-            'nombre' => 'required|string|min:3|max:20',
-            'telefono' => 'required|numeric|regex:/[0-9]{8}/',
+            'nombre' => 'required|string|min:3|max:20|regex:/^([0-9a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([0-9a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'telefono' => 'required|integer|min:10000000|max:99999999|regex:/[0-9]{8,12}/',
             'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }
@@ -52,8 +52,8 @@ class OrganizacionesRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'nombre' => 'required|string|min:3|max:20',
-            'telefono' => 'required|numeric|regex:/[0-9]{8}/',
+            'nombre' => 'required|string|min:3|max:20|regex:/^([0-9a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([0-9a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'telefono' => 'required|integer|min:10000000|max:99999999|regex:/[0-9]{8,12}/',
             'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }

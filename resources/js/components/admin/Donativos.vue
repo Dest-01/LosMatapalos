@@ -115,14 +115,14 @@
         <not-found></not-found>
       </div>
 
-    <div
+      <div
         class="modal fade"
         id="modalExtra"
         tabindex="-1"
         role="dialog"
         aria-labelledby="modalExtra"
         aria-hidden="true"
-        >
+      >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -332,7 +332,6 @@
         role="dialog"
         aria-labelledby="addNew"
         aria-hidden="true"
-        
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -367,6 +366,8 @@
                     name="buscador"
                     class="form-control"
                     :disabled="CedulaBloqueo"
+                    minlength="8"
+                    maxlength="18"
                   />
                 </div>
                 <div>
@@ -427,14 +428,15 @@
                 <div class="form-group">
                   <label>Tipo de donativo</label>
                   <select
+                  v-model="form.tipo"
                     class="form-control"
-                    v-model="form.tipo"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('tipo') }"
+                    required
                   >
                     <option disabled value="">Seleccione un elemento</option>
-                    <option>Material</option>
-                    <option>Monetario</option>
+                    <option value="Material">{{Material}}</option>
+                    <option value="Monetario">{{Monetario}}</option>
                   </select>
 
                   <has-error :form="form" field="estado"></has-error>
@@ -449,6 +451,7 @@
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('detalle') }"
+                    required
                   />
                   <has-error :form="form" field="detalle"></has-error>
                 </div>
@@ -466,6 +469,7 @@
                             @change="updatePhoto"
                             :disabled="isDisabled"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
+                        
                           />
                           <has-error :form="form" field="photo"></has-error>
                         </label>
@@ -512,6 +516,7 @@
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('fecha') }"
+                    required
                   />
                   <has-error :form="form" field="fecha"></has-error>
                 </div>
@@ -522,12 +527,13 @@
                     v-model="form.estado"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('estado') }"
+                    required
                   >
                     <div class="form-group"></div>
                     <option disabled value="">Seleccione un elemento</option>
-                    <option>Recibido</option>
-                    <option>Pendiente</option>
-                    <option>Rechazado</option>
+                    <option value="Recibido">Recibido</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Rechazado">Rechazado</option>
                   </select>
 
                   <has-error :form="form" field="estado"></has-error>
@@ -613,6 +619,8 @@ export default {
         telefono: "",
         correo: "",
       }),
+      Monetario:"Monetario",
+      Material:"Material",
     };
   },
   methods: {
@@ -819,19 +827,19 @@ export default {
           params: { id: this.formPer.id },
         })
         .then((response) => {
-           if (response.data.success == false) {
+          if (response.data.success == false) {
             Toast.fire({
               icon: "error",
               title: "Cedula ya existe!",
             });
           } else {
-          $("#modalExtra").modal("hide");
+            $("#modalExtra").modal("hide");
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.$Progress.finish();
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$Progress.finish();
           }
         })
         .catch(() => {
@@ -853,13 +861,13 @@ export default {
               title: "Cedula ya existe!",
             });
           } else {
-          $("#modalExtra").modal("hide");
+            $("#modalExtra").modal("hide");
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.$Progress.finish();
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$Progress.finish();
           }
         })
         .catch(() => {
@@ -928,7 +936,7 @@ export default {
   opacity: 1;
   background: rgba(121, 120, 120, 0.623);
 }
-.btn{
+.btn {
   margin-top: 10px;
   margin-right: 20px;
 }

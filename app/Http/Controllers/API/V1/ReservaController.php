@@ -156,7 +156,7 @@ class ReservaController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+ 
 
         $reserva = $this->reserva->findOrFail($id);
 

@@ -43,6 +43,7 @@ class ReservaRequest extends FormRequest
             'fecha' => 'required|date|',
             'horaInicio' => 'required',
             'horaFin' => 'required',
+            'fecha' => 'required|after:yesterday',
         ];
     }
 
@@ -56,7 +57,7 @@ class ReservaRequest extends FormRequest
         return [
            
             'cantidad' => 'required|numeric|min:1|max:30',
-            'fecha' => 'required',
+            'fecha' => 'required|after:yesterday',
             'horaInicio' => 'required',
             'horaFin' => 'required',
         ];
@@ -65,9 +66,10 @@ class ReservaRequest extends FormRequest
     public function messages(){
         return [
             'cantidad.*'=>'Minimo de 1 y maxima 30',
+            'fecha.after' => 'Una fecha despues de hoy',
             'fecha.*' => 'Seleccione la fecha',
             'horaInicio.*' => 'Selecciona la hora inicial',
-            'horaFin.*' => 'Selecciona la hora fin',
+            'horaFin.*' => 'Selecciona la hora de salida',
         ];
     }
 }

@@ -132,7 +132,7 @@
 
         <div class="contenedor-footer">
             <div class="content-foo">
-                <h4>Phone</h4>
+                <h4>Teléfono</h4>
                 <p>0000-0000</p>
             </div>
             <div class="content-foo">
@@ -140,7 +140,7 @@
                 <p>sendero@una.ac.cr</p>
             </div>
             <div class="content-foo">
-                <h4>Location</h4>
+                <h4>Ubicación</h4>
                 <p>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, cum?
                 </p>

@@ -1,202 +1,160 @@
 <template>
   <div class="principal">
-    <div class="titulo">Repositorio de documentos</div>
+    <div class="titulo">
+      <h1>Repositorio de documentos</h1>
+    </div>
     <div class="secundario">
-        <h1 v-show="Mostrarmensaje"><i class="fas fa-tools"></i> Muy pronto... </h1>
-    <table class="table align-middle">
-      <thead>
-        <tr>
-          <th class="icono" scope="col"></th>
-          <th class="nombre" scope="col">Nombre del documento</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row"><img src="images/PDFIcono.png" alt="" /></th>
-          <td>nombre del documento</td>
-
-          <td>
-            <button @click="mostrar()" type="button" class="btn btn-info btn-sm px-3">
-              DETALLES
-            </button>
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th class="icono"></th>
+            <th class="nombre" scope="col">Nombre</th>
+            <th class="botones" scope="col"></th>
+            <th class="botones" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="icono">
+              <img
+                src="/images/PDFIcono.png"
+                width="50px"
+                height="50px"
+                alt=""
+              />
             </td>
-            <td>
-            <button @click="mostrar()" type="button" class="btn btn-success btn-sm px-3">
-              DESCARGAR
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row"><img src="images/PDFIcono.png" alt="" /></th>
-           <td>nombre del documento</td>
-
-         <td>
-            <button @click="mostrar()" type="button" class="btn btn-info btn-sm px-3">
-              DETALLES
-            </button>
+            <td class="nombre">Nombre del documento</td>
+            <td class="botones">
+              <button type="button" class="btn btn-info btn-sm px-3">
+                <i class="fas fa-info-circle"></i>
+              </button>
             </td>
-            <td>
-            <button @click="mostrar()" type="button" class="btn btn-success btn-sm px-3">
-              DESCARGAR
-            </button>
-          </td>
-        </tr>
-        <tr>
-           <th scope="row"><img src="images/PDFIcono.png" alt="" /></th>
-          <td>nombre del documento</td>
-
-          <td>
-            <button @click="mostrar()" type="button" class="btn btn-info btn-sm px-3">
-              DETALLES
-            </button>
+            <td class="botones">
+              <button type="button" class="btn btn-danger btn-sm px-3">
+                <i class="fas fa-download"></i>
+              </button>
             </td>
-            <td>
-            <button @click="mostrar()" type="button" class="btn btn-success btn-sm px-3">
-              DESCARGAR
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row"><img src="images/PDFIcono.png" alt="" /></th>
-          <td>nombre del documento</td>
-
-          <td>
-            <button @click="mostrar()" type="button" class="btn btn-info btn-sm px-3">
-              DETALLES
-            </button>
+          </tr>
+          <tr>
+            <td class="icono">
+              <img
+                src="/images/PDFIcono.png"
+                width="50px"
+                height="50px"
+                alt=""
+              />
             </td>
-            <td>
-            <button @click="mostrar()" type="button" class="btn btn-success btn-sm px-3">
-              DESCARGAR
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row"><img src="images/PDFIcono.png" alt="" /></th>
-          <td>nombre del documento</td>
-
-          <td>
-            <button @click="mostrar()" type="button" class="btn btn-info btn-sm px-3">
-              DETALLES
-            </button>
+            <td class="nombre">Nombre del documento</td>
+            <td class="botones">
+              <button type="button" class="btn btn-info btn-sm px-3">
+                <i class="fas fa-info-circle"></i>
+              </button>
             </td>
-            <td>
-            <button @click="mostrar()" type="button" class="btn btn-success btn-sm px-3">
-              DESCARGAR
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <td class="botones">
+              <button type="button" class="btn btn-danger btn-sm px-3">
+                <i class="fas fa-download"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="icono">
+              <img
+                src="/images/PDFIcono.png"
+                width="50px"
+                height="50px"
+                alt=""
+              />
+            </td>
+            <td class="nombre">Nombre del documento</td>
+            <td class="botones">
+              <button type="button" class="btn btn-info btn-sm px-3">
+                <i class="fas fa-info-circle"></i>
+              </button>
+            </td>
+            <td class="botones">
+              <button type="button" class="btn btn-danger btn-sm px-3">
+                <i class="fas fa-download"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="icono">
+              <img
+                src="/images/PDFIcono.png"
+                width="50px"
+                height="50px"
+                alt=""
+              />
+            </td>
+            <td class="nombre">Nombre del documento</td>
+            <td class="botones">
+              <button type="button" class="btn btn-info btn-sm px-3">
+                <i class="fas fa-info-circle"></i>
+              </button>
+            </td>
+            <td class="botones">
+              <button type="button" class="btn btn-danger btn-sm px-3">
+                <i class="fas fa-download"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return{
-            Mostrarmensaje: false,
-        }
-        
-    },
-    methods: {
-        mostrar(){
-            this.Mostrarmensaje = true
-        }
-    }
-}
-</script>
-
 <style scoped>
 .principal {
-  margin-top: 150px;
-  margin-block: 100px;
-  margin-left: 120px;
-  margin-right: 120px;
-}
-.secundario{
-    width: 100%;
-    margin: 40px;
-}
-.titulo {
-  font-size: 2rem;
-  font-family: "Poppins";
+  margin: 130px 10px 10px 10px;
+  width: 100%;
+  height: 100%;
   text-align: center;
-  font-weight: 600;
-  margin: 50px;
-  padding: 10px;
-}
-thead {
-  font-size: 18px;
   font-family: "Poppins";
 }
-tr {
-  font-size: 18px;
-  font-family: "Poppins";
+.titulo{
+  margin: 10px;
+
 }
-img {
-  width: 50px;
-  height: 50px;
+.secundario {
+  width: 100%;
+  height: 500px;
+  margin: 10px 10px 10px 10px;
+  padding: 20px 250px;
+    text-align: start;
+}
+.table tbody {
+  border: 1px;
+  border-block: unset;
+  border-bottom-color: #5a5a5a87;
+  border-bottom-style: groove;
 }
 .icono {
-  width: 10px;
-}
-
-.btn {
-  width: 150px;
-  height: 40px;
-  margin: 10px;
-  font-size: 20px;
-  padding: 5px;
-}
-.nombre {
-  width: 100%;
-}
-tbody, td, tfoot, th, thead, tr {
-border-color: #d9d9d970; 
-    /* border-style: groove; */
-    /* border-width: 1px; */
-    border-bottom: groove;
-    border-bottom-color: #b7b7b72e;
-}
-@media screen and (max-width: 768px) {
-  .secundario{
-    width: 100%;
-  }
-  .titulo{
-    font-size: 1rem;
-    width: 100%;
-  }
-  .btn{
-        width: 100px;
-        font-size: 10px;
-    }
-}
-
-@media only screen and (min-device-width: 769px) and (max-device-width: 1024px) {
-  img{
-    width: 25px;
-    height: 25px;
-  }
-    .secundario{
-        width: 100%;
-        margin-left: 1px;
-    }
-    .btn{
-        width: 100px;
-        font-size: 10px;
-        padding: 1px;
-    }
-    .table>:not(caption)>*>* {
-    padding: 1px 1px;
-}
-.nombre{
   width: 100px;
 }
+.nombre {
+  width: 400px;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.botones {
+  width: 50px;
+}
+.table > :not(caption) > * > * {
+  padding: 1.2rem 0.1rem;
 }
 
-
-
+@media (max-width: 768px) {
+  .secundario {
+    width: 100%;
+    height: auto;
+    margin: 1px 1px;
+    padding: 1px 18px 1px 1px;
+  }
+  .nombre {
+    width: 400px;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+}
 </style>

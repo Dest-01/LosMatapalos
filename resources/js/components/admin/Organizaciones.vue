@@ -137,6 +137,8 @@
                     :class="{ 'is-invalid': form.errors.has('id') }"
                     placeholder="Cedula Jurídica"
                     required
+                    minlength="8"
+                    maxlength="20"
                   />
                   <has-error :form="form" field="id"></has-error>
                 </div>
@@ -154,6 +156,7 @@
                     required
                     minlength="3"
                     maxlength="30"
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -168,7 +171,7 @@
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     min="10000000"
                     placeholder="12345678"
-                    pattern="[0-9]{8,12}"
+                    pattern="[0-9]{8,}"
                     required
                   />
                   <has-error :form="form" field="telefono"></has-error>

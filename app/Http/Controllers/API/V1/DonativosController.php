@@ -116,7 +116,7 @@ class DonativosController extends BaseController
                 'tipo' => 'required|string|max:50',
                 'detalle' => 'required|string|max:255',
                 'fecha' => 'required|date',
-                'photo' => 'required',
+                'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
                 'estado' => 'required|string|',
 
             ];
@@ -125,6 +125,8 @@ class DonativosController extends BaseController
                 'tipo.*' => 'Seleccione un tipo de donativo',
                 'detalle.*' => 'Breve descripción del donativo',
                 'fecha.*' => 'Seleccione fecha de donativo',
+                'photo.sometimes' => 'Solo imagenes, jpeg, jpg o png',
+                'photo.base64image' => 'Solo imagenes, jpeg, jpg o png',
                 'photo.*' => 'Cargue una foto',
                 'estado.*' => 'Seleccione un estado del donativo',
             ];
@@ -178,6 +180,7 @@ class DonativosController extends BaseController
             'tipo' => 'required|string|max:50',
             'detalle' => 'required|string|max:255',
             'fecha' => 'required|date',
+            'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
             'estado' => 'required|string|',
 
         ];
@@ -186,6 +189,9 @@ class DonativosController extends BaseController
             'tipo.*' => 'Seleccione un tipo de donativo',
             'detalle.*' => 'Breve descripción del donativo',
             'fecha.*' => 'Seleccione fecha de donativo',
+            'photo.sometimes' => 'Solo imagenes, jpeg, jpg o png',
+            'photo.base64image' => 'Solo imagenes, jpeg, jpg o png',
+            'photo.*' => 'Cargue una foto',
             'estado.*' => 'Seleccione un estado del donativo',
         ];
 

@@ -50,7 +50,7 @@
        </li>
       <li class="col-6 col-sm-4">
           <div class="cnt-block equal-hight" style="height: 349px;">
-            <figure><img src="/images/face1.jpg" class="img-responsive" alt=""></figure>
+            <figure><img src="/images/Persona3.jpeg" class="img-responsive" alt=""></figure>
             <h3><a href="mailto:yerry.rodriguez.barquero@est.una.ac.cr">Persona 3</a></h3>
             <p>Encargado administrativo</p>
             <ul class="follow-us clearfix">
