@@ -28,6 +28,8 @@ export default [
     { path: '/admin/fauna', component: require('./components/admin/Fauna').default },
     { path: '/admin/flora', component: require('./components/admin/flora.vue').default },
     { path: '/admin/articulos', component: require('./components/admin/Articulos.vue').default },
+    { path: '/admin/reportes1', component: require('./components/admin/Reportes1.vue').default },
+    { path: '/reporte', component: require('./components/PruebaReporte.vue').default },
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //------------------=-------------------------------RUTAS CLIENTE-------------------------------------------------

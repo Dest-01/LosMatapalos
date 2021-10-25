@@ -122,7 +122,6 @@
               @submit.prevent="editmode ? actualizarPersona() : crearPersona()"
             >
               <div class="modal-body">
-                
                 <div class="form-group">
                   <label>Cédula</label>
                   <input
@@ -136,11 +135,10 @@
                     required
                     minlength="8"
                     maxlength="18"
-                     pattern = "[0-9]{8,18}"
+                    pattern="[0-9]{8,18}"
                   />
                   <has-error :form="form" field="id"></has-error>
                 </div>
-
 
                 <div class="form-group">
                   <label>Nombre</label>
@@ -206,10 +204,10 @@
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     id="phone"
                     size="20"
-                     min="10000000"
-                     maxlength="12"
+                    min="10000000"
+                    maxlength="12"
                     placeholder="12345678"
-                   pattern = "[0-9]{8,12}"
+                    pattern="[0-9]{8,12}"
                     required
                   />
                   <has-error :form="form" field="telefono"></has-error>
@@ -265,6 +263,7 @@
 export default {
   data() {
     return {
+      OcultartablaReportes: true,
       CedulaBloqueo: false,
       editmode: false,
       errors: {},
@@ -281,6 +280,7 @@ export default {
     };
   },
   methods: {
+
     getResults(page = 1) {
       this.$Progress.start();
 

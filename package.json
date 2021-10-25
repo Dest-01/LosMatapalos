@@ -34,6 +34,8 @@
         "@johmun/vue-tags-input": "^2.1.0",
         "admin-lte": "^3.1.0",
         "b-carousel": "^1.0.9",
+        "jspdf": "^2.4.0",
+        "jspdf-html2canvas": "^1.4.9",
         "laravel-vue-pagination": "^2.3.1",
         "mdb-ui-kit": "^3.9.0",
         "moment": "^2.29.1",

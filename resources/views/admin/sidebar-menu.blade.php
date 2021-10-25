@@ -218,7 +218,7 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item">
-                        <router-link to="" class="nav-link">
+                        <router-link to="/admin/reportes1" class="nav-link">
                             <i class="nav-icon fas fa-print white"></i>
                             <p>
                                 Consultar Reporte

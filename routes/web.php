@@ -40,6 +40,15 @@ Route::get('/users', function () {
     return view('admin');
 })->where('users', '[\/\w\.-]*')->middleware('auth');
 
+Route::get('/admin/reportes1', function () {
+    return view('admin');
+})->where('admin/reportes1', '[\/\w\.-]*')->middleware('auth');
+
+Route::get('/reporte', function () {
+    return view('admin');
+})->where('reporte', '[\/\w\.-]*')->middleware('auth');
+
+
 /////////////////////----FIN-ADMIN Y PRUEBAS---//////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////
