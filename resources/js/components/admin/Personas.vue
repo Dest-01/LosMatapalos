@@ -135,6 +135,7 @@
                     required
                     minlength="8"
                     maxlength="18"
+                    
                     pattern="[0-9]{8,18}"
                   />
                   <has-error :form="form" field="id"></has-error>
@@ -205,7 +206,7 @@
                     id="phone"
                     size="20"
                     min="10000000"
-                    maxlength="12"
+                    max="99999999"
                     placeholder="12345678"
                     pattern="[0-9]{8,12}"
                     required

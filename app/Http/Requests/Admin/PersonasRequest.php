@@ -37,7 +37,7 @@ class PersonasRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'id' => 'required|string|max:18|min:8',
+            'id' => 'required|string|max:18|min:8|regex:/[0-9]{8,18}/',
             'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',

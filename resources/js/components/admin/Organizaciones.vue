@@ -170,8 +170,9 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     min="10000000"
+                    max="99999999"
                     placeholder="12345678"
-                    pattern="[0-9]{8,}"
+                   pattern="[0-9]{8}"
                     required
                   />
                   <has-error :form="form" field="telefono"></has-error>

@@ -37,13 +37,17 @@ class ReservaRequest extends FormRequest
     public function createRules(): array
     {
 
-        
+        $horaIncio = '08:00:00';
+        $horaIncio2 = '15:00:00';
+        $horaFin2 =' 09:00:00';
+        $horaFin2 =' 16:00:00';
+
         return [
             'cantidad' => 'required|numeric|min:1|max:30',
             'fecha' => 'required|date|',
-            'horaInicio' => 'required',
-            'horaFin' => 'required',
-            'fecha' => 'required|after:yesterday',
+            'horaInicio' => 'required|date_format:H:i|after:$horaIncio|before:$horaIncio2',
+            'horaFin' => 'required|date_format:H:i|after:horaInicio',
+            'fecha' => 'required|after:tomorrow',
         ];
     }
 
@@ -57,7 +61,7 @@ class ReservaRequest extends FormRequest
         return [
            
             'cantidad' => 'required|numeric|min:1|max:30',
-            'fecha' => 'required|after:yesterday',
+            'fecha' => 'required|after:tomorrow',
             'horaInicio' => 'required',
             'horaFin' => 'required',
         ];
@@ -66,9 +70,11 @@ class ReservaRequest extends FormRequest
     public function messages(){
         return [
             'cantidad.*'=>'Minimo de 1 y maxima 30',
-            'fecha.after' => 'Una fecha despues de hoy',
+            'fecha.after' => '2 fecha despues de hoy',
             'fecha.*' => 'Seleccione la fecha',
+            'horaInicio.date_format' => 'Hora en el horario establecido',
             'horaInicio.*' => 'Selecciona la hora inicial',
+            'horaFin.after' => 'Hora despues de la hora inicio',
             'horaFin.*' => 'Selecciona la hora de salida',
         ];
     }

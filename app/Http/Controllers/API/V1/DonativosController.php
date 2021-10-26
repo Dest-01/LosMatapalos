@@ -114,8 +114,8 @@ class DonativosController extends BaseController
         try {
             $rules = [
                 'tipo' => 'required|string|max:50',
-                'detalle' => 'required|string|max:255',
-                'fecha' => 'required|date',
+                'detalle' => 'required|string|max:255|min:3',
+                'fecha' => 'required|date|after:2000-01-01',
                 'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
                 'estado' => 'required|string|',
 
@@ -178,8 +178,8 @@ class DonativosController extends BaseController
     {
         $rules = [
             'tipo' => 'required|string|max:50',
-            'detalle' => 'required|string|max:255',
-            'fecha' => 'required|date',
+            'detalle' => 'required|string|max:255|min:3',
+            'fecha' => 'required|date|after:2000-01-01',
             'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
             'estado' => 'required|string|',
 

@@ -33,7 +33,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  agregar nuevo
+                  Registrar Donativo
                 </button>
                 <button
                   type="button"
