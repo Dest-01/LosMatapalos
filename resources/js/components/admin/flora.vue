@@ -49,6 +49,7 @@
                     <th>Imagen</th>
                     <th>Familia científico</th>
                     <th>Fecha registro</th>
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -137,9 +138,9 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nom_comun') }"
                     placeholder="Nombre común de la especie"
+                    required
                     minlength="3"
                     maxlength="30"
-                    required
                   />
                   <has-error :form="form" field="nom_comun"></has-error>
                 </div>
@@ -153,9 +154,10 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nom_cientifico') }"
                     placeholder="Nombre científico de la especie"
+                     required
                     minlength="3"
                     maxlength="30"
-                    required
+                    
                   />
                   <has-error :form="form" field="nom_cientifico"></has-error>
                 </div>
@@ -168,11 +170,12 @@
                     name="Descripcion"
                     :class="{ 'is-invalid': form.errors.has('descripcion') }"
                     placeholder="Breve descripción"
+                    required
                     minlength="3"
-                    maxlength="255"
+                    maxlength="250"
                     id=""
                     rows="3"
-                    required
+                    
                   ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
@@ -253,7 +256,9 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fam_cientifica') }"
                     placeholder="Nombre de la familia científica"
-                    required
+                     required
+                    minlength="3"
+                    maxlength="30"
                   />
                   <has-error :form="form" field="fam_cientifica"></has-error>
                 </div>
@@ -299,7 +304,7 @@
     </div>
   </section>
 </template>
-
+ 
 <script>
 export default {
   data() {

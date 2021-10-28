@@ -102,7 +102,7 @@ class DonativosController extends BaseController
         }
 
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -114,14 +114,14 @@ class DonativosController extends BaseController
         try {
             $rules = [
                 'tipo' => 'required|string|max:50',
-                'detalle' => 'required|string|max:255|min:3',
+                'detalle' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:255|min:3',
                 'fecha' => 'required|date|after:2000-01-01',
                 'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
                 'estado' => 'required|string|',
 
             ];
 
-            $messages = [
+            $messages =[
                 'tipo.*' => 'Seleccione un tipo de donativo',
                 'detalle.*' => 'Breve descripción del donativo',
                 'fecha.*' => 'Seleccione fecha de donativo',
@@ -178,9 +178,9 @@ class DonativosController extends BaseController
     {
         $rules = [
             'tipo' => 'required|string|max:50',
-            'detalle' => 'required|string|max:255|min:3',
+            'detalle' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:255|min:3',
             'fecha' => 'required|date|after:2000-01-01',
-            'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
+            // 'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
             'estado' => 'required|string|',
 
         ];
@@ -191,7 +191,7 @@ class DonativosController extends BaseController
             'fecha.*' => 'Seleccione fecha de donativo',
             'photo.sometimes' => 'Solo imagenes, jpeg, jpg o png',
             'photo.base64image' => 'Solo imagenes, jpeg, jpg o png',
-            'photo.*' => 'Cargue una foto',
+            // 'photo.*' => 'Cargue una foto',
             'estado.*' => 'Seleccione un estado del donativo',
         ];
 
@@ -227,7 +227,6 @@ class DonativosController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
         $donativos = Donativos::FindOrFail($id);
         if (file_exists('images/donativos/' . $donativos->photo) and !empty($donativos->photo)) {
             unlink('images/donativos/' . $donativos->photo);

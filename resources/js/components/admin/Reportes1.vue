@@ -60,7 +60,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
-                  @click="verPersonasTabla()"
+                  
                 >
                   <i class="far fa-file-pdf"></i>
                   Generar Reporte

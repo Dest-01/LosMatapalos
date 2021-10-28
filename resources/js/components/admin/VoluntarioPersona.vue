@@ -160,7 +160,7 @@
                     name="buscadorC"
                     class="form-control"
                     :disabled="CedulaBloqueo"
-                     placeholder="Numero de cedula a consultar"
+                    placeholder="Numero de cedula a consultar"
                   />
                 </div>
                 <div v-show="showBuscadores">
@@ -202,7 +202,8 @@
                     name="identificacion"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('identificacion') }"
-                   
+                    minlength="8"
+                    maxlength="8"
                   />
                   <has-error :form="form" field="identificacion"></has-error>
                 </div>
@@ -219,9 +220,7 @@
                       'is-invalid': form.errors.has('idVoluntario'),
                     }"
                     required
-                    min="1"
-                    placeholder="1"
-
+                    minlength="1"
                   />
                   <has-error :form="form" field="idVoluntario"></has-error>
                 </div>
@@ -236,7 +235,7 @@
                     :class="{ 'is-invalid': form.errors.has('lugar') }"
                     required
                     minlength="3"
-                    maxlength="50"
+                    maxlength="70"
                     placeholder="Lugar de procedencia de la personas"
                   />
                   <has-error :form="form" field="lugar"></has-error>
@@ -254,7 +253,8 @@
                       'is-invalid': form.errors.has('cantidad'),
                     }"
                     required
-                    min="1"
+                    minlength="1"
+                    maxlength="30"
                     placeholder="Cantidad de actividades realizadas"
 
                   />

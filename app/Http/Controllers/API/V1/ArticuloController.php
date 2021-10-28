@@ -38,9 +38,9 @@ class ArticuloController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'Name' => 'required|min:3|max:20',
-            'Type' => 'required|min:3|max:20',
-            'Image' => 'required',
+            'Name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'Type' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'Image' => 'required|sometimes|base64image:png,jpeg,jpg',
         ];
     
         $messages = [
@@ -98,7 +98,6 @@ class ArticuloController extends BaseController
         $rules = [
             'Name' => 'required|min:3|max:20',
             'Type' => 'required|min:3|max:20',
-            'Image' => 'required',
         ];
     
         $messages = [
@@ -108,7 +107,6 @@ class ArticuloController extends BaseController
             'Type.max'=>'Minimo 3 caracteres',
             'Type.min'=>'Maximo 20 caracteres',
             'Type.*' => 'Indique tipo de articulo a publicar',
-            'Image.*' => 'Cargue una foto del Articulo',
 
         ];
 
@@ -146,7 +144,7 @@ class ArticuloController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+
 
         $articulo = Articulo::FindOrFail($id);  
         if(file_exists('images/Articulos/'.$articulo->Image) AND !empty($articulo->Image)){ 

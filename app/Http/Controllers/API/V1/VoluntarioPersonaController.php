@@ -90,9 +90,27 @@ class VoluntarioPersonaController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VoluntarioPersonasRequest $request)
+    public function store(Request $request)
     {
         try {
+            $rules = [
+                'identificacion' => 'required|string|max:18|min:8|regex:/[0-9]{8,18}/',
+                'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
+                'lugar'=> 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:70|min:3',
+                'idVoluntario' => 'required|integer|min:1|',
+            ];
+            $messages = [
+                'cantidad.min' => 'Mínimo 1 actividad',
+                'cantidad.max' => 'Maximo 30 actividades',
+                'cantidad.*' => 'Se requiere una cantidad de actividades',
+                'lugar.min' => 'Mínimo 3 caracteres',
+                'lugar.max' => 'Maximo 70 caracteres',
+                'lugar.*' => 'Se requiere un lugar de procedencia',
+                'idVoluntario' => 'Mínimo 1 Id de voluntario',
+                'idVoluntario.*' => 'Se requiere un Id de voluntario',
+            ];
+            $this->validate($request, $rules,$messages);
+            
             $filtro = $request->idVoluntario;
             $existencia = Voluntario::where('id', '=', $filtro)->first();
             if ($existencia === null) {
@@ -134,13 +152,22 @@ class VoluntarioPersonaController extends BaseController
      * @param  \App\Models\VoluntarioPersona  $voluntarioPersona
      * @return \Illuminate\Http\Response
      */
-    public function update(VoluntarioPersonasRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        
+        $rules = [
+            'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
+            'lugar'=> 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:255|min:3',
+        ];
+        $messages = [
+            'cantidad.min' => 'Mínimo 1 actividad',
+            'cantidad.max' => 'Maximo 30 actividades',
+            'cantidad.*' => 'Se requiere una cantidad de actividades',
+            'lugar.min' => 'Mínimo 3 caracteres',
+            'lugar.max' => 'Maximo 30 caracteres',
+            'lugar.*' => 'Se requiere un lugar de procedencia',
+        ];
         $tag = $this->voluntarioPersona->findOrFail($id);
-
         $tag->update($request->all());
-
         return $this->sendResponse($tag, 'Voluntario Persona Actualizada');
     }
     /**
@@ -152,9 +179,7 @@ class VoluntarioPersonaController extends BaseController
     public function destroy($id)
     {
         $voluntarioPer = $this->voluntarioPersona->findOrFail($id);
-
         $voluntarioPer->delete();
-
         return $this->sendResponse($voluntarioPer, 'Voluntario Persona eliminada');
     }
 }

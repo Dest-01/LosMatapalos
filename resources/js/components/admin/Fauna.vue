@@ -142,9 +142,9 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombreComun') }"
                     placeholder="Nombre común de la especie"
+                    required
                     minlength="3"
                     maxlength="30"
-                    required
                   />
                   <has-error :form="form" field="nombreComun"></has-error>
                 </div>
@@ -159,9 +159,9 @@
                       'is-invalid': form.errors.has('nombreCientifico'),
                     }"
                     placeholder="Nombre científico de la especie"
+                    required
                     minlength="3"
                     maxlength="30"
-                    required
                   />
                   <has-error :form="form" field="nombreCientifico"></has-error>
                 </div>
@@ -173,11 +173,11 @@
                     name="descripcion"
                     :class="{ 'is-invalid': form.errors.has('descripcion') }"
                     placeholder="Breve descripción"
+                    required
                     minlength="3"
-                    maxlength="255"
+                    maxlength="60"
                     id=""
                     rows="3"
-                    required
                   ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
@@ -191,6 +191,8 @@
                     :class="{ 'is-invalid': form.errors.has('tipo') }"
                     placeholder="Nombre del tipo de especie"
                     required
+                    minlength="3"
+                    maxlength="15"
                   />
                   <has-error :form="form" field="tipo"></has-error>
                 </div>
@@ -207,6 +209,7 @@
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('imagen') }"
                             id="SubirImagen"
+                            required
                           />
                           <has-error :form="form" field="imagen"></has-error>
                         </label>
@@ -270,6 +273,8 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fechaRegistro') }"
                     required
+                    minlength="3"
+                    maxlength="30"
                   />
                   <has-error :form="form" field="fechaRegistro"></has-error>
                 </div>
@@ -350,7 +355,7 @@ export default {
     editModal(Fauna) {
       this.editmode = true;
       this.form.reset();
-       $("#SubirImagen").val("");
+      $("#SubirImagen").val("");
       this.previewImage = "";
       $("#addNew").modal("show");
       this.form.fill(Fauna);
@@ -358,7 +363,7 @@ export default {
     newModal() {
       this.editmode = false;
       this.form.reset();
-       $("#SubirImagen").val("");
+      $("#SubirImagen").val("");
       this.previewImage = "";
       $("#addNew").modal("show");
     },

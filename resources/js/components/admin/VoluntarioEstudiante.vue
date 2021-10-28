@@ -174,7 +174,7 @@
                     name="buscadorC"
                     class="form-control"
                     :disabled="CedulaBloqueo"
-                   placeholder="Numero de cedula a consultar"
+                    placeholder="Numero de cedula a consultar"
                   />
                 </div>
                 <div v-show="showBuscadores">
@@ -232,8 +232,8 @@
                       'is-invalid': form.errors.has('idVoluntario'),
                     }"
                     required
-                    min="1"
-                    placeholder="1"
+                    placeholder="Id de voluntario"
+                    minlength="1"
                   />
                   <has-error :form="form" field="idVoluntario"></has-error>
                 </div>
@@ -247,11 +247,11 @@
                     class="form-control"
                     :disabled="bloquearCamposExtras"
                     :class="{ 'is-invalid': form.errors.has('carrera') }"
-                    required
-                    min="3"
+                    minlength="3"
                     maxlength="50"
-                    placeholder="Carrera universitaria del estudiante"
+                    placeholder="Carrera universitaria"
                   />
+                  
                   <has-error :form="form" field="carrera"></has-error>
                 </div>
 
@@ -269,6 +269,7 @@
                             :disabled="bloquearCamposExtras"
                             :class="{ 'is-invalid': form.errors.has('imagen') }"
                             id="SubirImagen"
+                            required
                           />
                           <has-error :form="form" field="imagen"></has-error>
                         </label>
@@ -317,9 +318,9 @@
                     :class="{
                       'is-invalid': form.errors.has('cantidad'),
                     }"
-                    required
-                    min="0"
-                    placeholder="Cantidad de actividades realizadas"
+                    minlength="1"
+                    maxlength="30"
+                    placeholder="Cantidad de actividades"
                   />
                   <has-error :form="form" field="cantidad"></has-error>
                 </div>

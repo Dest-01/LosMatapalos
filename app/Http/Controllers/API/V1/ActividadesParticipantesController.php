@@ -94,7 +94,6 @@ class ActividadesParticipantesController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
 
         $actividadesParticipantes = $this->actividadesParticipantes->findOrFail($id);
 

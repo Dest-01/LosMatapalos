@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar Nuevo
+                  Agregar Organización
                 </button>
               </div>
             </div>

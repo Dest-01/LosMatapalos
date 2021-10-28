@@ -87,7 +87,6 @@ class VoluntarioActividadesController extends BaseController
      */
     public function destroy(VoluntarioActividades $voluntarioActividades,$id)
     {
-        $this->authorize('isAdmin');
         $voluntarioActividades = $this->voluntarioActividades->findOrFail($id);
         $voluntarioActividades->delete();
         return $this->sendResponse($voluntarioActividades, 'Datos Eliminados');

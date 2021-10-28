@@ -136,6 +136,9 @@
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
+                    required
+                    minlength="3"
+                    maxlength="25"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
                     placeholder="Nombre del donativo necesario"
@@ -168,6 +171,7 @@
                             accept="image/*"
                             ref="file"
                             name="photo"
+                            required
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
                              id="SubirImagen"
@@ -236,7 +240,7 @@
   </section>
 </template>
 
-            <script>
+<script>
 export default {
   data() {
     return {
@@ -412,5 +416,5 @@ export default {
 };
 </script>
 
-            <style>
+<style>
 </style>

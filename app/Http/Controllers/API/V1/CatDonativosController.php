@@ -36,8 +36,8 @@ class CatDonativosController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => 'required|string|max:20',
-            'photo' => 'required',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
 
         ];
 
@@ -92,14 +92,13 @@ class CatDonativosController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'nombre' => 'required|string|max:20',
-            'photo' => 'required',
-
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:4',
+            // 'photo' => 'base64image:png,jpeg,jpg',
         ];
 
         $messages = [
             'nombre.*' => 'Escriba un nombre, maximo 20 caracteres',
-            'photo.*' => 'Cargue una foto',
+            // 'photo.*' => 'Cargue una foto',
         ];
 
         $this->validate($request, $rules, $messages);

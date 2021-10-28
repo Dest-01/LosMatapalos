@@ -407,6 +407,7 @@
                     v-model="form.idPersona"
                     type="text"
                     name="idPersona"
+                    required
                     class="form-control"
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('idPersona') }"
@@ -420,6 +421,7 @@
                     type="text"
                     name="idOrganizacion"
                     class="form-control"
+                    required
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('idOrganizacion') }"
                   />
@@ -449,9 +451,11 @@
                     type="text"
                     name="detalle"
                     class="form-control"
+                    required
+                    minlength="3"
+                    maxlength="255"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('detalle') }"
-                    required
                   />
                   <has-error :form="form" field="detalle"></has-error>
                 </div>
@@ -469,6 +473,7 @@
                             @change="updatePhoto"
                             :disabled="isDisabled"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
+                            id="SubirImagen"
                         
                           />
                           <has-error :form="form" field="photo"></has-error>
@@ -767,6 +772,8 @@ export default {
       // this.form.reset();
 
       $("#addNew").modal("show");
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       this.form.fill(donativo);
       this.isDisabled = false;
       this.CedulaBloqueo = true;
@@ -779,6 +786,8 @@ export default {
     newModal() {
       this.editmode = false;
       this.form.reset();
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
       this.show = true;
       this.buscador = "";

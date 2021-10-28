@@ -84,25 +84,25 @@ class VoluntarioEstudiantesController extends BaseController
     {
 
         $rules = [
-            'carrera' => 'required|string|max:50',
-            'voluntariado_id' => 'required|integer|',
-            'imagen' => 'required',
+            'identificacion' => 'required|string|max:18|min:8|regex:/[0-9]{8,18}/',
+            'carrera' => 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:50|min:3',
+            'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
             'idVoluntario' => 'required|integer|min:1',
-            'cantidad' => 'required|integer|min:0',
+            'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
         ];
 
         $messages = [
-            'voluntariado_id.*' => 'Se requiere un id de voluntario y solo números',
-            'carrera.*' => 'Se requiere la carrera de la universidad, maximo 50 caracteres',
+            'carrera.*' => 'Se requiere la carrera del Estudiante',
+            'carrera.min' => 'Mínimo 3 caracteres',
+            'carrera.max' => 'Maximo 50 caracteres',
             'imagen.*' => 'Se requiere la foto del estudiante',
-            'idVoluntario.min' => 'minimo un numero en el id del voluntario',
-            'idVoluntario.*' => 'Se requiere un id de voluntario',
-            'cantidad..min' => 'minimo 0 actividades',
-            'cantidad.*' => 'Se requiere la cantidad de actividades',
+            'idVoluntario' => 'Mínimo 1 Id de voluntario',
+            'idVoluntario.*' => 'Se requiere un Id de voluntario',
+            'cantidad.min' => 'Mínimo 1 actividad',
+            'cantidad.max' => 'Maximo 30 actividades',
+            'cantidad.*' => 'Se requiere una cantidad de actividades',
         ];
-
         $this->validate($request, $rules, $messages);
-
         if ($request->imagen) {
             $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos($request->imagen, ';')))[1])[1];
             (!file_exists(public_path() . '/images/voluntariado/')) ? mkdir(public_path() . '/images/voluntariado/', 0777, true) : null;
@@ -158,21 +158,17 @@ class VoluntarioEstudiantesController extends BaseController
     {
       
         $rules = [
-            'carrera' => 'required|string|max:50',
-            'voluntariado_id' => 'required|integer|',
-            'imagen' => 'required',
-            'idVoluntario' => 'required|integer|min:1',
-            'cantidad' => 'required|integer|min:0',
+            'carrera' => 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:30|min:3',
+            'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
         ];
 
         $messages = [
-            'voluntariado_id.*' => 'Se requiere un id de voluntario y solo números',
-            'carrera.*' => 'Se requiere la carrera de la universidad, maximo 50 caracteres',
-            'imagen.*' => 'Se requiere la foto del estudiante',
-            'idVoluntario.min' => 'minimo un numero en el id del voluntario',
-            'idVoluntario.*' => 'Se requiere un id de voluntario',
-            'cantidad..min' => 'minimo 0 actividades',
-            'cantidad.*' => 'Se requiere la cantidad de actividades',
+            'carrera.*' => 'Se requiere la carrera del Estudiante',
+            'carrera.min' => 'Mínimo 3 caracteres',
+            'carrera.max' => 'Maximo 50 caracteres',
+            'cantidad.min' => 'Mínimo 1 actividad',
+            'cantidad.max' => 'Maximo 30 actividades',
+            'cantidad.*' => 'Se requiere una cantidad de actividades',
         ];
 
         $this->validate($request, $rules, $messages);

@@ -69,7 +69,7 @@ class ActividadesController extends BaseController
 
             if ($request->imagen) {
                 $name = time() . '.' . explode('/', explode(':', substr($request->imagen, 0, strpos($request->imagen, ';')))[1])[1];
-                (!file_exists(public_path().'/images/Actividades/')) ? mkdir(public_path().'/images/actividades/',0777,true) : null;
+                (!file_exists(public_path().'/images/actividades/')) ? mkdir(public_path().'/images/actividades/',0777,true) : null;
                 \Image::make($request->imagen)->save(public_path('images/actividades/') . $name);
                 $request->merge(['imagen' => $name]);
             }
@@ -177,7 +177,7 @@ class ActividadesController extends BaseController
 
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+
         $actividades = Actividades::FindOrFail($id);
         if (file_exists('images/actividades/' . $actividades->imagen) and !empty($actividades->imagen)) {
             unlink('images/actividades/' . $actividades->imagen);

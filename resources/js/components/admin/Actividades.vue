@@ -63,7 +63,7 @@
                     </td>
                     <td>
                       <img
-                        v-bind:src="'/images/Actividades/' + Actividad.imagen"
+                        v-bind:src="'/images/actividades/' + Actividad.imagen"
                         width="50px"
                         height="50px"
                       />

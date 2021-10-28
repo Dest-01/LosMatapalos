@@ -138,9 +138,10 @@
                     class="form-control"
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('id') }"
-                    required
+                   required
                     minlength="8"
                     maxlength="18"
+                   pattern="[0-9]{8,18}"
                     placeholder="Cedula del participante"
                   />
                   <has-error :form="form" field="id"></has-error>
@@ -156,9 +157,10 @@
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
                     required
                     minlength="3"
-                    maxlength="20"
+                    maxlength="30"
+                   pattern="[a-zA-Z'-'\s]*"
                     placeholder="Nombre del participante"
-                    pattern="[a-zA-Z'-'\s]*"
+                   
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -171,9 +173,10 @@
                     name="apellido1"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido1') }"
+                    
                     required
                     minlength="3"
-                    maxlength="20"
+                    maxlength="30"
                     placeholder="Primer apellido del participante"
                     pattern="[a-zA-Z'-'\s]*"
                   />
@@ -188,11 +191,12 @@
                     name="apellido2"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido2') }"
-                    required
+                  required
                     minlength="3"
-                    maxlength="20"
+                    maxlength="30"
+                     pattern="[a-zA-Z'-'\s]*"
                     placeholder="Segundo apellido del participante"
-                    pattern="[a-zA-Z'-'\s]*"
+                  
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -204,10 +208,12 @@
                     type="text"
                     name="nacionalidad"
                     class="form-control"
+                      pattern="[a-zA-Z'-'\s]*"
                     :class="{ 'is-invalid': form.errors.has('nacionalidad') }"
-                    required
+                    
+                   required
                     minlength="3"
-                    maxlength="20"
+                    maxlength="30"
                     placeholder="Nacionalidad del participante"
                   />
                   <has-error :form="form" field="nacionalidad"></has-error>
