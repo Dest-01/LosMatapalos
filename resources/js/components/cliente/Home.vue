@@ -1,12 +1,20 @@
 <template>
   <div style="background: #fff">
-<div class="header">
-   <section class="textos-header">
-     <h1>Sendero Los Matapalos</h1>
-        <h2>Aprendemos de la naturaleza</h2>
-         <img v-bind:key="image" v-for="image in image17" :src="image.url" />
-   </section>
-   <div class="wave" style="height: 150px; top: 195px; overflow: hidden">
+    <section class="marko" id="hero">
+      <div class="promo">
+        <dir class="marcont">
+          <h1>#AprendemosDeLaNaturaleza</h1>
+          <p>Sello <span>UNA</span></p>
+        </dir>
+      </div>
+
+      <video muted autoplay loop>
+        <source
+          src="https://dl.dropbox.com/s/qajc97uh3rlzdn2/video.mp4?dl=0"
+          type="Video/mp4"
+        />
+      </video>
+      <div class="wave" style="height: 150px; bottom: -10px; overflow: hidden">
         <svg
           viewBox="0 0 500 150"
           preserveAspectRatio="none"
@@ -14,257 +22,81 @@
         >
           <path
             d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-            style="stroke: none; fill: #fff"
+            style="stroke: none; fill: rgb(255, 255, 255)"
           ></path>
         </svg>
       </div>
-</div>
-    
+
+      <div class="capa"></div>
+    </section>
+
     <main>
-      <section class="contenedor sobre-nosotros">
-        <h2 class="titulo">Titulo</h2>
-        <div class="contenedor-sobre-nosotros">
-          <!-- <img src="img/ilustracion2.svg" alt="" class="imagen-about-us">-->
-          <img
-            class="imagen-about-us"
-            v-bind:key="image"
-            v-for="image in image6"
-            :src="image.url"
-          />
-          <div class="contenido-textos">
-            <h3><span>1</span>Titulo texto</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-              veniam eius aspernatur ad consequuntur aperiam minima sed dicta
-              odit numquam sapiente quam eum, architecto animi pariatur, velit
-              doloribus laboriosam ut.
-            </p>
-            <h3><span>2</span>Titulo texto</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-              veniam eius aspernatur ad consequuntur aperiam minima sed dicta
-              odit numquam sapiente quam eum, architecto animi pariatur, velit
-              doloribus laboriosam ut.
-            </p>
+      <Actividades></Actividades>
+      <section style="background: #f0f0f0; border-top: 2px solid #91aff3d1;" class="services-area section-padding">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.3s">
+              <div class="section-title text-center">
+                <h2>Nuestros Servicios</h2>
+                <p>
+                  Nuestro sendero cuenta con diferentes servicios para el
+                  publico general.
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-      <section class="portafolio">
-        <div class="contenedor">
-          <h2 class="titulo">Portafolio</h2>
-          <div class="galeria-port">
-            <div class="imagen-port">
-              <!--  <img src="img/img1.jpg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image9"
-                :src="image.url"
-              />
-              <div class="hover-galeria">
-                <!-- <img src="img/icono1.png" alt="">-->
-                <img
-                  v-bind:key="image"
-                  v-for="image in image4"
-                  :src="image.url"
-                />
-                <p>Nuestro trabajo</p>
+          <div class="row">
+            <div
+              class="col-lg-4 col-md-6 col-sm-6 wow fadeInUp"
+              data-wow-delay="0.4s"
+            >
+              <div class="single-serviecs-block">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>
+                  <a href="services-details.html">Capacitaciones y Cursos</a>
+                </h3>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
               </div>
             </div>
-            <div class="imagen-port">
-              <!-- <img src="img/img2.jpg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image10"
-                :src="image.url"
-              />
-              <div class="hover-galeria">
-                <!-- <img src="img/icono1.png" alt="">-->
-                <img
-                  v-bind:key="image"
-                  v-for="image in image4"
-                  :src="image.url"
-                />
-                <p>Nuestro trabajo</p>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6 wow fadeInUp"
+              data-wow-delay="0.5s"
+            >
+              <div class="single-serviecs-block">
+                <i class="fas fa-walking"></i>
+                <h3><a href="services-details.html">Tours</a></h3>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
               </div>
             </div>
-            <div class="imagen-port">
-              <!-- <img src="img/img3.jpg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image11"
-                :src="image.url"
-              />
-              <div class="hover-galeria">
-                <!--   <img src="img/icono1.png" alt="">-->
-                <img
-                  v-bind:key="image"
-                  v-for="image in image4"
-                  :src="image.url"
-                />
-                <p>Nuestro trabajo</p>
-              </div>
-            </div>
-            <div class="imagen-port">
-              <!--<img src="img/img1.jpg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image9"
-                :src="image.url"
-              />
-              <div class="hover-galeria">
-                <!-- <img src="img/icono1.png" alt="">-->
-                <img
-                  v-bind:key="image"
-                  v-for="image in image4"
-                  :src="image.url"
-                />
-                <p>Nuestro trabajo</p>
-              </div>
-            </div>
-            <div class="imagen-port">
-              <!-- <img src="img/img4.jpg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image12"
-                :src="image.url"
-              />
-              <div class="hover-galeria">
-                <!-- <img src="img/icono1.png" alt="">-->
-                <img
-                  v-bind:key="image"
-                  v-for="image in image4"
-                  :src="image.url"
-                />
-                <p>Nuestro trabajo</p>
-              </div>
-            </div>
-            <div class="imagen-port">
-              <!-- <img src="img/img5.jpg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image13"
-                :src="image.url"
-              />
-              <div class="hover-galeria">
-                <!-- <img src="img/icono1.png" alt="">-->
-                <img
-                  v-bind:key="image"
-                  v-for="image in image4"
-                  :src="image.url"
-                />
-                <p>Nuestro trabajo</p>
-              </div>
-            </div>
-            <div class="imagen-port">
-              <!-- <img src="img/img6.jpg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image14"
-                :src="image.url"
-              />
-              <div class="hover-galeria">
-                <!--  <img src="img/icono1.png" alt="">-->
-                <img
-                  v-bind:key="image"
-                  v-for="image in image4"
-                  :src="image.url"
-                />
-                <p>Nuestro trabajo</p>
-              </div>
-            </div>
-            <div class="imagen-port">
-              <!-- <img src="img/img7.jpg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image15"
-                :src="image.url"
-              />
-              <div class="hover-galeria">
-                <!--  <img src="img/icono1.png" alt="">-->
-                <img
-                  v-bind:key="image"
-                  v-for="image in image4"
-                  :src="image.url"
-                />
-                <p>Nuestro trabajo</p>
+            <div
+              class="col-lg-4 col-md-6 col-sm-6 wow fadeInUp"
+              data-wow-delay="0.6s"
+            >
+              <div class="single-serviecs-block">
+                <i class="fas fa-book"></i>
+                <h3>
+                  <a href="services-details.html"
+                    >Educacion Ambiental a escuelas y colegios</a
+                  >
+                </h3>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section class="clientes contenedor">
-        <h2 class="titulo">titulo</h2>
-        <div class="cards">
-          <div class="card">
-            <!-- <img src="img/face1.jpg" alt="">-->
-            <img v-bind:key="image" v-for="image in image2" :src="image.url" />
-            <div class="contenido-texto-card">
-              <h4>Name</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae,
-                sapiente!
-              </p>
-            </div>
-          </div>
-          <div class="card">
-            <!-- <img src="img/face2.jpg" alt="">-->
-            <img v-bind:key="image" v-for="image in image3" :src="image.url" />
-            <div class="contenido-texto-card">
-              <h4>Name</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae,
-                sapiente!
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="about-services">
-        <div class="contenedor">
-          <h2 class="titulo">Nuestros servicios</h2>
-          <div class="servicio-cont">
-            <div class="servicio-ind">
-              <!--<img src="img/ilustracion1.svg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image5"
-                :src="image.url"
-              />
-              <h3>Name</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
-                qui?
-              </p>
-            </div>
-            <div class="servicio-ind">
-              <!-- <img src="img/ilustracion4.svg" alt="">-->
-              <img
-                v-bind:key="image"
-                v-for="image in image8"
-                :src="image.url"
-              />
-              <h3>Name</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
-                qui?
-              </p>
-            </div>
-            <div class="servicio-ind">
-              <!-- <img src="img/ilustracion3.svg" alt=""> -->
-              <img
-                v-bind:key="image"
-                v-for="image in image7"
-                :src="image.url"
-              />
-              <h3>Name</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
-                qui?
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div style="margin-top:30px">
+      <Contacto></Contacto>
+      </div>
       <section class="map">
         <div class="contenedor">
           <h2 class="titulo">Encuentranos</h2>
@@ -287,159 +119,22 @@
   </div>
 </template>
 <script>
+import Actividades from "../cliente/Actividades.vue";
+import Contacto from "../cliente/Contacto.vue";
+
 export default {
+  components: {
+    Actividades: Actividades,
+    Contacto: Contacto,
+  },
   data() {
-    return {
-      image1: [
-        {
-          url: "../images/alexcgdesign.png",
-        },
-      ],
-      image2: [
-        {
-          url: "../images/bird2.jpg",
-        },
-      ],
-      image3: [
-        {
-          url: "../images/bird3.jpg",
-        },
-      ],
-      image4: [
-        {
-          url: "../images/icono1.png",
-        },
-      ],
-      image5: [
-        {
-          url: "../images/ilustracion1.svg",
-        },
-      ],
-      image6: [
-        {
-          url: "../images/ilustracion2.svg",
-        },
-      ],
-      image7: [
-        {
-          url: "../images/ilustracion3.svg",
-        },
-      ],
-      image8: [
-        {
-          url: "../images/ilustracion4.svg",
-        },
-      ],
-      image9: [
-        {
-          url: "../images/img1.jpg",
-        },
-      ],
-      image10: [
-        {
-          url: "../images/img2.jpg",
-        },
-      ],
-      image11: [
-        {
-          url: "../images/img3.jpg",
-        },
-      ],
-      image12: [
-        {
-          url: "../images/img4.jpg",
-        },
-      ],
-      image13: [
-        {
-          url: "../images/img5.jpg",
-        },
-      ],
-      image14: [
-        {
-          url: "../images/img6.jpg",
-        },
-      ],
-      image15: [
-        {
-          url: "../images/img7.jpg",
-        },
-      ],
-      image16: [
-        {
-          url: "../images/img8.jpg",
-        },
-      ],
-      image17: [
-        {
-          url: "../images/portada.jpg",
-        },
-      ],
-    };
+    return {};
   },
 };
 </script>
 
 
 <style scoped>
-
-.header {
-    width: 100%;
-    height: 340px;
-    
-    /* fallback for old browsers */
-
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background-size: cover;
-    background-attachment: fixed;
-    position: relative;
-    margin-bottom: 0;
-   margin-top: 180px;
-}
-.header .textos-header{
-    display: flex;
-    height: 100px;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    position: relative;
-    margin-bottom: 0;
-    margin-top: 10px;
-}
-
-.textos-header h1{
-    font-size: 60px;
-    color:#fff;
-    text-shadow: 5px 5px 5px #000;
-    z-index: 20;
-    margin-top: 50px;
-}
-
-.textos-header h2{
-    font-size: 30px;
-    font-weight: 300;
-    color:#fff;
-    text-shadow: 5px 5px 5px #000;
-    z-index: 20;
-}
-
-.wave{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    z-index: 10;
-}
-.textos-header img{
-    opacity: .5;
-    position: absolute;
-    z-index: 0;
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-    
-}
 .contenedor {
     padding: 60px 0;
     width: 90%;
@@ -448,185 +143,168 @@ export default {
     overflow: hidden;
     margin-top: 20px;
 }
+#hero{
+    min-height: 60vh;
+    position: relative;
+   
+}
+video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.capa{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0500059a ;
+    opacity: 0.8;
+    mix-blend-mode: overlay;
+}
+.marko{
+  min-height: 70vh;
+  height: 70vh;
+  width: 100vw;
 
-.titulo {
-    color: #034991;
-    font-size: 30px;
+}
+.promo{
+padding-top: 10vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 50%;
+margin: auto;
+
+position: relative;
+z-index: 15;
+}
+.promo h1{
+  font-size: 2.0rem;
+  text-align: center;
+  color: #f3f3f3;
+  font-weight: 500;
+}
+.promo p{
+  font-size: 1.5rem;
+  text-align: center;
+  color: #fcfcfc;
+  font-weight:500 ;
+}
+span{
+  color: #920b0b;
+  
+  font-weight:700 ;
+}
+.marcont{
+  background-color:rgba(0, 0, 0, 0.7) ;
+position: relative;
+z-index: 15;
+padding: 30px;
+border-radius: 30px;
+}
+
+.wave{
+    position: absolute;
+    bottom:-10;
+    width: 100%;
+    z-index: 10;
+}
+section {
+            padding: 60px 0;
+           /* min-height: 100vh;*/
+        }
+
+.section-padding {
+    padding: 120px 0;
+}
+
+.section-title {
+    margin-bottom: 50px;
+}
+
+
+.section-title h2 {
+    font-size: 40px;
+    line-height: 45px;
+    position: relative;
+    margin-bottom: 20px;
+  color: #333333;
+  text-transform: capitalize;
+}
+
+.services-area {
+  margin-bottom: -30px;
+}
+.serviecs-block .single-serviecs-block {
+    margin: 30px 0;
+}
+.single-serviecs-block {
+    padding: 30px 40px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
     text-align: center;
-    margin-bottom: 60px;
-    
-}
-
-/* Header */
-
-
-
-/* About us */
-
-main .sobre-nosotros{
-    padding: 20px 0 60px 0;
-}
-.contenedor-sobre-nosotros{
-    display: flex;
-    justify-content: space-evenly;
-
-}
-
-.imagen-about-us{
-    width: 48%;
-}
-
-.sobre-nosotros .contenido-textos{
-    width: 48%;
-}
-
-.contenido-textos h3{
-    margin-bottom: 15px;
-}
-
-.contenido-textos h3 span{
-    background: #034991;
-    color: #fff;
-    border-radius: 50%;
-    display: inline-block;
-    text-align: center;
-    width: 30px;
-    height: 30px;
-    padding: 2px;
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, .5);
-    margin-right: 5px;
-}
-
-.contenido-textos p{
-    padding: 0px 0px 30px 15px;
-    font-weight: 300;
-    text-align: justify;
-}
-
-/* Galeria */
-
-
-.portafolio{
-    background: #f2f2f2;
-}
-
-.galeria-port{
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-
-.imagen-port{
-    width: 24%;
-    margin-bottom: 10px;
     overflow: hidden;
     position: relative;
-    cursor: pointer;
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, .5);
-}
-
-.imagen-port > img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     display: block;
+    height: 320px;
+    margin-bottom: 30px;
 }
 
-.hover-galeria{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    transform: scale(0);
-    background: #034991;
-    opacity: 0.7;
-    transition: transform .5s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
 
-.hover-galeria img{
-    width: 50px;
-}
-
-.hover-galeria p{
+.single-serviecs-block:hover {
+    background: #1d54cc;
     color: #fff;
 }
-
-.imagen-port:hover .hover-galeria{
-    transform: scale(1);
+.single-serviecs-block:hover h3 a {
+    color: #fff;
+    margin-top: 180px;
 }
-
-/* Clients */
-
-.cards{
-    display: flex;
-    justify-content: space-evenly;
+.single-serviecs-block:hover p {
+    display: none;
 }
-
-.cards .card{
-    background: #034991;
-    display: flex;
-    width: 46%;
-    height: 400px;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 5px;
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.6);
-}
-
-.cards .card img{
-    width: 100px;
+.single-serviecs-block:hover i {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -90%);
+    background: #fff;
+    color: #007f9b;
     height: 100px;
-    object-fit: cover;
-    border: 3px solid #fff;
-    border-radius: 50%;
+    width: 100px;
+    font-size: 40px;
+    line-height: 100px; 
+}
+.single-serviecs-block h3 a {
+    color: #333333;
+    margin-bottom: 15px;
+    margin-top: 80px;
     display: block;
+    overflow: hidden;
+    transition: 0.5s;
 }
 
-.cards .card > .contenido-texto-card{
-    width: 60%;
+.single-serviecs-block i {
     color: #fff;
-}
-
-.cards .card > .contenido-texto-card p{
-    font-weight: 300;
-    padding-top: 5px;
-}
-
-/*  Our team */
-
-.about-services{
-    background: #f2f2f2;
-    padding-bottom: 30px;
-}
-
-
-.servicio-cont{
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.servicio-ind{
-    width: 28%;
+    font-size: 50px;
+    height: 140px;
+    width: 140px;
+    line-height: 170px;
     text-align: center;
+    background: #1d54cc;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.6s;
 }
 
-.servicio-ind img{
-    width: 90%;
-}
-
-.servicio-ind h3{
-    margin: 10px 0;
-}
-
-.servicio-ind p{
-    font-weight: 300;
-    text-align: justify;
-}
 .map{
     background: #fff;
     padding-bottom: 30px;
@@ -635,9 +313,7 @@ main .sobre-nosotros{
     display:flex;
     justify-content: space-evenly;
     align-items: center;
-
 }
-
 .map-box{
     display: flex;
     width:100%;
@@ -650,173 +326,4 @@ main .sobre-nosotros{
     border-radius: 10px;
 }
 
-/* footer */
-
-footer{
-    background: #034991;
-    padding: 60px 0 30px 0;
-    margin: auto;
-    overflow: hidden;
-}
-
-.contenedor-footer{
-    display: flex;
-    width: 90%;
-    justify-content: space-evenly;
-    margin: auto;
-    padding-bottom: 50px;
-    border-bottom: 1px solid #ccc;
-}
-
-.content-foo{
-    text-align: center;
-}
-
-.content-foo h4{
-    color: #fff;
-    border-bottom: 3px solid #CD1719;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-}
-
-.content-foo p{
-    color: #ccc;
-}
-
-.titulo-final{
-    text-align: center;
-    font-size: 24px;
-    margin: 20px 0 0 0;
-    color: #9e9797;
-}
-
-@media screen and (max-width:900px){
-    .header{
-        background-position: center;
-    }
-
-    .contenedor-sobre-nosotros{
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .sobre-nosotros .contenido-textos{
-        width: 90%;
-    }
-
-    .imagen-about-us{
-        width: 90%;
-    }
-
-    /* Galeria */
-
-    .imagen-port{
-        width: 44%;
-    }
-
-    /* Clientes */
-
-    .cards{
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .cards .card{
-        width: 90%;
-    }
-
-    .cards .card:first-child{
-        margin-bottom: 30px;
-    }
-
-    /* servicios */
-
-    .servicio-cont{
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    .servicio-ind{
-        width: 100%;
-        text-align: center;
-    }
-
-    .servicio-ind:nth-child(1), .servicio-ind:nth-child(2){
-        margin-bottom: 60px;
-    }
-
-    .servicio-ind img{
-        width: 90%;
-    }
-}
-@media screen and (max-width:500px){
-    
-
-    .textos-header h1{
-        font-size: 35px;
-    }
-
-    .textos-header h2{
-        font-size: 20px;
-    }
-
-    /* ABOUT US */
-
-    .imagen-about-us{
-        margin-bottom: 60px;
-        width: 99%;
-    }
-
-    .sobre-nosotros .contenido-textos{
-        width: 95%;
-    }
-
-    /* Galeria */
-
-    .imagen-port{
-        width: 95%;
-    }
-
-    /* Clients */
-
-    .cards .card{
-        height: 450px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .cards .card img{
-        width: 90px;
-        height: 90px;
-    }
-
-    /* Footer */
-
-    .contenedor-footer{
-        flex-direction: column;
-        border: none;
-    }
-
-    .content-foo{
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .content-foo h4{
-        border: none;
-    }
-
-    .content-foo p{
-        color: #ccc;
-        border-bottom: 1px solid #f2f2f2;
-        padding-bottom: 20px;
-    }
-
-    .titulo-final{
-        font-size: 20px;
-    }
-}
 </style>

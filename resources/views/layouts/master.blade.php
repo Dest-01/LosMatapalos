@@ -62,9 +62,6 @@
                             <a class="nav-link" href="{{ url('/reservacion') }}">Reservación</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/actividades') }}">Actividades</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{{ url('/donaciones') }}">Donaciones</a>
                         </li>
 
@@ -123,30 +120,24 @@
     </div>
     {{-- ./wrapper --}}
 
-    <footer>
-        <div class="
-            paginacion">
-            <pagination style="font-family: fantasy" :data="donativos" @pagination-change-page="getResults">
-            </pagination>
-        </div>
+    <footer class="bg-dark text-center text-white">
+        <!-- Copyright -->
+        <div class="text-center p-3">
+            <h5 style="padding: 10px">
+                Senderos los Mataplos - PGAI
+            </h5>
+            <h5 style="padding: 10px">
+                <a href="https://www.facebook.com/pgaiuna/"><i class="fab fa-facebook white"></i></a>
+                <a href="https://www.instagram.com/pgaiuna/?r=nametag"><i class="fab fa-instagram white"></i></a>
+            </h5>
+            <h5 style="padding: 10px">
+                 © 2021-2022 Todos los derechos reservados.
+            </h5>
 
-        <div class="contenedor-footer">
-            <div class="content-foo">
-                <h4>Teléfono</h4>
-                <p>0000-0000</p>
-            </div>
-            <div class="content-foo">
-                <h4>Email</h4>
-                <p>sendero@una.ac.cr</p>
-            </div>
-            <div class="content-foo">
-                <h4>Ubicación</h4>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, cum?
-                </p>
-            </div>
         </div>
+        <!-- Copyright -->
     </footer>
+
     <!-- Bootstrap SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">

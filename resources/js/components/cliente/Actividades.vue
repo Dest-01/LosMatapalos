@@ -1,6 +1,6 @@
 <template>
   <div class="contenedor-principal">
-    <h1>Actividades del Sendero los Matapalos</h1>
+    <h1>Eventos del Sendero los Matapalos</h1>
     <ul class="contenedor-todo">
       <div
         class="contenedor-contenido"
@@ -121,14 +121,25 @@ export default {
   align-items: flex-start;
   align-content: space-around;
   margin: 1px 10px 5px 10px;
-min-height: 100vh;
-  max-height: 100%;
 }
 
 .paginacion {
-  margin: 5px 80px 5px 80px;
-  padding: 1em;
+  margin: auto;
+    padding: 1em;
+    width: 300px;
+    justify-content: center;
 }
+.pagination{
+justify-content: center;
+    font-family: fantasy;
+    color: black;
+    background: #f0f0f0;
+    padding: 5px;
+
+    border-radius: 30px;
+}
+
+
 
 * {
   margin: 0;
