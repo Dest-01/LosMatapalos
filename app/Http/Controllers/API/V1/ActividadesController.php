@@ -39,7 +39,7 @@ class ActividadesController extends BaseController
         try {
             $rules = [
                 'nombre' => 'required|string|max:20|min:3',
-                'fecha' => 'required',
+                'fecha' => 'required|after:today',
                 'hora' => 'required',
                 'descripcion' => 'required|string|max:255|min:3',
                 'cantParticipantes' => 'required|integer|min:1|max:30',
@@ -51,7 +51,7 @@ class ActividadesController extends BaseController
                 'nombre.min' => 'Mínimo 3 caracteres',
                 'nombre.max' => 'Maximo 20 caracteres',
                 'nombre.*' => 'Nombre requiere',
-                'fecha.*' => 'Seleccione una fecha',
+                'fecha.*' => 'Seleccione 2 fechas despues de hoy',
                 'hora.*' => 'Seleccione un hora',
                 'descripcion.min' => 'Mínimo 3 caracteres',
                 'descripcion.max' => 'Maximo 20 caracteres',
@@ -122,7 +122,7 @@ class ActividadesController extends BaseController
 
         $rules = [
             'nombre' => 'required|string|max:20|min:3',
-            'fecha' => 'required',
+            'fecha' => 'required|after:today',
             'hora' => 'required',
             'descripcion' => 'required|string|max:255|min:3',
             'cantParticipantes' => 'required|integer|min:1|max:30',
@@ -134,7 +134,7 @@ class ActividadesController extends BaseController
             'nombre.min' => 'Mínimo 3 caracteres',
             'nombre.max' => 'Maximo 20 caracteres',
             'nombre.*' => 'Nombre requiere',
-            'fecha.*' => 'Seleccione una fecha',
+            'fecha.*' => 'Seleccione 2 fechas despues de hoy',
             'hora.*' => 'Seleccione un hora',
             'descripcion.min' => 'Mínimo 3 caracteres',
             'descripcion.max' => 'Maximo 20 caracteres',

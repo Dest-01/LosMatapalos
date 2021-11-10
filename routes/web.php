@@ -119,6 +119,9 @@ Route::get('/admin/flora', function () {
     return view('admin');
 })->where('admin/flora', '[\/\w\.-]*')->middleware('auth');
 ///////////////////////////////----FIN--BIODIVERSIDAD--///////////////////////
+Route::get('/admin/repositorio', function () {
+    return view('admin');
+})->where('admin/repositorio', '[\/\w\.-]*')->middleware('auth');
 ///////////////////////////////////////////////////////////////////////////
 Route::get('/admin/articulos', function(){
     return view('admin');

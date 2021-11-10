@@ -230,6 +230,8 @@ width: -webkit-fit-content;
     align-content: center;
     justify-content: center;
     align-items: center;
+   min-height: 100vh;
+  max-height: 100%;
 }
 .container {
   background: #66666699;

@@ -108,7 +108,8 @@
 .principal {
   margin: 130px 10px 10px 10px;
   width: 100%;
-  height: 100%;
+   min-height: 750px;
+  max-height: 100%;
   text-align: center;
   font-family: "Poppins";
 }

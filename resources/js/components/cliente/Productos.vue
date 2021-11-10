@@ -3,7 +3,11 @@
     <h1 style="text-align: center">Nuestros Productos</h1>
     <div class="card-container">
       <div class="grid">
-        <label v-for="producto in Productos.data" :key="producto.id" class="card">
+        <label
+          v-for="producto in Productos.data"
+          :key="producto.id"
+          class="card"
+        >
           <input class="card__input" type="checkbox" />
           <div class="card__body">
             <div class="card__body-cover">
@@ -16,8 +20,8 @@
               ></span>
             </div>
             <header class="card__body-header">
-              <h2 class="card__body-header-title">{{producto.Name}}</h2>
-              <p class="card__body-header-subtitle">{{producto.Type}}</p>
+              <h2 class="card__body-header-title">{{ producto.Name }}</h2>
+              <p class="card__body-header-subtitle">{{ producto.Type }}</p>
             </header>
           </div>
         </label>
@@ -56,10 +60,9 @@ export default {
 <style scoped>
 .contenedor {
   position: relative;
-   height: 600px;
-
+ min-height: 100vh;
+  max-height: 100%;
   padding: 10px;
-
   justify-items: center;
   margin: 100px 10px 0 10px;
 }

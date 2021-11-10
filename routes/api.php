@@ -85,6 +85,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'flora' => 'FloraController',
         'articulos'=>'ArticuloController',
         'dashboard' => 'DashboardController',
+        'repositorio' => 'RepositorioDocumentosController',
     ]);
 });
 

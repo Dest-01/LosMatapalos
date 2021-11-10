@@ -6,8 +6,9 @@ General Demo Styles [not related to navbar]
     margin: 0;
     padding: 0;
 }
-body {
+html, body {
     font-family: 'Poppins', sans-serif;
+    height: 100%;
     }
     #background-image {
     background-image: url('senderoBack.jpg');
@@ -20,17 +21,16 @@ Navbar Styles
 
 nav.navbar {
 /* background: #910404;-*/
-background-image: linear-gradient(#910404, #a31e32);
-color: #fff;
-border-bottom: none;
-border-radius: 0;
-border-bottom-left-radius: 30px;
-border-bottom-right-radius: 30px;
-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.2);
-padding: 5px 0;
--webkit-transition: all 0.5s;
--o-transition: all 0.5s;
-transition: all 0.5s;
+background-image: linear-gradient(#ffffff, #e1e1e1);
+    color: black;
+    border-bottom: none;
+    box-shadow: 2px 2px 7px rgb(0 0 0 / 20%);
+    padding: 5px 0;
+    -webkit-transition: all 0.5s;
+    border-bottom-color: aquamarine;
+    -o-transition: all 0.5s;
+    border-bottom: 2px solid #38ab81;
+    transition: all 0.5s;
 }
 /* Navbar Brand */
 nav.navbar a.navbar-brand {
@@ -112,8 +112,9 @@ color: #6172b9;
 }
 
 dropdown-menu{
-background: cadetblue;
+    background: #38ab81;
 border-radius: 10px;
+
 }
 
 .navbar-brand {
@@ -126,9 +127,13 @@ border-radius: 10px;
 }
 
 .navbar.navbar-light .breadcrumb .nav-item .nav-link, .navbar.navbar-light .navbar-nav .nav-item .nav-link {
-    color: #fff;
+    color: #101010;
     -webkit-transition: .35s;
     transition: .35s;
+}
+
+.navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .show>.nav-link {
+    color: #101010;
 }
 
 .navbar-dark .navbar-toggler-icon, .navbar-light .navbar-toggler-icon {
@@ -140,14 +145,22 @@ border-radius: 10px;
     color: rgb(255 255 255);
     font-size: 20px;
 }
+.wrapper {
+    min-height: calc(100% - 4rem);
+  }
+
+.Main-content{
+    height: 100%;
+}
 
 /* footer */
 
 footer{
     background: #034991;
-    padding: 60px 0 30px 0;
-    margin: auto;
-    overflow: hidden;
+    padding: 10px 0 10px 0;
+    position: relative; 
+    left: 0 ; right: 0; bottom: 0; 
+    height:[footer-height] 
 }
 
 .contenedor-footer{
@@ -155,7 +168,6 @@ footer{
     width: 90%;
     justify-content: space-evenly;
     margin: auto;
-    padding-bottom: 50px;
     border-bottom: 1px solid #ccc;
 }
 
@@ -304,7 +316,8 @@ footer{
     }
 }
 .navbar-dark .navbar-nav .nav-link {
-    color: hsl(0deg 0% 100%);
+    color: hsl(0deg 0% 0%);
+    font-weight: 700;
 }
 
 .pagination .page-item.active .page-link {

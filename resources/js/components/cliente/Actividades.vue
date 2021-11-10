@@ -2,7 +2,11 @@
   <div class="contenedor-principal">
     <h1>Actividades del Sendero los Matapalos</h1>
     <ul class="contenedor-todo">
-      <div class="contenedor-contenido" v-for="actividad in actividades.data" :key="actividad.id">
+      <div
+        class="contenedor-contenido"
+        v-for="actividad in actividades.data"
+        :key="actividad.id"
+      >
         <li
           class="booking-card"
           :style="{
@@ -106,7 +110,7 @@ export default {
 <style scoped>
 .contenedor-principal {
   margin-top: 100px;
-  height: 600px;
+  min-height: 100%;
 }
 .contenedor-todo {
   display: flex;
@@ -117,6 +121,8 @@ export default {
   align-items: flex-start;
   align-content: space-around;
   margin: 1px 10px 5px 10px;
+min-height: 100vh;
+  max-height: 100%;
 }
 
 .paginacion {
@@ -339,7 +345,7 @@ h1 {
     margin-top: 140px;
     margin-left: 24px;
   }
-  .contenedor-contenido{
+  .contenedor-contenido {
     width: auto;
     margin-right: 45px;
   }
@@ -348,7 +354,7 @@ h1 {
     margin: 5px 5px 5px 6px;
     padding: 1em;
   }
-  ul .booking-card{
+  ul .booking-card {
     margin: 1px;
   }
   ul .booking-card::before {

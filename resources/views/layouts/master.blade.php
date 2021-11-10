@@ -74,7 +74,7 @@
                                 Galeria
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
-                                style="border-top-radius: 50px; border-bottom-radius: 10px; background: #9f1726d9;">
+                                style="border-top-radius: 50px; border-bottom-radius: 10px; background: #38ab81;">
                                 <li><a class="dropdown-item" href="{{ url('/flora') }}">Flora</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -105,7 +105,7 @@
     <div class="wrapper" id="app">
 
         {{-- Content Wrapper. Contains page content --}}
-        <div class="">
+        <div class="Main-content">
             {{-- Main content --}}
 
 
