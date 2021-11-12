@@ -144,12 +144,13 @@ justify-content: center;
 * {
   margin: 0;
   padding: 0;
-  font-family: "Poppins";
+ font-family: 'Frutiger', 700;
+    font-weight: bold;
 }
 
 .sub-title {
-  font-family: "Poppins";
-  font-weight: 600;
+  font-family: 'Frutiger', 700;
+    font-weight: bold;
 }
 
 h2 {

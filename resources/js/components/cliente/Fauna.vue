@@ -172,7 +172,7 @@ html {
   -ms-flex-direction: column;
   flex-direction: column;
   pointer-events: auto;
-  background-color: #00000000;
+  background-color: #0000007a;
   background-clip: padding-box;
   border: 1px solid rgb(0 0 0 / 0%);
   border-radius: 0.3rem;

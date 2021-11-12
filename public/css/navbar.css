@@ -7,7 +7,8 @@ General Demo Styles [not related to navbar]
     padding: 0;
 }
 html, body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Frutiger', 700;
+    font-weight: bold;
     height: 100%;
     }
     #background-image {
@@ -156,7 +157,7 @@ border-radius: 10px;
 /* footer */
 
 .bg-dark {
-    background-color: #626262!important;
+    background-color: #A7A7A9!important;
 }
   .fab{
       color: white;

@@ -26,7 +26,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
 
     <!-- MATERIAL DESIGN BOOSTRAP -->
-
+<link href="http://fonts.cdnfonts.com/css/frutiger" rel="stylesheet">
+                
 
 
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
