@@ -140,6 +140,7 @@ html {
 .modal-content {
   width: 900px;
   right: 40%;
+  
 }
 .total {
   margin: 85px;
@@ -175,7 +176,7 @@ html {
   background-color: #0000007a;
   background-clip: padding-box;
   border: 1px solid rgb(0 0 0 / 0%);
-  border-radius: 0.3rem;
+  border-radius: 20px;
   outline: 0;
   box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 20%);
   width: 850px;
@@ -236,6 +237,7 @@ h1 {
   counter-reset: pagination;
   text-align: center;
   height: 400px;
+  border-radius: 20px;
 }
 
 img {
@@ -247,6 +249,7 @@ img {
   overflow: hidden;
   cursor: pointer;
   box-shadow: 3px 3px 3px 2px rgb(0 0 0 / 20%);
+  border-radius: 20px;
 }
 .title {
   position: absolute;

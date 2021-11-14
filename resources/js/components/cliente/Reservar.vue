@@ -832,9 +832,10 @@ input:valid ~ label[data-v-4bc2021a] {
   margin: 10px;
 }
 .card {
-  width: 1000px;
-  height: auto;
-  box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 30%);
+    width: 1000px;
+    height: auto;
+    box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 30%);
+    border-radius: 20px;
 }
 
 .intro {
@@ -859,6 +860,8 @@ input:valid ~ label[data-v-4bc2021a] {
   color: white;
   font-family: "Poppins";
   padding-top: 20px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 td {
   font-weight: bold;

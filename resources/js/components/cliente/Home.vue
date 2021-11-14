@@ -47,7 +47,7 @@
 
               <div class="site-heading text-center">
                 <h2 style="color: white">Nuestros Inicios</h2>
-                <h4></h4>
+               
               </div>
 
               <p class="blog-post__text" style="color: #c3c3c3">
@@ -80,14 +80,13 @@
           </div>
         </div>
       </section>
-      <Actividades></Actividades>
       <section class="we-offer-area text-center bg-gray">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
               <div class="site-heading text-center">
                 <h2>¿Que ofrece nuestro <span>Sendero</span>?</h2>
-                <h4></h4>
+               
               </div>
             </div>
           </div>
@@ -130,12 +129,13 @@
           </div>
         </div>
       </section>
+       <Actividades></Actividades>
       <div style="margin-top: 30px">
         <Contacto></Contacto>
       </div>
-      <section class="map">
+      <section  class="map">
         <div class="contenedor">
-          <h2 class="titulo">Encuentranos</h2>
+          <h2 style="text-align:center" class="titulo">Encuentranos</h2>
           <div class="map-cont">
             <div class="map-box">
               <!-- <img src="img/ilustracion4.svg" alt="">-->
@@ -204,7 +204,7 @@ video {
 .marko {
   min-height: 70vh;
   height: 70vh;
-  width: 100vw;
+  width: 100%;
 }
 .promo {
   padding-top: 10vh;
@@ -608,7 +608,7 @@ ul {
   display: flex;
   align-items: center;
   border-radius: 0.8rem;
-  top: 100px;
+  margin-top: 20px;
 }
 
 .blog-post__img1 {
