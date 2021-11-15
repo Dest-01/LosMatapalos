@@ -98,7 +98,6 @@ ul {
   display: block;
   font-weight: 700;
   margin-bottom: 10px;
-  text-transform: uppercase;
 }
 
 .site-heading h2 span {

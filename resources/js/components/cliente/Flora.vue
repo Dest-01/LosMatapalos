@@ -1,10 +1,19 @@
 <template>
   <div class="Total">
     <div class="titulo">
-      <h1>GALERIA FLORA</h1>
+      <h1 style="text-align: center">
+        Galeria <span style="color: #38ab81">Flora</span>
+      </h1>
     </div>
-
-    <div class="container-all">
+    <div v-if="floras.data == 0" class="row">
+      <div class="mensaje">
+        <i class="far fa-folder-open"></i>
+        <h1>Oops!</h1>
+        <h3>No hay registros en galeria de flora</h3>
+        <h4>Muy pronto...</h4>
+      </div>
+    </div>
+    <div v-else class="container-all">
       <div v-for="flora in floras.data" :key="flora.id" class="container">
         <img
           v-bind:src="'/images/flora/' + flora.photo"
@@ -122,27 +131,33 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Poppins");
-body,
-html {
-  height: 100%;
-  margin: 0;
-  background: #2b2927;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-}
 .modal-content {
   width: 900px;
   right: 40%;
 }
 
-.total {
-  margin: 85px;
+.Total {
+
+  min-height: 800px;
+  max-height: 100%;
 }
+
+.mensaje{
+  width: 100%;
+  margin-top: 100px;
+  margin-block: 100px;
+  text-align: center;
+}
+
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free";
+    font-size: 100px;
+    color: #38ab81;
+}
+h4{
+  color: #38ab81;
+}
+
 
 .modal-content {
   position: relative;
@@ -188,25 +203,25 @@ footer {
 }
 
 .titulo {
-  font-family: sans-serif;
   margin-top: 90px;
-  font-weight: bold;
-  font-size: 1.6em;
-  text-shadow: 1px 5px 10px black;
-  transition-duration: 0.3s;
+  background: transparent;
+  padding: 0;
 }
+
 .paginacion {
-  margin: 5px 70px 55px 70px;
-  padding: 1em;
-  /* padding: 1px; */
-  /* border-radius: 0.2rem; */
-  /*box-shadow: 0 4px 6px 0 rgb(122 122 122);*/
-  /* position: absolute; */
-  /* left: 45%; */
-  /* bottom: -250px; */
-  /* height: auto; */
-  /* width: 150px; */
-  /* background: #c3c3c373;*/
+  margin: auto;
+    padding: 1em;
+    width: 300px;
+    justify-content: center;
+}
+.pagination{
+justify-content: center;
+    font-family: fantasy;
+    color: black;
+    background: #f0f0f0;
+    padding: 5px;
+
+    border-radius: 30px;
 }
 ol,
 ul {
@@ -214,24 +229,23 @@ ul {
   padding-left: 50%;
 }
 
+
 h1 {
   text-align: center;
-  color: black;
+  color: #000000ad;
 }
 .container-all {
-width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
-    margin: 10px 70px 30px 70px;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-   min-height: 100vh;
-  max-height: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 10px 70px 30px 70px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 .container {
   background: #66666699;
@@ -241,7 +255,7 @@ width: -webkit-fit-content;
   position: relative;
   float: left;
   padding: 5px;
-  margin: 45px 5px 45px 5px;
+  margin: 5px 5px 5px 5px;
   border-radius: 0.2rem;
   box-shadow: 0 4px 6px 0 rgb(0 0 0 / 30%);
   counter-reset: pagination;
@@ -332,15 +346,15 @@ img {
     width: 100%;
     height: auto;
   }
-  .titulo{
-        margin-top: 150px;
+  .titulo {
+    margin-top: 150px;
   }
 
   .container-all {
     width: 100%;
     margin: 1px;
   }
-  .container{
+  .container {
     width: 100%;
     height: auto;
   }
@@ -349,7 +363,7 @@ img {
     right: auto;
     margin-top: 35%;
   }
-  .container:hover span{
+  .container:hover span {
     font-size: 15px;
   }
 }
@@ -359,15 +373,15 @@ img {
     width: 100%;
     height: auto;
   }
-  .titulo{
-        margin-top: 150px;
+  .titulo {
+    margin-top: 150px;
   }
 
   .container-all {
     width: 100%;
     margin: 1px;
   }
-  .container{
+  .container {
     width: 100%;
     height: auto;
   }
@@ -376,7 +390,7 @@ img {
     right: auto;
     margin-top: 35%;
   }
-  .container:hover span{
+  .container:hover span {
     font-size: 17px;
   }
 }
@@ -385,24 +399,24 @@ img {
     width: 100%;
     height: auto;
   }
-  .titulo{
-        margin-top: 150px;
+  .titulo {
+    margin-top: 150px;
   }
 
   .container-all {
     width: 100%;
     margin: 1px;
   }
-  .container{
+  .container {
     width: 100%;
     height: auto;
   }
   .modal-content {
-width: 700px;
+    width: 700px;
     right: 20%;
     margin-top: 1%;
   }
-  .container:hover span{
+  .container:hover span {
     font-size: 25px;
   }
 }
@@ -412,24 +426,24 @@ width: 700px;
     width: 100%;
     height: auto;
   }
-  .titulo{
-        margin-top: 150px;
+  .titulo {
+    margin-top: 150px;
   }
 
   .container-all {
     width: 100%;
     margin: 1px;
   }
-  .container{
+  .container {
     width: 100%;
     height: auto;
   }
   .modal-content {
-width: 900px;
+    width: 900px;
     right: 40%;
     margin-top: 1%;
   }
-  .container:hover span{
+  .container:hover span {
     font-size: 35px;
   }
 }

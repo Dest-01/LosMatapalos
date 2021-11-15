@@ -277,7 +277,7 @@ ul {
 }
 
 .site-heading h2 span {
-  color: #00a01d;
+  color: #38ab81;
 }
 
 .site-heading h4 {

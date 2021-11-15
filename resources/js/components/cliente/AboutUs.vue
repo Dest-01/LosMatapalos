@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-6 col-sm-4">
         <div class="mision" style="margin-left: 2px">
-          <h2><i class="fas fa-crosshairs"></i>Mision</h2>
+          <h2><i class="fas fa-crosshairs"></i>Misión</h2>
           <p>
             “Aprender de la naturaleza todos los días para forjar valores
             biocéntricos en todas las personas que conviven en el Campus
@@ -16,7 +16,7 @@
       </div>
       <div class="col-6 col-sm-4">
         <div class="vision">
-          <h2><i class="far fa-eye"></i>Vision</h2>
+          <h2><i class="far fa-eye"></i>Visión</h2>
           <p>
             Colaborar para que el Campus Liberia sea el mejor en materia de
             Sostenibilidad en Latinoamérica.
@@ -56,10 +56,7 @@ export default {
 </script>
 
 <style scoped>
-h1,
-h2 {
-  text-transform: uppercase;
-}
+
 .datos {
   margin-top: 100px;
   background: transparent;

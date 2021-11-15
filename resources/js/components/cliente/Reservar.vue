@@ -2,7 +2,7 @@
   <div class="" style="margin-top: 85px">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <div class="intro" style="text-align: center">
-      <h2>Reservación del sendero los Matapalos</h2>
+      <h2>Reservación del <span>Sendero los Matapalos</span></h2>
     </div>
     <div class="contenedor-2">
       <div class="card mb-3">
@@ -840,13 +840,13 @@ input:valid ~ label[data-v-4bc2021a] {
 
 .intro {
   margin: auto auto 20px auto;
-  background: #faf9f7;
   height: 45px;
   text-align: center;
   font-size: 25px;
-  font-family: "Poppins";
-  /* padding: 5px; */
-  border-top: outset;
+  color: #000000ad;
+}
+span{
+  color:#38ab81;
 }
 .col-md-5 {
   padding: 5px;
