@@ -38,15 +38,18 @@
     </div>
 
     <NuestroEsquipo></NuestroEsquipo>
+    <Nosotros></Nosotros>
   </div>
 </template>
 
 <script>
 import NuestroEsquipo from "../cliente/NuestroEquipo.vue";
+import Nosotros from "../cliente/Nosotros.vue";
 
 export default {
   components: {
     NuestroEsquipo: NuestroEsquipo,
+    Nosotros: Nosotros,
   },
 
   data() {

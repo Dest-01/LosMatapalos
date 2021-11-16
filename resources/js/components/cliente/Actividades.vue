@@ -1,6 +1,14 @@
 <template>
   <div class="contenedor-principal">
-    <h1>Eventos del Sendero los Matapalos</h1>
+    <h1>Eventos del <span>Sendero los Matapalos</span></h1>
+    <div v-if="actividades.data == 0" class="row">
+      <div class="mensaje">
+        <i class="far fa-folder-open"></i>
+        <h1>Oops!</h1>
+        <h3>No hay eventos en el Sendero</h3>
+        <h4>Muy pronto...</h4>
+      </div>
+    </div>
     <ul class="contenedor-todo">
       <div
         class="contenedor-contenido"
@@ -112,6 +120,28 @@ export default {
   margin-top: 100px;
   min-height: 100%;
 }
+
+.mensaje {
+  width: 100%;
+  margin-top: 100px;
+  margin-block: 100px;
+  text-align: center;
+}
+
+.fa,
+.far,
+.fas {
+  font-family: "Font Awesome 5 Free";
+  font-size: 100px;
+  color: #38ab81;
+}
+h4 {
+  color: #38ab81;
+}
+
+span {
+  color: #38ab81;
+}
 .contenedor-todo {
   display: flex;
   /* padding-block: 20px; */
@@ -125,32 +155,30 @@ export default {
 
 .paginacion {
   margin: auto;
-    padding: 1em;
-    width: 300px;
-    justify-content: center;
+  padding: 1em;
+  width: 300px;
+  justify-content: center;
 }
-.pagination{
-justify-content: center;
-    font-family: fantasy;
-    color: black;
-    background: #f0f0f0;
-    padding: 5px;
+.pagination {
+  justify-content: center;
+  font-family: fantasy;
+  color: black;
+  background: #f0f0f0;
+  padding: 5px;
 
-    border-radius: 30px;
+  border-radius: 30px;
 }
-
-
 
 * {
   margin: 0;
   padding: 0;
- font-family: 'Frutiger', 700;
-    font-weight: bold;
+  font-family: "Frutiger", 700;
+  font-weight: bold;
 }
 
 .sub-title {
-  font-family: 'Frutiger', 700;
-    font-weight: bold;
+  font-family: "Frutiger", 700;
+  font-weight: bold;
 }
 
 h2 {

@@ -31,62 +31,14 @@
     </section>
 
     <main>
-      <section id="sec1">
-        <div class="blog-post">
-          <div class="blog-post__img">
-            <img
-              src="https://dl.dropbox.com/s/9eyk5c0t30d4qef/aerea%20liberia.jpg?dl=0"
-              alt=""
-            />
-          </div>
-
-          <div class="blog-spot__info">
-            <div class="blog-post__date">
-              <span style="color: #cecece"></span>
-              <span style="color: #cecece"></span>
-
-              <div class="site-heading text-center">
-                <h2 style="color: white">Nuestros Inicios</h2>
-               
-              </div>
-
-              <p class="blog-post__text" style="color: #c3c3c3">
-                La Universidad Nacional en su Campus Liberia, ha tenido una
-                significativa regeneración y enriquecimiento biológico que se ha
-                aprovechado para desarrollar un proyecto de sendero
-                universitario llamado “Los Matapalos”, nombre que se deriva de
-                la abundancia de esta especie y por los frondosos ejemplares que
-                están en la entrada del sendero.
-              </p>
-              <p class="blog-post__text" style="color: #c3c3c3">
-                El sendero Los Matapalos tuvo sus inicios alrededor del 2017
-                cuando a través de diferentes grupos y carreras que asumieron el
-                reto de reforestar y comenzar a hacer estudios que permitieran
-                un manejo adecuado y que a través de ellos se decidiera cual era
-                el paso a seguir.
-              </p>
-              <p class="blog-post__text" style="color: #c3c3c3">
-                El sendero Los Matapalos abrió oficialmente sus puertas desde el
-                2019, y a la fecha le han visitado diferentes grupos de la
-                comunidad e instituciones como el Colegio Agropecuario, Escuela
-                Adventista, UCR de la provincia de Limón, adultos mayores, grupo
-                de maestros pensionados de ADEP Liberia, entre otros. Este
-                sendero surgió como un espacio de convivencia donde se le
-                permitiera a la población estudiantil ser los intérpretes del
-                sendero y mostrar a sus visitantes la importancia ambiental,
-                cultural e histórica que éste tiene.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Inicios></Inicios>
+      
       <section class="we-offer-area text-center bg-gray">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
               <div class="site-heading text-center">
                 <h2>¿Que ofrece nuestro <span>Sendero</span>?</h2>
-               
               </div>
             </div>
           </div>
@@ -129,13 +81,14 @@
           </div>
         </div>
       </section>
-       <Actividades></Actividades>
+      <Proyectos></Proyectos>
+      <Actividades></Actividades>
       <div style="margin-top: 30px">
         <Contacto></Contacto>
       </div>
-      <section  class="map">
+      <section class="map">
         <div class="contenedor">
-          <h2 style="text-align:center" class="titulo">Encuentranos</h2>
+          <h2 style="text-align: center" class="titulo">Encuentranos</h2>
           <div class="map-cont">
             <div class="map-box">
               <!-- <img src="img/ilustracion4.svg" alt="">-->
@@ -157,11 +110,15 @@
 <script>
 import Actividades from "../cliente/Actividades.vue";
 import Contacto from "../cliente/Contacto.vue";
+import Inicios from "../cliente/NuestrosInicios.vue";
+import Proyectos from "../cliente/Proyectos.vue";
 
 export default {
   components: {
     Actividades: Actividades,
     Contacto: Contacto,
+    Inicios: Inicios,
+    Proyectos: Proyectos,
   },
   data() {
     return {};
@@ -254,26 +211,28 @@ section {
   /* min-height: 100vh;*/
 }
 section {
-    padding: 60px 0;
-    min-height: 100vh;
+  padding: 60px 0;
 }
-a, a:hover, a:focus, a:active {
-    text-decoration: none;
-    outline: none;
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  outline: none;
 }
 ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}.bg-gray {
-    background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bg-gray {
+  background-color: #f9f9f9;
 }
 
 .site-heading h2 {
   display: block;
   font-weight: 700;
   margin-bottom: 10px;
-  text-transform: uppercase;
 }
 
 .site-heading h2 span {
@@ -289,7 +248,7 @@ ul {
 }
 
 .site-heading h4::before {
-  background: #00a01d none repeat scroll 0 0;
+  background: #38ab81 none repeat scroll 0 0;
   bottom: 0;
   content: "";
   height: 2px;
@@ -319,13 +278,13 @@ ul {
 }
 
 .we-offer-area .our-offer-carousel .owl-dots .owl-dot.active span {
-  background: #00a01d none repeat scroll 0 0;
-  border-color: #00a01d;
+  background: #38ab81 none repeat scroll 0 0;
+  border-color: #38ab81;
 }
 
 .we-offer-area .item {
   background: #ffffff none repeat scroll 0 0;
-  border-left: 2px solid #00a01d;
+  border-left: 2px solid #38ab81;
   -moz-box-shadow: 0 0 10px #cccccc;
   -webkit-box-shadow: 0 0 10px #cccccc;
   -o-box-shadow: 0 0 10px #cccccc;
@@ -340,10 +299,15 @@ ul {
   background: #ffffff none repeat scroll 0 0;
   border: medium none;
   padding: 67px 40px 64px;
+  border-radius: 20px;
+}
+
+p {
+  text-align: justify;
 }
 
 .we-offer-area.text-center .item i {
-  background: #00a01d none repeat scroll 0 0;
+  background: #38ab81 none repeat scroll 0 0;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -364,7 +328,7 @@ ul {
 }
 
 .we-offer-area.text-center .item i::after {
-  border: 2px solid #00a01d;
+  border: 2px solid #38ab81;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -391,7 +355,7 @@ ul {
 }
 
 .we-offer-area.item-border-less .item .number {
-  font-family: "Poppins",sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 50px;
   font-weight: 900;
   opacity: 0.1;
@@ -402,7 +366,7 @@ ul {
 
 .our-offer-carousel.center-active .owl-item:nth-child(2n) .item,
 .we-offer-area.center-active .single-item:nth-child(2n) .item {
-  background: #00a01d none repeat scroll 0 0;
+  background: #38ab81 none repeat scroll 0 0;
 }
 
 .our-offer-carousel.center-active .owl-item:nth-child(2n) .item i,
@@ -415,7 +379,7 @@ ul {
 }
 
 .we-offer-area .item i {
-  color: #00a01d;
+  color: #38ab81;
   display: inline-block;
   font-size: 60px;
   margin-bottom: 20px;
@@ -441,7 +405,7 @@ ul {
 }
 
 .we-offer-area .item::after {
-  background: #00a01d none repeat scroll 0 0;
+  background: #38ab81 none repeat scroll 0 0;
   content: "";
   height: 100%;
   left: -100%;
@@ -472,11 +436,11 @@ ul {
 
 .we-offer-area.text-center .item:hover i {
   background-color: #ffffff !important;
-  color: #00a01d !important;
+  color: #38ab81 !important;
 }
 
 .we-offer-area.text-left .item i {
-  background: #00a01d none repeat scroll 0 0;
+  background: #38ab81 none repeat scroll 0 0;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -493,7 +457,7 @@ ul {
 }
 
 .we-offer-area.text-left .item i::after {
-  border: 2px solid #00a01d;
+  border: 2px solid #38ab81;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -586,88 +550,6 @@ ul {
   left: 50%;
   transform: translateX(-50%);
   transition: 0.6s;
-}
-
-#sec1 {
-  min-height: 80vh;
-  width: 100%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  padding: 0 1.5rem;
-}
-
-.blog-post {
-  width: 100%;
-  max-width: 98rem;
-  padding: 5rem;
-  background-color: rgba(4, 52, 97, 0.822);
-  box-shadow: 0 1.4rem 8rem rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  border-radius: 0.8rem;
-  margin-top: 20px;
-}
-
-.blog-post__img1 {
-  min-width: 25rem;
-  max-width: 25rem;
-  height: 25rem;
-  transform: translateX(-10rem);
-  position: relative;
-}
-
-.blog-post__img {
-  min-width: 35rem;
-  max-width: 35rem;
-  height: 40rem;
-  transform: translateX(-10rem);
-  position: relative;
-}
-.blog-post__img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 0.8rem;
-}
-
-.blog-post__img::before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: linear-gradient(
-    to right,
-    rgba(56, 158, 241, 0.8),
-    rgba(0, 242, 254, rgba(5, 53, 95, 0.8))
-  );
-  box-shadow: 0.5rem 0.5rem 3rem 1px rgba(196, 38, 38, 0.05);
-}
-
-.blog-post__date span {
-  display: block;
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin: 0 0.5rem;
-}
-
-.blog-post__tiltle {
-  font-size: 2.5rem;
-  margin: 1.5rem 0 2rem;
-  text-transform: uppercase;
-  color: #034991;
-}
-.blog-post__text {
-  margin-bottom: 3rem;
-  font-size: 1.4rem;
-  color: rgba(0, 0, 0, 0.7);
-  text-align: justify;
 }
 
 .map {
