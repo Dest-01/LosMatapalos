@@ -18,7 +18,7 @@ class CreateParticipanteActividadsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('IdActividad')->unsigned();
             $table->foreign('IdActividad')->references('id')->on('actividades');
-            $table->string('IdParticipante');
+            $table->unsignedBigInteger('IdParticipante');
             $table->foreign('IdParticipante')->references('id')->on('participantes');
             $table->string('nombreActividad');
             $table->timestamps();

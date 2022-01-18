@@ -15,7 +15,9 @@ class CreateVoluntarioPersonasTable extends Migration
     {
         Schema::create('voluntario_personas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('identificacion');
+            $table->unsignedBigInteger('identificacion');
+            $table->foreign("identificacion")->references("id")->on("personas")->onDelete("cascade")->onUpdate("cascade");
+            $table->string('identificacionPersona')->nullable();
             $table->integer('voluntariado_id')->unsigned();
             $table->foreign('voluntariado_id')->references('id')->on('voluntarios');
             $table->string('lugar');

@@ -39,8 +39,10 @@
                   type="button"
                   class="btn btn-sm btn-primary"
                   @click="modalPersona()"
+                  onclick="limpiarCampo()"
                 >
                   <i class="fa fa-plus-square"></i>
+
                   Registro Donante
                 </button>
                 <button
@@ -273,7 +275,7 @@
                   <has-error :form="formPer" field="apellido2"></has-error>
                 </div>
                 <div v-show="showPersona" class="form-group">
-                  <label>Telefono</label>
+                  <label>Teléfono</label>
                   <input
                     v-model="formPer.telefono"
                     type="number"
@@ -307,7 +309,7 @@
                 </div>
                 <!-- PARTE DE ORGANIZACION EN EL MISMO MODAL -->
                 <div v-show="showOrganizacion" class="form-group">
-                  <label>Cedula Jurídica</label>
+                  <label>Cédula Jurídica</label>
                   <input
                     v-model="formOrg.identificacion"
                     type="text"
@@ -333,7 +335,7 @@
                   <has-error :form="formOrg" field="nombre"></has-error>
                 </div>
                 <div v-show="showOrganizacion" class="form-group">
-                  <label>Telefono Organización</label>
+                  <label>Teléfono Organización</label>
                   <input
                     v-model="formOrg.telefono"
                     type="number"
@@ -461,10 +463,10 @@
                     type="button"
                     class="btn btn-success my-4"
                     @click="
-                      ConsultaCedula(), habilitarCampos(), NoexisteCedula()
+                      ConsultaCedula(), NoexisteCedula()
                     "
                   >
-                    Comprobar cedula
+                    Comprobar cédula
                   </button>
                   <button
                     type="button"
@@ -713,6 +715,7 @@ export default {
       }),
       formOrg: new Form({
         id: "",
+         identificacion: "",
         nombre: "",
         telefono: "",
         correo: "",
@@ -729,6 +732,7 @@ export default {
       $("#modalExtra").modal("show");
       this.showPersona = true;
       this.showOrganizacion = false;
+      this.formPer.identificacion = "";
     },
     modalOrganizacion() {
       this.modalExtra = true;
@@ -795,7 +799,7 @@ export default {
           this.form.identificacionPersona = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
-          this.MensajeCedula2 = "Se encontro la cedula";
+          this.MensajeCedula2 = "Se encontro la cédula";
         }
       }
     },
@@ -804,11 +808,11 @@ export default {
         if (this.cedulasOrg[i].identificacion == this.buscador) {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
-          this.form.idOrganizacion = this.cedulas[i].id;
+          this.form.idOrganizacion = this.cedulasOrg[i].id;
           this.form.identificacionOrganizacion = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
-          this.MensajeCedula2 = "Se encontro la cedula";
+          this.MensajeCedula2 = "Se encontro la cédula";
         }
       }
     },

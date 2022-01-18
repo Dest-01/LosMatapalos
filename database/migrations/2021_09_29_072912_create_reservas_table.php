@@ -17,8 +17,10 @@ class CreateReservasTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('idPersona');
             $table->foreign("idPersona")->references("id")->on("personas")->onDelete("cascade")->onUpdate("cascade");
+            $table->string('identificacionPersona')->nullable();
             $table->unsignedBigInteger('idOrganizacion');
             $table->foreign("idOrganizacion")->references("id")->on("organizaciones")->onDelete("cascade")->onUpdate("cascade");
+            $table->string('identificacionOrganizacion')->nullable();
             $table->integer('cantidad');
             $table->date('fecha')->format('d/m/Y');
             $table->time('horaInicio');

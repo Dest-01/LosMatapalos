@@ -71,7 +71,7 @@ class DonativosController extends BaseController
 
                 return $this->sendResponse($tag, 'Registro exitoso!');
             } else {
-                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                return response()->json(['success' => false, 'message' => 'Identificación ya existe!']);
             }
 
         } catch (\Exception$e) {
@@ -82,11 +82,11 @@ class DonativosController extends BaseController
     public function guardarOrganizacion(OrganizacionesRequest $request)
     {
         try {
-            $filtro = $request->id;
-            $existencia = Organizaciones::where('id', '=', $filtro)->first();
+            $filtro = $request->identificacion;
+            $existencia = Organizaciones::where('identificacion', '=', $filtro)->first();
             if ($existencia === null) {
                 $tag = $this->organizaciones->create([
-                    'id' => $request->get('id'),
+                    'identificacion' => $request->get('identificacion'),
                     'nombre' => $request->get('nombre'),
                     'telefono' => $request->get('telefono'),
                     'correo' => $request->get('correo'),
@@ -94,7 +94,7 @@ class DonativosController extends BaseController
 
                 return $this->sendResponse($tag, 'Registro exitoso!');
             } else {
-                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                return response()->json(['success' => false, 'message' => 'Cédula jurídica ya existe!']);
             }
 
         } catch (\Exception$e) {
