@@ -73,8 +73,8 @@
                 <tbody>
                   <tr v-for="donativo in donativos.data" :key="donativo.id">
                     <td>{{ donativo.id }}</td>
-                    <td>{{ donativo.idPersona }}</td>
-                    <td>{{ donativo.idOrganizacion }}</td>
+                    <td>{{ donativo.identificacionPersona }}</td>
+                    <td>{{ donativo.identificacionOrganizacion }}</td>
                     <td class="text-capitalize">{{ donativo.tipo }}</td>
                     <td>{{ donativo.detalle | truncate(30, "...") }}</td>
                     <td>
@@ -147,16 +147,79 @@
             <form>
               <div class="modal-body">
                 <div v-show="showPersona" class="form-group">
-                  <label>Cedula</label>
-                  <input
-                    v-model="formPer.id"
-                    type="text"
-                    name="id"
+                  <label>Tipo de indentificación</label>
+                  <select
                     class="form-control"
-                    :class="{ 'is-invalid': formPer.errors.has('id') }"
-                    placeholder="Cedula de la persona"
-                  />
-                  <has-error :form="formPer" field="id"></has-error>
+                    v-model="tipoIndenteficacion"
+                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    @change="tipoDeIndentificacon"
+                  >
+                    <option disabled value="">Seleccione un tipo</option>
+                    <option value="Cedula Nacional">Cédula Nacional</option>
+                    <option value="Cedula Residencial">
+                      Cedula Residencial
+                    </option>
+                    <option value="Pasaporte">Pasaporte</option>
+                  </select>
+                </div>
+
+                <div v-show="showPersona" class="form-group">
+                  <div v-show="CedulaNacional" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato #-####-####"
+                      id="nacional"
+                      onchange="validate()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="CedulaResidencial" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 10 dígitos"
+                      id="residencial"
+                      onchange="validateResidencial()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="Pasaporte" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 11 a 12 dígitos"
+                      id="pasaporte"
+                      onchange="validatePasaporte()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
                 </div>
                 <div v-show="showPersona" class="form-group">
                   <label>Nombre</label>
@@ -167,8 +230,11 @@
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                    placeholder="Nombre de persona"
+                    placeholder="Nombre"
+                    minlength="3"
+                    maxlength="20"
                     required
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="formPer" field="nombre"></has-error>
                 </div>
@@ -182,7 +248,10 @@
                     class="form-control"
                     :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
                     placeholder="Primer Apellido"
+                    minlength="3"
+                    maxlength="20"
                     required
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="formPer" field="apellido1"></has-error>
                 </div>
@@ -196,7 +265,10 @@
                     class="form-control"
                     :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
                     placeholder="Segundo Apellido"
+                    minlength="3"
+                    maxlength="20"
                     required
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="formPer" field="apellido2"></has-error>
                 </div>
@@ -210,8 +282,8 @@
                     :class="{ 'is-invalid': formPer.errors.has('telefono') }"
                     size="20"
                     min="10000000"
-                    placeholder="12345678"
-                    pattern="[0-9]{8,12}"
+                    placeholder="#### ####"
+                    pattern="[0-9]{8}"
                     required
                   />
                   <has-error :form="formPer" field="telefono"></has-error>
@@ -237,15 +309,15 @@
                 <div v-show="showOrganizacion" class="form-group">
                   <label>Cedula Jurídica</label>
                   <input
-                    v-model="formOrg.id"
+                    v-model="formOrg.identificacion"
                     type="text"
-                    name="id"
+                    name="identificacion"
                     class="form-control"
-                    :class="{ 'is-invalid': formOrg.errors.has('id') }"
-                    placeholder="Cedula jurídica de la organización"
+                    :class="{ 'is-invalid': formOrg.errors.has('identificacion') }"
+                    placeholder="#-###-######"
                     required
                   />
-                  <has-error :form="formOrg" field="id"></has-error>
+                  <has-error :form="formOrg" field="identificacion"></has-error>
                 </div>
                 <div v-show="showOrganizacion" class="form-group">
                   <label>Nombre de Organización</label>
@@ -270,8 +342,8 @@
                     :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
                     size="20"
                     min="10000000"
-                    placeholder="12345678"
-                    pattern="[0-9]{8,12}"
+                    placeholder="#### ####"
+                    pattern="[0-9]{8}"
                     required
                   />
                   <has-error :form="formOrg" field="telefono"></has-error>
@@ -316,6 +388,8 @@
                   type="button"
                   class="btn btn-success"
                   @click="crearPersona()"
+                  id="validar"
+                  disabled="registro"
                 >
                   Registrar
                 </button>
@@ -404,41 +478,53 @@
                 <div v-show="showIdentificacion" class="form-group">
                   <label>Identificación Donante</label>
                   <input
-                    v-model="form.idPersona"
+                    v-model="form.identificacionPersona"
                     type="text"
-                    name="idPersona"
+                    name="identificacionPersona"
                     required
                     class="form-control"
                     :disabled="CedulaBloqueo"
-                    :class="{ 'is-invalid': form.errors.has('idPersona') }"
+                    :class="{
+                      'is-invalid': form.errors.has('identificacionPersona'),
+                    }"
                   />
-                  <has-error :form="form" field="idPersona"></has-error>
+                  <has-error
+                    :form="form"
+                    field="identificacionPersona"
+                  ></has-error>
                 </div>
                 <div v-show="showIdentificacion" class="form-group">
                   <label>Identificación de Organización</label>
                   <input
-                    v-model="form.idOrganizacion"
+                    v-model="form.identificacionOrganizacion"
                     type="text"
-                    name="idOrganizacion"
+                    name="identificacionOrganizacion"
                     class="form-control"
                     required
                     :disabled="CedulaBloqueo"
-                    :class="{ 'is-invalid': form.errors.has('idOrganizacion') }"
+                    :class="{
+                      'is-invalid': form.errors.has(
+                        'identificacionOrganizacion'
+                      ),
+                    }"
                   />
-                  <has-error :form="form" field="idOrganizacion"></has-error>
+                  <has-error
+                    :form="form"
+                    field="identificacionOrganizacion"
+                  ></has-error>
                 </div>
                 <div class="form-group">
                   <label>Tipo de donativo</label>
                   <select
-                  v-model="form.tipo"
+                    v-model="form.tipo"
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('tipo') }"
                     required
                   >
                     <option disabled value="">Seleccione un elemento</option>
-                    <option value="Material">{{Material}}</option>
-                    <option value="Monetario">{{Monetario}}</option>
+                    <option value="Material">{{ Material }}</option>
+                    <option value="Monetario">{{ Monetario }}</option>
                   </select>
 
                   <has-error :form="form" field="estado"></has-error>
@@ -474,7 +560,6 @@
                             :disabled="isDisabled"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
                             id="SubirImagen"
-                        
                           />
                           <has-error :form="form" field="photo"></has-error>
                         </label>
@@ -585,9 +670,14 @@ export default {
       imageInfos: [],
       MensajeCedula2: "",
       MensajeCedula: "",
+      tipoIndenteficacion: "",
+      registro: false,
       showMensajesCedula2: false,
       showExistenciaCedula: false,
       showPersona: true,
+      CedulaResidencial: false,
+      CedulaNacional: false,
+      Pasaporte: false,
       showOrganizacion: false,
       showIdentificacion: false,
       show: true,
@@ -603,7 +693,9 @@ export default {
         id: "",
         persona: "",
         idPersona: "",
+        identificacionPersona: "",
         idOrganizacion: "",
+        identificacionOrganizacion: "",
         tipo: "",
         detalle: "",
         photo: "",
@@ -612,6 +704,7 @@ export default {
       }),
       formPer: new Form({
         id: "",
+        identificacion: "",
         nombre: "",
         apellido1: "",
         apellido2: "",
@@ -624,10 +717,11 @@ export default {
         telefono: "",
         correo: "",
       }),
-      Monetario:"Monetario",
-      Material:"Material",
+      Monetario: "Monetario",
+      Material: "Material",
     };
   },
+
   methods: {
     modalPersona() {
       this.modalExtra = false;
@@ -642,6 +736,25 @@ export default {
       $("#modalExtra").modal("show");
       this.showPersona = false;
       this.showOrganizacion = true;
+    },
+    tipoDeIndentificacon() {
+      if (this.tipoIndenteficacion == "Cedula Nacional") {
+        this.CedulaNacional = true;
+        this.Pasaporte = false;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+      if (this.tipoIndenteficacion == "Cedula Residencial") {
+        this.CedulaNacional = false;
+        this.Pasaporte = false;
+        this.CedulaResidencial = true;
+        this.form.identificacion = "";
+      } else if (this.tipoIndenteficacion == "Pasaporte") {
+        this.CedulaNacional = false;
+        this.Pasaporte = true;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
     },
     updatePhoto(e) {
       let file = e.target.files[0];
@@ -675,10 +788,11 @@ export default {
     },
     habilitarCampos() {
       for (let i = 0; i < this.cedulas.length; i++) {
-        if (this.cedulas[i].id == this.buscador) {
+        if (this.cedulas[i].identificacion == this.buscador) {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
-          this.form.idPersona = this.buscador;
+          this.form.idPersona = this.cedulas[i].id;
+          this.form.identificacionPersona = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
           this.MensajeCedula2 = "Se encontro la cedula";
@@ -687,10 +801,11 @@ export default {
     },
     habilitarCamposOrg() {
       for (let i = 0; i < this.cedulasOrg.length; i++) {
-        if (this.cedulasOrg[i].id == this.buscador) {
+        if (this.cedulasOrg[i].identificacion == this.buscador) {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
-          this.form.idOrganizacion = this.buscador;
+          this.form.idOrganizacion = this.cedulas[i].id;
+          this.form.identificacionOrganizacion = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
           this.MensajeCedula2 = "Se encontro la cedula";
@@ -915,10 +1030,6 @@ export default {
       });
     },
   },
-  mounted() {
-    console.log("Component mounted.");
-  },
-
   created() {
     this.$Progress.start();
     this.cargarDonativos();

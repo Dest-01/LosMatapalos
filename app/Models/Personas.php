@@ -10,5 +10,5 @@ class Personas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','nombre', 'apellido1', 'apellido2', 'telefono', 'correo'];
+    protected $fillable = ['id', 'identificacion', 'nombre', 'apellido1', 'apellido2', 'telefono', 'correo'];
 }

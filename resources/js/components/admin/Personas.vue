@@ -30,6 +30,7 @@
                   type="button"
                   class="btn btn-sm btn-primary"
                   @click="newModal"
+                   onclick="limpiarCampo()"
                 >
                   <i class="fa fa-plus-square"></i>
                   Agregar Nuevo
@@ -52,7 +53,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="persona in personas.data" :key="persona.id">
-                    <td>{{ persona.id }}</td>
+                    <td>{{ persona.identificacion }}</td>
                     <td class="text-capitalize">{{ persona.nombre }}</td>
                     <td>{{ persona.apellido1 }}</td>
                     <td>{{ persona.apellido2 }}</td>
@@ -95,6 +96,7 @@
         role="dialog"
         aria-labelledby="addNew"
         aria-hidden="true"
+        
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -111,6 +113,7 @@
                 data-dismiss="modal"
                 aria-label="Close"
                 @click="limpiar()"
+               
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -123,22 +126,70 @@
             >
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Cédula</label>
-                  <input
-                    v-model="form.id"
-                    type="text"
-                    name="id"
+                  <label>Tipo de indentificación</label>
+                  <select
                     class="form-control"
-                    :disabled="CedulaBloqueo"
-                    :class="{ 'is-invalid': form.errors.has('id') }"
-                    placeholder="Cedula"
-                    required
-                    minlength="8"
-                    maxlength="18"
-                    
-                    pattern="[0-9]{8,18}"
-                  />
-                  <has-error :form="form" field="id"></has-error>
+                    v-model="tipoIndenteficacion"
+                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    @change="tipoDeIndentificacon"
+                  >
+                    <option disabled value="">Seleccione un tipo</option>
+                    <option value="Cedula Nacional">Cédula Nacional</option>
+                    <option value="Cedula Residencial">
+                      Cedula Residencial
+                    </option>
+                    <option value="Pasaporte">Pasaporte</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <div v-show="CedulaNacional" class="form-group">
+                    <input
+                      v-model="form.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': form.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato #-####-####"
+                      id="nacional"
+                      onchange="validate()"
+                    />
+                    <has-error :form="form" field="identificacion"></has-error>
+                  </div>
+
+                  <div v-show="CedulaResidencial" class="form-group">
+                    <input
+                      v-model="form.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': form.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 10 dígitos"
+                      id="residencial"
+                      onchange="validateResidencial()"
+                    />
+                    <has-error :form="form" field="identificacion"></has-error>
+                  </div>
+
+                  <div v-show="Pasaporte" class="form-group">
+                    <input
+                      v-model="form.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': form.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 11 a 12 dígitos"
+                      id="pasaporte"
+                      onchange="validatePasaporte()"
+                    />
+                    <has-error :form="form" field="identificacion"></has-error>
+                  </div>
                 </div>
 
                 <div class="form-group">
@@ -204,11 +255,11 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     id="phone"
-                    size="20"
+                    size="8"
                     min="10000000"
                     max="99999999"
-                    placeholder="12345678"
-                    pattern="[0-9]{8,12}"
+                    placeholder="#### ####"
+                    pattern="[0-9]{8}"
                     required
                   />
                   <has-error :form="form" field="telefono"></has-error>
@@ -248,6 +299,8 @@
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
+                  id="validar"
+                  disabled="registro"
                 >
                   Registrar
                 </button>
@@ -267,11 +320,17 @@ export default {
       OcultartablaReportes: true,
       CedulaBloqueo: false,
       editmode: false,
+      CedulaResidencial: false,
+      CedulaNacional: false,
+      Pasaporte: false,
+      registro: false,
+      tipoIndenteficacion: "",
       errors: {},
       personas: {},
       total: "",
       form: new Form({
         id: "",
+        identificacion: "",
         nombre: "",
         apellido1: "",
         apellido2: "",
@@ -280,8 +339,13 @@ export default {
       }),
     };
   },
+  mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute("src", "/js/utilitarios.js");
+    plugin.async = true;
+    document.head.appendChild(plugin);
+  },
   methods: {
-
     getResults(page = 1) {
       this.$Progress.start();
 
@@ -334,6 +398,26 @@ export default {
       this.form.errors.clear();
     },
 
+    tipoDeIndentificacon() {
+      if (this.tipoIndenteficacion == "Cedula Nacional") {
+        this.CedulaNacional = true;
+        this.Pasaporte = false;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+      if (this.tipoIndenteficacion == "Cedula Residencial") {
+        this.CedulaNacional = false;
+        this.Pasaporte = false;
+        this.CedulaResidencial = true;
+        this.form.identificacion = "";
+      } else if (this.tipoIndenteficacion == "Pasaporte") {
+        this.CedulaNacional = false;
+        this.Pasaporte = true;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+    },
+
     cargarPersona() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
@@ -345,7 +429,7 @@ export default {
     crearPersona() {
       this.form
         .post("/api/persona", {
-          params: { id: this.form.id },
+          params: { identificacion: this.form.identificacion },
         })
         .then((response) => {
           if (response.data.success == false) {

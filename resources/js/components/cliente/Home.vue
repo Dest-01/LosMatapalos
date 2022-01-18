@@ -10,7 +10,7 @@
 
       <video muted autoplay loop>
         <source
-          src="https://dl.dropbox.com/s/qajc97uh3rlzdn2/video.mp4?dl=0"
+          src="https://dl.dropbox.com/s/hmffv7hp4mfkooh/Biblioteca%20-%203%20de%208.mov"
           type="Video/mp4"
         />
       </video>
@@ -50,7 +50,7 @@
                 <p>
                   El Sendero Los Matapalos cuenta con una amplia variedad de
                   cursos referentes al ambiente y su cuidado al igual que una
-                  amplia lista de capacitaciones ambientales
+                  amplia lista de capacitaciones ambientales.
                 </p>
               </div>
             </div>
@@ -62,7 +62,7 @@
                 <p>
                   El Sendero Los Matapalos cuenta con una amplia variedad de
                   cursos referentes al ambiente y su cuidado al igual que una
-                  amplia lista de capacitaciones ambientales
+                  amplia lista de capacitaciones ambientales.
                 </p>
               </div>
             </div>
@@ -70,40 +70,26 @@
             <div class="col-md-4 col-sm-6 equal-height">
               <div class="item">
                 <i class="fas fa-book"></i>
-                <h4>Educacion ambiental</h4>
+                <h4>Educación ambiental</h4>
                 <p>
                   El Sendero Los Matapalos cuenta con una amplia variedad de
                   cursos referentes al ambiente y su cuidado al igual que una
-                  amplia lista de capacitaciones ambientales
+                  amplia lista de capacitaciones ambientales.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <section>
       <Proyectos></Proyectos>
+      </section>
+       <section style="background: #f9f9f9">
       <Actividades></Actividades>
-      <div style="margin-top: 30px">
+       </section>
+      <div>
         <Contacto></Contacto>
       </div>
-      <section class="map">
-        <div class="contenedor">
-          <h2 style="text-align: center" class="titulo">Encuentranos</h2>
-          <div class="map-cont">
-            <div class="map-box">
-              <!-- <img src="img/ilustracion4.svg" alt="">-->
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4697.277481346486!2d-85.45376162258393!3d10.617667351742492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f757d3b9e5cff01%3A0x4139935881accb02!2sUniversidad%20Nacional!5e0!3m2!1sen!2scr!4v1631573581299!5m2!1sen!2scr"
-                width="600"
-                height="450"
-                style="border: 0"
-                allowfullscreen=""
-                loading="lazy"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   </div>
 </template>
@@ -552,24 +538,5 @@ p {
   transition: 0.6s;
 }
 
-.map {
-  background: #fff;
-  padding-bottom: 30px;
-}
-.map-cont {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-.map-box {
-  display: flex;
-  width: 100%;
-  border: 3px solid #034991;
-  align-items: center;
-  border-radius: 10px;
-}
-.map-box iframe {
-  width: 100%;
-  border-radius: 10px;
-}
+
 </style>

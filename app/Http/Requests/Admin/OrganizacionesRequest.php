@@ -37,9 +37,9 @@ class OrganizacionesRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'id' => 'required|string|max:18|min:8|regex:/[0-9]{8,18}/',
+            'identificacion' => 'required|regex:/^[1-9]-\d{3}-\d{6}$/',
             'nombre' => 'required|string|min:3|max:20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'telefono' => 'required|integer|min:10000000|max:99999999|regex:/[0-9]{8,12}/',
+            'telefono' => 'required|regex:/^\d{8}$/',
             'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }
@@ -53,17 +53,19 @@ class OrganizacionesRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string|min:3|max:20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'telefono' => 'required|integer|min:10000000|max:99999999|regex:/[0-9]{8,12}/',
+            'telefono' => 'required|regex:/^\d{8}$/',
             'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }
 
     public function messages(){
         return [
-            'id.*'=>'Cedula requiere mínimo 8 caracteres y máximo 18',
+            
+            'identificacion.regex' => 'El formato de la cédula jurídica es incorrecto',
+            'identificacion.*' => 'El campo de la cédula jurídica es requerido',
             'nombre.regex' => 'Solo se permite letras',
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
-            'telefono.*' => 'Telefono se requiere, mínimo 8 números',
+            'telefono.*' => 'Telefono se requiere, 8 números',
             'correo.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
         ];
     }

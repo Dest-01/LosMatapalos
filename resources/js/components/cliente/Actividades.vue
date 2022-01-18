@@ -116,10 +116,6 @@ export default {
 };
 </script>
 <style scoped>
-.contenedor-principal {
-  margin-top: 100px;
-  min-height: 100%;
-}
 
 .mensaje {
   width: 100%;

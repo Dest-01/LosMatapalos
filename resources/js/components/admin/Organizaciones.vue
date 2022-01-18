@@ -53,7 +53,7 @@
                     v-for="organizacion in organizaciones.data"
                     :key="organizacion.id"
                   >
-                    <td>{{ organizacion.id }}</td>
+                    <td>{{ organizacion.identificacion }}</td>
                     <td class="text-capitalize">{{ organizacion.nombre }}</td>
                     <td>{{ organizacion.telefono }}</td>
                     <td>{{ organizacion.correo }}</td>
@@ -129,18 +129,16 @@
                 <div class="form-group">
                   <label>Cedula Jurídica</label>
                   <input
-                    v-model="form.id"
-                    type="number"
-                    name="id"
+                    v-model="form.identificacion"
+                    type="text"
+                    name="identificacion"
                     class="form-control"
                     :disabled="CedulaBloqueo"
-                    :class="{ 'is-invalid': form.errors.has('id') }"
-                    placeholder="Cedula Jurídica"
+                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    placeholder="Formato: #-###-######"
                     required
-                    minlength="8"
-                    maxlength="20"
                   />
-                  <has-error :form="form" field="id"></has-error>
+                  <has-error :form="form" field="identificacion"></has-error>
                 </div>
 
                 <div class="form-group">
@@ -171,7 +169,7 @@
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     min="10000000"
                     max="99999999"
-                    placeholder="12345678"
+                    placeholder="#### ####"
                    pattern="[0-9]{8}"
                     required
                   />
@@ -234,6 +232,7 @@ export default {
       organizaciones: {},
       form: new Form({
         id: "",
+        identificacion: "",
         nombre: "",
         telefono: "",
         correo: "",

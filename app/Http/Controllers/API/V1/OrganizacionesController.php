@@ -44,11 +44,11 @@ class OrganizacionesController extends BaseController
     public function store(OrganizacionesRequest $request)
     {
         try {
-            $filtro = $request->id;
-            $existencia = Organizaciones::where('id', '=', $filtro)->first();
+            $filtro = $request->identificacion;
+            $existencia = Organizaciones::where('identificacion', '=', $filtro)->first();
             if ($existencia === null) {
                 $tag = $this->organizaciones->create([
-                    'id' => $request->get('id'),
+                    'identificacion' => $request->get('identificacion'),
                     'nombre' => $request->get('nombre'),
                     'telefono' => $request->get('telefono'),
                     'correo' => $request->get('correo'),

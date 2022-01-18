@@ -1,11 +1,11 @@
 <template>
 <section id="team" class="team-area">
         <div class="container">
+          
             <div class="row">
                 <div class="col-md-12">
                     <div class="site-heading text-center">
                         <h2>Nuestro <span>Equipo</span>.!</h2>
-                       
                     </div>
                 </div>
             </div>

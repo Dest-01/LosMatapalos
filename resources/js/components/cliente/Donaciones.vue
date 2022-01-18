@@ -11,6 +11,7 @@
         Su aporte logra una gran contribución con la mejora y el mantenimiento
         del sendero.</span
       >
+
     </div>
     <div class="necesarios">
       <div class="contenedor1 card">
@@ -102,53 +103,72 @@
         </div>
       </div>
     </div>
-    <div class="contenedor-donadores">
-      <h2 class="titles"><span class="pull-right"></span>Donadores</h2>
-      <div class="row">
-        <ul class="scroll-box">
-          <li v-for="donador in donadores.data" v-bind:key="donador">
-            <a href="#">
-              <h3>{{donador.nombre}} {{donador.apellido1}}</h3>
-              <h1 v-if="donador.id = donativos.idPersonas">{{donativo.fecha}}</h1>
-              <h4></h4>
-              <h5>
-                Descripción
-              </h5>
-            </a>
-          </li>
-        </ul>
-      </div>
+<section class="secCard">
+  <div class="container">
+  <div class="card">
+    <div class="imgBx">
+      <img src="https://dl.dropbox.com/s/qyw1fm7xcumr1ad/20210827_152101.jpg?dl=0" alt="">
     </div>
-    <div class="contenedor-donaciones">
-      <h2 class="titles">
-        <span class="pull-right"></span>Donaciones Recibidas
-      </h2>
-      <div class="row donation">
-        <div
-          v-for="donativo in donativos.data"
-          :key="donativo.id"
-          class="col-sm-3"
-        >
-          <a href="" class="card">
-            <h3 style="text-align: center">{{ donativo.tipo }}</h3>
-            <img
-              class="imagenes"
-              v-bind:src="'/images/donativos/' + donativo.photo"
-              width="300px"
-              height="200px"
-              alt=""
-            />
-            <h4>{{ donativo.fecha }}</h4>
-            <h5 style="text-align: center">{{ donativo.detalle }}</h5>
-          </a>
-        </div>
-      </div>
+    <div class="content">
+      <h2>Card one</h2>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel, consequuntur! Repudiandae laudantium maxime doloribus. Fugit porro in a beatae. Quo atque a quod accusamus inventore? Velit voluptatum rerum voluptates nostrum.</p>
     </div>
+  </div>
+</div>
+
+  <div class="container">
+  <div class="card">
+    <div class="imgBx">
+      <img src="https://dl.dropbox.com/s/qyw1fm7xcumr1ad/20210827_152101.jpg?dl=0" alt="">
+    </div>
+    <div class="content">
+      <h2>Card one</h2>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel, consequuntur! Repudiandae laudantium maxime doloribus. Fugit porro in a beatae. Quo atque a quod accusamus inventore? Velit voluptatum rerum voluptates nostrum.</p>
+    </div>
+  </div>
+</div>
+
+  <div class="container">
+  <div class="card">
+    <div class="imgBx">
+      <img src="https://dl.dropbox.com/s/qyw1fm7xcumr1ad/20210827_152101.jpg?dl=0" alt="">
+    </div>
+    <div class="content">
+      <h2>Card one</h2>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel, consequuntur! Repudiandae laudantium maxime doloribus. Fugit porro in a beatae. Quo atque a quod accusamus inventore? Velit voluptatum rerum voluptates nostrum.</p>
+    </div>
+  </div>
+</div>
+  <div class="container">
+  <div class="card">
+    <div class="imgBx">
+      <img src="https://dl.dropbox.com/s/qyw1fm7xcumr1ad/20210827_152101.jpg?dl=0" alt="">
+    </div>
+    <div class="content">
+      <h2>Card one</h2>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel, consequuntur! Repudiandae laudantium maxime doloribus. Fugit porro in a beatae. Quo atque a quod accusamus inventore? Velit voluptatum rerum voluptates nostrum.</p>
+    </div>
+  </div>
+</div>
+  <div class="container">
+  <div class="card">
+    <div class="imgBx">
+      <img src="https://dl.dropbox.com/s/qyw1fm7xcumr1ad/20210827_152101.jpg?dl=0" alt="">
+    </div>
+    <div class="content">
+      <h2>Card one</h2>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel, consequuntur! Repudiandae laudantium maxime doloribus. Fugit porro in a beatae. Quo atque a quod accusamus inventore? Velit voluptatum rerum voluptates nostrum.</p>
+    </div>
+  </div>
+</div>
+</section>
   </div>
 </template>
 
 <script>
+
 export default {
+
   data() {
     return {
       portada: "../images/PortadaDonaciones.jpg",
@@ -366,6 +386,89 @@ h5 {
 }
 .titles span {
   color: rgba(255, 255, 255, 0.6);
+}
+
+
+.secCard{
+  
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(239 237 237);
+  }
+.contenedor-donaciones{
+  background-color: rgb(239 237 237);
+}
+
+  .container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 30px;
+  }
+
+  .container .card{
+    position: relative;
+    max-width: 300px;
+    height: 150px;
+    background: #fff;
+    margin: 30px 10px;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease-in-out;
+  }
+  .container .card:hover{
+    height: 420px;
+  }
+
+.container .card .imgBx{
+  position: relative;
+width: 260px;
+height: 260px;
+top: -60px;
+left: 5px;
+z-index: 5;
+box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.container .card .imgBx img{
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.container .card .content{
+  position: relative;
+  margin-top: -140px;
+  padding: 10px 15px;
+  text-align: center;
+  color: #111;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.container .card:hover .content{
+  visibility: visible;
+  opacity: 1;
+  margin-top: -40px;
+
+}
+.site-heading h2 {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.site-heading h2 span {
+  color: #00a01d;
 }
 
 @media (max-width: 639px) {

@@ -10,5 +10,5 @@ class Organizaciones extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['id','nombre', 'telefono', 'correo'];
+    protected $fillable = ['id', 'identificacion', 'nombre', 'telefono', 'correo'];
 }

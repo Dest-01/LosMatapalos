@@ -15,10 +15,10 @@ class CreateReservasTable extends Migration
     {
         Schema::create('reservas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('idPersona')->nullable();
-            $table->foreign('idPersona')->references('id')->on('personas');
-            $table->string('idOrganizacion')->nullable();
-            $table->foreign('idOrganizacion')->references('id')->on('organizaciones');
+            $table->unsignedBigInteger('idPersona');
+            $table->foreign("idPersona")->references("id")->on("personas")->onDelete("cascade")->onUpdate("cascade");
+            $table->unsignedBigInteger('idOrganizacion');
+            $table->foreign("idOrganizacion")->references("id")->on("organizaciones")->onDelete("cascade")->onUpdate("cascade");
             $table->integer('cantidad');
             $table->date('fecha')->format('d/m/Y');
             $table->time('horaInicio');

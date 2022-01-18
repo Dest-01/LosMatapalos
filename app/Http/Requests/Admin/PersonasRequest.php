@@ -37,11 +37,14 @@ class PersonasRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'id' => 'required|integer|max:18|min:8|regex:/[0-9]{8,18}/',
+            //'identificacion' => 'regex:/[0-9]/|min:9|max:12',//cedula nacional
+           // 'identificacion' => 'regex:/^[0-9]{10}/',//cedula residencial
+           // 'identificacion' => 'regex:/^[0-9]{11-12}/',//pasaporte
+           'identificacion' => 'required',
             'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'telefono' => 'required|integer|min:10000000|max:99999999|regex:/[0-9]{8,12}/',
+            'telefono' => 'required|regex:/^\d{8}$/',
             'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }
@@ -58,14 +61,14 @@ class PersonasRequest extends FormRequest
             'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'telefono' => 'required|integer|min:10000000|max:99999999|regex:/[0-9]{8,12}/',
+            'telefono' => 'required|regex:/^\d{8}$/',
             'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
         ];
     }
 
     public function messages(){
         return [
-            'id.*'=>'Cedula requiere mínimo 8 caracteres y máximo 18',
+            'identificacion.*' => 'Se requiere un tipo de identificación',
             'nombre.regex' => 'Solo letras en el nombre',
             'apellido1.regex' => 'Solo letras en el primer apellido',
             'apellido2.regex' => 'Solo letras en el segundo apellido',

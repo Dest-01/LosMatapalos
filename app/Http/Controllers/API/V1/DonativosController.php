@@ -43,25 +43,25 @@ class DonativosController extends BaseController
     public function obtenerCedula(Request $request)
     {
         $filtro = $request->buscador;
-        $persona = Personas::where('id', $filtro)->get('id');
+        $persona = Personas::where('identificacion', $filtro)->get();
         return $this->sendResponse($persona, 'Cedula si existe');
 
     }
     public function obtenerCedulaOrg(Request $request)
     {
         $filtro = $request->buscador;
-        $organizacion = Organizaciones::where('id', $filtro)->get('id');
+        $organizacion = Organizaciones::where('identificacion', $filtro)->get();
         return $this->sendResponse($organizacion, 'Cedula si existe');
     }
 
     public function guardarPersona(PersonasRequest $request)
     {
         try {
-            $filtro = $request->id;
-            $existencia = Personas::where('id', '=', $filtro)->first();
+            $filtro = $request->identificacion;
+            $existencia = Personas::where('identificacion', '=', $filtro)->first();
             if ($existencia === null) {
                 $tag = $this->personas->create([
-                    'id' => $request->get('id'),
+                    'identificacion' => $request->get('identificacion'),
                     'nombre' => $request->get('nombre'),
                     'apellido1' => $request->get('apellido1'),
                     'apellido2' => $request->get('apellido2'),
@@ -144,7 +144,9 @@ class DonativosController extends BaseController
             $tag = $this->donativos->create([
                 'tipo' => $request->get('tipo'),
                 'idPersona' => $request->get('idPersona'),
+                'identificacionPersona' => $request->get('identificacionPersona'),
                 'idOrganizacion' => $request->get('idOrganizacion'),
+                'identificacionOrganizacion' => $request->get('identificacionOrganizacion'),
                 'detalle' => $request->get('detalle'),
                 'photo' => $request->get('photo'),
                 'fecha' => $request->get('fecha'),

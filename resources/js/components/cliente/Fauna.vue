@@ -9,7 +9,7 @@
       <div class="mensaje">
         <i class="far fa-folder-open"></i>
         <h1>Oops!</h1>
-        <h3>No hay registros en galeria de fauna</h3>
+        <h3>No hay registros en galería de fauna</h3>
         <h4>Muy pronto...</h4>
       </div>
     </div>
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> 
   </div>
 </template>
 <script>

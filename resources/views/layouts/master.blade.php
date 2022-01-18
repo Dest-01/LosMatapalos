@@ -26,9 +26,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
 
     <!-- MATERIAL DESIGN BOOSTRAP -->
-<link href="http://fonts.cdnfonts.com/css/frutiger" rel="stylesheet">
-                
+    <link href="http://fonts.cdnfonts.com/css/frutiger" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/css/swiper.css">
 
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/navbar.js') }}"></script>
@@ -69,7 +70,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Galeria
+                                Galería
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                                 style="border-top-radius: 50px; border-bottom-radius: 10px; background: #38ab81;">
@@ -135,7 +136,7 @@
                 <a href="https://www.instagram.com/pgaiuna/?r=nametag"><i class="fab fa-instagram white"></i></a>
             </h5>
             <h5 style="padding: 10px">
-                 © 2021-2022 Todos los derechos reservados.
+                © 2021-2022 Todos los derechos reservados.
             </h5>
 
         </div>
@@ -149,6 +150,9 @@
 
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
+    
     @auth
         <script>
             window.user = @json(auth()->user())

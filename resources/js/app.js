@@ -9,7 +9,15 @@
  window.Vue = require('vue');
  import moment from 'moment';
 
+//Importamos la librería y nuestros dos json
+import VueI18n from 'vue-i18n';
+import en from '../lang/en_US.json'
+import es from '../lang/es_ES.json'
 
+Vue.config.productionTip = false
+
+//añadimos la libreria
+Vue.use(VueI18n);
  
  import { Form, HasError, AlertError } from 'vform';
  window.Form = Form;
@@ -19,6 +27,19 @@
  
  import Swal from 'sweetalert2';
  
+ /* Creamos una instancia de la librería i18n, le añadimos por defecto el idioma 'en' 
+(puedes cambiarlo por 'es') y le indicamos qué json utilizar en cada idioma */
+const i18n = new VueI18n({
+    locale: 'en',
+    messages: {
+      en: {
+        lang: en
+      },
+      es: {
+        lang: es
+      }
+    }
+  });
  
  const Toast = Swal.mixin({
      toast: true,

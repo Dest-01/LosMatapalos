@@ -10,7 +10,7 @@ class Donativos extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tipo','idPersona', 'idOrganizacion', 'detalle', 'photo', 'fecha', 'estado'];
+    protected $fillable = ['tipo','idPersona', 'identificacionPersona', 'idOrganizacion', 'identificacionOrganizacion', 'detalle', 'photo', 'fecha', 'estado'];
 
     public function personas()
     {
