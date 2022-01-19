@@ -26,6 +26,7 @@
                     <th>Nombre de Actividad</th>
                     <th>Nombre de Persona Voluntaria</th>
                     <th>Nombre de Estudiante Voluntario</th>
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -34,9 +35,9 @@
                     :key="actividadVoluntario.id"
                   >
                     <td>{{ actividadVoluntario.id }}</td>
-                    <td class="text-capitalize">{{  actividadVoluntario.idActividad }}</td>
-                    <td class="text-capitalize">{{  actividadVoluntario.idVoluntario_Estudiante }}</td>
-                    <td class="text-capitalize">{{  actividadVoluntario.idVoluntario_Persona }}</td>
+                    <td class="text-capitalize">{{  actividadVoluntario.ActNombre }}</td>
+                    <td class="text-capitalize">{{  actividadVoluntario.VolPerCedula }} - {{  actividadVoluntario.NombrePersona }}</td>
+                    <td class="text-capitalize">{{  actividadVoluntario.volEstCedula }} - {{actividadVoluntario.NombreEstudiante}}</td>
                     <td> 
                       <a href="#" @click="editModal(actividadVoluntario)">
                         <i class="fa fa-edit blue"></i>
@@ -161,7 +162,7 @@
                                           :value="voluntarioPersona.id"
                                           :class="{ 'is-invalid': form.errors.has('idVoluntario_Persona') }"
                                       >
-                                          {{voluntarioPersona.identificacion}}
+                                          {{voluntarioPersona.identificacionPersona}}
                                       </li>
                                       <has-error :form="form" field="idVoluntario_Persona"></has-error>
                                     </ul>
@@ -198,7 +199,7 @@
                                           :value="voluntarioEstudiante.id"
                                           :class="{ 'is-invalid': form.errors.has('idVoluntario_Estudiante') }"
                                       >
-                                          {{voluntarioEstudiante.identificacion}}
+                                          {{voluntarioEstudiante.identificacionPersona}}
                                       </li>
                                       <has-error :form="form" field="idVoluntario_Estudiante"></has-error>
                                     </ul>

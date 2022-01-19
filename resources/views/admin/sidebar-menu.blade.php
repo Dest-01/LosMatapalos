@@ -190,15 +190,7 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item">
-                        <router-link to="" class="nav-link">
-                            <i class="nav-icon fas fa-file-word gray"></i>
-                            <p>
-                                Documentos
-                            </p>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link to="" class="nav-link">
+                        <router-link to="/admin/repositorio" class="nav-link">
                             <i class="nav-icon fas fa-file-pdf gray"></i>
                             <p>
                                 PDF

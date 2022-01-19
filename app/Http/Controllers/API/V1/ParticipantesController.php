@@ -36,11 +36,11 @@ class ParticipantesController extends BaseController
     public function store(ParticipanteRequest $request)
     {
         try {
-            $filtro = $request->id;
-            $existencia = participantes::where('id', '=', $filtro)->first();
+            $filtro = $request->identificacion;
+            $existencia = participantes::where('identificacion', '=', $filtro)->first();
             if ($existencia === null) {
                 $tag = $this->participantes->create([
-                    'id' => $request->get('id'),
+                    'identificacion' => $request->get('identificacion'),
                     'nombre' => $request->get('nombre'),
                     'apellido1' => $request->get('apellido1'),
                     'apellido2' => $request->get('apellido2'),

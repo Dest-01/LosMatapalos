@@ -31,7 +31,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar Nuevo
+                  Agregar Voluntariado
                 </button>
                 <button
                   type="button"
@@ -39,7 +39,7 @@
                   @click="abrirModal()"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar Persona
+                  Registrar Persona
                 </button>
               </div>
             </div>
@@ -62,7 +62,7 @@
                     :key="voluntariopersonas.id"
                   >
                     <td>{{ voluntariopersonas.id }}</td>
-                    <td>{{ voluntariopersonas.identificacion }}</td>
+                    <td>{{ voluntariopersonas.identificacionPersona }}</td>
                     <td>{{ voluntariopersonas.voluntariado_id }}</td>
                     <td>{{ voluntariopersonas.lugar }}</td>
                     <td>
@@ -153,7 +153,7 @@
             >
               <div class="modal-body">
                 <div v-show="showBuscadores" class="form-group">
-                  <label>Cedula a consultar:</label>
+                  <label>identificación a consultar:</label>
                   <input
                     v-model="buscadorC"
                     type="text"
@@ -182,7 +182,7 @@
                     style="width: 155px; height: 40px"
                     @click="ConsultaCedula(), NoexisteCedula()"
                   >
-                    Comprobar cedula
+                    Consultar
                   </button>
                   <button
                     type="button"
@@ -197,15 +197,20 @@
                   <label>Cedula del estudiante</label>
                   <input
                     :disabled="bloquearCedulaVoluntario"
-                    v-model="form.identificacion"
+                    v-model="form.identificacionPersona"
                     type="text"
-                    name="identificacion"
+                    name="identificacionPersona"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    :class="{
+                      'is-invalid': form.errors.has('identificacionPersona'),
+                    }"
                     minlength="8"
                     maxlength="8"
                   />
-                  <has-error :form="form" field="identificacion"></has-error>
+                  <has-error
+                    :form="form"
+                    field="identificacionPersona"
+                  ></has-error>
                 </div>
 
                 <div class="form-group">
@@ -256,7 +261,6 @@
                     minlength="1"
                     maxlength="30"
                     placeholder="Cantidad de actividades realizadas"
-
                   />
                   <has-error :form="form" field="cantidad"></has-error>
                 </div>
@@ -286,7 +290,7 @@
           </div>
         </div>
       </div>
-       <!-- Modal de persona -->
+      <!-- Modal de persona -->
       <div
         class="modal fade"
         id="personaModal"
@@ -294,11 +298,11 @@
         role="dialog"
         aria-labelledby="personaModal"
         aria-hidden="true"
-        >
+      >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Registro de estudiante</h5>
+              <h5 class="modal-title">Registro de voluntario</h5>
               <button
                 type="button"
                 class="close"
@@ -315,100 +319,160 @@
             <form @submit.prevent="crearPersona()">
               <div class="modal-body">
                 <div class="form-group">
-                    <label>Cedula</label>
+                  <label>Tipo de indentificación</label>
+                  <select
+                    class="form-control"
+                    v-model="tipoIndenteficacion"
+                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    @change="tipoDeIndentificacon"
+                  >
+                    <option disabled value="">Seleccione un tipo</option>
+                    <option value="Cedula Nacional">Cédula Nacional</option>
+                    <option value="Cedula Residencial">
+                      Cedula Residencial
+                    </option>
+                    <option value="Pasaporte">Pasaporte</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <div v-show="CedulaNacional" class="form-group">
                     <input
-                      v-model="formPer.id"
+                      v-model="formPer.identificacion"
                       type="text"
-                      name="id"
+                      name="identificacion"
                       class="form-control"
-                      :class="{ 'is-invalid': formPer.errors.has('id') }"
-                      required
-                      minlength="8"
-                      maxlength="18"
-                      placeholder="Cedula de la persona"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato #-####-####"
+                      id="nacional"
+                      onchange="validate()"
                     />
-                    <has-error :form="formPer" field="id"></has-error>
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
                   </div>
-                  <div class="form-group">
-                    <label>Nombre</label>
+
+                  <div v-show="CedulaResidencial" class="form-group">
                     <input
-                      v-model="formPer.nombre"
+                      v-model="formPer.identificacion"
                       type="text"
-                      name="nombre"
+                      name="identificacion"
                       class="form-control"
-                      :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                      required
-                      minlength="3"
-                      maxlength="20"
-                      pattern="[a-zA-Z'-'\s]*"
-                      placeholder="Nombre de la persona"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 10 dígitos"
+                      id="residencial"
+                      onchange="validateResidencial()"
                     />
-                    <has-error :form="formPer" field="nombre"></has-error>
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
                   </div>
-                  <div class="form-group">
-                    <label>Primer Apellido</label>
+
+                  <div v-show="Pasaporte" class="form-group">
                     <input
-                      v-model="formPer.apellido1"
+                      v-model="formPer.identificacion"
                       type="text"
-                      name="apellido1"
+                      name="identificacion"
                       class="form-control"
-                      :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                      required
-                      minlength="3"
-                      maxlength="20"
-                      pattern="[a-zA-Z'-'\s]*"
-                      placeholder="Primer apellido de la persona"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 11 a 12 dígitos"
+                      id="pasaporte"
+                      onchange="validatePasaporte()"
                     />
-                    <has-error :form="formPer" field="apellido1"></has-error>
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
                   </div>
-                  <div class="form-group">
-                    <label>Segundo Apellido</label>
-                    <input
-                      v-model="formPer.apellido2"
-                      type="text"
-                      name="apellido2"
-                      class="form-control"
-                      :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                      required
-                      minlength="3"
-                      maxlength="20"
-                      pattern="[a-zA-Z'-'\s]*"
-                      placeholder="Segundo apellido de la persona"
-                    />
-                    <has-error :form="formPer" field="apellido2"></has-error>
-                  </div>
-                  <div class="form-group">
-                    <label>Teléfono</label>
-                    <input
-                      v-model="formPer.telefono"
-                      type="number"
-                      name="telefono"
-                      class="form-control"
-                      :class="{ 'is-invalid': formPer.errors.has('telefono') }"
-                      min="10000000"
-                      placeholder="12345678"
-                      pattern="[0-9]{8,12}"
-                      required
-                    />
-                    <has-error :form="formPer" field="telefono"></has-error>
-                  </div>
-                  <div class="form-group">
-                    <label>Correo</label>
-                    <input
-                      v-model="formPer.correo"
-                      type="email"
-                      name="correo"
-                      class="form-control"
-                      :class="{ 'is-invalid': formPer.errors.has('correo') }"
-                      size="32"
-                      placeholder="ejemplo@gmail.com"
-                      minlength="3"
-                      maxlength="64"
-                      pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                      required
-                    />
-                    <has-error :form="formPer" field="correo"></has-error>
-                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input
+                    v-model="formPer.nombre"
+                    type="text"
+                    name="nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[a-zA-Z'-'\s]*"
+                    placeholder="Nombre"
+                  />
+                  <has-error :form="formPer" field="nombre"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Primer Apellido</label>
+                  <input
+                    v-model="formPer.apellido1"
+                    type="text"
+                    name="apellido1"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[a-zA-Z'-'\s]*"
+                    placeholder="Primer Apellido"
+                  />
+                  <has-error :form="formPer" field="apellido1"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Segundo Apellido</label>
+                  <input
+                    v-model="formPer.apellido2"
+                    type="text"
+                    name="apellido2"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[a-zA-Z'-'\s]*"
+                    placeholder="Segundo Apellido"
+                  />
+                  <has-error :form="formPer" field="apellido2"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input
+                    v-model="formPer.telefono"
+                    type="number"
+                    name="telefono"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('telefono') }"
+                    min="10000000"
+                    placeholder="#### ####"
+                    pattern="[0-9]{8}"
+                    required
+                  />
+                  <has-error :form="formPer" field="telefono"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Correo</label>
+                  <input
+                    v-model="formPer.correo"
+                    type="email"
+                    name="correo"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                    size="32"
+                    placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                    required
+                  />
+                  <has-error :form="formPer" field="correo"></has-error>
+                </div>
               </div>
               <div class="modal-footer">
                 <button
@@ -423,15 +487,16 @@
                   @click="crearPersona()"
                   type="submit"
                   class="btn btn-success"
+                  id="validar"
+                  disabled="registro"
                 >
-                  Guardar
+                  Registrar
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-    
     </div>
   </section>
 </template>
@@ -439,6 +504,11 @@
 export default {
   data() {
     return {
+      CedulaResidencial: false,
+      CedulaNacional: false,
+      Pasaporte: false,
+      tipoIndenteficacion: "",
+      registro: false,
       MensajeCedula: "",
       MensajeCedula2: "Se encontro la cedula!",
       showBuscadores: false, //se oculta al editar
@@ -460,6 +530,7 @@ export default {
         id: "",
         idVoluntario: "",
         identificacion: "",
+        identificacionPersona: "",
         voluntariado_id: "",
         lugar: "",
         cantidad: "",
@@ -492,7 +563,7 @@ export default {
     },
     editModal(voluntarioPersona) {
       this.editmode = true;
-      
+
       this.form.reset();
       $("#addNew").modal("show");
       this.form.fill(voluntarioPersona);
@@ -506,7 +577,6 @@ export default {
       this.formVoluntario.cantidad = this.CantidadActividades.cantidad;
       this.form.errors.clear();
       this.formVoluntario.errors.clear();
-      
     },
     newModal() {
       this.editmode = false;
@@ -517,8 +587,27 @@ export default {
       this.formVoluntario.errors.clear();
       this.limpiar();
     },
-   abrirModal() {
+    abrirModal() {
       $("#personaModal").modal("show");
+    },
+       tipoDeIndentificacon() {
+      if (this.tipoIndenteficacion == "Cedula Nacional") {
+        this.CedulaNacional = true;
+        this.Pasaporte = false;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+      if (this.tipoIndenteficacion == "Cedula Residencial") {
+        this.CedulaNacional = false;
+        this.Pasaporte = false;
+        this.CedulaResidencial = true;
+        this.form.identificacion = "";
+      } else if (this.tipoIndenteficacion == "Pasaporte") {
+        this.CedulaNacional = false;
+        this.Pasaporte = true;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
     },
     limpiar() {
       this.form.identificacion = "";
@@ -547,11 +636,12 @@ export default {
 
     SiExisteCedula() {
       for (let i = 0; i < this.cedulas.length; i++) {
-        if (this.cedulas[i].id == this.buscadorC) {
+        if (this.cedulas[i].identificacion == this.buscadorC) {
           this.showMensajesCedula = false;
           this.showMensajesCedula2 = true;
           this.CedulaBloqueo = true;
-          this.form.identificacion = this.buscadorC;
+          this.form.identificacion = this.cedulas[i].id;
+          this.form.identificacionPersona = this.buscadorC;
           this.bloquearCamposExtras = false;
           this.bloquearCamposIdVoluntario = false;
         }

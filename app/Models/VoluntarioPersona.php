@@ -9,5 +9,5 @@ class VoluntarioPersona extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['id','identificacion', 'voluntariado_id', 'lugar'];
+    protected $fillable = ['id', 'identificacion', 'identificacionPersona', 'voluntariado_id', 'lugar'];
 }

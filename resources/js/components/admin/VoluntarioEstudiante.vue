@@ -49,7 +49,7 @@
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Cedula de voluntario</th>
+                    <th>Identificación de voluntario</th>
                     <th>Id de voluntario</th>
                     <th>Carrera</th>
                     <th>Cantidad de actividades</th>
@@ -63,7 +63,7 @@
                     :key="voluntarioestudiante.id"
                   >
                     <td>{{ voluntarioestudiante.id }}</td>
-                    <td>{{ voluntarioestudiante.identificacion }}</td>
+                    <td>{{ voluntarioestudiante.identificacionPersona }}</td>
                     <td>{{ voluntarioestudiante.voluntariado_id }}</td>
                     <td>{{ voluntarioestudiante.carrera }}</td>
                     <!--<td>{{ voluntarios.data.find(function(el) { return el.id == voluntarioestudiante.voluntariado_id; } ).cantidad }}</td>-->
@@ -196,7 +196,7 @@
                     style="width: 155px; height: 40px"
                     @click="ConsultaCedula(), NoexisteCedula()"
                   >
-                    Comprobar cedula
+                    Consultar
                   </button>
                   <button
                     type="button"
@@ -211,13 +211,13 @@
                   <label>Cedula del estudiante</label>
                   <input
                     :disabled="bloquearCedulaVoluntario"
-                    v-model="form.identificacion"
+                    v-model="form.identificacionPersona"
                     type="text"
-                    name="identificacion"
+                    name="identificacionPersona"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    :class="{ 'is-invalid': form.errors.has('identificacionPersona') }"
                   />
-                  <has-error :form="form" field="identificacion"></has-error>
+                  <has-error :form="form" field="identificacionPersona"></has-error>
                 </div>
 
                 <div class="form-group">
@@ -251,7 +251,7 @@
                     maxlength="50"
                     placeholder="Carrera universitaria"
                   />
-                  
+
                   <has-error :form="form" field="carrera"></has-error>
                 </div>
 
@@ -359,7 +359,7 @@
         role="dialog"
         aria-labelledby="personaModal"
         aria-hidden="true"
-        >
+      >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -380,19 +380,79 @@
             <form @submit.prevent="crearPersona()">
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Cedula de estudiante</label>
-                  <input
-                    v-model="formPer.id"
-                    type="text"
-                    name="id"
+                  <label>Tipo de indentificación</label>
+                  <select
                     class="form-control"
-                    :class="{ 'is-invalid': formPer.errors.has('id') }"
-                    required
-                    minlength="8"
-                    maxlength="18"
-                    placeholder="Cedula del estudiante"
-                  />
-                  <has-error :form="formPer" field="id"></has-error>
+                    v-model="tipoIndenteficacion"
+                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    @change="tipoDeIndentificacon"
+                  >
+                    <option disabled value="">Seleccione un tipo</option>
+                    <option value="Cedula Nacional">Cédula Nacional</option>
+                    <option value="Cedula Residencial">
+                      Cedula Residencial
+                    </option>
+                    <option value="Pasaporte">Pasaporte</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <div v-show="CedulaNacional" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato #-####-####"
+                      id="nacional"
+                      onchange="validate()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="CedulaResidencial" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 10 dígitos"
+                      id="residencial"
+                      onchange="validateResidencial()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="Pasaporte" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 11 a 12 dígitos"
+                      id="pasaporte"
+                      onchange="validatePasaporte()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>Nombre</label>
@@ -455,8 +515,8 @@
                     :class="{ 'is-invalid': formPer.errors.has('telefono') }"
                     size="20"
                     min="10000000"
-                    placeholder="12345678"
-                    pattern="[0-9]{8,12}"
+                    placeholder="#### ####"
+                    pattern="[0-9]{8}"
                     required
                   />
                   <has-error :form="formPer" field="telefono"></has-error>
@@ -512,7 +572,11 @@ export default {
       progress: 0,
       message: "",
       imageInfos: [],
-
+      CedulaResidencial: false,
+      CedulaNacional: false,
+      Pasaporte: false,
+      tipoIndenteficacion: "",
+      registro: false,
       MensajeCedula: "",
       MensajeCedula2: "Se encontro la cedula!",
       showBuscadores: false, //se oculta al editar
@@ -533,6 +597,7 @@ export default {
       form: new Form({
         id: "",
         identificacion: "",
+        identificacionPersona: "",
         voluntariado_id: "",
         carrera: "",
         imagen: "",
@@ -647,13 +712,33 @@ export default {
       this.formPer.correo = "";
       this.formPer.errors.clear();
     },
+    tipoDeIndentificacon() {
+      if (this.tipoIndenteficacion == "Cedula Nacional") {
+        this.CedulaNacional = true;
+        this.Pasaporte = false;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+      if (this.tipoIndenteficacion == "Cedula Residencial") {
+        this.CedulaNacional = false;
+        this.Pasaporte = false;
+        this.CedulaResidencial = true;
+        this.form.identificacion = "";
+      } else if (this.tipoIndenteficacion == "Pasaporte") {
+        this.CedulaNacional = false;
+        this.Pasaporte = true;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+    },
     SiExisteCedula() {
       for (let i = 0; i < this.cedulas.length; i++) {
-        if (this.cedulas[i].id == this.buscadorC) {
+        if (this.cedulas[i].identificacion == this.buscadorC) {
           this.showMensajesCedula = false;
           this.showMensajesCedula2 = true;
           this.CedulaBloqueo = true;
-          this.form.identificacion = this.buscadorC;
+          this.form.identificacion = this.cedulas[i].id;
+          this.form.identificacionPersona = this.buscadorC;
           this.bloquearCamposExtras = false;
           this.bloquearCamposIdVoluntario = false;
         }
@@ -661,7 +746,7 @@ export default {
     },
     editarVoluntario() {
       for (let i = 0; i < this.CantidadActividades.length; i++) {
-          this.form.idVoluntario = this.CantidadActividades[i].id;
+        this.form.idVoluntario = this.CantidadActividades[i].id;
         this.form.cantidad = this.CantidadActividades[i].cantidad;
       }
     },
@@ -699,7 +784,7 @@ export default {
           this.SiExisteCedula();
         });
     },
-     ObtenerCantidad(VoluntarioId) {
+    ObtenerCantidad(VoluntarioId) {
       this.form
         .get("/api/voluntarioEstudiante/obtenerCantidad", {
           params: { VolCantidad: VoluntarioId },
@@ -710,7 +795,7 @@ export default {
         });
     },
     cargarVoluntarioEst() {
-     if (this.$gate.isAdmin() || this.$gate.isUser()) {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/voluntarioEstudiante/")
           .then(({ data }) => (this.voluntarioEst = data.data));
@@ -753,7 +838,7 @@ export default {
     },
     crearVoluntarioEst() {
       this.$Progress.start();
-     this.form.voluntariado_id = this.form.idVoluntario;
+      this.form.voluntariado_id = this.form.idVoluntario;
       this.form
         .post("/api/voluntarioEstudiante")
         .then((response) => {
@@ -763,16 +848,16 @@ export default {
               title: "Id del voluntario ya existe!",
             });
           } else {
-          $("#addNew").modal("hide");
+            $("#addNew").modal("hide");
 
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
 
-          this.$Progress.finish();
-          this.cargarVoluntario();
-          this.cargarVoluntarioEst();
+            this.$Progress.finish();
+            this.cargarVoluntario();
+            this.cargarVoluntarioEst();
           }
         })
         .catch(() => {
@@ -826,7 +911,7 @@ export default {
                 "success"
               );
               // Fire.$emit('AfterCreate');
-               this.cargarVoluntario();
+              this.cargarVoluntario();
               this.cargarVoluntarioEst();
             })
             .catch((data) => {

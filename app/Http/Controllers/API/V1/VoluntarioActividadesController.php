@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\VoluntarioActividades;
 use App\Models\Actividades;
-use App\Models\VoluntarioPersona;
+use App\Models\VoluntarioActividades;
 use App\Models\VoluntarioEstudiantes;
+use App\Models\VoluntarioPersona;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class VoluntarioActividadesController extends BaseController
-{   protected $voluntarioPersona = '';
+{protected $voluntarioPersona = '';
     protected $voluntarioActividades = '';
     protected $voluntarioEstudiantes = '';
     protected $actividades = '';
-    public function __construct(VoluntarioActividades $voluntarioActividades,VoluntarioPersona $voluntarioPersona,Actividades $actividades,VoluntarioEstudiantes $voluntarioEstudiantes)
+    public function __construct(VoluntarioActividades $voluntarioActividades, VoluntarioPersona $voluntarioPersona, Actividades $actividades, VoluntarioEstudiantes $voluntarioEstudiantes)
     {
         $this->middleware('auth:api');
         $this->voluntarioActividades = $voluntarioActividades;
@@ -28,16 +28,33 @@ class VoluntarioActividadesController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(){
-        $voluntarioActi = $this->voluntarioActividades->pluck('id','nombre');
-        return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades');
-    }
     public function index()
     {
-       $voluntarioActi = $this->voluntarioActividades->latest()->paginate(10);
-       return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades');
+        /* $voluntarioActi = $this->voluntarioActividades->pluck('id','nombre');
+        return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades');
+         */
+        $voluntarioActi = DB::table('voluntario_actividades')
+            ->join('actividades', 'voluntario_actividades.idActividad', '=', 'actividades.id')
+            ->join('voluntario_personas', 'voluntario_actividades.idVoluntario_Persona', '=', 'voluntario_personas.id')
+            ->join('personas as per', 'voluntario_personas.identificacion', '=', 'per.id')
+            ->join('voluntario_estudiantes', 'voluntario_actividades.idVoluntario_Estudiante', '=', 'voluntario_estudiantes.id')
+            ->join('personas', 'voluntario_estudiantes.identificacion', '=', 'personas.id')
+            ->select('voluntario_actividades.*', 'personas.nombre as NombrePersona', 'per.nombre as NombreEstudiante', 'personas.apellido1 as PrimerApePersona',
+                'actividades.id as ActId', 'actividades.nombre as ActNombre', 'voluntario_personas.identificacion as VolPerId',
+                'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',
+                'voluntario_estudiantes.identificacionPersona as volEstCedula', 'voluntario_estudiantes.identificacionPersona as volEstCedula')
+            ->paginate(10);
+
+        return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades');
+
     }
-    
+    /*
+    public function index()
+    {
+    $voluntarioActi = $this->voluntarioActividades->latest()->paginate(10);
+    return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -47,9 +64,9 @@ class VoluntarioActividadesController extends BaseController
     public function store(Request $request)
     {
         $tag = $this->voluntarioActividades->create([
-            'idActividad'=> $request->get('idActividad'),
-            'idVoluntario_Persona'=> $request->get('idVoluntario_Persona'),
-            'idVoluntario_Estudiante'=> $request->get('idVoluntario_Estudiante'),
+            'idActividad' => $request->get('idActividad'),
+            'idVoluntario_Persona' => $request->get('idVoluntario_Persona'),
+            'idVoluntario_Estudiante' => $request->get('idVoluntario_Estudiante'),
         ]);
         return $this->sendResponse($tag, 'Actividad Voluntarios registrados');
     }
@@ -85,22 +102,25 @@ class VoluntarioActividadesController extends BaseController
      * @param  \App\Models\VoluntarioActividades  $voluntarioActividades
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VoluntarioActividades $voluntarioActividades,$id)
+    public function destroy(VoluntarioActividades $voluntarioActividades, $id)
     {
         $voluntarioActividades = $this->voluntarioActividades->findOrFail($id);
         $voluntarioActividades->delete();
         return $this->sendResponse($voluntarioActividades, 'Datos Eliminados');
     }
-    public function GetActividades(){
-       $data = actividades::get();
-       return response()->json($data);     
+    public function GetActividades()
+    {
+        $data = actividades::get();
+        return response()->json($data);
     }
-    public function GetVoluntarioPersona(){
-       $data = VoluntarioPersona::get();
-       return response()->json($data);     
+    public function GetVoluntarioPersona()
+    {
+        $data = VoluntarioPersona::get();
+        return response()->json($data);
     }
-    public function GetVoluntarioEstudiantes(){
-       $data = VoluntarioEstudiantes::get();
-       return response()->json($data);
+    public function GetVoluntarioEstudiantes()
+    {
+        $data = VoluntarioEstudiantes::get();
+        return response()->json($data);
     }
 }

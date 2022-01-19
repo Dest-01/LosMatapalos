@@ -37,7 +37,6 @@ class ParticipanteRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'id' => 'required|string|max:18|min:8',
             'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
@@ -65,7 +64,6 @@ class ParticipanteRequest extends FormRequest
 
     public function messages(){
         return [
-            'id.*'=>'Cedula requiere mínimo 8 caracteres y máximo 18',
             'nombre.regex' => 'Solo letras en el nombre',
             'apellido1.regex' => 'Solo letras en el primer apellido',
             'apellido2.regex' => 'Solo letras en el segundo apellido',

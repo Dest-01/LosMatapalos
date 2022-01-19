@@ -33,26 +33,27 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  agregar reserva
+                  agregar reservación
                 </button>
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
-                  @click="modalPersona()"
+                  @click="modalPersona(), limpiar()"
+                  onclick="limpiarCampo()"
+                  
                 >
                   <i class="fa fa-plus-square"></i>
-                  Registro Persona
+                  Registrar Persona
                 </button>
                 <button
                   style="margin-right: 20px"
                   type="button"
                   class="btn btn-sm btn-primary"
-                  @click="modalOrganizacion()"
+                  @click="modalOrganizacion(), limpiar()"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Registro organización
+                  Registrar organización
                 </button>
-                
               </div>
             </div>
             <!-- /.card-header -->
@@ -61,8 +62,8 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Persona</th>
-                    <th>Organización</th>
+                    <th>Identificación</th>
+                    <th>Cédula Jurídica</th>
                     <th>Cantidad de Visitantes</th>
                     <th>Fecha de reservación</th>
                     <th>Hora inicial de reservación</th>
@@ -73,8 +74,8 @@
                 <tbody>
                   <tr v-for="reserva in reservas.data" :key="reserva.id">
                     <td>{{ reserva.id }}</td>
-                    <td>{{ reserva.idPersona }}</td>
-                    <td>{{ reserva.idOrganizacion }}</td>
+                    <td>{{ reserva.identificacionPersona }}</td>
+                    <td>{{ reserva.identificacionOrganizacion }}</td>
                     <td>{{ reserva.cantidad }}</td>
                     <td>{{ reserva.fecha }}</td>
                     <td>{{ reserva.horaInicio }}</td>
@@ -142,16 +143,79 @@
             <form>
               <div class="modal-body">
                 <div v-show="showPersona" class="form-group">
-                  <label>Cedula</label>
-                  <input
-                    v-model="formPer.id"
-                    type="text"
-                    name="id"
+                  <label>Tipo de indentificación</label>
+                  <select
                     class="form-control"
-                    :class="{ 'is-invalid': formPer.errors.has('id') }"
-                    placeholder="Cedula de la persona"
-                  />
-                  <has-error :form="formPer" field="id"></has-error>
+                    v-model="tipoIndenteficacion"
+                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    @change="tipoDeIndentificacon"
+                  >
+                    <option disabled value="">Seleccione un tipo</option>
+                    <option value="Cedula Nacional">Cédula Nacional</option>
+                    <option value="Cedula Residencial">
+                      Cedula Residencial
+                    </option>
+                    <option value="Pasaporte">Pasaporte</option>
+                  </select>
+                </div>
+
+                <div v-show="showPersona" class="form-group">
+                  <div v-show="CedulaNacional" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato #-####-####"
+                      id="nacional"
+                      onchange="validate()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="CedulaResidencial" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 10 dígitos"
+                      id="residencial"
+                      onchange="validateResidencial()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="Pasaporte" class="form-group">
+                    <input
+                      v-model="formPer.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 11 a 12 dígitos"
+                      id="pasaporte"
+                      onchange="validatePasaporte()"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
                 </div>
                 <div v-show="showPersona" class="form-group">
                   <label>Nombre</label>
@@ -162,7 +226,7 @@
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                    placeholder="Nombre de persona"
+                    placeholder="Nombre"
                     required
                   />
                   <has-error :form="formPer" field="nombre"></has-error>
@@ -205,8 +269,8 @@
                     :class="{ 'is-invalid': formPer.errors.has('telefono') }"
                     size="20"
                     min="10000000"
-                    placeholder="12345678"
-                    pattern="[0-9]{8,12}"
+                    placeholder="#### ####"
+                    pattern="[0-9]{8}"
                     required
                   />
                   <has-error :form="formPer" field="telefono"></has-error>
@@ -230,14 +294,14 @@
                 </div>
                 <!-- PARTE DE ORGANIZACION EN EL MISMO MODAL -->
                 <div v-show="showOrganizacion" class="form-group">
-                  <label>Cedula Jurídica</label>
+                  <label>Cédula Jurídica</label>
                   <input
-                    v-model="formOrg.id"
+                    v-model="formOrg.identificacion"
                     type="text"
                     name="id"
                     class="form-control"
                     :class="{ 'is-invalid': formOrg.errors.has('id') }"
-                    placeholder="Cedula jurídica de la organización"
+                    placeholder="#-###-######"
                     required
                   />
                   <has-error :form="formOrg" field="id"></has-error>
@@ -265,8 +329,8 @@
                     :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
                     size="20"
                     min="10000000"
-                    placeholder="12345678"
-                    pattern="[0-9]{8,12}"
+                    placeholder="#### ####"
+                    pattern="[0-9]{8}"
                     required
                   />
                   <has-error :form="formOrg" field="telefono"></has-error>
@@ -311,6 +375,9 @@
                   type="button"
                   class="btn btn-success"
                   @click="crearPersona()"
+                   id="validar"
+                  disabled="registro"
+
                 >
                   Registrar
                 </button>
@@ -332,7 +399,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-show="!editmode">
-                Crear nueva reservar
+                Crear nueva reservación
               </h5>
               <h5 class="modal-title" v-show="editmode">Actualizar reserva</h5>
               <button
@@ -377,9 +444,7 @@
                   <button
                     type="button"
                     class="btn btn-success my-4"
-                    @click="
-                      ConsultaCedula(), habilitarCampos(), NoexisteCedula()
-                    "
+                    @click="ConsultaCedula(), NoexisteCedula()"
                   >
                     Comprobar cedula
                   </button>
@@ -452,10 +517,13 @@
                     v-model="form.horaInicio"
                     type="time"
                     name="horaInicio"
+                    id="horaInicio"
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('horaInicio') }"
                     required
+                    onchange="validarHora()"
+
                   />
                   <has-error :form="form" field="horaInicio"></has-error>
                 </div>
@@ -465,10 +533,12 @@
                     v-model="form.horaFin"
                     type="time"
                     name="horaFin"
+                    id="horaFin"
                     class="form-control"
                     :disabled="isDisabled"
                     :class="{ 'is-invalid': form.errors.has('horaFin') }"
                     required
+                     onchange="validarHora()"
                   />
                   <has-error :form="form" field="horaFin"></has-error>
                 </div>
@@ -490,8 +560,9 @@
                   type="submit"
                   class="btn btn-primary"
                   :disabled="isDisabled"
+                  id="reservar"
                 >
-                  Registrar
+                  Reservar
                 </button>
               </div>
             </form>
@@ -506,6 +577,11 @@
 export default {
   data() {
     return {
+      CedulaResidencial: false,
+      CedulaNacional: false,
+      Pasaporte: false,
+      tipoIndenteficacion: "",
+      registro: false,
       MensajeCedula2: "Se encontro la cedula!",
       MensajeCedula: "",
       showMensajesCedula2: false,
@@ -525,7 +601,9 @@ export default {
       form: new Form({
         id: "",
         idPersona: "",
+        identificacionPersona: "",
         idOrganizacion: "",
+        identificacionOrganizacion: "",
         cantidad: "",
         fecha: "",
         horaInicio: "",
@@ -533,6 +611,7 @@ export default {
       }),
       formPer: new Form({
         id: "",
+        identificacion: "",
         nombre: "",
         apellido1: "",
         apellido2: "",
@@ -541,6 +620,7 @@ export default {
       }),
       formOrg: new Form({
         id: "",
+        identificacion: "",
         nombre: "",
         telefono: "",
         correo: "",
@@ -558,25 +638,48 @@ export default {
 
       this.$Progress.finish();
     },
+    tipoDeIndentificacon() {
+      if (this.tipoIndenteficacion == "Cedula Nacional") {
+        this.CedulaNacional = true;
+        this.Pasaporte = false;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+      if (this.tipoIndenteficacion == "Cedula Residencial") {
+        this.CedulaNacional = false;
+        this.Pasaporte = false;
+        this.CedulaResidencial = true;
+        this.form.identificacion = "";
+      } else if (this.tipoIndenteficacion == "Pasaporte") {
+        this.CedulaNacional = false;
+        this.Pasaporte = true;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+    },
     habilitarCampos() {
       for (let i = 0; i < this.cedulas.length; i++) {
-        if (this.cedulas[i].id == this.buscador) {
+        if (this.cedulas[i].identificacion == this.buscador) {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
-          this.form.idPersona = this.buscador;
+          this.form.idPersona = this.cedulas[i].id;
+          this.form.identificacionPersona = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
+          this.MensajeCedula2 = "Se encontro la cédula";
         }
       }
     },
     habilitarCamposOrg() {
       for (let i = 0; i < this.cedulasOrg.length; i++) {
-        if (this.cedulasOrg[i].id == this.buscador) {
+        if (this.cedulasOrg[i].identificacion == this.buscador) {
           this.isDisabled = false;
           this.CedulaBloqueo = true;
-          this.form.idOrganizacion = this.buscador;
+          this.form.idOrganizacion = this.cedulasOrg[i].id;
+          this.form.identificacionOrganizacion = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
+          this.MensajeCedula2 = "Se encontro la cédula";
         }
       }
     },
@@ -598,6 +701,7 @@ export default {
     },
     limpiar() {
       this.formPer.id = "";
+      this.formPer.identificacion = "",
       this.formPer.nombre = "";
       this.formPer.apellido1 = "";
       this.formPer.apellido2 = "";
@@ -611,7 +715,6 @@ export default {
       this.formOrg.errors.clear();
       this.showExistenciaCedula = false;
       this.showMensajesCedula2 = false;
-      
     },
     cancelarCedula() {
       this.isDisabled = true;

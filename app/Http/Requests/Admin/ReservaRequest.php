@@ -37,16 +37,13 @@ class ReservaRequest extends FormRequest
     public function createRules(): array
     {
 
-        $horaIncio = '08:00:00';
-        $horaIncio2 = '15:00:00';
-        $horaFin2 =' 09:00:00';
-        $horaFin2 =' 16:00:00';
+
 
         return [
             'cantidad' => 'required|numeric|min:1|max:30',
             'fecha' => 'required|date|',
-            'horaInicio' => 'required|date_format:H:i|after:$horaIncio|before:$horaIncio2',
-            'horaFin' => 'required|date_format:H:i|after:horaInicio',
+            'horaInicio' => 'required|date_format:H:i|',
+            'horaFin' => 'required|date_format:H:i|',
             'fecha' => 'required|after:tomorrow',
         ];
     }

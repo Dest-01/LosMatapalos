@@ -134,7 +134,7 @@
                   <tr v-for="reserva in reservaciones.data" :key="reserva.id">
                     <td>
                       <a href="pages/examples/invoice.html"
-                        >{{ reserva.idPersona }} {{ reserva.idOrganizacion }}</a
+                        >{{ reserva.identificacionPersona }} {{ reserva.identificacionOrganizacion }}</a
                       >
                     </td>
                     <td>{{ reserva.fecha }}</td>
@@ -197,8 +197,8 @@
                   <tr v-for="donacion in donaciones.data" :key="donacion.id">
                     <td>
                       <a href="pages/examples/invoice.html"
-                        >{{ donacion.idPersona }}
-                        {{ donacion.idOrganizacion }}</a
+                        >{{ donacion.identificacionPersona }}
+                        {{ donacion.identificacionOrganizacion }}</a
                       >
                     </td>
                     <td>{{ donacion.fecha }}</td>

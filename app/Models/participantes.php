@@ -10,5 +10,5 @@ class participantes extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['id','nombre', 'apellido1', 'apellido2', 'nacionalidad'];
+    protected $fillable = ['id', 'identificacion','nombre', 'apellido1', 'apellido2', 'nacionalidad'];
 }

@@ -62,6 +62,26 @@ function limpiarCampo(){
     cedulaNacional2.style.borderBottom = "#ced4da solid 1px";
 }
 
+function validarHora(){
+    $(".alert").remove();
+    const button = document.getElementById("reservar");
+    var horaInicio = $("#horaInicio").val();
+	var horaFin = $("#horaFin").val();
+
+    if( horaInicio <="07:59" || horaInicio >= "14:01" || horaFin <= "08:59" || horaFin >= "15:01"){
+        $("#horaFin").parent().after(
+			'<div class="alert alert-warning">Cambiar las horas! <br>Hora inicio entre 08:00 am y 02:00 pm<br> Hora fin entre las 09:00 am y 03:00 pm</div>'
+		);
+        button.disabled = true;
+
+    }else if(horaFin > horaInicio){
+        $("#horaFin").parent().after(
+			'<div class="alert alert-success">Correcto! <br>Las horas corresponden al horario</div>'
+		);
+        button.disabled = false;
+    }
+}
+
 var swiper = new Swiper('.blog-slider', {
     spaceBetween: 30,
     effect: 'fade',

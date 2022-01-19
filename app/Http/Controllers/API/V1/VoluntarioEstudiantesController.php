@@ -26,7 +26,7 @@ class VoluntarioEstudiantesController extends BaseController
     public function obtenerCedula(Request $request)
     {
         $filtro = $request->buscadorC;
-        $persona = Personas::where('id', $filtro)->get('id');
+        $persona = Personas::where('identificacion', $filtro)->get();
         return $this->sendResponse($persona, 'Cedula si existe');
 
     }
@@ -52,11 +52,11 @@ class VoluntarioEstudiantesController extends BaseController
     public function guardarPersona(PersonasRequest $request)
     {
         try {
-            $filtro = $request->id;
-            $existencia = Personas::where('id', '=', $filtro)->first();
+            $filtro = $request->identificacion;
+            $existencia = Personas::where('identificacion', '=', $filtro)->first();
             if ($existencia === null) {
                 $tag = $this->personas->create([
-                    'id' => $request->get('id'),
+                    'identificacion' => $request->get('identificacion'),
                     'nombre' => $request->get('nombre'),
                     'apellido1' => $request->get('apellido1'),
                     'apellido2' => $request->get('apellido2'),
@@ -84,7 +84,7 @@ class VoluntarioEstudiantesController extends BaseController
     {
 
         $rules = [
-            'identificacion' => 'required|string|max:18|min:8|regex:/[0-9]{8,18}/',
+            
             'carrera' => 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:50|min:3',
             'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
             'idVoluntario' => 'required|integer|min:1',
@@ -122,6 +122,7 @@ class VoluntarioEstudiantesController extends BaseController
                 ]);
                 $tag = $this->voluntarioEstudiantes->create([
                     'identificacion' => $request->get('identificacion'),
+                    'identificacionPersona' => $request->get('identificacionPersona'),
                     'voluntariado_id' => $request->get('voluntariado_id'),
                     'carrera' => $request->get('carrera'),
                     'imagen' => $request->get('imagen'),

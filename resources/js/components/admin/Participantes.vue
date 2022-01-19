@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar Nuevo
+                  Agregar Participante
                 </button>
               </div>
             </div>
@@ -55,7 +55,7 @@
                     v-for="participante in participantes.data"
                     :key="participante.id"
                   >
-                    <td>{{ participante.id }}</td>
+                    <td>{{ participante.identificacion }}</td>
                     <td class="text-capitalize">{{ participante.nombre }}</td>
                     <td>{{ participante.apellido1 }}</td>
                     <td>{{ participante.apellido2 }}</td>
@@ -129,22 +129,80 @@
               "
             >
               <div class="modal-body">
-                <div class="form-group">
-                  <label>Cédula</label>
-                  <input
-                    v-model="form.id"
-                    type="text"
-                    name="id"
+                                <div class="form-group">
+                  <label>Tipo de indentificación</label>
+                  <select
                     class="form-control"
-                    :disabled="CedulaBloqueo"
-                    :class="{ 'is-invalid': form.errors.has('id') }"
-                   required
-                    minlength="8"
-                    maxlength="18"
-                   pattern="[0-9]{8,18}"
-                    placeholder="Cedula del participante"
-                  />
-                  <has-error :form="form" field="id"></has-error>
+                    v-model="tipoIndenteficacion"
+                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    @change="tipoDeIndentificacon"
+                  >
+                    <option disabled value="">Seleccione un tipo</option>
+                    <option value="Cedula Nacional">Cédula Nacional</option>
+                    <option value="Cedula Residencial">
+                      Cedula Residencial
+                    </option>
+                    <option value="Pasaporte">Pasaporte</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <div v-show="CedulaNacional" class="form-group">
+                    <input
+                      v-model="form.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': form.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato #-####-####"
+                      id="nacional"
+                      onchange="validate()"
+                    />
+                    <has-error
+                      :form="form"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="CedulaResidencial" class="form-group">
+                    <input
+                      v-model="form.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': form.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 10 dígitos"
+                      id="residencial"
+                      onchange="validateResidencial()"
+                    />
+                    <has-error
+                      :form="form"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="Pasaporte" class="form-group">
+                    <input
+                      v-model="form.identificacion"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': form.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 11 a 12 dígitos"
+                      id="pasaporte"
+                      onchange="validatePasaporte()"
+                    />
+                    <has-error
+                      :form="form"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
                 </div>
 
                 <div class="form-group">
@@ -252,6 +310,11 @@
 export default {
   data() {
     return {
+      CedulaResidencial: false,
+      CedulaNacional: false,
+      Pasaporte: false,
+      tipoIndenteficacion: "",
+      registro: false,
       CedulaBloqueo: false,
       editmode: false,
       errors: {},
@@ -323,6 +386,39 @@ export default {
         axios
           .get("/api/participantes")
           .then(({ data }) => (this.participantes = data.data));
+      }
+    },
+
+        tipoDeIndentificacon() {
+      if (this.tipoIndenteficacion == "Cedula Nacional") {
+        this.CedulaNacional = true;
+        this.Pasaporte = false;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+      if (this.tipoIndenteficacion == "Cedula Residencial") {
+        this.CedulaNacional = false;
+        this.Pasaporte = false;
+        this.CedulaResidencial = true;
+        this.form.identificacion = "";
+      } else if (this.tipoIndenteficacion == "Pasaporte") {
+        this.CedulaNacional = false;
+        this.Pasaporte = true;
+        this.CedulaResidencial = false;
+        this.form.identificacion = "";
+      }
+    },
+    SiExisteCedula() {
+      for (let i = 0; i < this.cedulas.length; i++) {
+        if (this.cedulas[i].identificacion == this.buscadorC) {
+          this.showMensajesCedula = false;
+          this.showMensajesCedula2 = true;
+          this.CedulaBloqueo = true;
+          this.form.identificacion = this.cedulas[i].id;
+          this.form.identificacionPersona = this.buscadorC;
+          this.bloquearCamposExtras = false;
+          this.bloquearCamposIdVoluntario = false;
+        }
       }
     },
 
