@@ -40,7 +40,7 @@ class PersonasRequest extends FormRequest
             //'identificacion' => 'regex:/[0-9]/|min:9|max:12',//cedula nacional
            // 'identificacion' => 'regex:/^[0-9]{10}/',//cedula residencial
            // 'identificacion' => 'regex:/^[0-9]{11-12}/',//pasaporte
-           'identificacion' => 'required',
+            'identificacion' => 'required|regex:/^\d{10,12}$/',
             'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
@@ -75,7 +75,7 @@ class PersonasRequest extends FormRequest
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 20',
             'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 20',
-            'telefono.*' => 'Telefono se requiere, mínimo 8 números',
+            'telefono.*' => 'Teléfono se requiere, mínimo 8 números',
             'correo.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
         ];
     }

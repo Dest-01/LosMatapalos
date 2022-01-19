@@ -61,11 +61,11 @@ class OrganizacionesRequest extends FormRequest
     public function messages(){
         return [
             
-            'identificacion.regex' => 'El formato de la cédula jurídica es incorrecto',
+            'identificacion.regex' => 'El formato de la cédula jurídica es incorrecto, ejemplo #-###-######',
             'identificacion.*' => 'El campo de la cédula jurídica es requerido',
             'nombre.regex' => 'Solo se permite letras',
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
-            'telefono.*' => 'Telefono se requiere, 8 números',
+            'telefono.*' => 'Teléfono se requiere, 8 números',
             'correo.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
         ];
     }

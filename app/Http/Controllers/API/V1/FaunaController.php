@@ -37,7 +37,7 @@ class FaunaController extends BaseController
             $rules = [
                 'nombreComun' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
                 'nombreCientifico' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
-                'descripcion' => 'required|string|max:255|min:15',
+                'descripcion' => 'required|string|max:255|min:5',
                 'tipo' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
                 'fechaRegistro' => 'required|date|after:2020-01-01',
                 'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
@@ -46,21 +46,21 @@ class FaunaController extends BaseController
             ];
         
             $messages = [
-                'nombreComun.min' =>'Minimo 3 caracteres',
-                'nombreComun.max' => 'Maximo 30 caracteres',
+                'nombreComun.min' =>'Mínimo 3 caracteres',
+                'nombreComun.max' => 'Máximo 30 caracteres',
                 'nombreComun.*' => 'Escriba el nombre común de la especie,  no puede estar vacio o llevar numeros',
-                'nombreCientifico.min' =>'Minimo 3 caracteres',
-                'nombreCientifico.max' => 'Maximo 30 caracteres',
+                'nombreCientifico.min' =>'Mínimo 3 caracteres',
+                'nombreCientifico.max' => 'Máximo 30 caracteres',
                 'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar numeros',
-                'descripcion.min' =>'Minimo 15 caracteres',
+                'descripcion.min' =>'Mínimo 5 caracteres',
                 'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
-                'tipo.min' =>'Minimo 15 caracteres',
-                'tipo.max' => 'Maximo 30 caracteres',
+                'tipo.min' =>'Mínimo 15 caracteres',
+                'tipo.max' => 'Máximo 30 caracteres',
                 'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar numeros',
                 'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
                 'imagen.*' => 'Cargue una foto',
-                'familiaCientifca.min' =>'Minimo 3 caracteres',
-                'familiaCientifca.max' => 'Maximo 30 caracteres',
+                'familiaCientifca.min' =>'Mínimo 3 caracteres',
+                'familiaCientifca.max' => 'Máximo 30 caracteres',
                 'familiaCientifca.*' => 'Nombre de la familia científca',
             ];
     
@@ -115,7 +115,7 @@ class FaunaController extends BaseController
         $rules = [
             'nombreComun' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
             'nombreCientifico' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
-            'descripcion' => 'required|string|max:255|min:15',
+            'descripcion' => 'required|string|max:255|min:5',
             'tipo' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
             'fechaRegistro' => 'required|date|after:2020-01-01',
             'familiaCientifca' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
@@ -123,20 +123,21 @@ class FaunaController extends BaseController
         ];
     
         $messages = [
-            'nombreComun.min' =>'Minimo 3 caracteres',
-            'nombreComun.max' => 'Maximo 30 caracteres',
-            'nombreComun.*' => 'Escriba el nombre común de la especie,  no puede estar vacio o llevar números',
-            'nombreCientifico.min' =>'Minimo 3 caracteres',
-            'nombreCientifico.max' => 'Maximo 30 caracteres',
-            'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar números',
-            'descripcion.min' =>'Minimo 15 caracteres',
-            'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y máximo 255',
-            'tipo.min' =>'Minimo 15 caracteres',
-            'tipo.max' => 'Maximo 30 caracteres',
-            'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar números',
+            'nombreComun.min' =>'Mínimo 3 caracteres',
+            'nombreComun.max' => 'Máximo 30 caracteres',
+            'nombreComun.*' => 'Escriba el nombre común de la especie,  no puede estar vacio o llevar numeros',
+            'nombreCientifico.min' =>'Mínimo 3 caracteres',
+            'nombreCientifico.max' => 'Máximo 30 caracteres',
+            'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar numeros',
+            'descripcion.min' =>'Mínimo 5 caracteres',
+            'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
+            'tipo.min' =>'Mínimo 15 caracteres',
+            'tipo.max' => 'Máximo 30 caracteres',
+            'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar numeros',
             'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
-            'familiaCientifca.min' =>'Minimo 3 caracteres',
-            'familiaCientifca.max' => 'Maximo 30 caracteres',
+            'imagen.*' => 'Cargue una foto',
+            'familiaCientifca.min' =>'Mínimo 3 caracteres',
+            'familiaCientifca.max' => 'Máximo 30 caracteres',
             'familiaCientifca.*' => 'Nombre de la familia científca',
         ];
 

@@ -36,7 +36,7 @@ class FloraController extends BaseController
         $rules = [
             'nom_comun' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
             'nom_cientifico' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
-            'descripcion' => 'required|string|max:255|min:15',
+            'descripcion' => 'required|string|max:255|min:5',
             'tipo' => 'required|string|max:50',
             'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
             'fecha_registro' => 'required|date|after:2020-01-01',
@@ -45,20 +45,20 @@ class FloraController extends BaseController
         ];
     
         $messages = [
-            'nom_comun.min' =>'Minimo 3 caracteres y maximo 30',
+            'nom_comun.min' =>'Mínimo  3 caracteres y máximo 30',
             'nom_comun.max' => 'Maximo 30 caracteres',
             'nom_comun.*' => 'Escriba el nombre común de la especie',
-            'nom_cientifico.min' =>'Minimo 3 caracteres',
-            'nom_cientifico.max' => 'Maximo 30 caracteres',
+            'nom_cientifico.min' =>'Mínimo 3 caracteres',
+            'nom_cientifico.max' => 'Máximo 30 caracteres',
             'nom_cientifico.*' => 'Escriba el nombre científico de la especie',
-            'descripcion.min' =>'Minimo 15 caracteres ',
+            'descripcion.min' =>'Mínimo 5 caracteres ',
             'descripcion.*' => 'Breve descripción de la especie',
             'tipo.*' => 'Seleccione un tipo de flora',
             'fechaRegistro.after' => 'requiere una fecha mayor al 2020-01-01',
             'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
             'photo.*' => 'Cargue una foto',
-            'fam_cientifica.min' =>'Minimo 3 caracteres',
-            'fam_cientifica.max' => 'Maximo 30 caracteres',
+            'fam_cientifica.min' =>'Mínimo 3 caracteres',
+            'fam_cientifica.max' => 'Máximo 30 caracteres',
             'fam_cientifica.*' => 'Nombre de la familia científca',
         ];
 
@@ -84,7 +84,7 @@ class FloraController extends BaseController
             'fam_cientifica' => $request->get('fam_cientifica')
             
         ]);
-        return $this->sendResponse($tag, 'datos registrados');
+        return $this->sendResponse($tag, 'datos registrados!');
     }
 
     /**
@@ -110,7 +110,7 @@ class FloraController extends BaseController
         $rules = [
             'nom_comun' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
             'nom_cientifico' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
-            'descripcion' => 'required|string|max:255|min:15',
+            'descripcion' => 'required|string|max:255|min:5',
             'tipo' => 'required|string|max:50',
             'fecha_registro' => 'required|date|after:2020-01-01',
             'fam_cientifica' =>'required|regex:/^[a-zA-z09-9-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
@@ -118,19 +118,20 @@ class FloraController extends BaseController
         ];
     
         $messages = [
-            'nom_comun.min' =>'Minimo 3 caracteres y maximo 30',
+            'nom_comun.min' =>'Mínimo  3 caracteres y máximo 30',
             'nom_comun.max' => 'Maximo 30 caracteres',
             'nom_comun.*' => 'Escriba el nombre común de la especie',
-            'nom_cientifico.min' =>'Minimo 3 caracteres',
-            'nom_cientifico.max' => 'Maximo 30 caracteres',
+            'nom_cientifico.min' =>'Mínimo 3 caracteres',
+            'nom_cientifico.max' => 'Máximo 30 caracteres',
             'nom_cientifico.*' => 'Escriba el nombre científico de la especie',
-            'descripcion.min' =>'Minimo 15 caracteres ',
+            'descripcion.min' =>'Mínimo 5 caracteres ',
             'descripcion.*' => 'Breve descripción de la especie',
             'tipo.*' => 'Seleccione un tipo de flora',
             'fechaRegistro.after' => 'requiere una fecha mayor al 2020-01-01',
             'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
-            'fam_cientifica.min' =>'Minimo 3 caracteres',
-            'fam_cientifica.max' => 'Maximo 30 caracteres',
+            'photo.*' => 'Cargue una foto',
+            'fam_cientifica.min' =>'Mínimo 3 caracteres',
+            'fam_cientifica.max' => 'Máximo 30 caracteres',
             'fam_cientifica.*' => 'Nombre de la familia científca',
         ];
 
@@ -157,7 +158,7 @@ class FloraController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Datos Actualizados');
+        return $this->sendResponse($tag, 'Datos Actualizados!');
     }
 
     /**

@@ -38,19 +38,23 @@ class ArticuloController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'Name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
-            'Type' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'Nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'Tipo' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
             'Image' => 'required|sometimes|base64image:png,jpeg,jpg',
+            'Descripcion' => 'required|string|max:255|min:5',
+
         ];
     
         $messages = [
-            'Name.max'=>'Minimo 3 caracteres',
-            'Name.min'=>'Maximo 20 caracteres',
-            'Name.*'=>'Digite el nombre del articulo',
-            'Type.max'=>'Minimo 3 caracteres',
-            'Type.min'=>'Maximo 20 caracteres',
-            'Type.*' => 'Indique tipo de articulo a publicar',
+            'Nombre.max'=>'Minimo 3 caracteres',
+            'Nombre.min'=>'Maximo 20 caracteres',
+            'Nombre.*'=>'Digite el nombre del articulo',
+            'Tipo.max'=>'Minimo 3 caracteres',
+            'Tipo.min'=>'Maximo 20 caracteres',
+            'Tipo.*' => 'Indique tipo de articulo a publicar',
             'Image.*' => 'Cargue una foto del Articulo',
+            'descripcion.min' =>'Mínimo 5 caracteres',
+            'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
 
         ];
 
@@ -67,9 +71,10 @@ class ArticuloController extends BaseController
 
         $tag = $this->articulo->create([
 
-            'Name' => $request->get('Name'),
-            'Type' => $request->get('Type'),
-            'Image' => $request->get('Image')
+            'Nombre' => $request->get('Nombre'),
+            'Tipo' => $request->get('Tipo'),
+            'Image' => $request->get('Image'),
+            'Descripcion' => $request->get('Descripcion'),
             
         ]);
         return $this->sendResponse($tag, 'Articulo creado');
@@ -96,17 +101,23 @@ class ArticuloController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'Name' => 'required|min:3|max:20',
-            'Type' => 'required|min:3|max:20',
+            'Nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'Tipo' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'Image' => 'required|sometimes|base64image:png,jpeg,jpg',
+            'Descripcion' => 'required|string|max:255|min:5',
+
         ];
     
         $messages = [
-            'Name.max'=>'Minimo 3 caracteres',
-            'Name.min'=>'Maximo 20 caracteres',
-            'Name.*'=>'Digite el nombre del articulo',
-            'Type.max'=>'Minimo 3 caracteres',
-            'Type.min'=>'Maximo 20 caracteres',
-            'Type.*' => 'Indique tipo de articulo a publicar',
+            'Nombre.max'=>'Minimo 3 caracteres',
+            'Nombre.min'=>'Maximo 20 caracteres',
+            'Nombre.*'=>'Digite el nombre del articulo',
+            'Tipo.max'=>'Minimo 3 caracteres',
+            'Tipo.min'=>'Maximo 20 caracteres',
+            'Tipo.*' => 'Indique tipo de articulo a publicar',
+            'Image.*' => 'Cargue una foto del Articulo',
+            'descripcion.min' =>'Mínimo 5 caracteres',
+            'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
 
         ];
 

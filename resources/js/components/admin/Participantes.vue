@@ -30,6 +30,7 @@
                   type="button"
                   class="btn btn-sm btn-primary"
                   @click="newModal"
+                  onclick="esconder()"
                 >
                   <i class="fa fa-plus-square"></i>
                   Agregar Participante
@@ -130,7 +131,7 @@
             >
               <div class="modal-body">
                                 <div class="form-group">
-                  <label>Tipo de indentificación</label>
+                  <label>Tipo de identificación</label>
                   <select
                     class="form-control"
                     v-model="tipoIndenteficacion"
@@ -146,7 +147,7 @@
                   </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group ocultar">
                   <div v-show="CedulaNacional" class="form-group">
                     <input
                       v-model="form.identificacion"
@@ -294,6 +295,8 @@
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
+                    id="validar"
+                  disabled="registro"
                 >
                   Registrar
                 </button>

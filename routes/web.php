@@ -36,6 +36,10 @@ Route::get('/dashboard', function () {
     return view('admin');
 })->where('dashboard', '[\/\w\.-]*')->middleware('auth');
 
+Route::get('//profile', function () {
+    return view('admin');
+})->where('/profile', '[\/\w\.-]*')->middleware('auth');
+
 Route::get('/users', function () {
     return view('admin');
 })->where('users', '[\/\w\.-]*')->middleware('auth');

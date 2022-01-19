@@ -15,9 +15,10 @@ class CreateArticulosTable extends Migration
     {
         Schema::create('articulos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('Name');
-            $table->string('Type');
+            $table->string('Nombre');
+            $table->string('Tipo');
             $table->string('Image');
+            $table->string('Descripcion');
             $table->timestamps();
         });
     }

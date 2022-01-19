@@ -153,7 +153,7 @@ class DonativosController extends BaseController
                 'estado' => $request->get('estado'),
 
             ]);
-            return $this->sendResponse($tag, 'Donativo creado');
+            return $this->sendResponse($tag, 'Donativo registrado!');
         } catch (\PDOException | Exception $e) {
             return response()->json(["errors" => $e->getMessage()], 500);
         }
@@ -218,7 +218,7 @@ class DonativosController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Donativo Actualizado');
+        return $this->sendResponse($tag, 'Donativo Actualizado!');
     }
 
     /**

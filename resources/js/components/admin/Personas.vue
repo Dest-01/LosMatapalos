@@ -33,7 +33,7 @@
                    onclick="limpiarCampo()"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar Nuevo
+                  Agregar Persona
                 </button>
               </div>
             </div>
@@ -126,7 +126,7 @@
             >
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Tipo de indentificación</label>
+                  <label>Tipo de identificación</label>
                   <select
                     class="form-control"
                     v-model="tipoIndenteficacion"

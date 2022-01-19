@@ -160,7 +160,7 @@
                     name="buscadorC"
                     class="form-control"
                     :disabled="CedulaBloqueo"
-                    placeholder="Numero de cedula a consultar"
+                    placeholder="Numero de identificación a consultar"
                   />
                 </div>
                 <div v-show="showBuscadores">
@@ -194,7 +194,7 @@
                   </button>
                 </div>
                 <div class="form-group">
-                  <label>Cedula del estudiante</label>
+                  <label>Cédula de la persona</label>
                   <input
                     :disabled="bloquearCedulaVoluntario"
                     v-model="form.identificacionPersona"
@@ -241,7 +241,7 @@
                     required
                     minlength="3"
                     maxlength="70"
-                    placeholder="Lugar de procedencia de la personas"
+                    placeholder="Lugar de procedencia"
                   />
                   <has-error :form="form" field="lugar"></has-error>
                 </div>
@@ -319,7 +319,7 @@
             <form @submit.prevent="crearPersona()">
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Tipo de indentificación</label>
+                  <label>Tipo de identificación</label>
                   <select
                     class="form-control"
                     v-model="tipoIndenteficacion"
@@ -510,7 +510,7 @@ export default {
       tipoIndenteficacion: "",
       registro: false,
       MensajeCedula: "",
-      MensajeCedula2: "Se encontro la cedula!",
+      MensajeCedula2: "Si existe!",
       showBuscadores: false, //se oculta al editar
       showMensajesCedula: false,
       showMensajesCedula2: false,
@@ -667,12 +667,12 @@ export default {
     NoexisteCedula() {
       if (this.cedulas.length == 0) {
         this.showMensajesCedula = true;
-        this.MensajeCedula = "La cedula no se encuentra registrada";
+        this.MensajeCedula = "no existe!";
       }
       if (this.buscadorC.length == 0) {
         this.showMensajesCedula = true;
         this.MensajeCedula =
-          "Campo vacio, por favor digite un numero de cedula";
+          "Campo vacio, por favor digite un número de identificación";
       }
     },
     ConsultaCedula() {

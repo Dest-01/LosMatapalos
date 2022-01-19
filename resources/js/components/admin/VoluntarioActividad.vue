@@ -24,7 +24,7 @@
                   <tr>
                     <th>ID Voluntariado Actividad</th>
                     <th>Nombre de Actividad</th>
-                    <th>Nombre de Persona Voluntaria</th>
+                    <th>Nombre de Persona Voluntario</th>
                     <th>Nombre de Estudiante Voluntario</th>
                     <th>Funciones</th>
                   </tr>
@@ -587,7 +587,7 @@ export default {
     font-size: 15px;
  }
  .modal-content{
-    height: 500px;
+    height: 100%;
  }
  .modal-footer{
   	display: flex;

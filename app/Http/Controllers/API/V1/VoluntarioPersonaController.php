@@ -94,16 +94,16 @@ class VoluntarioPersonaController extends BaseController
     {
         try {
             $rules = [
-                'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
+                'cantidad'=> 'required|integer|min:1|max:30|',
                 'lugar'=> 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:70|min:3',
                 'idVoluntario' => 'required|integer|min:1|',
             ];
             $messages = [
                 'cantidad.min' => 'Mínimo 1 actividad',
-                'cantidad.max' => 'Maximo 30 actividades',
+                'cantidad.max' => 'Máximo 30 actividades',
                 'cantidad.*' => 'Se requiere una cantidad de actividades',
                 'lugar.min' => 'Mínimo 3 caracteres',
-                'lugar.max' => 'Maximo 70 caracteres',
+                'lugar.max' => 'Máximo 70 caracteres',
                 'lugar.*' => 'Se requiere un lugar de procedencia',
                 'idVoluntario' => 'Mínimo 1 Id de voluntario',
                 'idVoluntario.*' => 'Se requiere un Id de voluntario',
@@ -155,15 +155,15 @@ class VoluntarioPersonaController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
+            'cantidad'=> 'required|integer|min:1|max:30|',
             'lugar'=> 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:255|min:3',
         ];
         $messages = [
             'cantidad.min' => 'Mínimo 1 actividad',
-            'cantidad.max' => 'Maximo 30 actividades',
+            'cantidad.max' => 'Máximo 30 actividades',
             'cantidad.*' => 'Se requiere una cantidad de actividades',
             'lugar.min' => 'Mínimo 3 caracteres',
-            'lugar.max' => 'Maximo 30 caracteres',
+            'lugar.max' => 'Máximo 70 caracteres',
             'lugar.*' => 'Se requiere un lugar de procedencia',
         ];
         $tag = $this->voluntarioPersona->findOrFail($id);

@@ -99,7 +99,7 @@
       <div class="contenedor-tablas"  v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="card">
           <div class="card-header border-transparent">
-            <h3 class="card-title">Ultimas Reservaciones</h3>
+            <h3 class="card-title">Últimas Reservaciones</h3>
 
             <div class="card-tools">
               <button
@@ -154,7 +154,7 @@
             <a
               href="/admin/reservar"
               class="btn btn-sm btn-secondary float-right"
-              >Ver todas las reservas</a
+              >Ver todas las reservaciones</a
             >
           </div>
           <!-- /.card-footer -->
@@ -162,7 +162,7 @@
 
         <div class="card">
           <div class="card-header border-transparent">
-            <h3 class="card-title">Ultimas Donaciones</h3>
+            <h3 class="card-title">Últimas Donaciones</h3>
 
             <div class="card-tools">
               <button
@@ -226,7 +226,7 @@
         <!--/.card -->
         <div class="card">
           <div class="card-header border-transparent">
-            <h3 class="card-title">Ultimas Actividades</h3>
+            <h3 class="card-title">Últimas Actividades</h3>
 
             <div class="card-tools">
               <button

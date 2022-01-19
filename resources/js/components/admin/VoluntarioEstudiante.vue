@@ -167,14 +167,14 @@
             >
               <div class="modal-body">
                 <div v-show="showBuscadores" class="form-group">
-                  <label>Cedula a consultar:</label>
+                  <label>Identificación a consultar:</label>
                   <input
                     v-model="buscadorC"
                     type="text"
                     name="buscadorC"
                     class="form-control"
                     :disabled="CedulaBloqueo"
-                    placeholder="Numero de cedula a consultar"
+                    placeholder="Número de identificación"
                   />
                 </div>
                 <div v-show="showBuscadores">
@@ -208,7 +208,7 @@
                   </button>
                 </div>
                 <div class="form-group">
-                  <label>Cedula del estudiante</label>
+                  <label>Identificación del estudiante</label>
                   <input
                     :disabled="bloquearCedulaVoluntario"
                     v-model="form.identificacionPersona"
@@ -578,7 +578,7 @@ export default {
       tipoIndenteficacion: "",
       registro: false,
       MensajeCedula: "",
-      MensajeCedula2: "Se encontro la cedula!",
+      MensajeCedula2: "Si existe!",
       showBuscadores: false, //se oculta al editar
       showMensajesCedula: false,
       showMensajesCedula2: false,
@@ -765,13 +765,13 @@ export default {
       if (this.cedulas.length == 0) {
         this.showMensajesCedula = true;
         this.showMensajesVoluntario2 = false;
-        this.MensajeCedula = "La cedula no se encuentra registrada";
+        this.MensajeCedula = "No existe!";
       }
       if (this.buscadorC.length == 0) {
         this.showMensajesCedula = true;
         this.showMensajesVoluntario2 = false;
         this.MensajeCedula =
-          "Campo vacio, por favor digite un numero de cedula";
+          "Campo vacio, por favor digite un número de identificación";
       }
     },
     ConsultaCedula() {

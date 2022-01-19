@@ -31,6 +31,7 @@
                   type="button"
                   class="btn btn-sm btn-primary"
                   @click="newModal"
+                  onclick="quitarAlerta()"
                 >
                   <i class="fa fa-plus-square"></i>
                   agregar reservación
@@ -143,7 +144,7 @@
             <form>
               <div class="modal-body">
                 <div v-show="showPersona" class="form-group">
-                  <label>Tipo de indentificación</label>
+                  <label>Tipo de identificación</label>
                   <select
                     class="form-control"
                     v-model="tipoIndenteficacion"
@@ -298,13 +299,13 @@
                   <input
                     v-model="formOrg.identificacion"
                     type="text"
-                    name="id"
+                    name="identificacion"
                     class="form-control"
-                    :class="{ 'is-invalid': formOrg.errors.has('id') }"
+                    :class="{ 'is-invalid': formOrg.errors.has('identificacion') }"
                     placeholder="#-###-######"
                     required
                   />
-                  <has-error :form="formOrg" field="id"></has-error>
+                  <has-error :form="formOrg" field="identificacion"></has-error>
                 </div>
                 <div v-show="showOrganizacion" class="form-group">
                   <label>Nombre de Organización</label>
@@ -419,7 +420,7 @@
             >
               <div class="modal-body">
                 <div v-show="show" class="form-group">
-                  <label>Cédula a consultar:</label>
+                  <label>Identificación a consultar:</label>
                   <input
                     v-model="buscador"
                     type="text"
@@ -446,7 +447,7 @@
                     class="btn btn-success my-4"
                     @click="ConsultaCedula(), NoexisteCedula()"
                   >
-                    Comprobar cedula
+                    Consultar
                   </button>
                   <button
                     type="button"

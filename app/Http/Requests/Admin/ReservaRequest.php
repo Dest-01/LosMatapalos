@@ -66,12 +66,11 @@ class ReservaRequest extends FormRequest
 
     public function messages(){
         return [
-            'cantidad.*'=>'Minimo de 1 y maxima 30',
-            'fecha.after' => '2 fecha despues de hoy',
+            'cantidad.*'=>'Minimo de 1 y máxima 30',
+            'fecha.after' => '2 fecha después de hoy',
             'fecha.*' => 'Seleccione la fecha',
             'horaInicio.date_format' => 'Hora en el horario establecido',
             'horaInicio.*' => 'Selecciona la hora inicial',
-            'horaFin.after' => 'Hora despues de la hora inicio',
             'horaFin.*' => 'Selecciona la hora de salida',
         ];
     }

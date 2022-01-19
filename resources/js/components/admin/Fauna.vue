@@ -116,7 +116,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-show="!editmode">
-                Crear nueva especie
+                Registrar nueva especie
               </h5>
               <h5 class="modal-title" v-show="editmode">Actualizar especie</h5>
               <button
@@ -342,11 +342,7 @@ export default {
         };
         reader.readAsDataURL(file);
       } else {
-        swal({
-          type: "error",
-          title: "ops...",
-          text: "archivo muy grande",
-        });
+        Swal.fire("Oops...", "Archivo muy grande", "error");
       }
     },
     limpiar() {

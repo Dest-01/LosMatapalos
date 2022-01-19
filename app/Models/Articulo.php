@@ -10,5 +10,5 @@ class Articulo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['Name', 'Type', 'Image'];
+    protected $fillable = ['Nombre', 'Tipo', 'Image', 'Descripcion'];
 }

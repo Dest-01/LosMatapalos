@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <div class="container-fluid">
-            <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
+      <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
@@ -32,7 +32,7 @@
                   @click="newModal"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Agregar Nuevo
+                  Agregar Artículo
                 </button>
               </div>
             </div>
@@ -44,18 +44,17 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Tipo</th>
+                    <th>Descripción</th>
                     <th>Imagen</th>
                     <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    v-for="articulo in Articulos.data"
-                    :key="articulo.id"
-                  >
+                  <tr v-for="articulo in Articulos.data" :key="articulo.id">
                     <td>{{ articulo.id }}</td>
-                    <td class="text-capitalize">{{ articulo.Name }}</td>
-                    <td>{{ articulo.Type }}</td>
+                    <td class="text-capitalize">{{ articulo.Nombre }}</td>
+                    <td>{{ articulo.Tipo }}</td>
+                    <td>{{ articulo.Descripcion | truncate(30, "...") }}</td>
                     <td>
                       <img
                         v-bind:src="'/images/Articulos/' + articulo.Image"
@@ -105,11 +104,9 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-show="!editmode">
-                Crear nuevo articulo
+                Registrar nuevo artículo
               </h5>
-              <h5 class="modal-title" v-show="editmode">
-                Actualizar Articulo
-              </h5>
+              <h5 class="modal-title" v-show="editmode">Actualizar Articulo</h5>
               <button
                 type="button"
                 class="close"
@@ -131,36 +128,52 @@
                 <div class="form-group">
                   <label>Nombre</label>
                   <input
-                    v-model="form.Name"
+                    v-model="form.Nombre"
                     type="text"
-                    name="nombre"
+                    name="Nombre"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('Name') }"
+                    :class="{ 'is-invalid': form.errors.has('Nombre') }"
                     required
                     minlength="3"
                     maxlength="20"
-                    placeholder="Nombre del articulo"
+                    placeholder="Nombre del artículo"
                   />
                   <has-error :form="form" field="Name"></has-error>
                 </div>
 
-               
                 <div class="form-group">
                   <label>Tipo</label>
                   <input
-                    v-model="form.Type"
+                    v-model="form.Tipo"
                     type="text"
-                    name="tipo"
+                    name="Tipo"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('Type') }"
+                    :class="{ 'is-invalid': form.errors.has('Tipo') }"
                     required
                     minlength="3"
                     maxlength="20"
-                    placeholder="Tipo de articulo"
+                    placeholder="Tipo de artículo"
                   />
-                  <has-error :form="form" field="Type"></has-error>
+                  <has-error :form="form" field="Tipo"></has-error>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
+                  <label>Descripción</label>
+                  <textarea
+                    v-model="form.Descripcion"
+                    class="form-control"
+                    name="Descripcion"
+                    :class="{ 'is-invalid': form.errors.has('Descripcion') }"
+                    placeholder="Descripción"
+                    required
+                    minlength="3"
+                    maxlength="60"
+                    id=""
+                    rows="3"
+                  ></textarea>
+                  <has-error :form="form" field="Descripcion"></has-error>
+                </div>
+                <div class="form-group">
+                   <label>Imagen</label>
                   <div>
                     <div class="row">
                       <div class="col-8">
@@ -251,9 +264,10 @@ export default {
       Articulos: {},
       form: new Form({
         id: "",
-        Name: "",
-        Type: "",
+        Nombre: "",
+        Tipo: "",
         Image: "",
+        Descripcion: "",
       }),
     };
   },
@@ -263,8 +277,8 @@ export default {
       this.previewImage = URL.createObjectURL(file);
       this.currentImage = file;
       let reader = new FileReader();
-          // 2111775 = 2 MB en base64
-          // 9111775
+      // 2111775 = 2 MB en base64
+      // 9111775
       if (file["size"] < 9111775) {
         reader.onloadend = (file) => {
           //console.log('RESULT', reader.result)
@@ -313,7 +327,7 @@ export default {
       this.editmode = true;
       this.form.reset();
       this.form.errors.clear();
-       $("#SubirImagen").val("");
+      $("#SubirImagen").val("");
       this.previewImage = "";
       $("#addNew").modal("show");
       this.form.fill(articulo);
@@ -322,7 +336,7 @@ export default {
       this.editmode = false;
       this.form.reset();
       this.form.errors.clear();
-       $("#SubirImagen").val("");
+      $("#SubirImagen").val("");
       this.previewImage = "";
       $("#addNew").modal("show");
     },

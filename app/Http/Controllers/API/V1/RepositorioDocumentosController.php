@@ -46,9 +46,9 @@ class RepositorioDocumentosController extends BaseController
                 $repositorioDocumentos['documento'] = $archivo_nombre; 
             }
             if ($repositorioResult = RepositorioDocumentos::create($repositorioDocumentos)):
-                return $this->sendResponse($repositorioResult, 'Repositorio creado');
+                return $this->sendResponse($repositorioResult, 'Documento guardado!');
             endif;
-            return $this->sendResponse('Repositorio no creado');
+            return $this->sendResponse('Documento no guardado!');
         }catch(\Exception $e){
              return response()->json([
                  'message'=>$e->getMessage()
@@ -104,9 +104,9 @@ class RepositorioDocumentosController extends BaseController
 
 
             if($repositorioResult =  $repositorioDocumentos->update($request->all())):
-                return $this->sendResponse($repositorioResult, 'Repositorio Actualizado');
+                return $this->sendResponse($repositorioResult, 'Documento Actualizado!');
             endif;
-            return $this->sendResponse('Repositorio no creado');
+            return $this->sendResponse('No se actualizo!');
         }catch(\Exception $e){
             return response()->json([
                 'message'=>$e->getMessage()

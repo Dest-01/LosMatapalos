@@ -112,9 +112,9 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-show="!editmode">
-                Registrar nueva especie
+                Registrar nueva flora
               </h5>
-              <h5 class="modal-title" v-show="editmode">Actualizar especie</h5>
+              <h5 class="modal-title" v-show="editmode">Actualizar flora</h5>
               <button
                 type="button"
                 class="close"

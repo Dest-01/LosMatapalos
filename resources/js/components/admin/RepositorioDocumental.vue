@@ -27,21 +27,29 @@
                     <th>Nombre del archivo</th>
                     <th>Fecha</th>
                     <th>Descripción</th>
-                     <th>Funciones</th>
+                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="repositorio in repositorios.data" :key="repositorio.id">
+                  <tr
+                    v-for="repositorio in repositorios.data"
+                    :key="repositorio.id"
+                  >
                     <td>{{ repositorio.id }}</td>
                     <td class="text-capitalize">{{ repositorio.nombre }}</td>
                     <td class="text-capitalize">{{ repositorio.fecha }}</td>
-                    <td class="text-capitalize">{{ repositorio.descripcion }}</td>
-                    <td> 
+                    <td class="text-capitalize">
+                      {{ repositorio.descripcion | truncate(30, "...") }}
+                    </td>
+                    <td>
                       <a href="#" @click="editModal(repositorio)">
                         <i class="fa fa-edit blue"></i>
                       </a>
                       /
-                      <a href="#" @click="eliminarRepositorioDocumental(repositorio.id)">
+                      <a
+                        href="#"
+                        @click="eliminarRepositorioDocumental(repositorio.id)"
+                      >
                         <i class="fa fa-trash red"></i>
                       </a>
                     </td>
@@ -94,10 +102,10 @@
             </div>
             <form
               @submit.prevent="
-                editmode ? actualizarDocumento() : crearDocumentos() 
+                editmode ? actualizarDocumento() : crearDocumentos()
               "
             >
-              <div class="modal-body" >
+              <div class="modal-body">
                 <div class="form-group">
                   <label>Nombre Documento</label>
                   <input
@@ -127,35 +135,72 @@
                 </div>
                 <div class="form-group">
                   <label>Descripción</label>
-                  <input
+                  <textarea
                     v-model="form.descripcion"
-                    type="text"
-                    name="Descripcion"
                     class="form-control"
-                    placeholder="Descripcion del documento"
-                    required
+                    name="descripcion"
                     :class="{ 'is-invalid': form.errors.has('descripcion') }"
-                  />
+                    placeholder="Breve descripción"
+                    required
+                    minlength="3"
+                    maxlength="60"
+                    id=""
+                    rows="3"
+                  ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
 
-
-                <div class="form-group">     
-                  <label for="documento" class="control-label"
-                  >Documento</label> 
-                  <div class="custom-file">
-                    <input
-                      accept="application/pdf"
-                      type="file"
-                      @change="onFileChange"
-                      id="documento"
-                      name="documento"
-                      class="custom-file-input"
+                <div class="form-group">
+                  <div>
+                    <div class="row">
+                      <div class="col-8">
+                        <label class="btn btn-default p-0">
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            ref="file"
+                            @change="onFileChange"
+                            :class="{
+                              'is-invalid': form.errors.has('documento'),
+                            }"
+                            id="documento"
+                            name="documento"
+                            required
+                          />
+                          <has-error :form="form" field="documento"></has-error>
+                        </label>
+                      </div>
+                      <div class="col-4"></div>
+                    </div>
+                    <div v-if="currentImage" class="progress">
+                      <div
+                        class="progress-bar progress-bar-info"
+                        role="progressbar"
+                        :aria-valuenow="progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        :style="{ width: progress + '%' }"
+                      >
+                        {{ progress }}%
+                      </div>
+                    </div>
+                    <div v-if="previewImage">
+                      <div>
+                        <img
+                          class="preview my-3"
+                          :src="previewImage"
+                          alt=""
+                          width="100px"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      v-if="message"
+                      class="alert alert-secondary"
+                      role="alert"
                     >
-                    <label class="custom-file-label"
-                      >Seleccione un documento</label
-                    > 
-                    <has-error :form="form" field="documento"></has-error>
+                      {{ message }}
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -167,6 +212,8 @@
                     class="form-control"
                     placeholder="Tipo de archivo"
                     required
+                    :disabled="tipoPDF"
+                    value="PDF"
                     :class="{
                       'is-invalid': form.errors.has('tipo'),
                     }"
@@ -198,7 +245,7 @@
                   class="btn btn-primary"
                   enctype="multipart/form-data"
                 >
-                  Registrar
+                  Guardar
                 </button>
               </div>
             </form>
@@ -214,37 +261,43 @@ export default {
   data() {
     return {
       editmode: false,
+      currentImage: undefined,
+      previewImage: undefined,
+      progress: 0,
+      message: "",
+      imageInfos: [],
+      tipoPDF: true,
       repositorios: {},
       form: new Form({
         id: "",
         nombre: "",
         fecha: "",
         descripcion: "",
-        tipo: "",
+        tipo: "PDF",
         documento: "",
       }),
     };
   },
   methods: {
-    onFileChange(e){
+    onFileChange(e) {
       let CargarArchivo = e.target.files[0];
-      if(CargarArchivo){
-         let reader = new FileReader();
-         reader.onload = e =>{
+      if (CargarArchivo) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
           this.form.documento = e.target.result;
-         }
-         reader.readAsDataURL(CargarArchivo);
-      }else{
-         alert('wrong');
+        };
+        reader.readAsDataURL(CargarArchivo);
+      } else {
+        Swal.fire("Oops...", "No se cargo ningún archivo", "error");
       }
     },
-    limpiar(){
-        this.form.nombre = "";
-        this.fomr.fecha = "";
-        this.form.descripcion = "";
-        this.form.tipo = "";
-        this.form.documento = "";
-        this.form.errors.clear();
+    limpiar() {
+      this.form.nombre = "";
+      this.fomr.fecha = "";
+      this.form.descripcion = "";
+      this.form.tipo = "";
+      this.form.documento = "";
+      this.form.errors.clear();
     },
     getResults(page = 1) {
       this.$Progress.start();
@@ -273,46 +326,46 @@ export default {
           .then(({ data }) => (this.repositorios = data.data));
       }
     },
-    actualizarDocumento(){
-       this.$Progress.start();
-       this.form
-           .put(`/api/repositorio/${this.form.id}`)
-           .then((response)=>{
-              $("#addNew").modal("hide");
-              Toast.fire({
-                 icon: "success",
-                 title: response.data.message,
-              });
-              this.$Progress.finish();
-              this.cargarDocumentos();
-           })
-           .catch(()=>{
-              this.$Progress.fail();
-           });
+    actualizarDocumento() {
+      this.$Progress.start();
+      this.form
+        .put(`/api/repositorio/${this.form.id}`)
+        .then((response) => {
+          $("#addNew").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$Progress.finish();
+          this.cargarDocumentos();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
     },
-    eliminarRepositorioDocumental(id){
-       Swal.fire({
+    eliminarRepositorioDocumental(id) {
+      Swal.fire({
         title: "Seguro que lo desea eliminar?",
         text: "Esta acción no puede revertirse!",
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Si, Eliminar!",
-      }).then((result)=>{
-        if(result.value){
-           this.form
-               .delete(`/api/repositorio/${id}`)
-               .then(()=>{
-                  Swal.fire(
-                    "Eliminado!",
-                    "Se ha eliminado la información.",
-                    "success"
-                  );
-                   this.cargarDocumentos();
-               })
-               .catch((data)=>{
-                  Swal.fire("Fallo!", data.message, "warning");
-               });
+      }).then((result) => {
+        if (result.value) {
+          this.form
+            .delete(`/api/repositorio/${id}`)
+            .then(() => {
+              Swal.fire(
+                "Eliminado!",
+                "Se ha eliminado la información.",
+                "success"
+              );
+              this.cargarDocumentos();
+            })
+            .catch((data) => {
+              Swal.fire("Fallo!", data.message, "warning");
+            });
         }
       });
     },
@@ -341,7 +394,7 @@ export default {
   mounted() {
     console.log("Component mounted.");
   },
-  eliminarRepositorioDocumental(id){},
+  eliminarRepositorioDocumental(id) {},
   created() {
     this.$Progress.start();
     this.cargarDocumentos();

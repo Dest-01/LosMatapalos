@@ -52,7 +52,7 @@
                   @click="modalOrganizacion()"
                 >
                   <i class="fa fa-plus-square"></i>
-                  Registro organización
+                  Registro organización donante
                 </button>
               </div>
             </div>
@@ -149,7 +149,7 @@
             <form>
               <div class="modal-body">
                 <div v-show="showPersona" class="form-group">
-                  <label>Tipo de indentificación</label>
+                  <label>Tipo de identificación</label>
                   <select
                     class="form-control"
                     v-model="tipoIndenteficacion"
@@ -435,7 +435,7 @@
             >
               <div class="modal-body">
                 <div v-show="show" class="form-group">
-                  <label>Cédula a consultar:</label>
+                  <label>Identificación a consultar:</label>
                   <input
                     v-model="buscador"
                     type="text"
@@ -466,7 +466,7 @@
                       ConsultaCedula(), NoexisteCedula()
                     "
                   >
-                    Comprobar cédula
+                    Consultar
                   </button>
                   <button
                     type="button"
@@ -799,7 +799,7 @@ export default {
           this.form.identificacionPersona = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
-          this.MensajeCedula2 = "Se encontro la cédula";
+          this.MensajeCedula2 = "Si existe!";
         }
       }
     },
@@ -812,19 +812,19 @@ export default {
           this.form.identificacionOrganizacion = this.buscador;
           this.showMensajesCedula2 = true;
           this.showExistenciaCedula = false;
-          this.MensajeCedula2 = "Se encontro la cédula";
+          this.MensajeCedula2 = "Si existe!";
         }
       }
     },
     NoexisteCedula() {
       if (this.cedulas.length == 0 && this.cedulasOrg.length == 0) {
         this.showExistenciaCedula = true;
-        this.MensajeCedula = "El numero de cedula no esta registrado";
+        this.MensajeCedula = "No existe!";
       }
       if (this.buscador.length == 0) {
         this.showExistenciaCedula = true;
         this.MensajeCedula =
-          "Campo vacio, por favor digite un número de cedula";
+          "Campo vacío, por favor digite una identificación";
       }
     },
 

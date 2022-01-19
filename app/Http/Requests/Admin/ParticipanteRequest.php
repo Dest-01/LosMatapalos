@@ -37,6 +37,7 @@ class ParticipanteRequest extends FormRequest
     public function createRules(): array
     {
         return [
+            'identificacion' => 'required|',
             'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
@@ -64,6 +65,7 @@ class ParticipanteRequest extends FormRequest
 
     public function messages(){
         return [
+            'identificacion.*' => 'Se requiere la identificación',
             'nombre.regex' => 'Solo letras en el nombre',
             'apellido1.regex' => 'Solo letras en el primer apellido',
             'apellido2.regex' => 'Solo letras en el segundo apellido',
