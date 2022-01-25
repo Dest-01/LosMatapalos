@@ -1,31 +1,66 @@
 <template>
-  <div class="contenedor">
-    <h1 style="text-align: center">Nuestros Productos</h1>
-    <div class="card-container">
-      <div class="grid">
-        <label
-          v-for="producto in Productos.data"
-          :key="producto.id"
-          class="card"
-        >
-          <input class="card__input" type="checkbox" />
-          <div class="card__body">
-            <div class="card__body-cover">
-              <img
-                class="card__body-cover-image"
-                v-bind:src="'/images/Articulos/' + producto.Image"
-              /><span class="card__body-cover-checkbox">
-                <svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
-                  <polyline points="1.5 6 4.5 9 10.5 1"></polyline></svg
-              ></span>
-            </div>
-            <header class="card__body-header">
-              <h2 class="card__body-header-title">{{ producto.Name }}</h2>
-              <p class="card__body-header-subtitle">{{ producto.Type }}</p>
-            </header>
-          </div>
-        </label>
+  <div id="container" class="contenedor">
+    <div class="wow fadeInUp" data-wow-duration="2s">
+      <div class="col-md-12">
+        <div class="site-heading text-center">
+          <h1 style="text-align: center">
+            Nuestros <span style="color: #38ab81">Productos</span>
+          </h1>
+        </div>
       </div>
+    </div>
+
+    <section>
+      <div class="Marca" id="main">
+        <div
+          class="section--yellow wow fadeInLeft"
+          data-wow-delay="0.1s"
+          style="
+            visibility: visible;
+            -webkit-animation-delay: 0.1s;
+            -moz-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+          "
+        >
+          <div
+            v-for="producto in Productos.data"
+            :key="producto.id"
+            class="contenenedor-productos"
+          >
+            <div class="card">
+              <div class="imagen">
+                <img
+                  v-bind:src="'/images/Articulos/' + producto.Image"
+                  width="100%"
+                  height="100%"
+                  alt=""
+                />
+              </div>
+              <div class="detalles">
+                <div class="Nombre">
+                  <h3>Nombre: {{ producto.Nombre }}</h3>
+                </div>
+                <div class="tipo">
+                  <h5>Tipo: {{ producto.Tipo }}</h5>
+                </div>
+                <div class="Descripcion">
+                  <h6>Descripción: {{ producto.Descripcion }}</h6>
+                </div>
+                <button id="boton" class="material-bubble">
+                  ¿Como conseguir?
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="paginacion">
+      <pagination
+        style="font-family: fantasy; color: black"
+        :data="Productos"
+        @pagination-change-page="getResults"
+      ></pagination>
     </div>
   </div>
 </template>
@@ -50,6 +85,12 @@ export default {
         .then(({ data }) => (this.Productos = data.data));
     },
   },
+  mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute("src", "/js/cliente.js");
+    plugin.async = true;
+    document.head.appendChild(plugin);
+  },
   created() {
     this.$Progress.start();
     this.cargarProductos();
@@ -59,218 +100,144 @@ export default {
 </script>
 <style scoped>
 .contenedor {
-  position: relative;
- min-height: 100vh;
+  margin-top: 100px;
+  min-height: 800px;
   max-height: 100%;
-  padding: 10px;
-  justify-items: center;
-  margin: 100px 10px 0 10px;
 }
-.contenedor h1 {
-  display: block;
-  background-color: #fff;
-  margin-bottom: 20px;
-}
-.card-container {
+.Marca {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
   justify-content: center;
 }
-
+.contenenedor-productos {
+  margin: 50px;
+}
 .card {
-  --background: #fff;
-  --background-checkbox: #0082ff;
-  --background-image: #fff, rgba(0, 107, 175, 0.2);
-  --text-color: #666;
-  --text-headline: #000;
-  --card-shadow: #0082ff;
-  --card-height: 300px;
-  --card-width: 300px;
-  --card-radius: 12px;
-  --header-height: 80px;
-  --blend-mode: overlay;
-  --transition: 0.15s;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  width: 300px;
+  height: 400px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 11px 0px;
+  padding-bottom: 10px;
 }
-.card:nth-child(odd) .card__body-cover-image {
-  --x-y1: 100% 90%;
-  --x-y2: 67% 83%;
-  --x-y3: 33% 90%;
-  --x-y4: 0% 85%;
+.imagen {
+  width: 100%;
+  padding-bottom: 5px;
 }
-.card:nth-child(even) .card__body-cover-image {
-  --x-y1: 100% 85%;
-  --x-y2: 73% 93%;
-  --x-y3: 25% 85%;
-  --x-y4: 0% 90%;
+img {
+  width: 100%;
+  height: 230px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
-.card__input {
-  position: absolute;
-  display: block;
-  outline: none;
+.card:hover {
+  box-shadow: 2px 2px 5px #38ab81, 2px 2px 5px #38ab81, 2px 2px 5px #38ab81;
+  -webkit-transform: translateX(-3px);
+  transform: translateX(-3px);
+}
+.detalles {
+  text-align: center;
+}
+h1 h2 h3 {
+  font-size: 35px;
+  font-weight: 600;
+}
+
+button {
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+}
+
+button {
+  position: relative;
   border: none;
-  background: none;
-  padding: 0;
-  margin: 0;
-  -webkit-appearance: none;
+  font-size: 18px;
+
+  outline: none;
+  border-radius: 3px;
+  margin: 0 10px;
+  padding: 5px 5px;
+  border-radius: 20px;
 }
-.card__input:checked ~ .card__body {
-  --shadow: 0 0 0 3px var(--card-shadow);
+button:active {
+  transform: translateY(6px);
 }
-.card__input:checked ~ .card__body .card__body-cover-checkbox {
-  --check-bg: var(--background-checkbox);
-  --check-border: #fff;
-  --check-scale: 1;
-  --check-opacity: 1;
+button::after,
+button::before {
+  border-radius: 6px;
 }
-.card__input:checked ~ .card__body .card__body-cover-checkbox--svg {
-  --stroke-color: #fff;
-  --stroke-dashoffset: 0;
-}
-.card__input:checked ~ .card__body .card__body-cover:after {
-  --opacity-bg: 0;
-}
-.card__input:checked ~ .card__body .card__body-cover-image {
-  --filter-bg: grayscale(0);
-}
-.card__input:disabled ~ .card__body {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-.card__input:disabled ~ .card__body:active {
-  --scale: 1;
-}
-.card__body {
-  display: grid;
-  grid-auto-rows: calc(var(--card-height) - var(--header-height)) auto;
-  background: var(--background);
-  height: var(--card-height);
-  width: var(--card-width);
-  border-radius: var(--card-radius);
+
+.material-bubble {
+  background-color: #3bc190db;
+  color: #ffffff;
+  border: none;
   overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  box-shadow: var(--shadow, 0 4px 4px 7px rgba(0, 0, 0, 0.02));
-  transition: transform var(--transition), box-shadow var(--transition);
-  transform: scale(var(--scale, 1)) translateZ(0);
+  box-shadow: none;
+  font-weight: inherit;
+  text-transform: capitalize;
 }
-.card__body:active {
-  --scale: 0.96;
+.material-bubble:hover {
+  color: #ffffff;
+  background: #16bce1;
 }
-.card__body-cover {
-  --c-border: var(--card-radius) var(--card-radius) 0 0;
-  --c-width: 100%;
-  --c-height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-.card__body-cover:after {
+.material-bubble::before {
   content: "";
   position: absolute;
-  left: 0;
   top: 0;
-  width: var(--c-width);
-  height: var(--c-height);
-  border-radius: var(--c-border);
-  background: linear-gradient(to bottom right, var(--background-image));
-  mix-blend-mode: var(--blend-mode);
-  opacity: var(--opacity-bg, 1);
-  transition: opacity var(--transition) linear;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #3bc190db;
+  transition: opacity 0.3s, border 0.3s;
 }
-.card__body-cover-image {
-  width: var(--c-width);
-  height: var(--c-height);
-  -o-object-fit: cover;
-  object-fit: cover;
-  border-radius: var(--c-border);
-
-  -webkit-clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    var(--x-y1, 100% 90%),
-    var(--x-y2, 67% 83%),
-    var(--x-y3, 33% 90%),
-    var(--x-y4, 0% 85%)
-  );
-  clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    var(--x-y1, 100% 90%),
-    var(--x-y2, 67% 83%),
-    var(--x-y3, 33% 90%),
-    var(--x-y4, 0% 85%)
-  );
+.material-bubble:hover::before {
+  opacity: 0;
 }
-/*.card__body-cover-checkbox {
-  background: var(--check-bg, var(--background-checkbox));
-  border: 2px solid var(--check-border, #fff);
+.material-bubble::after {
+  content: "";
   position: absolute;
-  right: 10px;
-  top: 10px;
-  z-index: 1;
-  width: 28px;
-  height: 28px;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background-color: #389eb4;
+  border-color: transparent;
   border-radius: 50%;
-  opacity: var(--check-opacity, 0);
-  transition: transform var(--transition), opacity calc(var(--transition) * 1.2) linear;
-  transform: scale(var(--check-scale, 0));
-}*/
-.card__body-cover-checkbox--svg {
-  width: 13px;
-  height: 11px;
-  display: inline-block;
-  vertical-align: top;
-  fill: none;
-  margin: 7px 0 0 5px;
-  stroke: var(--stroke-color, #fff);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 16px;
-  stroke-dashoffset: var(--stroke-dashoffset, 16px);
-  transition: stroke-dashoffset 0.4s ease var(--transition);
+  transform: translate(-10px, -70px) scale(0.1);
+  opacity: 0;
+  z-index: -1;
+  transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
-.card__body-header {
-  height: var(--header-height);
-  background: var(--background);
-  padding: 0 10px 10px 10px;
+.material-bubble:hover::after {
+  opacity: 1;
+  transform-origin: 100px 100px;
+  transform: scale(2) translate(-10px, -70px);
 }
-.card__body-header-title {
-  color: var(--text-headline);
-  font-weight: 700;
-  margin-bottom: 8px;
+.paginacion {
+  margin: auto;
+  padding: 1em;
+  width: 300px;
+  justify-content: center;
 }
-.card__body-header-subtitle {
-  color: var(--text-color);
-  font-weight: 500;
-  font-size: 13px;
+.pagination {
+  justify-content: center;
+  font-family: fantasy;
+  color: black;
+  background: #f0f0f0;
+  padding: 5px;
+
+  border-radius: 30px;
+}
+ol,
+ul {
+  /* left: 45%; */
+  padding-left: 50%;
 }
 
-body .grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
-}
-@media screen and (max-width: 900px) {
-  body .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1rem;
-  }
-}
-@media screen and (max-width: 650px) {
-  body .grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 1rem;
-  }
-  .contenedor h1 {
-    display: block;
-    background-color: #fff;
-    margin-bottom: 40px;
-    margin-top: 50px;
-  }
+.section--yellow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 </style>

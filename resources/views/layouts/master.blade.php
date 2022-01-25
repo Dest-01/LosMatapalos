@@ -17,6 +17,8 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/animatecss/3.5.2/animate.min.css">
     <!-- MATERIAL DESIGN BOOSTRAP -->
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
@@ -25,6 +27,10 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <!-- MATERIAL DESIGN BOOSTRAP -->
     <link href="http://fonts.cdnfonts.com/css/frutiger" rel="stylesheet">
 
@@ -34,6 +40,7 @@
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/navbar.js') }}"></script>
     <script src="{{ asset('/js/utilitarios.js') }}"></script>
+    <script src="{{ asset('/js/cliente.js') }}"></script>
     <link rel="shortcut icon" href="images/icono.png">
 
 
@@ -152,6 +159,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     
     @auth
         <script>

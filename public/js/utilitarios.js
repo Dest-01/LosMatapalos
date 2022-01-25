@@ -1,12 +1,15 @@
 //VALIDACION DE LA CEDULA NACIONAL
 function validate() {
     const button = document.getElementById("validar");
+    const inputCedulaNacional = document.getElementById("nacional");
     var cedulaNacional = document.getElementById("nacional").value;
     var cedulaNacional2 = document.getElementById("nacional");
     var re = /^[1-9]-\d{4}-\d{4}$/;
     if (re.test(cedulaNacional)) {
         button.disabled = false;
+        inputCedulaNacional.disabled = true;
         cedulaNacional2.style.borderBottom = "#0a9d00 solid 2px";
+        inputCedulaNacional.style.width = "400px";
         return true;
     } else {
         cedulaNacional2.style.borderBottom = "red solid 2px";

@@ -553,6 +553,7 @@
 
 <script>
 export default {
+  name: 'ContactUs',
   data() {
     return {
       bloqueraHoras: true,
@@ -600,6 +601,7 @@ export default {
     };
   },
   methods: {
+
     modalPersona() {
       var modal = document.getElementById("modal");
       new bootstrap.Modal(modal).show();
@@ -1295,4 +1297,5 @@ input:focus ~ .highlight {
     display: block;
   }
 }
+
 </style>

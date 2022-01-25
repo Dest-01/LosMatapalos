@@ -155,8 +155,13 @@
                       placeholder="Formato #-####-####"
                       id="nacional"
                       onchange="validate()"
+                      
                     />
+                    <button style="margin: 1px" type="button" class="btn btn-danger btn-sm px-3">
+                <i class="fas fa-times"></i>
+              </button>
                     <has-error :form="form" field="identificacion"></has-error>
+                      
                   </div>
 
                   <div v-show="CedulaResidencial" class="form-group">

@@ -40,7 +40,7 @@ class PersonasRequest extends FormRequest
             //'identificacion' => 'regex:/[0-9]/|min:9|max:12',//cedula nacional
            // 'identificacion' => 'regex:/^[0-9]{10}/',//cedula residencial
            // 'identificacion' => 'regex:/^[0-9]{11-12}/',//pasaporte
-            'identificacion' => 'required|regex:/^\d{10,12}$/',
+            'identificacion' => 'required|',
             'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
