@@ -1,10 +1,24 @@
 <template>
   <div class="contenedor-contacto">
     <div class="content">
-      <h1 class="logo">Contacta<span>nos</span></h1>
-      <hr />
-      <div class="contact-wrapper animated bounceInUp">
-        <div id="collapseExample4" class="collapse shadow-sm hide contact-form">
+      <h1 class="logo" style="margin-bottom: 20px">Contacta<span>nos</span></h1>
+      <div style="text-align: center; margin: 10px">
+        <button
+          style="
+            text-transform: capitalize;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 20px;
+          "
+          onclick="ocultarContactar()"
+          class="btn btn-danger btn-sm px-3"
+        >
+          <i class="fas fa-plus-square"></i>
+          información
+        </button>
+      </div>
+      <div id="box_contacto" class="contact-wrapper animated bounceInUp">
+        <div class="contact-form">
           <h3>Sendero los Mataplos</h3>
           <form id="contact-form">
             <input type="hidden" name="contact_number" />
@@ -76,28 +90,6 @@
             Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus
             Liberia, Sede Regional Chorotega, Universidad Nacional
           </p>
-          <!-- Collapse Panel 4--><a
-            data-toggle="collapse"
-            href="#collapseExample4"
-            role="button"
-            aria-expanded="true"
-            aria-controls="collapseExample4"
-            class="btn btn-danger btn-block p2-3 shadow-sm with-chevron"
-          >
-            <p
-              class="
-                d-flex
-                align-items-center
-                justify-content-between
-                mb-0
-                px-3
-                py-2
-              "
-            >
-              <strong class="text-uppercase">Contactar</strong
-              >
-            </p>
-          </a>
         </div>
       </div>
     </div>
@@ -119,12 +111,13 @@
   </div>
 </template>
 <style scoped>
+#box_contacto {
+  opacity: 0;
+}
+
 h1 {
   color: #4f4f4f;
   font-weight: 700;
-}
-hr:not([size]) {
-  height: 5px;
 }
 .contenedor_mapa {
   width: 100%;
@@ -234,7 +227,7 @@ ul {
 }
 
 .contact-form form button {
-  background: #034991;
+  background: #38ab81;
   border: 0;
   padding: 1em;
   border-radius: 20px;
@@ -286,6 +279,29 @@ textarea {
   .contact-info ul,
   .contact-info p {
     text-align: justify;
+  }
+}
+@media only screen and (min-device-width: 375px) and (max-device-width: 699px) {
+  .content {
+    width: 90%;
+    top: -100px;
+  }
+  .contact-form {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 20px;
+  }
+  .contact-info {
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  .contenedor_mapa{
+    height: 850px;
+  }
+  .map-cont{
+    height: 850px;
   }
 }
 </style>

@@ -18,6 +18,18 @@ function validate() {
     }
 }
 
+function bloquearCedula() {
+    const button = document.getElementById("validar");
+    const inputCedulaNacional = document.getElementById("nacional");
+    if(button.disabled = true && inputCedulaNacional != ""){
+        inputCedulaNacional.disabled = true;
+        button.disabled = false;
+    }else {
+        inputCedulaNacional.disabled = false;
+        button.disabled = true;
+    }
+}
+
 //FIN DE LA VALIDACION DE LA CEDULA
 
 //VALIDACION DE LA CEDULA RESIDENCIAL

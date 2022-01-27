@@ -1,48 +1,47 @@
 <template>
   <div class="container">
-    <figure class="snip0057 blue">
-      <figcaption>
-        <h2>Nuestros <span>Inicios</span></h2>
-        <p>
-        La Universidad Nacional en su Campus Liberia, ha tenido una
-                significativa regeneración y enriquecimiento biológico que se ha
-                aprovechado para desarrollar un proyecto de sendero
-                universitario llamado “Los Matapalos”, nombre que se deriva de
-                la abundancia de esta especie y por los frondosos ejemplares que
-                están en la entrada del sendero.
-        </p>
-        <p>
-           El sendero Los Matapalos tuvo sus inicios alrededor del 2017
-                cuando a través de diferentes grupos y carreras que asumieron el
-                reto de reforestar y comenzar a hacer estudios que permitieran
-                un manejo adecuado y que a través de ellos se decidiera cual era
-                el paso a seguir.
-        </p>
-         <p>
-         El sendero Los Matapalos abrió oficialmente sus puertas desde el
-                2019, y a la fecha le han visitado diferentes grupos de la
-                comunidad e instituciones como el Colegio Agropecuario, Escuela
-                Adventista, UCR de la provincia de Limón, adultos mayores, grupo
-                de maestros pensionados de ADEP Liberia, entre otros. Este
-                sendero surgió como un espacio de convivencia donde se le
-                permitiera a la población estudiantil ser los intérpretes del
-                sendero y mostrar a sus visitantes la importancia ambiental,
-                cultural e histórica que éste tiene.
-        </p>
-        <!--<div class="icons">
+    <section class="section--purple wow fadeInLeft" data-wow-duration="2s">
+      <figure class="snip0057 blue">
+        <figcaption>
+          <h2>Nuestros <span>Inicios</span></h2>
+          <p>
+            La Universidad Nacional en su Campus Liberia, ha tenido una
+            significativa regeneración y enriquecimiento biológico que se ha
+            aprovechado para desarrollar un proyecto de sendero universitario
+            llamado “Los Matapalos”, nombre que se deriva de la abundancia de
+            esta especie y por los frondosos ejemplares que están en la entrada
+            del sendero.
+          </p>
+          <p>
+            El sendero Los Matapalos tuvo sus inicios alrededor del 2017 cuando
+            a través de diferentes grupos y carreras que asumieron el reto de
+            reforestar y comenzar a hacer estudios que permitieran un manejo
+            adecuado y que a través de ellos se decidiera cual era el paso a
+            seguir.
+          </p>
+          <p>
+            El sendero Los Matapalos abrió oficialmente sus puertas desde el
+            2019, y a la fecha le han visitado diferentes grupos de la comunidad
+            e instituciones como el Colegio Agropecuario, Escuela Adventista,
+            UCR de la provincia de Limón, adultos mayores, grupo de maestros
+            pensionados de ADEP Liberia, entre otros. Este sendero surgió como
+            un espacio de convivencia donde se le permitiera a la población
+            estudiantil ser los intérpretes del sendero y mostrar a sus
+            visitantes la importancia ambiental, cultural e histórica que éste
+            tiene.
+          </p>
+          <!--<div class="icons">
           <a href="#"><i class="ion-ios-home"></i></a
           ><a href="#"><i class="ion-ios-email"></i></a
           ><a href="#"><i class="ion-ios-telephone"></i></a>
         </div>-->
-      </figcaption>
-      <div class="image">
-        <img
-           v-bind:src="'/images/aerea liberia.jpg'"
-          alt="sample3"
-        />
-      </div>
-      <div class="position">Sendero los Mataplos</div>
-    </figure>
+        </figcaption>
+        <div class="image">
+          <img v-bind:src="'/images/aerea liberia.jpg'" alt="sample3" />
+        </div>
+        <div class="position">Sendero los Mataplos</div>
+      </figure>
+    </section>
   </div>
 </template>
 
@@ -51,31 +50,30 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
 
-.container{
-    display: flex;
-    margin-top: 10px;
-    margin-block: 10px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
+.container {
+  display: flex;
+  margin-top: 10px;
+  margin-block: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
 }
-h2{
-    color: #4f4f4f;
-    font-weight: 700;
+h2 {
+  color: #4f4f4f;
+  font-weight: 700;
 }
-span{
-    color: #38ab81;
+span {
+  color: #38ab81;
 }
 figure.snip0057 {
-  font-family: 'Raleway', Arial, sans-serif;
   position: relative;
   overflow: hidden;
   margin: 10px;
   width: 100%;
   background: #ffffff;
   color: #000000;
-  min-height: 600px;
+  min-height: 670px;
   max-height: 100%;
   border: 2px solid #38ab81;
   border-radius: 20px;
@@ -92,23 +90,23 @@ figure.snip0057 .image {
   z-index: 1;
   -webkit-transform: skewX(-15deg);
   transform: skewX(5deg) translateX(-25px);
-  min-height: 600px;
+  min-height: 670px;
   max-height: 100%;
 }
 figure.snip0057 .image img {
-position: relative;
-    display: block;
-    left: -15%;
-    z-index: 1;
-    /* transform: skew(
+  position: relative;
+  display: block;
+  left: -15%;
+  z-index: 1;
+  /* transform: skew(
 15deg); */
-    min-height: 600px;
-    max-height: 100%;
-    width: 107%;
+  min-height: 670px;
+  max-height: 100%;
+  width: 107%;
 }
 figure.snip0057:before {
   position: absolute;
-  content: '';
+  content: "";
   height: 100%;
   width: 45%;
   background: rgba(0, 0, 0, 0.2);
@@ -213,5 +211,28 @@ figure.snip0057.hover:before {
     left: 0px;
   }
 }
-
+@media only screen and (min-device-width: 375px) and (max-device-width: 900px) {
+  figure.snip0057{
+    margin: 0px;
+        height: 1100px;
+  }
+  figure.snip0057::before {
+    width: 0%;
+  }
+  figure.snip0057 .image {
+    transform: skewX(0deg) translateX(0px);
+    width: 100%;
+  }
+  figure.snip0057 figcaption {
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    /* right: 0; */
+    width: 100%;
+  }
+  figure.snip0057 .image img {
+    left: 0%;
+    width: 100%;
+    min-height: 400px;
+  }
+}
 </style>

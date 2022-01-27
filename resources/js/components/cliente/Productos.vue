@@ -42,6 +42,7 @@
                 </div>
                 <div class="tipo">
                   <h5>Tipo: {{ producto.Tipo }}</h5>
+
                 </div>
                 <div class="Descripcion">
                   <h6>Descripción: {{ producto.Descripcion }}</h6>
@@ -169,8 +170,8 @@ button::before {
 }
 
 .material-bubble {
-  background-color: #3bc190db;
-  color: #ffffff;
+  background-color: #3bc19000;
+  color: black;
   border: none;
   overflow: hidden;
   box-shadow: none;
@@ -180,6 +181,9 @@ button::before {
 .material-bubble:hover {
   color: #ffffff;
   background: #16bce1;
+   -webkit-transition: background 3000ms linear;
+    -ms-transition: background 3000ms linear;
+    transition: background 3000ms linear;
 }
 .material-bubble::before {
   content: "";

@@ -345,7 +345,6 @@ p {
 }
 
 .we-offer-area.item-border-less .item .number {
-  font-family: "Poppins", sans-serif;
   font-size: 50px;
   font-weight: 900;
   opacity: 0.1;
@@ -542,7 +541,16 @@ p {
   transition: 0.6s;
 }
 
+@media only screen and (min-device-width: 375px) and (max-device-width: 900px) {
 
+  .promo h1{
+    width: 100%;
+    font-size: 10px;
+  }
+  .marcont{
+    width: 100%;
+  }
+}
 
 
 </style>

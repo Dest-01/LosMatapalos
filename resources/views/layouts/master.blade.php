@@ -50,9 +50,13 @@
     <header>
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="https://sendero.herokuapp.com/">
+                <a class="navbar-brand icono_una" href="https://www.una.ac.cr">
+                    <img src="images/una.png" alt="" width="120" height="60">
+                </a>
+                <a class="navbar-brand " href="https://sendero.herokuapp.com/">
                     <img src="images/logo2.png" alt="" width="120" height="60">
                 </a>
+               
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -105,9 +109,6 @@
                   <button class="btn btn-outline-success" style="background: #ffffff;" type="submit">Buscar</button>
                 </form> -->
                 </div>
-                <a class="navbar-brand" href="https://www.una.ac.cr">
-                    <img src="images/una.png" alt="" width="120" height="60">
-                </a>
             </div>
         </nav>
     </header>

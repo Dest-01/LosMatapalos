@@ -143,12 +143,13 @@
                 </div>
 
                 <div class="form-group">
-                  <div v-show="CedulaNacional" class="form-group">
+                  <div v-show="CedulaNacional" class="form-group identitad">
                     <input
                       v-model="form.identificacion"
                       type="text"
                       name="identificacion"
                       class="form-control"
+                      :disabled="CedulaBloqueo2"
                       :class="{
                         'is-invalid': form.errors.has('identificacion'),
                       }"
@@ -157,14 +158,14 @@
                       onchange="validate()"
                       
                     />
-                    <button style="margin: 1px" type="button" class="btn btn-danger btn-sm px-3">
+                    <button onclick="bloquearCedula()" style="margin: 1px 1px 1px 10px" type="button" class="btn btn-danger btn-sm px-3">
                 <i class="fas fa-times"></i>
               </button>
                     <has-error :form="form" field="identificacion"></has-error>
                       
                   </div>
 
-                  <div v-show="CedulaResidencial" class="form-group">
+                  <div v-show="CedulaResidencial" class="form-group identitad">
                     <input
                       v-model="form.identificacion"
                       type="text"
@@ -178,9 +179,12 @@
                       onchange="validateResidencial()"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
+                      <button style="margin: 1px 1px 1px 10px" type="button" class="btn btn-danger btn-sm px-3">
+                <i class="fas fa-times"></i>
+              </button>
                   </div>
 
-                  <div v-show="Pasaporte" class="form-group">
+                  <div v-show="Pasaporte" class="form-group identitad">
                     <input
                       v-model="form.identificacion"
                       type="text"
@@ -194,6 +198,9 @@
                       onchange="validatePasaporte()"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
+                      <button style="margin: 1px 1px 1px 10px" type="button" class="btn btn-danger btn-sm px-3">
+                <i class="fas fa-times"></i>
+              </button>
                   </div>
                 </div>
 
@@ -306,6 +313,7 @@
                   class="btn btn-primary"
                   id="validar"
                   disabled="registro"
+                  onclick="bloquearCedula()"
                 >
                   Registrar
                 </button>
@@ -324,6 +332,7 @@ export default {
     return {
       OcultartablaReportes: true,
       CedulaBloqueo: false,
+      CedulaBloqueo2: false,
       editmode: false,
       CedulaResidencial: false,
       CedulaNacional: false,
@@ -401,6 +410,14 @@ export default {
       this.form.telefono = "";
       this.form.correo = "";
       this.form.errors.clear();
+    },
+
+    bloquearCedula(){
+      this.CedulaBloqueo2 = true;
+      this.registro = false;
+      this.form.identificacion = "";
+
+
     },
 
     tipoDeIndentificacon() {
@@ -506,6 +523,9 @@ export default {
 
 
 <style scoped>
+.identitad{
+  display: flex;
+}
 .custom-select {
   position: relative;
   width: 100%;
