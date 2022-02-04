@@ -126,13 +126,6 @@ export default {
   text-align: center;
 }
 
-.fa,
-.far,
-.fas {
-  font-family: "Font Awesome 5 Free";
-  font-size: 100px;
-  color: #38ab81;
-}
 h4 {
   color: #38ab81;
 }
@@ -165,13 +158,6 @@ span {
   padding: 5px;
 
   border-radius: 30px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Frutiger", 700;
-  font-weight: bold;
 }
 
 .sub-title {
@@ -208,6 +194,7 @@ ul .booking-card {
   color: #0a4870;
   transition: 0.3s;
   height: 500px;
+  box-shadow: 1px 1px 10px 0 black;
 }
 ul .booking-card::before {
   content: "";
@@ -326,7 +313,7 @@ ul
   .more-information
   .info-and-date-container
   .box.info {
-  color: #ec992c;
+  color: #0a4870;
   margin-right: 10px;
 }
 ul .booking-card .informations-container .more-information .disclaimer {

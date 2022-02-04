@@ -251,11 +251,10 @@ let boxContacto = document.getElementById("box_contacto");
 if( boxContacto.style.opacity == '1'){
 
     boxContacto.style.opacity = '0';
-    boxContacto.style.transition = 'transform 2s, opacity 2s';
 
 }else{
     boxContacto.style.opacity = '1';
-    boxContacto.style.transition = 'opacity 2s';
+    boxContacto.style.transition = 'all 1.2s';
 }
 
 

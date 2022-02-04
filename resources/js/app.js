@@ -14,6 +14,7 @@ import VueI18n from 'vue-i18n';
 import en from '../lang/en_US.json'
 import es from '../lang/es_ES.json'
 
+
 Vue.config.productionTip = false
 
 //añadimos la libreria

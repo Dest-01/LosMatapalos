@@ -131,7 +131,8 @@ h1 {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  height: 700px;
+  height: 650px;
+
 }
 .map-box {
   display: flex;
@@ -297,10 +298,10 @@ textarea {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
   }
-  .contenedor_mapa{
+  .contenedor_mapa {
     height: 850px;
   }
-  .map-cont{
+  .map-cont {
     height: 850px;
   }
 }

@@ -42,7 +42,6 @@
                 </div>
                 <div class="tipo">
                   <h5>Tipo: {{ producto.Tipo }}</h5>
-
                 </div>
                 <div class="Descripcion">
                   <h6>Descripción: {{ producto.Descripcion }}</h6>
@@ -146,7 +145,6 @@ h1 h2 h3 {
 }
 
 button {
-  font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
 }
 
@@ -154,20 +152,14 @@ button {
   position: relative;
   border: none;
   font-size: 18px;
-
+  transition: all 1.2s;
   outline: none;
   border-radius: 3px;
   margin: 0 10px;
   padding: 5px 5px;
   border-radius: 20px;
 }
-button:active {
-  transform: translateY(6px);
-}
-button::after,
-button::before {
-  border-radius: 6px;
-}
+
 
 .material-bubble {
   background-color: #3bc19000;
@@ -181,9 +173,9 @@ button::before {
 .material-bubble:hover {
   color: #ffffff;
   background: #16bce1;
-   -webkit-transition: background 3000ms linear;
-    -ms-transition: background 3000ms linear;
-    transition: background 3000ms linear;
+  -webkit-transition: background 3000ms linear;
+  -ms-transition: background 3000ms linear;
+  transition: background 3000ms linear;
 }
 .material-bubble::before {
   content: "";

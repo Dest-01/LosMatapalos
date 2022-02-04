@@ -1,6 +1,5 @@
 <template>
-  <div class="" style="margin-top: 85px">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <div class="contenedor">
     <div class="intro" style="text-align: center">
       <h2>Reservación del <span>Sendero los Matapalos</span></h2>
     </div>
@@ -217,7 +216,7 @@
                     <i class="fas fa-calendar-check iconoInput2 icono"></i>
                     <h3 class="labelH3">Fecha de llegada</h3>
                     <input
-                      style="width: 100%; text-transform: inherit;"
+                      style="width: 100%; text-transform: inherit"
                       v-model="formReserva.fecha"
                       type="date"
                       value="Fecha"
@@ -274,6 +273,11 @@
                       :form="formReserva"
                       field="horaFin"
                     ></has-error>
+                  </div>
+                </div>
+                <div>
+                  <div class="campo3">
+                    <input type="radio" />
                   </div>
                 </div>
                 <button
@@ -553,7 +557,7 @@
 
 <script>
 export default {
-  name: 'ContactUs',
+  name: "ContactUs",
   data() {
     return {
       bloqueraHoras: true,
@@ -601,7 +605,6 @@ export default {
     };
   },
   methods: {
-
     modalPersona() {
       var modal = document.getElementById("modal");
       new bootstrap.Modal(modal).show();
@@ -791,6 +794,9 @@ export default {
 </script>
 
 <style scoped>
+.contenedor {
+  margin: 40px auto;
+}
 .iconoInput {
   color: #e8e8e8;
   font-size: 26px;
@@ -834,10 +840,10 @@ input:valid ~ label[data-v-4bc2021a] {
   margin: 10px;
 }
 .card {
-    width: 1000px;
-    height: auto;
-    box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 30%);
-    border-radius: 20px;
+  width: 1000px;
+  height: auto;
+  box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 30%);
+  border-radius: 20px;
 }
 
 .intro {
@@ -847,8 +853,8 @@ input:valid ~ label[data-v-4bc2021a] {
   font-size: 25px;
   color: #000000ad;
 }
-span{
-  color:#38ab81;
+span {
+  color: #38ab81;
 }
 .col-md-5 {
   padding: 5px;
@@ -1297,5 +1303,6 @@ input:focus ~ .highlight {
     display: block;
   }
 }
-
 </style>
+
+#

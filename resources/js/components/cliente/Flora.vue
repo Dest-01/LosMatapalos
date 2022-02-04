@@ -5,6 +5,10 @@
         Galeria <span style="color: #38ab81">Flora</span>
       </h1>
     </div>
+    <div class="menu">
+      <button @click="filtrarPlanta()" class="btn_menu">Herbaceas</button>
+      <button class="btn_menu">Leñosas</button>
+    </div>
     <div v-if="floras.data == 0" class="row">
       <div class="mensaje">
         <i class="far fa-folder-open"></i>
@@ -24,12 +28,22 @@
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         />
-        <span class="title">Nombre comun: {{ flora.nom_comun }}</span>
-        <span class="text posicion1"
-          >Nombre Cientifico: {{ flora.nom_cientifico }}</span
-        >
-        <span class="text posicion2">Tipo: {{ flora.tipo }}</span>
-        <span class="text posicion3">Familia: {{ flora.fam_cientifica }}</span>
+        <div class="descripcion">
+          <span class="text">Nombre comun: {{ flora.nom_comun }}</span>
+          <span class="text"
+            >Nombre Cientifico: {{ flora.nom_cientifico }}</span
+          >
+          <span class="text">Tipo: {{ flora.tipo }}</span>
+          <span class="text">Familia: {{ flora.fam_cientifica }}</span>
+          <button
+            @click="verImagen(flora)"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            class="btn btn-danger"
+          >
+            Ver
+          </button>
+        </div>
       </div>
     </div>
     <div class="paginacion">
@@ -127,324 +141,134 @@ export default {
       return text.substring(0, length) + suffix;
     },
   },
+  computed:{
+
+  }
 };
 </script>
 
 <style scoped>
-.modal-content {
-  width: 900px;
-  right: 40%;
+
+.titulo {
+  margin-top: 40px;
+  padding: 5px;
 }
 
-.Total {
-
-  min-height: 800px;
-  max-height: 100%;
-}
-
-.mensaje{
+.mensaje {
   width: 100%;
-  margin-top: 100px;
+  margin-top: 20px;
   margin-block: 100px;
   text-align: center;
 }
-
-.fa, .far, .fas {
-    font-family: "Font Awesome 5 Free";
-    font-size: 100px;
-    color: #38ab81;
-}
-h4{
-  color: #38ab81;
-}
-
-
-.modal-content {
-  position: relative;
-  display: -ms-flexbox;
+.container-all {
   display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  pointer-events: auto;
-  background-color: #0000007a;
-  background-clip: padding-box;
-  border: 1px solid rgb(0 0 0 / 0%);
-  border-radius: 20px;
-  outline: 0;
-  box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 20%);
-  width: 850px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 5px auto;
+  padding: 0;
 }
-.modal-title {
-  color: white;
-  margin-bottom: 0;
-  line-height: 1.6;
+.container {
+  width: 450px;
+  height: 350px;
+  box-sizing: content-box;
+  font-size: 25px;
+  text-align: center;
+  margin: 10px;
+  padding: 0;
+  border-radius: 15px;
+  box-shadow: 1px 1px 10px 0 black;
 }
-
-.form-label {
-  font-family: "Poppins";
-  margin-bottom: 0.5rem;
-  color: rgb(255 255 255);
-  font-weight: 700;
-}
-.form-control[data-v-82d23cc6]:disabled,
-.form-control[data-v-82d23cc6]:read-only {
-  background-color: #fff7f712;
-  opacity: 1;
-  border: 1px solid rgb(0 0 0 / 0%);
-  color: white;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-footer {
-  margin-top: 40px;
+.container img {
+  object-fit: cover;
+  z-index: 1;
   width: 100%;
-  float: left;
+  height: 100%;
+  border: 3px solid #38ab81b0;
+  border-radius: 15px;
+  padding: 0;
 }
 
-.titulo {
-  margin-top: 90px;
-  background: transparent;
+.descripcion {
+  color: #fff;
+  font-size: 1em;
+  font-weight: 700;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  top: -100%;
+  opacity: 0;
+  transition: all 0.8s;
+  width: 100%;
+  height: 100%;
+}
+.menu{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px auto;
+  padding: 5px;
+  justify-content: center;
+}
+.btn_menu{
+  margin: 5px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  background: #1290accf;
+  width: 150px;
+  height: 50px;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+transition: all 0.4s;
+}
+.btn_menu:hover{
+  background: #0c7c96;
+}
+.btn {
+  width: 50%;
+  left: 25%;
+  position: relative;
+  background: #1290accf;
+}
+
+.container > .descripcion:hover {
+  opacity: 1;
+}
+.modal-content{
+  color: black;
+  font-size: 20px;
+  font-weight: 800;
+  background: #ffffff5e;
+  border: 0;
+  box-shadow: 1px 1px 10px 0 black;
   padding: 0;
 }
 
 .paginacion {
-  margin: auto;
-    padding: 1em;
-    width: 300px;
-    justify-content: center;
-}
-.pagination{
-justify-content: center;
-    font-family: fantasy;
-    color: black;
-    background: #f0f0f0;
-    padding: 5px;
-
-    border-radius: 30px;
-}
-ol,
-ul {
-  /* left: 45%; */
-  padding-left: 50%;
-}
-
-
-h1 {
-  text-align: center;
-  color: #000000ad;
-}
-.container-all {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: 10px 70px 30px 70px;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: center;
+  margin: 10px auto;
+  padding: 1em;
+  width: 300px;
   justify-content: center;
-  align-items: center;
+
 }
-.container {
-  background: #66666699;
-  width: 550px;
-  overflow: hidden;
-  display: block;
-  position: relative;
-  float: left;
+.pagination {
+  justify-content: center;
+  font-family: fantasy;
+  color: black;
+  background: #f0f0f0;
   padding: 5px;
-  margin: 5px 5px 5px 5px;
-  border-radius: 0.2rem;
-  box-shadow: 0 4px 6px 0 rgb(0 0 0 / 30%);
-  counter-reset: pagination;
-  text-align: center;
-  height: 400px;
-  border-radius: 20px;
+  border-radius: 30px;
+  font-weight: 900;
 }
 
-img {
-  height: 100%;
-  width: 100%;
-  transition-duration: 0.3s;
-  max-width: 100%;
-  display: block;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 3px 3px 3px 2px rgb(0 0 0 / 20%);
-  border-radius: 20px;
-}
-.title {
-  position: absolute;
-  display: block;
-  cursor: pointer;
-  top: 25%;
-  display: none;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  font-weight: bold;
-  font-size: 1.8em;
-  text-shadow: 1px 5px 10px black;
-  transition-duration: 0.3s;
-}
-.text {
-  position: absolute;
-  top: 40%;
-  cursor: pointer;
-  max-width: 80%;
-  text-align: center;
-  left: 50%;
-  text-shadow: 1px 5px 10px black;
-  font-size: 23px;
-  display: none;
-  margin-right: -50%;
-  transition-duration: 0.3s;
-  transform: translate(-50%, -50%);
-}
-.posicion1 {
-  top: 50%;
-}
-.posicion2 {
-  top: 70%;
-}
-.posicion3 {
-  top: 80%;
-}
-.posicion4 {
-  top: 90%;
-}
-.btn {
-  position: absolute;
-  top: 80%;
-  cursor: pointer;
-  max-width: 80%;
-  text-align: center;
-  left: 50%;
-  text-shadow: 1px 5px 10px black;
-  font-size: 1em;
-
-  margin-right: -50%;
-  transition-duration: 0.3s;
-  transform: translate(-50%, -50%);
-}
-
-.container:hover img {
-  transform: scale(1.2);
-  transition-duration: 0.3s;
-  filter: grayscale(50%);
-  opacity: 0.7;
-}
-.container:hover span {
-  color: white;
-  display: block;
-  transition-duration: 0.3s;
-}
-@media (max-width: 280px) {
-  img {
+@media screen and (max-width:900px) {
+  .paginacion {
     width: 100%;
-    height: auto;
-  }
-  .titulo {
-    margin-top: 150px;
-  }
-
-  .container-all {
-    width: 100%;
-    margin: 1px;
-  }
-  .container {
-    width: 100%;
-    height: auto;
-  }
-  .modal-content {
-    width: 100%;
-    right: auto;
-    margin-top: 35%;
-  }
-  .container:hover span {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 767px) {
-  img {
-    width: 100%;
-    height: auto;
-  }
-  .titulo {
-    margin-top: 150px;
-  }
-
-  .container-all {
-    width: 100%;
-    margin: 1px;
-  }
-  .container {
-    width: 100%;
-    height: auto;
-  }
-  .modal-content {
-    width: 100%;
-    right: auto;
-    margin-top: 35%;
-  }
-  .container:hover span {
-    font-size: 17px;
-  }
-}
-@media only screen and (min-device-width: 768px) and (max-device-width: 1023px) {
-  img {
-    width: 100%;
-    height: auto;
-  }
-  .titulo {
-    margin-top: 150px;
-  }
-
-  .container-all {
-    width: 100%;
-    margin: 1px;
-  }
-  .container {
-    width: 100%;
-    height: auto;
-  }
-  .modal-content {
-    width: 700px;
-    right: 20%;
-    margin-top: 1%;
-  }
-  .container:hover span {
-    font-size: 25px;
-  }
-}
-
-@media only screen and (min-device-width: 1024px) and (max-device-width: 1280px) {
-  img {
-    width: 100%;
-    height: auto;
-  }
-  .titulo {
-    margin-top: 150px;
-  }
-
-  .container-all {
-    width: 100%;
-    margin: 1px;
-  }
-  .container {
-    width: 100%;
-    height: auto;
-  }
-  .modal-content {
-    width: 900px;
-    right: 40%;
-    margin-top: 1%;
-  }
-  .container:hover span {
-    font-size: 35px;
   }
 }
 </style>

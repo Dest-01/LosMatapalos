@@ -77,6 +77,7 @@ figure.snip0057 {
   max-height: 100%;
   border: 2px solid #38ab81;
   border-radius: 20px;
+  font-weight: 700;
 }
 figure.snip0057 * {
   -webkit-box-sizing: border-box;
@@ -127,6 +128,7 @@ figure.snip0057 figcaption p {
   text-align: justify;
   padding: 10px 0;
   width: 100%;
+  font-weight: 700;
 }
 figure.snip0057 figcaption h2 {
   font-weight: 700;

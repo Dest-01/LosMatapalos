@@ -1,6 +1,6 @@
 <template>
-  <div id="container" style="background: #fff">
-    <section class="marko" id="hero">
+  <div id="container">
+    <section ction class="lema" id="hero">
       <div class="promo">
         <dir class="marcont">
           <h1>#AprendemosDeLaNaturaleza</h1>
@@ -29,6 +29,7 @@
 
       <div class="capa"></div>
     </section>
+    
 
     <main>
       <Inicios></Inicios>
@@ -83,14 +84,11 @@
           </div>
         </div>
       </section>
-      <section>	
-      <Proyectos></Proyectos>
-      </section>
 
        <section style="background: #f9f9f9">
       <Actividades></Actividades>
        </section>
-      <div>
+      <div class="contenedor_contacto">
         <Contacto></Contacto>
       </div>
     </main>
@@ -117,15 +115,10 @@ export default {
 
 
 <style scoped>
-
-.contenedor {
-  padding: 60px 0;
-  width: 90%;
-  max-width: 1000px;
-  margin: auto;
-  overflow: hidden;
-  margin-top: 20px;
+.contenedor_contacto{
+  margin-bottom: 10px;
 }
+
 #hero {
   min-height: 60vh;
   position: relative;
@@ -148,7 +141,7 @@ video {
   opacity: 0.8;
   mix-blend-mode: overlay;
 }
-.marko {
+.lema {
   min-height: 70vh;
   height: 70vh;
   width: 100%;
@@ -177,8 +170,8 @@ video {
   color: #fcfcfc;
   font-weight: 500;
 }
-span {
-  color: #920b0b;
+p span {
+  color: #aa0d2c;
 
   font-weight: 700;
 }
@@ -200,21 +193,7 @@ section {
   padding: 60px 0;
   /* min-height: 100vh;*/
 }
-section {
-  padding: 60px 0;
-}
-a,
-a:hover,
-a:focus,
-a:active {
-  text-decoration: none;
-  outline: none;
-}
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+
 .bg-gray {
   background-color: #f9f9f9;
 }
@@ -246,30 +225,6 @@ ul {
   margin-left: -25px;
   position: absolute;
   width: 50px;
-}
-
-.site-heading {
-  margin-bottom: 60px;
-  overflow: hidden;
-  margin-top: -5px;
-}
-
-.carousel-shadow .owl-stage-outer {
-  margin: -15px -15px 0;
-  padding: 15px;
-}
-
-.we-offer-area .our-offer-carousel .owl-dots .owl-dot span {
-  background: #ffffff none repeat scroll 0 0;
-  border: 2px solid;
-  height: 15px;
-  margin: 0 5px;
-  width: 15px;
-}
-
-.we-offer-area .our-offer-carousel .owl-dots .owl-dot.active span {
-  background: #38ab81 none repeat scroll 0 0;
-  border-color: #38ab81;
 }
 
 .we-offer-area .item {
@@ -428,119 +383,6 @@ p {
   color: #38ab81 !important;
 }
 
-.we-offer-area.text-left .item i {
-  background: #38ab81 none repeat scroll 0 0;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  color: #ffffff;
-  display: inline-block;
-  font-size: 60px;
-  height: 100px;
-  line-height: 100px;
-  margin-bottom: 30px;
-  position: relative;
-  width: 100px;
-  z-index: 1;
-  text-align: center;
-}
-
-.we-offer-area.text-left .item i::after {
-  border: 2px solid #38ab81;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  content: "";
-  height: 120px;
-  left: -10px;
-  position: absolute;
-  top: -10px;
-  width: 120px;
-}
-
-.section-padding {
-  padding: 120px 0;
-}
-
-.section-title {
-  margin-bottom: 50px;
-}
-
-.section-title h2 {
-  font-size: 40px;
-  line-height: 45px;
-  position: relative;
-  margin-bottom: 20px;
-  color: #333333;
-  text-transform: capitalize;
-}
-
-.services-area {
-  margin-bottom: -30px;
-}
-.serviecs-block .single-serviecs-block {
-  margin: 30px 0;
-}
-.single-serviecs-block {
-  padding: 30px 40px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  text-align: center;
-  overflow: hidden;
-  position: relative;
-  display: block;
-  height: 320px;
-  margin-bottom: 30px;
-}
-
-.single-serviecs-block:hover {
-  background: #1d54cc;
-  color: #fff;
-}
-.single-serviecs-block:hover h3 a {
-  color: #fff;
-  margin-top: 180px;
-}
-.single-serviecs-block:hover p {
-  display: none;
-}
-.single-serviecs-block:hover i {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -90%);
-  background: #fff;
-  color: #007f9b;
-  height: 100px;
-  width: 100px;
-  font-size: 40px;
-  line-height: 100px;
-}
-.single-serviecs-block h3 a {
-  color: #333333;
-  margin-bottom: 15px;
-  margin-top: 80px;
-  display: block;
-  overflow: hidden;
-  transition: 0.5s;
-}
-
-.single-serviecs-block i {
-  color: #fff;
-  font-size: 50px;
-  height: 140px;
-  width: 140px;
-  line-height: 170px;
-  text-align: center;
-  background: #1d54cc;
-  border-radius: 50%;
-  position: absolute;
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: 0.6s;
-}
-
 @media only screen and (min-device-width: 375px) and (max-device-width: 900px) {
 
   .promo h1{
@@ -551,6 +393,4 @@ p {
     width: 100%;
   }
 }
-
-
 </style>

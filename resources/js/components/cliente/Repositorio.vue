@@ -6,47 +6,57 @@
       </h1>
     </div>
     <div class="secundario">
-      <table class="table align-middle">
+      <table>
         <thead>
           <tr>
             <th class="icono"></th>
             <th class="nombre" scope="col">Nombre</th>
-            <th class="nombre" scope="col">descripción</th>
+            <th class="descripcion" scope="col">Descripción</th>
             <th class="botones" scope="col"></th>
             <th class="botones" scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <tr  v-for="documentoRepo in documentosRepositorio.data" :key="documentoRepo.id">
+          <tr
+            v-for="documentoRepo in documentosRepositorio.data"
+            :key="documentoRepo.id"
+          >
             <td class="icono">
               <img
                 src="/images/PDFIcono.png"
-                width="50px"
-                height="50px"
-                alt=""
+                alt="PDFIcono"
+                width="100%"
+                height="100%"
               />
             </td>
-            <td class="nombre">{{documentoRepo.nombre}}</td>
-            <td class="nombre">{{documentoRepo.descripcion}}</td>
+            <td class="nombre">{{ documentoRepo.nombre }}</td>
+            <td class="descripcion">{{ documentoRepo.descripcion }}</td>
             <td class="botones">
-              <a  class="btn btn-info btn-sm px-3" v-bind:href="'/documentos/repositorioDocumental/' + documentoRepo.documento" target="_blank" rel="noopener noreferrer"> <i class="fas fa-info-circle"></i></a>
+              <a
+                class="btn btn-info btn-sm px-3"
+                v-bind:href="
+                  '/documentos/repositorioDocumental/' + documentoRepo.documento
+                "
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i class="fas fa-info-circle"></i
+              ></a>
             </td>
             <td class="botones">
-              <a  class="btn btn-danger btn-sm px-3" v-bind:href="'/documentos/repositorioDocumental/' + documentoRepo.documento"  v-bind:download="''+ documentoRepo.nombre"><i class="fas fa-download"></i></a>
+              <a
+                class="btn btn-danger btn-sm px-3"
+                v-bind:href="
+                  '/documentos/repositorioDocumental/' + documentoRepo.documento
+                "
+                v-bind:download="'' + documentoRepo.nombre"
+                ><i class="fas fa-download"></i
+              ></a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <h1 style="display: none" id="error">An error occurred</h1>
-    <div id="loader" class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-
-    <div id="pages-container"></div>
   </div>
 </template>
 
@@ -83,55 +93,54 @@ export default {
 
 <style scoped>
 .principal {
-  margin: 130px 10px 10px 10px;
-  width: 100%;
-  min-height: 750px;
-  max-height: 100%;
-  text-align: center;
-  font-family: "Poppins";
-}
-.titulo {
-  margin: 10px;
+  margin-top: 50px;
+  padding: 0;
 }
 .secundario {
-  width: 100%;
-  height: 500px;
-  margin: 10px 10px 10px 10px;
-  padding: 20px 250px;
-  text-align: start;
+  margin: 10px 50px;
+  display: grid;
+  justify-content: center;
 }
-.table tbody {
-  border: 1px;
-  border-block: unset;
-  border-bottom-color: #5a5a5a87;
-  border-bottom-style: groove;
+table {
+  margin: 10px 50px;
+  font-size: 20px;
 }
 .icono {
-  width: 100px;
+  width: 50px;
+}
+thead {
+  background: #e7e7e76b;
+}
+tr,
+th {
+  border-bottom: 1px solid #38ab8191;
+}
+.nombre,
+.icono,
+.descripcion,
+.botones {
+  padding: 20px 10px;
 }
 .nombre {
-  width: 400px;
-  font-size: 1.5rem;
-  font-weight: 400;
+  width: 250px;
+}
+.descripcion {
+  width: 500px;
 }
 .botones {
   width: 50px;
 }
-.table > :not(caption) > * > * {
-  padding: 1.2rem 0.1rem;
-}
 
-@media (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .secundario {
-    width: 100%;
-    height: auto;
-    margin: 1px 1px;
-    padding: 1px 18px 1px 1px;
+    min-height: 700px;
+    max-height: auto;
   }
-  .nombre {
-    width: 400px;
-    font-size: 1.1rem;
-    font-weight: 400;
+  table tr {
+    display: block;
+  }
+  table td {
+    display: block;
   }
 }
 </style>
