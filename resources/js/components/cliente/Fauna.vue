@@ -68,29 +68,24 @@
               Nombre Cientifico: {{ form.nombreCientifico }}
             </h5>
             <button
+              style="background: none; border: none; font-size: 1.25rem; font-weight: 500;"
               type="button"
-              class="btn-close white"
-              data-bs-dismiss="modal"
+              data-dismiss="modal"
               aria-label="Close"
-            ></button>
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
           <div class="modal-body">
-            <div>
-              <img
-                v-bind:src="'/images/Fauna/' + form.imagen"
-                width="100%"
-                height="100%"
-                alt=""
-              />
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label"
-                >Descripcion:</label
-              >
-              <label for="exampleFormControlTextarea1" class="form-label">{{
-                form.descripcion
-              }}</label>
-            </div>
+            <img
+              v-bind:src="'/images/Fauna/' + form.imagen"
+              width="100%"
+              height="100%"
+              alt=""
+            />
+          </div>
+          <div class="modal-footer">
+            <label>Descripcion: {{ form.descripcion }}</label>
           </div>
         </div>
       </div>
@@ -144,7 +139,6 @@ export default {
 </script>
 
 <style scoped>
-
 .titulo {
   margin-top: 40px;
   padding: 5px;
@@ -236,13 +230,35 @@ export default {
   opacity: 1;
 }
 .modal-content {
-  color: black;
+  color: #fff;
   font-size: 20px;
   font-weight: 800;
-  background: #ffffff5e;
+  background: rgba(17, 17, 17, 0.76);
   border: 0;
   box-shadow: 1px 1px 10px 0 black;
   padding: 0;
+  width: 55vw;
+  height: 70vh;
+  box-sizing: content-box;
+  left: -50%;
+}
+
+.modal-body {
+  width: 100%;
+  height: 100%;
+  box-sizing: content-box;
+  padding: 1px;
+}
+.modal-body img {
+  box-sizing: border-box;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-footer {
+  background: rgba(17, 17, 17, 0.76);
+  justify-content: start;
 }
 
 .paginacion {
@@ -250,6 +266,11 @@ export default {
   padding: 1em;
   width: 300px;
   justify-content: center;
+}
+button span {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 .pagination {
   justify-content: center;

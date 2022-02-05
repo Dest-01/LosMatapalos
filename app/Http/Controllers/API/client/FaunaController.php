@@ -23,7 +23,7 @@ class FaunaController extends BaseController
      */
     public function index()
     {
-        $faunas = $this->fauna->latest()->paginate(6);
+        $faunas = $this->fauna->latest()->paginate(8);
         
      
 

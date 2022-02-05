@@ -61,7 +61,7 @@ export default {
 <style scoped>
 
 .datos {
-  margin-top: 100px;
+  margin-top: 40px;
   background: transparent;
   padding: 0;
 }

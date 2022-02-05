@@ -246,16 +246,15 @@ function validar() {
 
 function ocultarContactar() {
 
-let boxContacto = document.getElementById("box_contacto");
+    let boxContacto = document.getElementById("box_contacto");
 
-if( boxContacto.style.opacity == '1'){
+    if (boxContacto.style.opacity == '1') {
 
-    boxContacto.style.opacity = '0';
+        boxContacto.style.opacity = '0';
 
-}else{
-    boxContacto.style.opacity = '1';
-    boxContacto.style.transition = 'all 1.2s';
+    } else {
+        boxContacto.style.opacity = '1';
+        boxContacto.style.transition = 'all 1.2s';
+    }
 }
 
-
-}

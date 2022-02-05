@@ -135,12 +135,9 @@ th {
   .secundario {
     min-height: 700px;
     max-height: auto;
+    width: 100%;
+    margin: 0;
   }
-  table tr {
-    display: block;
-  }
-  table td {
-    display: block;
-  }
+
 }
 </style>

@@ -1,7 +1,10 @@
 <template>
   <div class="contenedor">
     <div class="intro" style="text-align: center">
-      <h2>Reservación del <span>Sendero los Matapalos</span></h2>
+      <h2>
+        Reservación del
+        <span style="color: #38ab81">Sendero los Matapalos</span>
+      </h2>
     </div>
     <div class="contenedor-2">
       <div class="card mb-3">
@@ -23,7 +26,6 @@
                     <td>9:00 a.m.</td>
                     <td>
                       <button
-                        style="height: 35px; width: 55px"
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora1()"
@@ -38,7 +40,6 @@
                     <td>10:00 a.m.</td>
                     <td>
                       <button
-                        style="height: 35px; width: 55px"
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora2()"
@@ -53,7 +54,6 @@
                     <td>11:00 a.m.</td>
                     <td>
                       <button
-                        style="height: 35px; width: 55px"
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora3()"
@@ -68,7 +68,6 @@
                     <td>12:00 p.m.</td>
                     <td>
                       <button
-                        style="height: 35px; width: 55px"
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora4()"
@@ -83,7 +82,6 @@
                     <td>02:00 p.m.</td>
                     <td>
                       <button
-                        style="height: 35px; width: 55px"
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora6()"
@@ -98,7 +96,6 @@
                     <td>03:00 p.m.</td>
                     <td>
                       <button
-                        style="height: 35px; width: 55px"
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora7()"
@@ -114,48 +111,48 @@
           </div>
           <div class="col-md-6">
             <div class="card-body">
-              <h5 class="card-title">Formulario de Reservación</h5>
-              <i class="fas fa-info-circle"> Indicaciones</i><br />
-              <i class="fas fa-angle-right"
-                >Puede registrar cliente, organización o grupo.</i
-              >
-              <i class="fas fa-angle-right"
-                >Es necesario comprobar que esta registrado.</i
-              >
-              <i class="fas fa-angle-right"
-                >Se enviara un correo con la información de la reservación.</i
-              >
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="modalPersona()"
-              >
-                Persona
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="modalGrupo()"
-              >
-                Grupo
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="modalOrganizacion()"
-              >
-                Organización
-              </button>
-              <br />
-              <br />
+              <div class="reservar_indicaciones">
+                <h5 class="card-title">Formulario de Reservación</h5>
+                <i class="fas fa-info-circle"> Indicaciones</i>
+                <i class="fas fa-angle-right"
+                  >Puede registrar cliente, organización o grupo.</i
+                >
+                <i class="fas fa-angle-right"
+                  >Es necesario comprobar que esta registrado.</i
+                >
+                <i class="fas fa-angle-right"
+                  >Se enviara un correo con la información de la reservación.</i
+                >
+                <div class="botones_opciones">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="modalPersona()"
+                  >
+                    Persona
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="modalGrupo()"
+                  >
+                    Grupo
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="modalOrganizacion()"
+                  >
+                    Organización
+                  </button>
+                </div>
+              </div>
               <form class="material-form">
-                <br />
                 <div class="group">
-                  <i class="fas fa-id-card iconoInput"></i>
                   <h3>Busqueda identificación</h3>
-                  <div class="campo1">
+                  <div class="campo">
+                    <i class="fas fa-id-card iconoInput"></i>
                     <input
-                      style="width: 100%"
                       v-model="formReserva.identificacion"
                       name="identificacion"
                       type="text"
@@ -163,9 +160,16 @@
                       :disabled="bloquearConsulta"
                       maxlength="18"
                     />
-                    <span style="width: 100%" class="highlight"></span>
-                    <span style="width: 100%" class="bar"></span>
+                    <button
+                      type="button"
+                      @click="consultarDatos()"
+                      class="Posicionar btn btn-success"
+                      :disabled="bloquearConsulta"
+                    >
+                      Consulta
+                    </button>
                   </div>
+                  <!--div de alerta-->
                   <div>
                     <h2
                       v-text="mensajeExistencia"
@@ -180,20 +184,16 @@
                       {{ mensajeNoExistencia }}
                     </h2>
                   </div>
-                  <button
-                    type="button"
-                    @click="consultarDatos()"
-                    class="Posicionar btn btn-success"
-                  >
-                    Consulta
-                  </button>
                 </div>
-                <div class="group2">
-                  <div class="campo2">
-                    <i class="fas fa-users iconoInput"></i>
+                <div class="group">
+                  <div class="campo">
                     <h3>Cantidad de visitantes</h3>
+
+                    <h3 class="labelH3">Fecha de llegada</h3>
+                  </div>
+                  <div class="campo">
+                    <i class="fas fa-users iconoInput"></i>
                     <input
-                      style="width: 100%"
                       v-model="formReserva.cantidad"
                       type="number"
                       required
@@ -204,19 +204,10 @@
                         'is-invalid': formReserva.errors.has('cantidad'),
                       }"
                     />
-                    <span style="width: 100%" class="highlight"></span>
-                    <span style="width: 100%" class="bar"></span>
-                    <has-error
-                      style=""
-                      :form="formReserva"
-                      field="cantidad"
-                    ></has-error>
-                  </div>
-                  <div class="campo2">
-                    <i class="fas fa-calendar-check iconoInput2 icono"></i>
-                    <h3 class="labelH3">Fecha de llegada</h3>
+                    <has-error class="error2" :form="formReserva" field="cantidad"></has-error>
+  
+                    <i class="fas fa-calendar-check iconoInput icono"></i>
                     <input
-                      style="width: 100%; text-transform: inherit"
                       v-model="formReserva.fecha"
                       type="date"
                       value="Fecha"
@@ -226,21 +217,20 @@
                         'is-invalid': formReserva.errors.has('fecha'),
                       }"
                     />
-                    <span style="width: 100%" class="highlight"></span>
-                    <span style="width: 100%" class="bar"></span>
-                    <has-error
-                      style=""
-                      :form="formReserva"
-                      field="fecha"
-                    ></has-error>
+       
+                    <has-error class="error" :form="formReserva" field="fecha"></has-error>
+
                   </div>
                 </div>
-                <div class="group2">
-                  <div class="campo2">
-                    <i class="fas fa-clock iconoInput2"></i>
+
+                <div class="group">
+                  <div class="campo">
                     <h3>Hora de llegada</h3>
+                    <h3 class="labelH3">Hora de Salida</h3>
+                  </div>
+                  <div class="campo">
+                    <i class="fas fa-clock iconoInput"></i>
                     <input
-                      style="width: 100%"
                       v-model="formReserva.horaInicio"
                       type="time"
                       required
@@ -250,16 +240,12 @@
                       }"
                     />
                     <has-error
-                      style=""
+                    class="error2"
                       :form="formReserva"
                       field="horaInicio"
                     ></has-error>
-                  </div>
-                  <div class="campo2">
-                    <i class="fas fa-clock iconoInput2 icono"></i>
-                    <h3 class="labelH3">Hora de Salida</h3>
+                    <i class="fas fa-clock iconoInput icono"></i>
                     <input
-                      style="width: 100%"
                       v-model="formReserva.horaFin"
                       type="time"
                       required
@@ -268,33 +254,30 @@
                         'is-invalid': formReserva.errors.has('horaFin'),
                       }"
                     />
-                    <has-error
-                      style=""
-                      :form="formReserva"
-                      field="horaFin"
-                    ></has-error>
+                    <has-error class="error" :form="formReserva" field="horaFin"></has-error>
                   </div>
                 </div>
-                <div>
-                  <div class="campo3">
-                    <input type="radio" />
-                  </div>
+                <div class="aceptar">
+                  <input type="checkbox" v-model="AceptarTerminos" @click="aceptoTerminos()" :disabled="bloquearterminos" name="field name" value="Initial value">    
+                  <span>Acepta todo los <a href="">terminos y condicones</a></span>
                 </div>
-                <button
-                  type="button"
-                  class="btn btn-success btn-rounded"
-                  @click="crearReserva()"
-                  :disabled="bloquearCampos"
-                >
-                  Reservar
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger btn-rounded"
-                  @click="cancelarConsulta()"
-                >
-                  Cancelar
-                </button>
+                <div class="campo">
+                  <button
+                    type="button"
+                    class="btn btn-success btn-rounded"
+                    @click="crearReserva()"
+                    :disabled="bloquearReservar"
+                  >
+                    Reservar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-rounded"
+                    @click="cancelarConsulta()"
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -302,7 +285,6 @@
       </div>
     </div>
 
-    <!-- Modal -->
     <!-- Modal -->
     <div
       class="modal fade"
@@ -563,10 +545,12 @@ export default {
       bloqueraHoras: true,
       bloquearCampos: true,
       bloquearConsulta: false,
+      bloquearReservar: true,
+      bloquearterminos: true,
       soloPersona: false,
       soloOrganizacion: false,
       soloGrupo: false,
-
+      AceptarTerminos: false,
       tituloModal: "",
       persona: {},
       organizacion: {},
@@ -636,6 +620,16 @@ export default {
       this.mensajeNoExistencia = "";
       this.bloquearCampos = true;
       this.bloquearConsulta = false;
+      this.bloquearterminos = true;
+      this.AceptarTerminos = false;
+    },
+    aceptoTerminos(){
+      if(this.AceptarTerminos == true){
+        this.bloquearReservar = true;
+      }else{
+        this.bloquearReservar = false;
+
+      }
     },
     limpiarTodo() {
       this.formPersona.reset();
@@ -651,6 +645,7 @@ export default {
           this.bloquearCampos = false;
           this.bloquearConsulta = true;
           this.formReserva.idPersona = this.formReserva.identificacion;
+          this.bloquearterminos = false;
         }
       }
       for (let i = 0; i < this.organizacion.length; i++) {
@@ -660,6 +655,7 @@ export default {
           this.bloquearCampos = false;
           this.bloquearConsulta = true;
           this.formReserva.idOrganizacion = this.formReserva.identificacion;
+          this.bloquearterminos = false;
         }
       }
     },
@@ -797,54 +793,6 @@ export default {
 .contenedor {
   margin: 40px auto;
 }
-.iconoInput {
-  color: #e8e8e8;
-  font-size: 26px;
-  position: absolute;
-  left: 10px;
-  padding-top: 11px;
-}
-
-.Posicionar {
-  position: absolute;
-  left: 350px;
-  top: 3px;
-}
-
-.iconoInput2 {
-  color: #e8e8e8;
-  font-size: 26px;
-  position: absolute;
-  left: 7px;
-  padding-top: 11px;
-}
-
-input:focus ~ label[data-v-4bc2021a],
-input:valid ~ label[data-v-4bc2021a] {
-  top: -20px;
-  font-size: 20px;
-  color: #000000;
-}
-
-.modal-content {
-  width: 540px;
-  border: 0;
-  -webkit-box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
-  box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
-  height: auto;
-}
-.contenedor-2 {
-  display: flex;
-  margin: 10px;
-  justify-content: space-evenly;
-  margin: 10px;
-}
-.card {
-  width: 1000px;
-  height: auto;
-  box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 30%);
-  border-radius: 20px;
-}
 
 .intro {
   margin: auto auto 20px auto;
@@ -853,9 +801,24 @@ input:valid ~ label[data-v-4bc2021a] {
   font-size: 25px;
   color: #000000ad;
 }
-span {
-  color: #38ab81;
+
+.contenedor-2 {
+  display: flex;
+  margin: 10px;
+  justify-content: space-evenly;
+  margin: 10px;
 }
+/*CARD QUE CONTIENE HORARIO Y FORMULARIO */
+.card {
+  width: 1000px;
+  height: auto;
+  box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 30%);
+  border-radius: 20px;
+}
+.card-body{
+  padding: 10px;
+}
+/*COLUMNA DE LOS HORARIOS*/
 .col-md-5 {
   padding: 5px;
   background: #034991;
@@ -870,439 +833,159 @@ span {
   padding-top: 20px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
+  width: 42%;
 }
+tr,
 td {
-  font-weight: bold;
-  font-size: 16px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 20px 5px;
+  text-align: center;
 }
-.btn {
-  height: 40px;
-  width: 140px;
-  font-size: 19px;
-  padding: 5px;
-  text-transform: capitalize;
+.col-md-6 {
+  width: 58%;
 }
-
-.horas {
+.reservar_indicaciones {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: column;
+
+  align-items: flex-start;
   align-content: center;
 }
-.table {
-  color: white;
-  font-size: 16px;
+.reservar_indicaciones i {
+  padding: 5px;
 }
-
+.botones_opciones {
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+}
 .card-title {
-  font-size: 35px;
-  text-align: center;
+  font-size: 30px;
   font-weight: 900;
-  padding: 5px;
 }
-h6 {
-  font-family: "Poppins";
-  font-size: 25px;
-  padding: 5px;
-  text-align: center;
+.group {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  position: relative;
+  padding: 10px;
+}
+.campo {
+  display: flex;
+}
+.aceptar{
+      margin: 10px 5px 10px 15px;
+}
+.aceptar span, span a {
+  font-size: 20px;
 }
 
-/* form starting stylings ------------------------------- */
-.group {
-  position: relative;
-  margin-bottom: 40px;
-  padding-top: 10px;
-  margin-top: 10px;
-  padding-block: 10px;
+.campo h3 {
+  width: 50%;
+  padding: 5px 15px;
 }
-.is-invalid ~ .invalid-feedback {
-  margin-top: 1px;
-}
-.group2 {
-  position: relative;
-  margin-bottom: 40px;
-  position: relative;
-  margin-bottom: 60px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 500px;
-}
-input {
-  font-size: 18px;
-  padding: 10px 10px 10px 45px;
-  display: block;
-  width: 500px;
+.campo input {
+  width: 40%;
+  padding: 5px 1px;
+  margin: 1px 20px 1px 4px;
   border: none;
   border-bottom: 1px solid #757575;
   text-transform: capitalize;
+  border-bottom: 2px solid rgb(204, 200, 200);
+  transition: border 0.5s;
 }
 
-.InputGroup {
-  margin-right: 5px;
-  margin-left: 5px;
-}
-
-.campo1 {
-  width: 350px;
-}
-.campo2 {
-  width: 500px;
-  margin-right: 10px;
-}
-
-.labelH3 {
-  left: 250px;
-}
-
-.icono {
-  left: 255px;
-}
-
-input:focus {
+.campo input:focus {
   outline: none;
+  border-bottom: 2px solid rgb(14, 14, 170);
+
 }
 
-/* LABEL ======================================= */
-label {
-  color: #999;
-  font-size: 18px;
-  font-weight: normal;
-  position: absolute;
-  pointer-events: none;
-  left: 5px;
-  top: 10px;
-  transition: 0.2s ease all;
-  -moz-transition: 0.2s ease all;
-  -webkit-transition: 0.2s ease all;
-  padding: 1px 1px 1px 45px;
-}
 h3 {
-  color: #999;
-  font-size: 18px;
+  color: #000000ad;
+  font-size: 20px;
   font-weight: normal;
-  position: absolute;
   pointer-events: none;
-  left: 5px;
-  top: -25px;
+ 
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;
 }
 
-/* active state */
-input:focus ~ label,
-input:valid ~ label {
-  top: -20px;
-  font-size: 14px;
-  color: #5264ae;
-}
-.indicaciones {
-  text-align: justify;
-  margin-bottom: 1px;
-  font-size: 14px;
-  font-weight: 600;
+.iconoInput {
+  color: #e8e8e8;
+  font-size: 26px;
+  margin-top: 2%;
 }
 
-/* BOTTOM BARS ================================= */
-.bar {
-  position: relative;
-  display: block;
-  width: 500px;
-}
-.bar:before,
-.bar:after {
-  content: "";
-  height: 2px;
-  width: 0;
-  bottom: 1px;
-  position: absolute;
-  background: #5264ae;
-  transition: 0.2s ease all;
-  -moz-transition: 0.2s ease all;
-  -webkit-transition: 0.2s ease all;
-}
-.bar:before {
-  left: 50%;
-}
-.bar:after {
-  right: 50%;
+
+.Posicionar {
+  margin: 5px 1px 5px 10px;
+  width: 30%;
 }
 
-/* active state */
-input:focus ~ .bar:before,
-input:focus ~ .bar:after {
-  width: 50%;
+.modal-content {
+  width: 540px;
+  border: 0;
+  -webkit-box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+  height: auto;
 }
 
-/* HIGHLIGHTER ================================== */
-.highlight {
-  position: absolute;
-  height: 60%;
-  width: 100px;
-  top: 25%;
-  left: 0;
-  pointer-events: none;
-  opacity: 0.5;
+.btn {
+  font-size: 15px;
+  text-transform: capitalize;
 }
 
-/* active state */
-input:focus ~ .highlight {
-  -webkit-animation: inputHighlighter 0.3s ease;
-  -moz-animation: inputHighlighter 0.3s ease;
-  animation: inputHighlighter 0.3s ease;
+.help-block, .invalid-feedback{
+  top: 100%;
+  
 }
 
-/* ANIMATIONS ================ */
-@-webkit-keyframes inputHighlighter {
-  from {
-    background: #5264ae;
-  }
-  to {
-    width: 0;
-    background: transparent;
-  }
+.error2 {
+left: 8%;
 }
-@-moz-keyframes inputHighlighter {
-  from {
-    background: #5264ae;
-  }
-  to {
-    width: 0;
-    background: transparent;
-  }
+.error{
+  left: 55%;
 }
-@keyframes inputHighlighter {
-  from {
-    background: #5264ae;
+
+@media only screen and (max-width: 800px ) {
+  .row{
+    display: flex;
+    flex-direction: column;
+    
   }
-  to {
-    width: 0;
-    background: transparent;
-  }
-}
-/***********RESPONSIVE MODE***************************/
-@media only screen and (min-device-width: 900px) and (max-device-width: 1365px) {
-  .contenedor-2 {
-    margin: 15px 10px 25% 10px;
-  }
-  .card {
-    margin: 100px 10px 100px 10px;
-  }
-}
-@media only screen and (min-device-width: 568px) and (max-device-width: 900px) {
-  input {
+  .col-md-5, .col-md-6{
     width: 100%;
   }
-  .btn {
-    margin-top: 5px;
+  .col-md-5 {
+    border-bottom-left-radius: 0;
   }
-  .intro {
-    margin-top: 80px;
+  .botones_opciones{
+        display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
   }
-  .bar {
-    width: 100%;
-  }
-  .Posicionar {
-    width: 100px;
-    left: 70%;
-  }
-  .InputGroup {
-    display: block;
-    margin-top: 20px;
-  }
-  .group2 {
-    display: block;
-    margin-top: 20px;
-    width: 100%;
-  }
-  .campo1 {
-    width: 235px;
-  }
-  .campo2 {
-    width: 100%;
-    margin-top: 30px;
-  }
-  .labelH3 {
-    left: 1px;
-    top: 50px;
-  }
-  .icono {
-    left: 5px;
-  }
-  .modal-content {
-    width: 100%;
-    height: auto;
-  }
-}
-@media only screen and (min-device-width: 412px) and (max-device-width: 567px) {
-  input {
-    width: 100%;
-  }
-  .btn {
-    margin-top: 5px;
-  }
-  .intro {
-    margin-top: 120px;
-  }
-  .bar {
-    width: 100%;
-  }
-  .Posicionar {
-    width: 100px;
-    left: 70%;
-  }
-  .InputGroup {
-    display: block;
-    margin-top: 20px;
-  }
-  .group2 {
-    display: block;
-    margin-top: 20px;
-    width: 100%;
-  }
-  .campo1 {
-    width: 230px;
-  }
-  .campo2 {
-    width: 100%;
-    margin-top: 30px;
-  }
-  .labelH3 {
-    left: 1px;
-    top: 50px;
-  }
-  .icono {
-    left: 5px;
-  }
-  .modal-content {
-    width: 100%;
-    height: auto;
-  }
-}
-@media only screen and (min-device-width: 320px) and (max-device-width: 411px) {
-  input {
-    width: 100%;
-  }
-  .btn {
-    margin-top: 5px;
-  }
-  .intro {
-    margin-top: 120px;
-  }
-  .bar {
-    width: 100%;
-  }
-  .Posicionar {
-    width: 100px;
-    left: 70%;
-  }
-  .InputGroup {
-    display: block;
-    margin-top: 20px;
-  }
-  .group2 {
-    display: block;
-    margin-top: 20px;
-    width: 100%;
-  }
-  .campo1 {
+  .botones_opciones button{
     width: 200px;
+    margin: 10px auto;
   }
-  .campo2 {
-    width: 100%;
-    margin-top: 30px;
+  .Posicionar{
+    width: 38%;
+    margin: 0;
   }
-  .labelH3 {
-    left: 1px;
-    top: 50px;
-  }
-  .icono {
-    left: 5px;
-  }
-  .modal-content {
-    width: 100%;
-    height: auto;
-  }
-}
-@media only screen and (max-device-width: 320px) {
-  input {
-    width: 100%;
-  }
-  .btn {
-    margin-top: 5px;
-  }
-  .intro {
-    margin-top: 120px;
-  }
-  .bar {
-    width: 100%;
-  }
-  .Posicionar {
-    width: 100px;
-    left: 65%;
-  }
-  .InputGroup {
-    display: block;
-    margin-top: 20px;
-  }
-  .group2 {
-    display: block;
-    margin-top: 20px;
-    width: 100%;
-  }
-  .campo1 {
-    width: 170px;
-  }
-  .campo2 {
-    width: 100%;
-    margin-top: 30px;
-  }
-  .labelH3 {
-    left: 1px;
-    top: 50px;
-  }
-  .icono {
-    left: 5px;
-  }
-  .modal-content {
-    margin: 5px;
-    width: 100%;
-    height: auto;
-  }
-}
-@media only screen and (max-device-width: 280px) {
-  input {
-    width: 100%;
-  }
-  .Posicionar {
-    width: 100px;
-    left: 60%;
-  }
-
-  .campo1 {
-    width: 130px;
-  }
-  .table > :not(caption) > * > * {
-    padding: 0.1rem 0.1rem;
+  .campo input{
+    margin: 2px;
   }
 }
 
-@media only screen and (min-device-width: 640px) and (max-device-width: 736px) {
-  input {
-    width: 100%;
-  }
-  .campo1 {
-    width: 480px;
-  }
-  .Posicionar {
-    left: 85%;
-  }
-  .btn {
-    display: block;
-  }
-}
+/***********RESPONSIVE MODE***************************/
 </style>
 
-#
