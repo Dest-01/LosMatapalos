@@ -44,7 +44,9 @@ class ReservarCliController extends BaseController
 
         $tag = $this->reserva->create([
             'idPersona' => $request->get('idPersona'),
+            'identificacionPersona' => $request->get('identificacionPersona'),
             'idOrganizacion' => $request->get('idOrganizacion'),
+            'identificacionOrganizacion' => $request->get('identificacionOrganizacion'),
             'cantidad' => $request->get('cantidad'),
             'fecha' => $request->get('fecha'),
             'horaInicio' => $request->get('horaInicio'),
@@ -62,13 +64,12 @@ class ReservarCliController extends BaseController
      */
     public function GuardarPersona(PersonasRequest $request)
     {
-
         try {
-            $filtro = $request->id;
-            $existencia = Personas::where('id', '=', $filtro)->first();
+            $filtro = $request->identificacion;
+            $existencia = Personas::where('identificacion', '=', $filtro)->first();
             if ($existencia === null) {
                 $tag = $this->personas->create([
-                    'id' => $request->get('id'),
+                    'identificacion' => $request->get('identificacion'),
                     'nombre' => $request->get('nombre'),
                     'apellido1' => $request->get('apellido1'),
                     'apellido2' => $request->get('apellido2'),
@@ -77,11 +78,11 @@ class ReservarCliController extends BaseController
                 ]);
 
                 return $this->sendResponse($tag, 'Registro exitoso!');
-            }else{
+            } else {
                 return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
             }
 
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             return $e->getMessage();
         }
 
@@ -90,22 +91,22 @@ class ReservarCliController extends BaseController
     public function GuardarOrganizacion(OrganizacionesRequest $request)
     {
         try {
-            $filtro = $request->id;
-            $existencia = Organizaciones::where('id', '=', $filtro)->first();
+            $filtro = $request->identificacion;
+            $existencia = Organizaciones::where('identificacion', '=', $filtro)->first();
             if ($existencia === null) {
                 $tag = $this->organizaciones->create([
-                    'id' => $request->get('id'),
+                    'identificacion' => $request->get('identificacion'),
                     'nombre' => $request->get('nombre'),
                     'telefono' => $request->get('telefono'),
                     'correo' => $request->get('correo'),
                 ]);
 
                 return $this->sendResponse($tag, 'Registro exitoso!');
-            }else{
+            } else {
                 return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
             }
 
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             return $e->getMessage();
         }
     }
@@ -119,14 +120,14 @@ class ReservarCliController extends BaseController
     public function obtenerCedula(Request $request)
     {
         $filtro = $request->buscador;
-        $persona = Personas::where('id', $filtro)->get();
+        $persona = Personas::where('identificacion', $filtro)->get();
         return $this->sendResponse($persona, 'Cedula si existe');
 
     }
     public function obtenerCedulaOrg(Request $request)
     {
         $filtro = $request->buscador;
-        $organizacion = Organizaciones::where('id', $filtro)->get();
+        $organizacion = Organizaciones::where('identificacion', $filtro)->get();
         return $this->sendResponse($organizacion, 'Cedula si existe');
 
     }
