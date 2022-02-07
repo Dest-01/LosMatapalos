@@ -17,7 +17,7 @@
         <h4>Muy pronto...</h4>
       </div>
     </div>
-    <div v-else class="container-all">
+    <div v-else class="container-all wow fadeInLeft" data-wow-duration="2s">
       <div v-for="flora in floras.data" :key="flora.id" class="container">
         <img
           v-bind:src="'/images/flora/' + flora.photo"
@@ -84,13 +84,8 @@
                 alt=""
               />
             </div>
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label"
-                >Descripcion:</label
-              >
-              <label for="exampleFormControlTextarea1" class="form-label">{{
-                form.descripcion
-              }}</label>
+            <div class="modal-footer">
+              <label>Descripcion: {{ form.descripcion }}</label>
             </div>
           </div>
         </div>
@@ -141,19 +136,22 @@ export default {
       return text.substring(0, length) + suffix;
     },
   },
-  computed:{
-
-  }
+  computed: {},
 };
 </script>
 
-<style scoped>
 
+<style scoped>
 .titulo {
   margin-top: 40px;
   padding: 5px;
 }
-
+.titulo {
+  animation-name: desplazar;
+  animation-duration: 1s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
 .mensaje {
   width: 100%;
   margin-top: 20px;
@@ -174,10 +172,14 @@ export default {
   box-sizing: content-box;
   font-size: 25px;
   text-align: center;
-  margin: 10px;
+  margin: 15px;
   padding: 0;
   border-radius: 15px;
   box-shadow: 1px 1px 10px 0 black;
+  transition: transform 0.6s;
+}
+.container:hover {
+  transform: scale(1.1);
 }
 .container img {
   object-fit: cover;
@@ -205,7 +207,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.menu{
+.menu {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -213,7 +215,7 @@ export default {
   padding: 5px;
   justify-content: center;
 }
-.btn_menu{
+.btn_menu {
   margin: 5px;
   padding: 10px;
   font-size: 20px;
@@ -224,9 +226,9 @@ export default {
   border: 0;
   border-radius: 5px;
   color: #fff;
-transition: all 0.4s;
+  transition: all 0.4s;
 }
-.btn_menu:hover{
+.btn_menu:hover {
   background: #0c7c96;
 }
 .btn {
@@ -239,14 +241,43 @@ transition: all 0.4s;
 .container > .descripcion:hover {
   opacity: 1;
 }
-.modal-content{
-  color: black;
+.modal-content {
+  color: #fff;
   font-size: 20px;
   font-weight: 800;
-  background: #ffffff5e;
+  background: rgba(17, 17, 17, 0.76);
   border: 0;
   box-shadow: 1px 1px 10px 0 black;
   padding: 0;
+  width: 55vw;
+  height: 70vh;
+  box-sizing: content-box;
+  left: -15vw;
+}
+
+.modal-body {
+  width: 55vw;
+  height: 70vh;
+  box-sizing: content-box;
+  padding: 1px;
+}
+.modal-body img {
+  box-sizing: border-box;
+  object-fit: cover;
+  width: 55vw;
+  height: 70vh;
+}
+
+.modal-footer {
+  background: rgba(17, 17, 17, 0.76);
+  justify-content: start;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom: 1px solid black;
+  box-shadow: -2px 2px 3px 0 #000000ab;
+}
+.modal-footer label {
+  color: #fff;
 }
 
 .paginacion {
@@ -254,7 +285,11 @@ transition: all 0.4s;
   padding: 1em;
   width: 300px;
   justify-content: center;
-
+}
+button span {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 .pagination {
   justify-content: center;
@@ -266,7 +301,22 @@ transition: all 0.4s;
   font-weight: 900;
 }
 
-@media screen and (max-width:900px) {
+@keyframes desplazar {
+  /*Creacion de la animacion, se establece el orden en que va a ocurrir los cambios*/
+  0% {
+    margin-top: 80px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    margin-top: 40px;
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 900px) {
   .paginacion {
     width: 100%;
   }

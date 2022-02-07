@@ -4,7 +4,7 @@
       <h1>Nuestros <span style="color: #38ab81">Productos</span></h1>
     </div>
 
-    <div class="todo_productos">
+    <div class="todo_productos wow fadeInUp" data-wow-duration="2s">
       <div
         v-for="producto in Productos.data"
         :key="producto.id"
@@ -30,7 +30,14 @@
             <div class="Descripcion">
               <h6>Descripción: {{ producto.Descripcion }}</h6>
             </div>
-            <button type="button"  data-toggle="modal" data-target="#modalConseguir" class="">¿Como conseguir?</button>
+            <button
+              type="button"
+              data-toggle="modal"
+              data-target="#modalConseguir"
+              class=""
+            >
+              ¿Como conseguir?
+            </button>
           </div>
         </div>
       </div>
@@ -48,7 +55,9 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Nombre Producto: {{form.Nombre}}</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              Nombre Producto: {{ form.Nombre }}
+            </h5>
             <button type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -83,10 +92,16 @@
             </button>
           </div>
           <div class="modal-body_info">
-            <p>Para conseguir este producto es necesario contactar con miembros del sendero.</p>
+            <p>
+              Para conseguir este producto es necesario contactar con miembros
+              del sendero.
+            </p>
             <p>Correo: sendero.una.ac.cr</p>
             <p>Número (506) 0000-0000</p>
-            <p>Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus Liberia, Sede Regional Chorotega, Universidad Nacional.</p>
+            <p>
+              Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus
+              Liberia, Sede Regional Chorotega, Universidad Nacional.
+            </p>
           </div>
         </div>
       </div>
@@ -150,8 +165,16 @@ export default {
   padding: 0;
 }
 
+.site-heading {
+  animation-name: desplazar;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
 .todo_productos {
-  margin: 10px;
+  margin: 15px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -166,10 +189,12 @@ export default {
   border-radius: 15px;
   box-shadow: 1px 1px 10px 0 black;
   transition: border 0.2s;
+  transition: transform 0.5s;
 }
 img:hover {
   border: 3px solid #38ab81;
   cursor: pointer;
+  transform: scale(1.05);
 }
 .productos > img:hover {
   border: 3px solid #38ab81;
@@ -206,7 +231,7 @@ button {
   transition: all 0.2s;
 }
 
-button:hover{
+button:hover {
   background: linear-gradient(1deg, #0a5f40, #159b6a);
 }
 
@@ -232,7 +257,7 @@ button:hover{
   font-weight: 900;
 }
 /*MODAL ESTILO*/
-.modal{
+.modal {
   left: -12%;
 }
 .modal-content {
@@ -240,45 +265,60 @@ button:hover{
   height: 65vh;
 }
 
-.modal-body{
+.modal-body {
   padding: 0;
   box-sizing: content-box;
   width: 55vw;
   height: 65vh;
-} 
-.modal-body img{
+}
+.modal-body img {
   object-fit: cover;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
 }
-.modal-body > img:hover{
+.modal-body > img:hover {
   border: none;
   cursor: default;
+  transform: none;
 }
-.modal-header button{
+.modal-header button {
   font-weight: 600;
   background: none;
   color: #111;
   border: none;
   font-size: 1.25rem;
 }
-.modal-content_info{
+.modal-content_info {
   width: 420px;
   height: 400px;
   background: #ffffff;
 }
 
-.modal-body_info{
+.modal-body_info {
   width: 420px;
   height: 400px;
   padding: 5px;
   font-size: 1.25rem;
 }
-.modal_info{
-   width: 100%;
-   left: 4%;
-   top: 18%;
+.modal_info {
+  width: 100%;
+  left: 4%;
+  top: 18%;
 }
 
+@keyframes desplazar {
+  /*Creacion de la animacion, se establece el orden en que va a ocurrir los cambios*/
+  0% {
+    margin-top: 80px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    margin-top: 40px;
+    opacity: 1;
+  }
+}
 </style>

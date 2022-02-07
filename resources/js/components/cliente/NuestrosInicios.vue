@@ -4,7 +4,7 @@
       <figure class="snip0057 blue">
         <figcaption>
           <h2>Nuestros <span>Inicios</span></h2>
-          <p>
+          <p id="parrafo_1">
             La Universidad Nacional en su Campus Liberia, ha tenido una
             significativa regeneración y enriquecimiento biológico que se ha
             aprovechado para desarrollar un proyecto de sendero universitario
@@ -12,14 +12,14 @@
             esta especie y por los frondosos ejemplares que están en la entrada
             del sendero.
           </p>
-          <p>
+          <p id="parrafo_2">
             El sendero Los Matapalos tuvo sus inicios alrededor del 2017 cuando
             a través de diferentes grupos y carreras que asumieron el reto de
             reforestar y comenzar a hacer estudios que permitieran un manejo
             adecuado y que a través de ellos se decidiera cual era el paso a
             seguir.
           </p>
-          <p>
+          <p id="parrafo_3">
             El sendero Los Matapalos abrió oficialmente sus puertas desde el
             2019, y a la fecha le han visitado diferentes grupos de la comunidad
             e instituciones como el Colegio Agropecuario, Escuela Adventista,
@@ -59,6 +59,29 @@
   align-content: center;
   justify-content: center;
 }
+
+#parrafo_1, #parrafo_2, #parrafo_3{
+  animation-name: parrafo_1;
+  animation-delay: 1.5s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  transition: font-size 3s;
+  transition-delay: 1.5s;
+  font-size: 0;
+}
+
+@keyframes parrafo_1{
+  0%{
+    font-size: 0;
+  }
+  100%{
+    font-size: 0.9em;
+
+  }
+}
+
+
+
 h2 {
   color: #4f4f4f;
   font-weight: 700;

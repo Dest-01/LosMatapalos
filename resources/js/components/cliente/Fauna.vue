@@ -17,7 +17,7 @@
         <h4>Muy pronto...</h4>
       </div>
     </div>
-    <div v-else class="container-all">
+    <div v-else class="container-all wow fadeInLeft" data-wow-duration="2s">
       <div v-for="fauna in faunas.data" :key="fauna.id" class="container">
         <img
           v-bind:src="'/images/Fauna/' + fauna.imagen"
@@ -137,13 +137,17 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .titulo {
   margin-top: 40px;
   padding: 5px;
 }
-
+.titulo {
+  animation-name: desplazar;
+  animation-duration: 1s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
 .mensaje {
   width: 100%;
   margin-top: 20px;
@@ -157,6 +161,7 @@ export default {
   justify-content: center;
   margin: 5px auto;
   padding: 0;
+
 }
 .container {
   width: 450px;
@@ -164,10 +169,14 @@ export default {
   box-sizing: content-box;
   font-size: 25px;
   text-align: center;
-  margin: 10px;
+  margin: 15px;
   padding: 0;
   border-radius: 15px;
   box-shadow: 1px 1px 10px 0 black;
+  transition: transform 0.6s;
+}
+.container:hover {
+  transform: scale(1.1);
 }
 .container img {
   object-fit: cover;
@@ -244,23 +253,29 @@ export default {
 }
 
 .modal-body {
-  width: 100%;
-  height: 100%;
+  width: 55vw;
+  height: 70vh;
   box-sizing: content-box;
   padding: 1px;
 }
 .modal-body img {
   box-sizing: border-box;
   object-fit: cover;
-  width: 100%;
-  height: 100%;
+   width: 55vw;
+  height: 70vh;
 }
 
 .modal-footer {
   background: rgba(17, 17, 17, 0.76);
   justify-content: start;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom: 1px solid black;
+  box-shadow: -2px 2px 3px 0 #000000ab;
 }
-
+.modal-footer label{
+  color: #fff;
+}
 .paginacion {
   margin: 10px auto;
   padding: 1em;
@@ -281,6 +296,22 @@ button span {
   border-radius: 30px;
   font-weight: 900;
 }
+
+@keyframes desplazar {
+  /*Creacion de la animacion, se establece el orden en que va a ocurrir los cambios*/
+  0% {
+    margin-top: 80px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    margin-top: 40px;
+    opacity: 1;
+  }
+}
+
 
 @media screen and (max-width: 900px) {
   .paginacion {

@@ -4,7 +4,16 @@
       Acerca de <span style="color: #38ab81">nosotros</span>
     </h1>
     <div class="row">
-      <div class="col-6 col-sm-4">
+      <div
+        class="col-6 col-sm-4 wow fadeInLeft"
+        data-wow-delay="0.1s"
+        style="
+          visibility: visible;
+          -webkit-animation-delay: 0.1s;
+          -moz-animation-delay: 0.1s;
+          animation-delay: 0.1s;
+        "
+      >
         <div class="mision" style="margin-left: 2px">
           <h2><i class="fas fa-crosshairs"></i>Misión</h2>
           <p>
@@ -14,7 +23,16 @@
           </p>
         </div>
       </div>
-      <div class="col-6 col-sm-4">
+      <div
+        class="col-6 col-sm-4 wow fadeInLeft"
+        data-wow-delay="0.2s"
+        style="
+          visibility: visible;
+          -webkit-animation-delay: 0.2s;
+          -moz-animation-delay: 0.2s;
+          animation-delay: 0.2s;
+        "
+      >
         <div class="vision">
           <h2><i class="far fa-eye"></i>Visión</h2>
           <p>
@@ -23,7 +41,16 @@
           </p>
         </div>
       </div>
-      <div class="col-6 col-sm-4">
+      <div
+        class="col-6 col-sm-4 wow fadeInLeft"
+        data-wow-delay="0.3s"
+        style="
+          visibility: visible;
+          -webkit-animation-delay: 0.3s;
+          -moz-animation-delay: 0.3s;
+          animation-delay: 0.3s;
+        "
+      >
         <div class="valores" style="margin-right: 2px">
           <h2><i class="fas fa-balance-scale"></i> Valores</h2>
           <li>Familia</li>
@@ -59,12 +86,31 @@ export default {
 </script>
 
 <style scoped>
-
 .datos {
   margin-top: 40px;
   background: transparent;
   padding: 0;
+  animation-name: desplazar;
+  animation-duration: 2s;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
+
+@keyframes desplazar {
+  /*Creacion de la animacion, se establece el orden en que va a ocurrir los cambios*/
+  0% {
+    margin-top: 80px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    margin-top: 40px;
+    opacity: 1;
+  }
+}
+
 .mision {
   text-align: justify;
   padding: 5%;
@@ -76,7 +122,8 @@ export default {
   border: 1px solid #0000003b;
   box-shadow: 1px 1px 1px 1px #38ab81;
 }
-.fas, .far{
+.fas,
+.far {
   color: #38ab81;
 }
 

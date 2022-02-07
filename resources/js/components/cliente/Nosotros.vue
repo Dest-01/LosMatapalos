@@ -1,5 +1,5 @@
 <template>
-  <div class="contenedor">
+  <div class="contenedor  wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
     <div class="site-heading text-center">
       <h2>Equipo de <span>Desarrollo</span></h2>
     </div>

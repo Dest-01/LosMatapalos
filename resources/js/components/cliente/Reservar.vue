@@ -341,12 +341,12 @@
             ></button>
           </div>
           <form>
-            <div  class="modal-body">
+            <div class="modal-body">
               <!-- MODAL DE PERSONA-->
-              <div v-show="soloPersona"  class="group">
+              <div v-show="soloPersona" class="group">
                 <label>Tipo de identificación</label>
                 <select
-                   class="input_modal"
+                  class="input_modal"
                   v-model="tipoIndenteficacion"
                   :class="{
                     'is-invalid': formReserva.errors.has('identificacion'),
@@ -364,7 +364,7 @@
                 <div v-show="CedulaNacional" class="group identitad">
                   <i class="fas fa-id-card iconoInput_modal"></i>
                   <input
-                  style="padding-top: 40px;"
+                    style="padding-top: 40px"
                     v-model="formPersona.identificacion"
                     type="text"
                     name="identificacion"
@@ -374,30 +374,43 @@
                       'is-invalid': formPersona.errors.has('identificacion'),
                     }"
                     placeholder="Formato #-####-####"
-                    id="nacional"
-                    onchange="validate()"
+                    id="inputNacional"
+                    onchange="validaCedulaNacional()"
                   />
+                  <button
+                    id="botonCancelar"
+                    onclick="cancelarCedula()"
+                    class="btn btn-danger"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
                   <has-error
                     :form="formPersona"
                     field="identificacion"
                   ></has-error>
                 </div>
-
                 <div v-show="CedulaResidencial" class="group identitad">
                   <i class="fas fa-id-card iconoInput_modal"></i>
                   <input
-                  style="padding-top: 40px;"
+                    style="padding-top: 40px"
                     v-model="formPersona.identificacion"
                     type="text"
                     name="identificacion"
-                     class="input_modal"
+                    class="input_modal"
                     :class="{
                       'is-invalid': formPersona.errors.has('identificacion'),
                     }"
                     placeholder="Formato de 10 dígitos"
-                    id="residencial"
-                    onchange="validateResidencial()"
+                    id="inputResidencial"
+                    onchange="validaCedulaResidencial()"
                   />
+                  <button
+                    id="botonCancelar_residencial"
+                    onclick="cancelarCedulaResidencial()"
+                    class="btn btn-danger"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
                   <has-error
                     :form="formPersona"
                     field="identificacion"
@@ -407,18 +420,25 @@
                 <div v-show="Pasaporte" class="group identitad">
                   <i class="fas fa-id-card iconoInput_modal"></i>
                   <input
-                  style="padding-top: 40px;"
+                    style="padding-top: 40px"
                     v-model="formPersona.identificacion"
                     type="text"
                     name="identificacion"
-                     class="input_modal"
+                    class="input_modal"
                     :class="{
                       'is-invalid': formPersona.errors.has('identificacion'),
                     }"
                     placeholder="Formato de 11 a 12 dígitos"
-                    id="pasaporte"
-                    onchange="validatePasaporte()"
+                    id="inputPasaporte"
+                    onchange="validarPasaporte()"
                   />
+                  <button
+                    id="botonCancelar_pasaporte"
+                    onclick="cancelarPasaporte()"
+                    class="btn btn-danger"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
                   <has-error
                     :form="formPersona"
                     field="identificacion"
@@ -451,6 +471,7 @@
                   v-model="formPersona.apellido1"
                   type="text"
                   :class="{ 'is-invalid': formPersona.errors.has('apellido1') }"
+                  placeholder="Escriba su primer apellido"
                 />
                 <has-error
                   style="top: 80px"
@@ -467,6 +488,7 @@
                   v-model="formPersona.apellido2"
                   type="text"
                   :class="{ 'is-invalid': formPersona.errors.has('apellido2') }"
+                  placeholder="Escriba su segundo apellido"
                 />
                 <has-error
                   style="top: 80px"
@@ -483,6 +505,7 @@
                   v-model="formPersona.telefono"
                   type="number"
                   :class="{ 'is-invalid': formPersona.errors.has('telefono') }"
+                  placeholder="#### ####"
                 />
                 <has-error
                   style="top: 80px"
@@ -500,6 +523,7 @@
                   v-model="formPersona.correo"
                   type="text"
                   :class="{ 'is-invalid': formPersona.errors.has('correo') }"
+                  placeholder="ejemplo@gmail.com"
                 />
                 <has-error
                   style="top: 80px"
@@ -510,19 +534,20 @@
               <!-- FIN DE MODAL DE PERSONA -->
               <!-- MODAL DE ORGANIZACION -->
               <div v-show="soloOrganizacion" class="group">
-                <label>Cedula organización</label>
+                <label>Cédula organización</label>
                 <i class="fas fa-id-card iconoInput_modal"></i>
                 <input
                   class="input_modal"
-                  v-model="formOrganizacion.id"
-                  name="id"
+                  v-model="formOrganizacion.identificacion"
+                  name="identificacion"
                   type="text"
-                  :class="{ 'is-invalid': formOrganizacion.errors.has('id') }"
+                  :class="{ 'is-invalid': formOrganizacion.errors.has('identificacion') }"
+                  placeholder="#-###-######"
                 />
                 <has-error
                   style="top: 80px"
                   :form="formOrganizacion"
-                  field="id"
+                  field="identificacion"
                 ></has-error>
               </div>
               <div v-show="soloOrganizacion" class="group">
@@ -536,6 +561,7 @@
                   :class="{
                     'is-invalid': formOrganizacion.errors.has('nombre'),
                   }"
+                  placeholder="Nombre de la organización"
                 />
                 <has-error
                   style="top: 80px"
@@ -545,7 +571,7 @@
               </div>
               <div v-show="soloOrganizacion" class="group">
                 <i class="fas fa-mobile-alt iconoInput_modal"></i>
-                <label>Telefono de la organización</label>
+                <label>Teléfono de la organización</label>
                 <input
                   class="input_modal"
                   v-model="formOrganizacion.telefono"
@@ -554,6 +580,7 @@
                   :class="{
                     'is-invalid': formOrganizacion.errors.has('telefono'),
                   }"
+                  placeholder="#### ####"
                 />
                 <has-error
                   style="top: 80px"
@@ -573,6 +600,7 @@
                   :class="{
                     'is-invalid': formOrganizacion.errors.has('correo'),
                   }"
+                  placeholder="ejemplo@gmail.com"
                 />
                 <has-error
                   style="top: 80px"
@@ -603,7 +631,8 @@
                 class="btn btn-success"
                 data-bs-dismiss="modal"
                 @click="crearPersona"
-                id="validar"
+                id="botonPersonaRegistro"
+                :disabled="registrarPersonasBoton"
               >
                 Registrar
               </button>
@@ -646,6 +675,8 @@ export default {
       CedulaNacional: false,
       Pasaporte: false,
       registro: false,
+      registrarPersonasBoton: true,
+      cancelarInputCedula: false,
       tipoIndenteficacion: "",
       tituloModal: "",
       persona: {},
@@ -821,7 +852,7 @@ export default {
     crearPersona() {
       this.formPersona
         .post("/api/reservarCliente/persona", {
-          params: { id: this.formPersona.id },
+          params: { id: this.formPersona.identificacion },
         })
         .then((response) => {
           if (response.data.success == false) {
@@ -839,7 +870,7 @@ export default {
     crearOrganizacion() {
       this.formOrganizacion
         .post("/api/reservarCliente/organizacion", {
-          params: { id: this.formOrganizacion.id },
+          params: { id: this.formOrganizacion.identificacion },
         })
         .then((response) => {
           if (response.data.success == false) {
@@ -917,6 +948,37 @@ export default {
 <style scoped>
 .contenedor {
   margin: 40px auto;
+}
+
+#botonCancelar {
+  visibility: hidden;
+  width: 35px;
+  height: 32px;
+  padding: 2px;
+  position: absolute;
+  left: 90%;
+  top: 40%;
+}
+
+#botonCancelar_residencial {
+  visibility: hidden;
+  width: 35px;
+  height: 32px;
+  padding: 2px;
+  position: absolute;
+  left: 90%;
+  top: 40%;
+}
+
+#botonCancelar_pasaporte{
+  visibility: hidden;
+  width: 35px;
+  height: 32px;
+  padding: 2px;
+  position: absolute;
+  left: 90%;
+  top: 40%;
+
 }
 
 .intro {
@@ -1002,11 +1064,11 @@ td {
   position: relative;
   padding: 3px;
 }
-.group select{
+.group select {
   outline: none;
   border: 0;
-    border-bottom: 2px solid #ccc8c8;
-    color: #252525;
+  border-bottom: 2px solid #ccc8c8;
+  color: #252525;
 }
 
 .iconoInput,
