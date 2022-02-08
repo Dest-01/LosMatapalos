@@ -1,6 +1,6 @@
 <template>
   <div class="contenedor-principal">
-    <section class="section--blue wow fadeInDown" data-wow-duration="2s">
+    <section class="section--blue wow fadeInLeft" data-wow-duration="2s">>
       <h1>Eventos del <span>Sendero los Matapalos</span></h1>
 
       <div v-if="actividades.data == 0" class="row">
@@ -221,26 +221,26 @@ ul .booking-card .book-container .content {
   transition: 0.3s;
 }
 ul .booking-card .book-container .content .btn {
-  border: 3px solid white;
+  border: 3px solid #fff;
   padding: 10px 15px;
   background: none;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 1.3em;
-  color: white;
+  color: #fff;
   cursor: pointer;
   transition: 0.3s;
 }
 ul .booking-card .book-container .content .btn:hover {
   background: none;
-  border: 3px solid white;
-  color: white;
+  border: 3px solid #fff;
+  color: fff;
   cursor: pointer;
 }
 ul .booking-card .informations-container {
   flex: 1 0 auto;
   padding: 20px;
-  background: #f0f0f0;
+  background: #fff;
   transform: translateY(206px);
   transition: 0.3s;
 }
@@ -294,9 +294,10 @@ ul
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
-  background: white;
+  background: #0a4870;
   font-weight: bold;
   font-size: 0.9em;
+  color: #ffffff;
 }
 ul
   .booking-card
@@ -313,7 +314,7 @@ ul
   .more-information
   .info-and-date-container
   .box.info {
-  color: #0a4870;
+  color: #ffffff;
   margin-right: 10px;
 }
 ul .booking-card .informations-container .more-information .disclaimer {

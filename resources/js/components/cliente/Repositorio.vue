@@ -57,6 +57,12 @@
         </tbody>
       </table>
     </div>
+    <div class="paginacion">
+      <pagination
+        :data="documentosRepositorio"
+        @pagination-change-page="getResults"
+      ></pagination>
+    </div>
   </div>
 </template>
 
@@ -96,10 +102,23 @@ export default {
   margin-top: 50px;
   padding: 0;
 }
+.titulo{
+  opacity: 0;
+  animation-name: aparecerTitulo;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+  animation-duration: 3s;
+  transition: opacity 3s;
+}
+
 .secundario {
   margin: 10px 50px;
   display: grid;
   justify-content: center;
+  animation-name: moverArribaAbajo;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  transition: margin-top 3s;
 }
 table {
   margin: 10px 50px;
@@ -131,6 +150,42 @@ th {
   width: 50px;
 }
 
+.paginacion {
+  margin: 10px auto;
+  padding: 1em;
+  width: 300px;
+  justify-content: center;
+}
+
+.pagination {
+  justify-content: center;
+  padding: 5px;
+  background: #f0f0f0;
+  border-radius: 30px;
+  font-weight: 900;
+}
+
+@keyframes aparecerTitulo{
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes moverArribaAbajo{
+  0%{
+    margin-top: -300px;
+  }
+  100%{
+    margin-top: 10px;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .secundario {
     min-height: 700px;
@@ -138,6 +193,5 @@ th {
     width: 100%;
     margin: 0;
   }
-
 }
 </style>

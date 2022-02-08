@@ -57,12 +57,12 @@ class PersonasRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-           
-            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+ 
+            'nombre' => 'required| :/^[a-zA- ]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'telefono' => 'required|regex:/^\d{8}$/',
-            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
+            'telefono' => 'required|regex:/^\d{8}$/',                           
+            'correo' => 'required|email|regex: ',                                                       
         ];
     }
 

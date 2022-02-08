@@ -145,7 +145,7 @@ h1 {
   height: 100%;
 }
 .contenedor-contacto {
-  background: #f9f9f9;
+  background: #ffffff;
   width: 100%;
   position: relative;
   height: auto;

@@ -116,7 +116,8 @@
 .contenedor {
   width: 100%;
   overflow: hidden;
-  padding: 80px 0;
+  padding: 20px 0;
+  margin: 20px 0;
 }
 span{
     color: #034991d1;

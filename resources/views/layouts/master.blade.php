@@ -30,12 +30,13 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    
+
     <!-- MATERIAL DESIGN BOOSTRAP -->
     <link href="http://fonts.cdnfonts.com/css/frutiger" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/css/swiper.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css">
 
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/navbar.js') }}"></script>
@@ -56,7 +57,7 @@
                 <a class="navbar-brand " href="https://sendero.herokuapp.com/">
                     <img src="images/logo2.png" alt="" width="120" height="60">
                 </a>
-               
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -140,8 +141,9 @@
                 Senderos los Mataplos - PGAI
             </h5>
             <h5 style="padding: 10px">
-                <a href="https://www.facebook.com/pgaiuna/"><i class="fab fa-facebook white"></i></a>
-                <a href="https://www.instagram.com/pgaiuna/?r=nametag"><i class="fab fa-instagram white"></i></a>
+                <a href="https://www.facebook.com/pgaiuna/" target="_blank"><i class="fab fa-facebook white"></i></a>
+                <a href="https://www.instagram.com/pgaiuna/?r=nametag" target="_blank"><i
+                        class="fab fa-instagram white"></i></a>
             </h5>
             <h5 style="padding: 10px">
                 © 2021-2022 Todos los derechos reservados.
@@ -159,9 +161,8 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>
     @auth
         <script>
             window.user = @json(auth()->user())

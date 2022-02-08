@@ -1,6 +1,4 @@
 
-
-
 (function () {
     var Util,
         __bind = function (fn, me) {
@@ -261,7 +259,43 @@ function ocultarContactar() {
     }
 }
 
-/*VALIDAR DATOS DE RESERVACION*/ 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/*ENVIAR CORREO DE RESERVACION */
+/////////////////////////////////////////////////////////////////////////////////////////////////////// 
+function enviarCorreoReservacion() {
+    var cedula = document.getElementById('cedulaReservacion').value;
+    var cantidad = document.getElementById('cantidaPersonasReservacion').value;
+    var fecha = document.getElementById('fechaReservacion').value;
+    var horaIni = document.getElementById('horaLLegaReservacion').value;
+    var horaFin = document.getElementById('horaFinReservacion').value;
+    if (cedula != "" && cantidad != "" && fecha != "" && horaIni != "" && horaFin != "") {
+        document.getElementById('contact-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            // generate a five digit number for the contact_number variable
+            this.contact_number.value = Math.random() * 100000 | 0;
+            // these IDs from the previous steps
+            emailjs.sendForm('service_xf6d5cg', 'template_mw3itut', this)
+                .then(function () {
+                    console.log('SUCCESS!');
+
+                }, function (error) {
+                    console.log('FAILED...', error);
+                });
+        });
+    }
+
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/*FIN ENVIAR CORREO DE RESERVACION */
+/////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+
+/*VALIDAR DATOS DE RESERVACION*/
+
 function validaCedulaNacional() {
     const button = document.getElementById("botonPersonaRegistro");
     const buttonCancelar = document.getElementById("botonCancelar");
@@ -282,11 +316,12 @@ function validaCedulaNacional() {
         return false;
     }
 }
-function cancelarCedula(){
+
+function cancelarCedula() {
     const inputCedulaNacional = document.getElementById("inputNacional");
     const buttonCancelar = document.getElementById("botonCancelar");
     const button = document.getElementById("botonPersonaRegistro");
-    
+
     inputCedulaNacional.value = "";
     inputCedulaNacional.style.borderBottom = "2px solid #757575";
     inputCedulaNacional.disabled = false; //Desbloqueamos el input
@@ -317,7 +352,7 @@ function validaCedulaResidencial() {
     }
 }
 
-function cancelarCedulaResidencial(){
+function cancelarCedulaResidencial() {
     const inputCedulaResidencial = document.getElementById("inputResidencial");
     const buttonCancelar = document.getElementById("botonCancelar_residencial");
     const button = document.getElementById("botonPersonaRegistro");
@@ -352,7 +387,7 @@ function validarPasaporte() {
     }
 }
 
-function cancelarPasaporte(){
+function cancelarPasaporte() {
     const inputPasaporte = document.getElementById("inputPasaporte");
     const buttonCancelar = document.getElementById("botonCancelar_pasaporte");
     const button = document.getElementById("botonPersonaRegistro");
@@ -364,3 +399,18 @@ function cancelarPasaporte(){
     buttonCancelar.style.visibility = 'hidden'; //ocultamos el botton de cancelar
 
 }
+
+
+var swiper = new Swiper('.blog-slider', {
+    spaceBetween: 30,
+    effect: 'fade',
+    loop: true,
+    mousewheel: {
+      invert: false,
+    },
+    // autoHeight: true,
+    pagination: {
+      el: '.blog-slider__pagination',
+      clickable: true,
+    }
+  });

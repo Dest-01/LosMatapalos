@@ -151,7 +151,8 @@
                 </div>
               </div>
               <!--CONTENEDOR DE TODO EL FORMULARIO DE RESERVACION-->
-              <form class="material-form">
+              <form id="contact-form" class="material-form">
+                <input type="hidden" name="contact_number" />
                 <div class="group">
                   <h3>Busqueda identificación</h3>
 
@@ -159,7 +160,8 @@
                     <i class="fas fa-id-card iconoInput"></i>
                     <input
                       v-model="formReserva.identificacion"
-                      name="identificacion"
+                      name="cedulaReservacion"
+                      id="cedulaReservacion"
                       type="text"
                       required
                       :disabled="bloquearConsulta"
@@ -178,13 +180,13 @@
                   <div>
                     <h2
                       v-text="mensajeExistencia"
-                      style="font-size: 15px; color: green"
+                      style="font-size: 15px; color: green; margin-left: 8%"
                     >
                       {{ mensajeExistencia }}
                     </h2>
                     <h2
                       v-text="mensajeNoExistencia"
-                      style="font-size: 15px; color: red"
+                      style="font-size: 15px; color: red; margin-left: 8%"
                     >
                       {{ mensajeNoExistencia }}
                     </h2>
@@ -201,6 +203,8 @@
                   <div class="campo_form_1">
                     <i class="fas fa-users iconoInput"></i>
                     <input
+                      id="cantidaPersonasReservacion"
+                      name="cantidaPersonasReservacion"
                       v-model="formReserva.cantidad"
                       type="number"
                       required
@@ -218,6 +222,8 @@
                     ></has-error>
                     <i class="fas fa-calendar-check iconoInput icono"></i>
                     <input
+                      id="fechaReservacion"
+                      name="fechaReservacion"
                       v-model="formReserva.fecha"
                       type="date"
                       value="Fecha"
@@ -244,6 +250,8 @@
                   <div class="campo_form_1">
                     <i class="fas fa-clock iconoInput"></i>
                     <input
+                      id="horaLLegaReservacion"
+                      name="horaLLegaReservacion"
                       v-model="formReserva.horaInicio"
                       type="time"
                       required
@@ -259,6 +267,8 @@
                     ></has-error>
                     <i class="fas fa-clock iconoInput icono"></i>
                     <input
+                      id="horaFinReservacion"
+                      name="horaFinReservacion"
                       v-model="formReserva.horaFin"
                       type="time"
                       required
@@ -286,19 +296,20 @@
                     value="Initial value"
                   />
                   <span
-                    >Acepta los<a href="" target="_BLANK"
-                      >terminos y condiciones</a
-                    ></span
+                    >Acepta los
+                    <a href="" target="_BLANK">terminos y condiciones</a></span
                   >
                 </div>
                 <!--fin del div de terminos y condicones-->
                 <!--Div de los botones -->
                 <div class="botones_finales">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn btn-success btn-rounded"
                     @click="crearReserva()"
                     :disabled="bloquearReservar"
+                    onclick="enviarCorreoReservacion()"
+                    value="Send"
                   >
                     Reservar
                   </button>
@@ -345,6 +356,7 @@
               <!-- MODAL DE PERSONA-->
               <div v-show="soloPersona" class="group">
                 <label>Tipo de identificación</label>
+                <i class="fas fa-bars iconoInput_modal"></i>
                 <select
                   class="input_modal"
                   v-model="tipoIndenteficacion"
@@ -362,10 +374,14 @@
 
               <div v-show="soloPersona" class="group">
                 <div v-show="CedulaNacional" class="group identitad">
-                  <i class="fas fa-id-card iconoInput_modal"></i>
+                  <i
+                    class="fas fa-id-card iconoInput_modal"
+                    style="margin-top: 6px; left: -2px"
+                  ></i>
                   <input
-                    style="padding-top: 40px"
+                    style="padding: 20px 0 0 26px;"
                     v-model="formPersona.identificacion"
+                    @blur="validarCedulaNacional"
                     type="text"
                     name="identificacion"
                     class="input_modal"
@@ -390,9 +406,10 @@
                   ></has-error>
                 </div>
                 <div v-show="CedulaResidencial" class="group identitad">
-                  <i class="fas fa-id-card iconoInput_modal"></i>
+                  <i class="fas fa-id-card iconoInput_modal" style="margin-top: 6px; left: -2px"></i>
                   <input
-                    style="padding-top: 40px"
+                    @blur="validarCedulaResidencial"
+                    style="padding: 20px 0 0 26px;"
                     v-model="formPersona.identificacion"
                     type="text"
                     name="identificacion"
@@ -418,9 +435,10 @@
                 </div>
 
                 <div v-show="Pasaporte" class="group identitad">
-                  <i class="fas fa-id-card iconoInput_modal"></i>
+                  <i class="fas fa-id-card iconoInput_modal " style="margin-top: 6px; left: -2px"></i>
                   <input
-                    style="padding-top: 40px"
+                    @blur="validarPasaporte"
+                    style="padding: 20px 0 0 26px;"
                     v-model="formPersona.identificacion"
                     type="text"
                     name="identificacion"
@@ -519,7 +537,7 @@
                 <i class="fas fa-at iconoInput_modal"></i>
                 <input
                   class="input_modal"
-                  name="correo"
+                  name="correoModal"
                   v-model="formPersona.correo"
                   type="text"
                   :class="{ 'is-invalid': formPersona.errors.has('correo') }"
@@ -535,13 +553,15 @@
               <!-- MODAL DE ORGANIZACION -->
               <div v-show="soloOrganizacion" class="group">
                 <label>Cédula organización</label>
-                <i class="fas fa-id-card iconoInput_modal"></i>
+                <i class="fas fa-id-card iconoInput_modal" style="left: -2px;"></i>
                 <input
                   class="input_modal"
                   v-model="formOrganizacion.identificacion"
                   name="identificacion"
                   type="text"
-                  :class="{ 'is-invalid': formOrganizacion.errors.has('identificacion') }"
+                  :class="{
+                    'is-invalid': formOrganizacion.errors.has('identificacion'),
+                  }"
                   placeholder="#-###-######"
                 />
                 <has-error
@@ -719,6 +739,34 @@ export default {
     };
   },
   methods: {
+    validarCedulaNacional() {
+      if (/^[1-9]-\d{4}-\d{4}$/.test(this.formPersona.identificacion)) {
+        this.registrarPersonasBoton = false;
+        return;
+      } else {
+        this.registrarPersonasBoton = true;
+        return;
+      }
+    },
+    validarCedulaResidencial() {
+      if (/^\d{10}$/.test(this.formPersona.identificacion)) {
+        this.registrarPersonasBoton = false;
+        return;
+      } else {
+        this.registrarPersonasBoton = true;
+        return;
+      }
+    },
+    validarPasaporte() {
+      if (/^\d{11,12}$/.test(this.formPersona.identificacion)) {
+        this.registrarPersonasBoton = false;
+        return;
+      } else {
+        this.registrarPersonasBoton = true;
+        return;
+      }
+    },
+
     tipoDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
         this.CedulaNacional = true;
@@ -814,16 +862,16 @@ export default {
       }
     },
     noExiste() {
-      if (this.persona.length == 0 && this.organizacion.length == 0) {
-        this.mensajeExistencia = "";
-        this.mensajeNoExistencia = "No esta registrado";
-        this.bloquearCampos = true;
-        this.bloquearConsulta = false;
-      }
-      if (this.formReserva.identificacion.length == 0) {
+      if (this.formReserva.identificacion == "") {
         this.mensajeExistencia = "";
         this.mensajeNoExistencia =
           "Campo vacio, por favor digite la información";
+        this.bloquearCampos = true;
+        this.bloquearConsulta = false;
+      }
+      if (this.persona.length == 0 && this.organizacion.length == 0) {
+        this.mensajeExistencia = "";
+        this.mensajeNoExistencia = "No esta registrado";
         this.bloquearCampos = true;
         this.bloquearConsulta = false;
       }
@@ -942,12 +990,20 @@ export default {
     this.$Progress.start();
     this.$Progress.finish();
   },
+  computed: {},
 };
 </script>
 
 <style scoped>
 .contenedor {
   margin: 40px auto;
+}
+
+.ValidacionError {
+  border-bottom: 3px solid red;
+}
+.ValidacionBuena {
+  border-bottom: 3px solid green;
 }
 
 #botonCancelar {
@@ -970,7 +1026,7 @@ export default {
   top: 40%;
 }
 
-#botonCancelar_pasaporte{
+#botonCancelar_pasaporte {
   visibility: hidden;
   width: 35px;
   height: 32px;
@@ -978,7 +1034,6 @@ export default {
   position: absolute;
   left: 90%;
   top: 40%;
-
 }
 
 .intro {
@@ -987,6 +1042,20 @@ export default {
   text-align: center;
   font-size: 25px;
   color: #000000ad;
+  opacity: 0;
+  animation-name: introAparece;
+  animation-delay: 1s;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  transition: opacity 3s;
+}
+@keyframes introAparece{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }
 
 .contenedor-2 {
@@ -1001,6 +1070,22 @@ export default {
   height: auto;
   box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 30%);
   border-radius: 20px;
+  animation-name: aparecerCard;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  transition: left 3s;
+  left: -45%;
+
+}
+
+
+@keyframes aparecerCard{
+  0%{
+    left: -45%;
+  }
+  100%{
+    left: 0;
+  }
 }
 .card-body {
   padding: 10px;
@@ -1080,7 +1165,7 @@ td {
 .group .iconoInput_modal {
   position: absolute;
   margin-top: 5%;
-  left: 0;
+  left: 4px;
 }
 .input_modal {
   padding-top: 14px;
@@ -1116,7 +1201,7 @@ h3 {
 }
 .campo_consulta input,
 .campo_consulta button {
-  margin: 1px;
+  margin: 5px;
 }
 .campo_consulta input {
   width: 50%;
@@ -1126,13 +1211,13 @@ h3 {
 }
 .campo_form_1 {
   display: flex;
-  margin: 10px;
+  margin: 5px;
 }
 
 .campo_form_1 input {
-  width: 37%;
+  width: 42.2%;
   padding: 5px;
-  margin: 5px 10px;
+  margin: 5px 5px;
 }
 .aceptar {
   margin: 10px;

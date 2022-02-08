@@ -82,7 +82,7 @@
 <style scoped>
 
 section {
-    padding: 60px 0;
+    padding: 45px 0;
 }
 a, a:hover, a:focus, a:active {
     text-decoration: none;
@@ -92,6 +92,10 @@ ul {
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+.container{
+  padding: 20px;
 }
 
 .site-heading h2 {

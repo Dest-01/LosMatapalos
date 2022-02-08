@@ -84,7 +84,9 @@
           </div>
         </div>
       </section>
-
+  <section>
+    <proyectos></proyectos>
+  </section>
        <section style="background: #f9f9f9">
       <Actividades></Actividades>
        </section>
@@ -117,6 +119,7 @@ export default {
 <style scoped>
 .contenedor_contacto{
   margin-bottom: 10px;
+  background: #fff;
 }
 
 #hero {

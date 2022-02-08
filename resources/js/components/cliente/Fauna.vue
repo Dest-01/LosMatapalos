@@ -68,7 +68,12 @@
               Nombre Cientifico: {{ form.nombreCientifico }}
             </h5>
             <button
-              style="background: none; border: none; font-size: 1.25rem; font-weight: 500;"
+              style="
+                background: none;
+                border: none;
+                font-size: 1.25rem;
+                font-weight: 500;
+              "
               type="button"
               data-dismiss="modal"
               aria-label="Close"
@@ -161,7 +166,6 @@ export default {
   justify-content: center;
   margin: 5px auto;
   padding: 0;
-
 }
 .container {
   width: 450px;
@@ -261,7 +265,7 @@ export default {
 .modal-body img {
   box-sizing: border-box;
   object-fit: cover;
-   width: 55vw;
+  width: 55vw;
   height: 70vh;
 }
 
@@ -273,7 +277,7 @@ export default {
   border-bottom: 1px solid black;
   box-shadow: -2px 2px 3px 0 #000000ab;
 }
-.modal-footer label{
+.modal-footer label {
   color: #fff;
 }
 .paginacion {
@@ -289,7 +293,6 @@ button span {
 }
 .pagination {
   justify-content: center;
-  font-family: fantasy;
   color: black;
   background: #f0f0f0;
   padding: 5px;
@@ -311,7 +314,6 @@ button span {
     opacity: 1;
   }
 }
-
 
 @media screen and (max-width: 900px) {
   .paginacion {

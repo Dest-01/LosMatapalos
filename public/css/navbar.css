@@ -167,7 +167,11 @@ px
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
     -webkit-transition: all 0.2s linear;
     transition: all 0.2s linear;
-    font-weight: 700;
+}
+
+.pagination .page-item .page-link:hover{
+    background: #0a4870d9;
+    color: #fff;
 }
 
 

@@ -23,7 +23,7 @@ class ArticuloController extends BaseController
      */
     public function index()
     {
-        $Articulos = $this->articulo->latest()->paginate(8);
+        $Articulos = $this->articulo->latest()->paginate(6);
         return $this->sendResponse($Articulos, 'Articulos de la marca!');
     }
 
