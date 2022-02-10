@@ -19,7 +19,7 @@ function validarCedulaN() {
 function validateResidencial() {
     var residencialIdent = document.getElementById("residencial").value;
     var residencialIdent2 = document.getElementById("residencial");
-    var re = /^\d{10}$/;
+    var re = /^[1-9]\d{9}$/;
     if (re.test(residencialIdent)) {
         residencialIdent2.style.borderBottom = "#0a9d00 solid 2px";
         return true;

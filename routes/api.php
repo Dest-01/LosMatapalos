@@ -36,6 +36,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('donativo/verificarOrg', 'DonativosController@obtenerCedulaOrg');
     Route::post('donativo/guardarPersona', 'DonativosController@guardarPersona');
     Route::post('donativo/guardarOrganizacion', 'DonativosController@guardarOrganizacion');
+    Route::get('donativo/listar', 'DonativosController@list');
       /////////////////////////---VOLUNTARIO--ESTUDIANTE---//////////////////////////////////////////////////////////////////
     Route::get('voluntarioEstudiante/obtenerCedula', 'VoluntarioEstudiantesController@obtenerCedula');
     Route::get('voluntarioEstudiante/obtenerCantidad', 'VoluntarioEstudiantesController@obtenerCantidad');

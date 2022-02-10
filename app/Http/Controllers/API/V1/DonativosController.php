@@ -37,7 +37,10 @@ class DonativosController extends BaseController
     }
 
     function list() {
-//
+        $donativo = $this->donativos->get();
+        //  $products = $this->product->latest()->with('category', 'tags')->paginate(10);
+
+        return $this->sendResponse($donativo, 'Lista Donativos');
     }
 
     public function obtenerCedula(Request $request)

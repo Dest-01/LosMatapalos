@@ -324,9 +324,8 @@
                     id="phone"
                     size="8"
                     min="10000000"
-                    max="99999999"
                     placeholder="#### ####"
-                    pattern="[0-9]{8}"
+                    pattern="[1-9][0-9]{7}"
                     required
                   />
                   <has-error :form="form" field="telefono"></has-error>
@@ -339,10 +338,9 @@
                     name="correo"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
-                    size="32"
                     placeholder="ejemplo@gmail.com"
                     minlength="3"
-                    maxlength="64"
+                    maxlength="100"
                     pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                     required
                   />
@@ -510,6 +508,7 @@ export default {
     document.head.appendChild(plugin);
   },
   methods: {
+
     filtrar() {
       if (this.filtrarBusqueda == "") {
         this.cargarPersona();
@@ -533,7 +532,7 @@ export default {
       }
     },
     validarCedulaResidencial() {
-      if (/^\d{10}$/.test(this.form.identificacion)) {
+      if (/^[1-9]\d{9}$/.test(this.form.identificacion)) {
         this.bloquearInputIdR = true;
         this.registroBloquear = false;
         this.bloquearCancelar = false;
@@ -726,8 +725,6 @@ export default {
   mounted() {
     console.log("Component mounted.");
   },
-  eliminarPersona(id) {},
-
   created() {
     this.$Progress.start();
     this.cargarPersona();
