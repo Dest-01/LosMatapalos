@@ -65,7 +65,9 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('dashboard/ultimasReservaciones', 'DashboardController@ultimasReservaciones');
     Route::get('dashboard/ultimasDonaciones', 'DashboardController@ultimasDonaciones');
     Route::get('dashboard/ultimasActividades', 'DashboardController@ultimasActividades');
-    
+    ///////////////////////////////------RUSTAS LISTAR PARA IFLTRAR ----------------////////////////////
+    Route::get('organizacion/listar', 'OrganizacionesController@list');
+    Route::get('personas/listar', 'PersonasController@list');
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
         'user' => 'UserController',
@@ -97,6 +99,7 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
     Route::post('reservarCliente/organizacion', 'ReservarCliController@GuardarOrganizacion');
     Route::get('donacionesCliente/donacionesNecesarias', 'DonacionController@cargarCategoriaDonativos');
     Route::get('donacionesCliente/Donadores', 'DonacionController@Donadores');
+    Route::get('floraCliente/List', 'FloraController@list');
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',

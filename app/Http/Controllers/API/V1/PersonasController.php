@@ -30,6 +30,12 @@ class PersonasController extends BaseController
 
         return $this->sendResponse($persona, 'Lista de Personas');
     }
+    public function list()
+    {
+        $persona = $this->personas->get();
+
+        return $this->sendResponse($persona, 'Lista de Personas');
+    }
 
     public function obtenerCedula(Request $request)
     {

@@ -6,8 +6,9 @@
       </h1>
     </div>
     <div class="menu">
-      <button @click="filtrarPlanta()" class="btn_menu">Herbaceas</button>
-      <button class="btn_menu">Leñosas</button>
+      <button @click="vertodo()" class="btn_menu">Todo</button>
+      <button @click="pasarFiltro()" class="btn_menu">Herbaceas</button>
+      <button @click="segundoFiltro()" class="btn_menu">Leñosas</button>
     </div>
     <div v-if="floras.data == 0" class="row">
       <div class="mensaje">
@@ -18,7 +19,11 @@
       </div>
     </div>
     <div v-else class="container-all wow fadeInLeft" data-wow-duration="2s">
-      <div v-for="flora in floras.data" :key="flora.id" class="container">
+      <div
+        v-for="flora in floras.data"
+        :key="flora.id"
+        class="container"
+      >
         <img
           v-bind:src="'/images/flora/' + flora.photo"
           width="100%"
@@ -45,10 +50,11 @@
           </button>
         </div>
       </div>
+      <!--Primer div muestra todo los datos-->
     </div>
+    <!--Fin del div filtrar-->
     <div class="paginacion">
       <pagination
-        style="font-family: fantasy; color: black"
         :data="floras"
         @pagination-change-page="getResults"
       ></pagination>
@@ -99,6 +105,10 @@ export default {
   data() {
     return {
       floras: {},
+      florasTodos: {},
+      filtrarBusqueda: "Plantas herbaceas",
+      filtrarBusqueda2: "Plantas leñosas",
+      tipo: "",
       form: new Form({
         id: "",
         nom_comun: "",
@@ -109,6 +119,17 @@ export default {
     };
   },
   methods: {
+    pasarFiltro(){
+      this.floras.data = this.filtroHerbaceas;
+    },
+    segundoFiltro(){
+      this.floras.data = this.filtroLenosas;
+
+    },
+    vertodo() {
+      this.cargarFlora();
+    },
+
     verImagen(flora) {
       this.form.fill(flora);
     },
@@ -124,6 +145,9 @@ export default {
       axios
         .get("/api/floraCliente")
         .then(({ data }) => (this.floras = data.data));
+         axios
+        .get("/api/floraCliente/List")
+        .then(({ data }) => (this.florasTodos = data.data));
     },
   },
   created() {
@@ -136,7 +160,26 @@ export default {
       return text.substring(0, length) + suffix;
     },
   },
-  computed: {},
+  computed: {
+    filtroHerbaceas: function () {
+      return this.florasTodos.filter((flora) => {
+        return (
+          flora.tipo
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) );
+      });
+    },
+    filtroLenosas: function () {
+      return this.florasTodos.filter((flora) => {
+        return (
+          flora.tipo
+            .toLowerCase()
+            .includes(this.filtrarBusqueda2.toLowerCase()));
+      });
+       
+    },
+
+  },
 };
 </script>
 

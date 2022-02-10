@@ -38,9 +38,9 @@ class OrganizacionesRequest extends FormRequest
     {
         return [
             'identificacion' => 'required|regex:/^[1-9]-\d{3}-\d{6}$/',
-            'nombre' => 'required|string|min:3|max:20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'telefono' => 'required|regex:/^\d{8}$/',
-            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
+            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|min:4|max:100',
         ];
     }
 
@@ -52,9 +52,9 @@ class OrganizacionesRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'nombre' => 'required|string|min:3|max:20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-0-9-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-0-9]*)*)+$/',
             'telefono' => 'required|regex:/^\d{8}$/',
-            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i',
+            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|min:4|max:100',
         ];
     }
 

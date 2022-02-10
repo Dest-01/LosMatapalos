@@ -26,14 +26,26 @@
               <h3 class="card-title">Listado de organizaciones</h3>
 
               <div class="card-tools">
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="newModal"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Agregar Organización
-                </button>
+                <div>
+                  <input
+                    @blur="filtrar()"
+                    v-model="filtrarBusqueda"
+                    class="form-control"
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar..."
+                  />
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary addBtn"
+                    @click="newModal"
+                  >
+                    <i class="fa fa-plus-square"></i>
+                    Agregar Organización
+                  </button>
+                </div>
               </div>
             </div>
             <!-- /.card-header -->
@@ -59,14 +71,23 @@
                     <td>{{ organizacion.correo }}</td>
                     <td>
                       <a href="#" @click="editModal(organizacion)">
-                        <i class="fa fa-edit blue"></i>
+                        <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a
                         href="#"
                         @click="eliminarOrganizacion(organizacion.id)"
                       >
-                        <i class="fa fa-trash red"></i>
+                        <i id="icono" class="fa fa-trash red"></i>
+                      </a>
+                      /
+                      <a
+                        data-mdb-toggle="modal"
+                        data-mdb-target="#exampleModal"
+                        href="#"
+                        @click="detailsModal(organizacion)"
+                      >
+                        <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
                   </tr>
@@ -89,7 +110,7 @@
         <not-found></not-found>
       </div>
 
-      <!-- Modal -->
+      <!-- Modal de registrar y actualizar-->
       <div
         class="modal fade"
         id="addNew"
@@ -137,6 +158,7 @@
                     :class="{ 'is-invalid': form.errors.has('identificacion') }"
                     placeholder="Formato: #-###-######"
                     required
+                    pattern="[1-9]{1}-[1-9]{3}-[1-9]{6}"
                   />
                   <has-error :form="form" field="identificacion"></has-error>
                 </div>
@@ -153,8 +175,8 @@
                     placeholder="Nombre de organización"
                     required
                     minlength="3"
-                    maxlength="30"
-                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
+                    maxlength="60"
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ-0-9'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -167,11 +189,9 @@
                     name="telefono"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
-                    min="10000000"
-                    max="99999999"
                     placeholder="#### ####"
-                   pattern="[0-9]{8}"
                     required
+                    pattern="[1-9]{4}[0-9]{4}"
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -184,12 +204,12 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
                     size="32"
-                     placeholder="ejemplo@gmail.com"
+                    placeholder="ejemplo@gmail.com"
                     minlength="3"
                     maxlength="64"
-                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                    required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   />
+
                   <has-error :form="form" field="correo"></has-error>
                 </div>
               </div>
@@ -218,6 +238,78 @@
           </div>
         </div>
       </div>
+
+      <!-- Modal de ver informacion -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModal"
+        aria-hidden="true"
+        >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles de la Organización</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Cedula Jurídica</label>
+                <input
+                  v-model="form.identificacion"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Nombre organización</label>
+                <input
+                  v-model="form.nombre"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Teléfono organización</label>
+                <input
+                  v-model="form.telefono"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Correo organización</label>
+                <input
+                  v-model="form.correo"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--FIN DEL MODAL DE INFORMACION-->
     </div>
   </section>
 </template>
@@ -228,8 +320,11 @@ export default {
     return {
       CedulaBloqueo: false,
       editmode: false,
+      verDetalles: true,
+      filtrarBusqueda: "",
       errores: {},
       organizaciones: {},
+      nuevoOrganaciones: {},
       form: new Form({
         id: "",
         identificacion: "",
@@ -240,6 +335,13 @@ export default {
     };
   },
   methods: {
+    filtrar() {
+      if (this.filtrarBusqueda == "") {
+        this.cargarOrganizacion();
+      } else if (this.filtrarBusqueda != "") {
+        this.organizaciones.data = this.organizacionesFiltradas;
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
 
@@ -284,6 +386,10 @@ export default {
       $("#addNew").modal("show");
       this.form.errors.clear();
     },
+    detailsModal(organizacion) {
+      $("#exampleModal").modal("show");
+      this.form.fill(organizacion);
+    },
     limpiar() {
       this.form.nombre = "";
       this.form.apellido1 = "";
@@ -298,6 +404,9 @@ export default {
         axios
           .get("/api/organizacion")
           .then(({ data }) => (this.organizaciones = data.data));
+        axios
+          .get("/api/organizacion/listar")
+          .then(({ data }) => (this.nuevoOrganaciones = data.data));
       }
     },
 
@@ -364,83 +473,57 @@ export default {
   mounted() {
     console.log("Component mounted.");
   },
-  eliminarOrganizacion(id) {},
 
   created() {
     this.$Progress.start();
     this.cargarOrganizacion();
     this.$Progress.finish();
   },
+  computed: {
+    organizacionesFiltradas: function () {
+      return this.nuevoOrganaciones.filter((organizacion) => {
+        return (
+          organizacion.identificacion
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          organizacion.nombre
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          organizacion.telefono
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          organizacion.correo
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase())
+        );
+      });
+    },
+  },
 };
 </script>
 
 
 <style scoped>
-.custom-select {
-  position: relative;
-  width: 100%;
-  text-align: left;
-  outline: none;
-  height: 45px;
-  line-height: 47px;
+#icono {
+  font-size: 20px;
 }
-
-.custom-select .selected {
-  background-color: #080808;
-  border-radius: 6px;
-  border: 1px solid #666666;
-  color: #fff;
-  padding-left: 1em;
-  cursor: pointer;
-  user-select: none;
+.card-tools {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
-
-.custom-select .selected.open {
-  border: 1px solid #ad8225;
-  border-radius: 6px 6px 0px 0px;
+.card-tools div {
+  padding: 10px;
 }
-
-.custom-select .selected:after {
-  position: absolute;
-  content: "";
-  top: 22px;
-  right: 1em;
-  width: 0;
-  height: 0;
-  border: 5px solid transparent;
-  border-color: #fff transparent transparent transparent;
+.card-tools div button {
+  height: 36px;
+  font-size: 15px;
 }
-
-.custom-select .items {
-  color: rgb(2, 2, 2);
-  border-radius: 0px 0px 6px 6px;
-  overflow: hidden;
-  border-right: 1px solid #ad8225;
-  border-left: 1px solid #ad8225;
-  border-bottom: 1px solid #ad8225;
-  position: absolute;
-  background-color: #ffffff;
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-
-.custom-select .items div {
-  color: rgb(0, 0, 0);
-  padding-left: 1em;
-  cursor: pointer;
-  user-select: none;
-}
-
-.custom-select .items div:hover {
-  background-color: #ad8225;
-}
-
-.selectHide {
-  display: none;
-}
-
-.selectHide {
-  display: none;
+.card-title {
+  margin: 1px;
+  line-height: inherit;
+  float: left;
+  font-size: 1.8rem;
+  font-weight: 400;
 }
 </style>

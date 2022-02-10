@@ -39,9 +39,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css">
 
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
-    <script src="{{ asset('/js/navbar.js') }}"></script>
-    <script src="{{ asset('/js/utilitarios.js') }}"></script>
-    <script src="{{ asset('/js/cliente.js') }}"></script>
+    <script src="{{ asset('/js/animaciones.js') }}"></script>
     <link rel="shortcut icon" href="images/icono.png">
 
 

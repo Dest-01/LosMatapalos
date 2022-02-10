@@ -402,4 +402,10 @@ h1 {
   margin: 10px 20px;
   text-align: center;
 }
+
+@media screen and (max-width: 900px) {
+   .paginacion{
+        margin: 1px auto;
+    }
+}
 </style>

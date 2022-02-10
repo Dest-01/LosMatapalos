@@ -399,6 +399,7 @@ export default {
     cargarFlora() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios.get("/api/flora").then(({ data }) => (this.flora = data.data));
+        
       }
     },
 

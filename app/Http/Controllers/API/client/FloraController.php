@@ -23,7 +23,7 @@ class FloraController extends BaseController
      */
     public function index()
     {
-        $floras = $this->flora->latest()->paginate(6);
+        $floras = $this->flora->latest()->paginate(8);
         
      
 
@@ -33,7 +33,11 @@ class FloraController extends BaseController
 
     public function list()
     {
-//
+        $floras = $this->flora->get();
+        
+     
+
+        return $this->sendResponse($floras, 'Lista Flora');
     }
 
     public function show($id)

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <section class="section--purple wow fadeInLeft" data-wow-duration="2s">
+    <section class="section--purple">
       <figure class="snip0057 blue">
         <figcaption>
-          <h2>Nuestros <span>Inicios</span></h2>
+          <h2 id="titulo">Nuestros <span>Inicios</span></h2>
           <p id="parrafo_1">
             La Universidad Nacional en su Campus Liberia, ha tenido una
             significativa regeneración y enriquecimiento biológico que se ha
@@ -60,23 +60,21 @@
   justify-content: center;
 }
 
-#parrafo_1, #parrafo_2, #parrafo_3{
-  animation-name: parrafo_1;
+figure.snip0057, #titulo, #parrafo_1, #parrafo_2, #parrafo_3{
+  animation-name: parrafo;
   animation-delay: 1.5s;
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-fill-mode: forwards;
-  transition: font-size 3s;
-  transition-delay: 1.5s;
-  font-size: 0;
+  transition-delay: 0.5s;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 }
 
-@keyframes parrafo_1{
+@keyframes parrafo{
   0%{
-    font-size: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
   }
   100%{
-    font-size: 0.9em;
-
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
 

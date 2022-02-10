@@ -96,33 +96,8 @@
   </div>
 </template>
 
-
-
-<script>
-export default {
-  mounted() {
-    const plugin = document.createElement("script");
-    plugin.setAttribute("src", "/js/cliente.js");
-    plugin.async = true;
-    document.head.appendChild(plugin);
-  },
-};
-</script>
-
-
-
-
 <style scoped>
-* {
-  box-sizing: border-box;
-}
-body {
-  background-color: #38ab81;
 
-  min-height: 100vh;
-  font-family: "Montserrat", sans-serif;
-  display: flex;
-}
 
 .site-heading h2 {
   display: block;

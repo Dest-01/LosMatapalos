@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="limiter">
-		<div class="container-login100"  style="background-image: url('https:/dl.dropbox.com/s/wfhypdcxbxvsuym/20210803030336_IMG_0548.JPG?dl=0'); background-size: cover;">
+		<div class="container-login100"  style="">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="images/logo2.png" alt="IMG">

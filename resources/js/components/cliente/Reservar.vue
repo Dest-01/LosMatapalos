@@ -991,6 +991,12 @@ export default {
     this.$Progress.finish();
   },
   computed: {},
+    mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute("src", "/js/validacionesReservacion.js");
+    plugin.async = true;
+    document.head.appendChild(plugin);
+  },
 };
 </script>
 
@@ -1075,9 +1081,7 @@ export default {
   animation-fill-mode: forwards;
   transition: left 3s;
   left: -45%;
-
 }
-
 
 @keyframes aparecerCard{
   0%{

@@ -29,24 +29,38 @@
 
       <div class="capa"></div>
     </section>
-    
 
     <main>
       <Inicios></Inicios>
-      
+
       <section class="we-offer-area text-center bg-gray">
         <div id="main" class="container">
           <div class="row">
             <div class="wow fadeInUp" data-wow-duration="2s">
-            <div class="col-md-12">
-              <div class="site-heading text-center">
-                <h2>¿Que ofrece nuestro <span>Sendero</span>?</h2>
+              <div class="col-md-12">
+                <div class="site-heading text-center">
+                  <h2>¿Que ofrece nuestro <span>Sendero</span>?</h2>
+                </div>
               </div>
             </div>
-             </div>
           </div>
           <div class="row our-offer-items less-carousel">
-            <div class="col-md-4 col-sm-6 equal-height section--yellow wow fadeInLeft"  data-wow-delay="0.1s" style="visibility: visible; -webkit-animation-delay: 0.1s; -moz-animation-delay: 0.1s; animation-delay: 0.1s;">
+            <div
+              class="
+                col-md-4 col-sm-6
+                equal-height
+                section--yellow
+                wow
+                fadeInLeft
+              "
+              data-wow-delay="0.1s"
+              style="
+                visibility: visible;
+                -webkit-animation-delay: 0.1s;
+                -moz-animation-delay: 0.1s;
+                animation-delay: 0.1s;
+              "
+            >
               <div class="item">
                 <i class="fas fa-chalkboard-teacher"></i>
                 <h4>Capacitaciones y Cursos</h4>
@@ -58,7 +72,22 @@
               </div>
             </div>
 
-            <div class="col-md-4 col-sm-6 equal-height section--yellow wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
+            <div
+              class="
+                col-md-4 col-sm-6
+                equal-height
+                section--yellow
+                wow
+                fadeInLeft
+              "
+              data-wow-delay="0.2s"
+              style="
+                visibility: visible;
+                -webkit-animation-delay: 0.2s;
+                -moz-animation-delay: 0.2s;
+                animation-delay: 0.2s;
+              "
+            >
               <div class="item">
                 <i class="fas fa-walking"></i>
                 <h4>Tours</h4>
@@ -70,7 +99,22 @@
               </div>
             </div>
 
-            <div class="col-md-4 col-sm-6 equal-height section--yellow wow fadeInLeft" data-wow-delay="0.3s" style="visibility: visible; -webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+            <div
+              class="
+                col-md-4 col-sm-6
+                equal-height
+                section--yellow
+                wow
+                fadeInLeft
+              "
+              data-wow-delay="0.3s"
+              style="
+                visibility: visible;
+                -webkit-animation-delay: 0.3s;
+                -moz-animation-delay: 0.3s;
+                animation-delay: 0.3s;
+              "
+            >
               <div class="item">
                 <i class="fas fa-book"></i>
                 <h4>Educación ambiental</h4>
@@ -84,12 +128,12 @@
           </div>
         </div>
       </section>
-  <section>
-    <proyectos></proyectos>
-  </section>
-       <section style="background: #f9f9f9">
-      <Actividades></Actividades>
-       </section>
+      <section>
+        <proyectos></proyectos>
+      </section>
+      <section style="background: #f9f9f9">
+        <Actividades></Actividades>
+      </section>
       <div class="contenedor_contacto">
         <Contacto></Contacto>
       </div>
@@ -112,12 +156,18 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute("src", "/js/validacionHome.js");
+    plugin.async = true;
+    document.head.appendChild(plugin);
+  },
 };
 </script>
 
 
 <style scoped>
-.contenedor_contacto{
+.contenedor_contacto {
   margin-bottom: 10px;
   background: #fff;
 }
@@ -387,12 +437,11 @@ p {
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 900px) {
-
-  .promo h1{
+  .promo h1 {
     width: 100%;
     font-size: 10px;
   }
-  .marcont{
+  .marcont {
     width: 100%;
   }
 }

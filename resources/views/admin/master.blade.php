@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('/css/extras.css') }}">
-  <script src="{{ asset('/js/utilitarios.js') }}"></script>
+  <script src="{{ asset('/js/funcionesAdmin.js') }}"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">

@@ -1,138 +1,150 @@
 <template>
   <div class="contenedor-contacto">
-    <div class="content">
-      <h1 class="logo" style="margin-bottom: 20px">Contacta<span>nos</span></h1>
-      <div style="text-align: center; margin: 10px">
-        <button
-          style="
-            text-transform: capitalize;
-            font-size: 1rem;
-            font-weight: 500;
-            border-radius: 20px;
-          "
-          onclick="ocultarContactar()"
-          class="btn btn-danger btn-sm px-3"
-        >
-          <i class="fas fa-plus-square"></i>
-          información
-        </button>
-      </div>
-      <div id="box_contacto" class="contact-wrapper animated bounceInUp">
-        <div class="contact-form">
-          <h3>Sendero los Mataplos</h3>
-          <form id="contact-form">
-            <input type="hidden" name="contact_number" />
+    <h1 class="logo" style="margin-bottom: 20px">
+      Contacta<span style="color: #38ab81">nos</span>
+    </h1>
+    <div class="contenedor_triple">
+      <div class="figura">
+        <div id="box_contacto" class="contact-wrapper animated bounceInUp">
+          <div class="contact-form">
+            <h3 style="text-align: center">Sendero los Mataplos</h3>
+            <form id="contact-form">
+              <input type="hidden" name="contact_number" />
+              <p>
+                <label>Nombre completo</label>
+                <input
+                  onchange="validar()"
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                />
+              </p>
+              <p>
+                <label>Email</label>
+                <input
+                  onchange="validar()"
+                  type="email"
+                  id="email"
+                  name="email"
+                />
+              </p>
+              <p>
+                <label>Número de celular</label>
+                <input
+                  onchange="validar()"
+                  type="tel"
+                  id="celular"
+                  name="celular"
+                />
+              </p>
+              <p>
+                <label>Asunto</label>
+                <input
+                  onchange="validar()"
+                  type="text"
+                  id="asunto"
+                  name="asunto"
+                />
+              </p>
+              <div class="final_enviar">
+                <p class="block">
+                  <label>Mensaje</label>
+                  <textarea
+                    onchange="validar()"
+                    name="mensaje"
+                    id="mensaje"
+                    rows="3"
+                  ></textarea>
+                </p>
+                <p class="block btn_enviar" style="text-align: center">
+                  <button
+                    id="enviarMensaje"
+                    class="btn btn-danger btn-sm px-3"
+                    type="submit"
+                    value="Send"
+                  >
+                    Enviar
+                  </button>
+                </p>
+              </div>
+            </form>
+          </div>
+          <div class="contact-info">
+            <h4>Mas información</h4>
+            <ul>
+              <li><i class="fas fa-phone"></i> (506) 0000-0000</li>
+              <li>
+                <i class="fas fa-envelope-open-text"></i> sendero.una.ac.cr
+              </li>
+            </ul>
+            <i class="fas fa-map-marker-alt"></i>
             <p>
-              <label>Nombre completo</label>
-              <input
-                onchange="validar()"
-                type="text"
-                id="nombre"
-                name="nombre"
-              />
+              Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus
+              Liberia, Sede Regional Chorotega, Universidad Nacional
             </p>
-            <p>
-              <label>Email</label>
-              <input
-                onchange="validar()"
-                type="email"
-                id="email"
-                name="email"
-              />
-            </p>
-            <p>
-              <label>Número de celular</label>
-              <input
-                onchange="validar()"
-                type="tel"
-                id="celular"
-                name="celular"
-              />
-            </p>
-            <p>
-              <label>Asunto</label>
-              <input
-                onchange="validar()"
-                type="text"
-                id="asunto"
-                name="asunto"
-              />
-            </p>
-            <p class="block">
-              <label>mensaje</label>
-              <textarea
-                onchange="validar()"
-                name="mensaje"
-                id="mensaje"
-                rows="3"
-              ></textarea>
-            </p>
-            <p class="block btn_enviar">
-              <button
-                id="enviarMensaje"
-                class="btn btn-danger btn-sm px-3"
-                type="submit"
-                value="Send"
-              >
-                Enviar
-              </button>
-            </p>
-          </form>
-        </div>
-        <div class="contact-info">
-          <h4>Mas información</h4>
-          <ul>
-            <li><i class="fas fa-phone"></i> (506) 0000-0000</li>
-            <li><i class="fas fa-envelope-open-text"></i> sendero.una.ac.cr</li>
-          </ul>
-          <i class="fas fa-map-marker-alt"></i>
-          <p>
-            Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus
-            Liberia, Sede Regional Chorotega, Universidad Nacional
-          </p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="contenedor_mapa">
-      <div class="map-cont">
-        <div class="map-box">
-          <!-- <img src="img/ilustracion4.svg" alt="">-->
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4697.277481346486!2d-85.45376162258393!3d10.617667351742492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f757d3b9e5cff01%3A0x4139935881accb02!2sUniversidad%20Nacional!5e0!3m2!1sen!2scr!4v1631573581299!5m2!1sen!2scr"
-            width="1000"
-            height="450"
-            allowfullscreen=""
-            loading="lazy"
-          ></iframe>
+      <div class="contenedor_mapa">
+        <div class="map-cont">
+          <div class="map-box">
+            <!-- <img src="img/ilustracion4.svg" alt="">-->
+            <iframe
+              src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=es&amp;q=JG8X+XCW,%20El%20Capul%C3%ADn,%20Provincia%20de%20Guanacaste+(Universidad%20Nacional%20Campus%20Liberia%20-%20Costa%20Rica)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+              width="100%"
+              height="450"
+              allowfullscreen=""
+              loading="lazy"
+              frameborder="0"
+              scrolling="no"
+              marginheight="0"
+              marginwidth="0"
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
-#box_contacto {
-  opacity: 0;
+/*Contenedor principal*/
+.contenedor-contacto {
+  background: #ffffff;
+  width: 100%;
+  height: auto;
+  min-height: 745px;
+  max-height: 100%;
+}
+/*Contiene a los 3 elementos*/
+.contenedor_triple {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+/*Contiene la parte de mas informacion y el enviar mensaje*/
+.contact-wrapper {
+  color: white;
+  min-height: 650px;
+}
+.figura {
+  width: 50%;
+}
+/*contiene al mapa */
+.contenedor_mapa {
+  width: 50%;
 }
 
-h1 {
-  color: #4f4f4f;
-  font-weight: 700;
-}
-.contenedor_mapa {
-  width: 100%;
-  margin-top: 4%;
-}
 .map {
   background: #fff;
-  padding-bottom: 30px;
 }
 .map-cont {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   height: 650px;
-
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
 }
 .map-box {
   display: flex;
@@ -144,75 +156,30 @@ h1 {
   width: 100%;
   height: 100%;
 }
-.contenedor-contacto {
-  background: #ffffff;
-  width: 100%;
-  position: relative;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  min-height: 600px;
-  max-height: 100%;
-}
-.content {
-  position: absolute;
-  width: 45%;
-}
-
-.container {
-  max-width: 1170px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 1.5em;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
 .logo {
   text-align: center;
   font-size: 3em;
 }
 
-.logo span {
-  color: #38ab81;
-}
-
-.contact-wrapper {
-  box-shadow: 0 0 10px 0 #ffffff;
-  color: white;
-  border-radius: 20px;
-}
-
-.contact-wrapper > * {
-  padding: 1em;
-}
-
 .contact-form {
   background: #222222a6;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  height: 650px;
 }
 
 .contact-form form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   position: relative;
+  flex-direction: column;
+  width: 100%;
+  height: 650px;
 }
-
-.contact-form form label {
-  display: block;
-}
-
-.contact-form form p {
-  margin: 0;
-  padding: 1em;
-}
-
-.contact-form form .block {
-  grid-column: 1 / 3;
+#nombre:focus,
+#celular:focus,
+#asunto:focus,
+#email:focus,
+#asunto:focus,
+#mensaje:focus {
+  border-bottom: 1px solid blue;
 }
 
 .contact-form form button,
@@ -232,32 +199,20 @@ ul {
   border: 0;
   padding: 1em;
   border-radius: 20px;
-}
-
-.contact-form form button:hover,
-.contact-form form button:focus {
-  background: #d63031;
-  color: #fff;
-  transition: background-color 1s ease-out;
-  outline: 0;
+  width: 50%;
 }
 
 /* CONTACT INFO */
 .contact-info {
-  background: #000000c9;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  background: #2a2a2aeb;
+  clip-path: polygon(0 0, 100% 0, 79% 100%, 0 100%);
+  width: 149%;
 }
-
-.contact-info h4,
-.contact-info ul,
-.contact-info p {
-  text-align: justify;
-  margin: 0 0 1rem 0;
-}
-
 textarea {
   resize: none;
+}
+.contact-info p {
+  width: 78%;
 }
 
 .fa-map-marker-alt {
@@ -282,27 +237,34 @@ textarea {
     text-align: justify;
   }
 }
-@media only screen and (min-device-width: 375px) and (max-device-width: 699px) {
-  .content {
-    width: 90%;
-    top: -100px;
-  }
-  .contact-form {
+@media only screen and (min-device-width: 300px) and (max-device-width: 699px) {
+  .contenedor_triple {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     width: 100%;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 0px;
-    border-top-right-radius: 20px;
+  }
+  .figura {
+    width: 100%;
+  }
+  #box_contacto {
+    padding: 5px;
+  }
+  .contenedor_mapa{
+    padding: 5px;
+  }
+  .contenedor_mapa,
+  .map-cont {
+    width: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    margin-top: -20px;
   }
   .contact-info {
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    width: 100%;
   }
-  .contenedor_mapa {
-    height: 850px;
-  }
-  .map-cont {
-    height: 850px;
+  form p {
+    padding: 4px 40px;
   }
 }
 </style>

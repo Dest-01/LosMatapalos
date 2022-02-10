@@ -30,7 +30,9 @@ class OrganizacionesController extends BaseController
     }
 
     function list() {
-        $organizacion = $this->organizaciones->pluck('id', 'id');
+
+        $organizacion = $this->organizaciones->get();
+      //  $organizacion = $this->organizaciones->pluck('id', 'id');
 
         return $this->sendResponse($organizacion, 'Lista Organizaciones');
     }
