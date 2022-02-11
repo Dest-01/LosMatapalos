@@ -25,6 +25,13 @@ class FloraController extends BaseController
         return $this->sendResponse($flora, 'Lista flora');
     }
 
+    public function list()
+    {
+        $flora = $this->flora->get();
+
+        return $this->sendResponse($flora, 'Lista flora');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -34,13 +41,13 @@ class FloraController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'nom_comun' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
-            'nom_cientifico' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
+            'nom_comun' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
+            'nom_cientifico' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'descripcion' => 'required|string|max:255|min:5',
             'tipo' => 'required|string|max:50',
             'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
             'fecha_registro' => 'required|date|after:2020-01-01',
-            'fam_cientifica' =>'required|regex:/^[a-zA-z09-9-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'fam_cientifica' =>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/]+$/u|string|max:20|min:3',
 
         ];
     
@@ -108,12 +115,13 @@ class FloraController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'nom_comun' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
-            'nom_cientifico' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
+            'nom_comun' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
+            'nom_cientifico' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'descripcion' => 'required|string|max:255|min:5',
             'tipo' => 'required|string|max:50',
+            'photo' => 'base64image:png,jpeg,jpg',
             'fecha_registro' => 'required|date|after:2020-01-01',
-            'fam_cientifica' =>'required|regex:/^[a-zA-z09-9-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'fam_cientifica' =>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/]+$/u|string|max:20|min:3',
 
         ];
     

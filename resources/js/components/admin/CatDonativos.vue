@@ -26,6 +26,7 @@
               <h3 class="card-title">Lista de donativos necesarios</h3>
 
               <div class="card-tools">
+                <div>
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
@@ -34,6 +35,7 @@
                   <i class="fa fa-plus-square"></i>
                   agregar nuevo
                 </button>
+                </div>
               </div>
             </div>
             <!-- /.card-header -->
@@ -60,17 +62,24 @@
                     <td>
                       <img
                         v-bind:src="'/images/CatDonativos/' + catDonativo.photo"
-                        width="50px"
-                        height="50px"
+                        width="40%"
+                        height="100px"
                       />
                     </td>
                     <td>
                       <a href="#" @click="editModal(catDonativo)">
-                        <i class="fa fa-edit blue"></i>
+                        <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a href="#" @click="eliminarCatDonativo(catDonativo.id)">
-                        <i class="fa fa-trash red"></i>
+                        <i id="icono" class="fa fa-trash red"></i>
+                      </a>
+                       /
+                      <a
+                        href="#"
+                        @click="detailsModal(catDonativo)"
+                      >
+                        <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
                   </tr>
@@ -132,7 +141,6 @@
                 <div class="form-group">
                   <label>Nombre del donativo necesario</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
@@ -141,7 +149,7 @@
                     maxlength="25"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
-                    placeholder="Nombre del donativo necesario"
+                    placeholder="Escriba el donativo necesario"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -161,45 +169,35 @@
                   }}</label>
                   <has-error :form="form" field="estado"></has-error>
                 </div>
-                <div class="form-group">
+               <div class="form-group">
                   <div>
                     <div class="row">
                       <div class="col-8">
+                        <label for="">Imagen del donativo necesario</label>
                         <label class="btn btn-default p-0">
                           <input
                             type="file"
                             accept="image/*"
                             ref="file"
                             name="photo"
-                            required
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
-                             id="SubirImagen"
+                            id="SubirImagen"
                           />
                           <has-error :form="form" field="photo"></has-error>
                         </label>
                       </div>
-                      <div class="col-4"></div>
                     </div>
-                    <div v-if="currentImage" class="progress">
-                      <div
-                        class="progress-bar progress-bar-info"
-                        role="progressbar"
-                        :aria-valuenow="progress"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        :style="{ width: progress + '%' }"
-                      >
-                        {{ progress }}%
-                      </div>
-                    </div>
+                    <div class="progress"></div>
                     <div v-if="previewImage">
                       <div>
                         <img
                           class="preview my-3"
                           :src="previewImage"
                           alt=""
-                          width="100px"
+                          title="Imagen Previa"
+                          width="100%"
+                          height="250px"
                         />
                       </div>
                     </div>
@@ -236,6 +234,66 @@
           </div>
         </div>
       </div>
+            <!-- Modal de ver informacion -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModal"
+        aria-hidden="true"
+        >
+        <div class="modal-dialog" role="document">
+          <div id="modal-contentino" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles de la Donativo Necesario</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Nombre de donativo necesario</label>
+                <input
+                  v-model="form.nombre"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Estado del donativo necesario</label>
+                <input
+                  v-model="form.estado"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Imagen</label>
+                  <img
+                        v-bind:src="'/images/CatDonativos/' + form.photo"
+                        width="100%"
+                        height="400px"
+                      />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -246,13 +304,16 @@ export default {
     return {
       editmode: false,
       currentImage: undefined,
-      previewImage: undefined,
+      previewImage: undefined, //Imagen Previa al cargar
       progress: 0,
       message: "",
       imageInfos: [],
       mostrarEstado: true,
       estado: "No es necesario",
+      filtrarBusqueda: "",
+      verDetalles: true,
       catDonativos: {},
+      nuevoCatDonativos: {},
       form: new Form({
         id: "",
         nombre: "",
@@ -262,11 +323,21 @@ export default {
     };
   },
   methods: {
+    filtrar() {
+      if (this.filtrarBusqueda == "") {
+        this.cargarCatDonativos();
+      } else if (this.filtrarBusqueda != "") {
+        this.catDonativos.data = this.catDonativosFiltrados;
+      }
+    },
+
     updatePhoto(e) {
       let file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.currentImage = file;
       let reader = new FileReader();
 
-      if (file["size"] < 2111775) {
+      if (file["size"] < 12111775) {
         reader.onloadend = (file) => {
           //console.log('RESULT', reader.result)
           this.form.photo = reader.result;
@@ -324,13 +395,21 @@ export default {
       this.form.errors.clear();
       $("#addNew").modal("show");
       this.form.fill(catdonativo);
+      this.previewImage = form.photo;
     },
     newModal() {
       this.editmode = false;
+      this.previewImage = undefined;
       this.form.reset();
       this.form.errors.clear();
       this.estado = "No es necesario";
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
+    },
+     detailsModal(catdonativo) {
+      $("#exampleModal").modal("show");
+      this.form.fill(catdonativo);
     },
     cargarCatDonativos() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
@@ -407,14 +486,52 @@ export default {
     },
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
-      });
-    },
+
+
   },
 };
 </script>
 
-<style>
+
+<style scoped>
+#btnCancelar {
+  padding: 1px 5px;
+  margin: 1px 1px 1px 10px;
+}
+
+#icono {
+  font-size: 20px;
+}
+.card-tools {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.card-tools div {
+  padding: 10px;
+}
+.card-tools div button {
+  height: 36px;
+  font-size: 15px;
+}
+.card-title {
+  margin: 1px;
+  line-height: inherit;
+  float: left;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+#modal-contentino {
+  width: 150%;
+}
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: baseline;
+    border-top: 1px solid #dee2e6;
+}
+@media screen and (min-width: 900px) {
+  .modal-content {
+    width: 100%;
+  }
+}
 </style>

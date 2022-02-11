@@ -26,6 +26,17 @@
               <h3 class="card-title">Lista de flora</h3>
 
               <div class="card-tools">
+                 <div>
+                  <input
+                    @blur="filtrar()"
+                    v-model="filtrarBusqueda"
+                    class="form-control"
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar..."
+                  />
+                </div>
+                <div>
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
@@ -34,6 +45,7 @@
                   <i class="fa fa-plus-square"></i>
                   Agregar Nuevo
                 </button>
+                </div>
               </div>
             </div>
             <!-- /.card-header -->
@@ -55,10 +67,10 @@
                 <tbody>
                   <tr v-for="Flora in flora.data" :key="Flora.id">
                     <td>{{ Flora.id }}</td>
-                    <td class="text-capitalize">{{ Flora.nom_comun }}</td>
-                    <td class="text-capitalize">{{ Flora.nom_cientifico }}</td>
-                    <td>{{ Flora.descripcion | truncate(30, "...") }}</td>
-                    <td class="text-capitalize">{{ Flora.tipo }}</td>
+                    <td>{{ Flora.nom_comun }}</td>
+                    <td>{{ Flora.nom_cientifico }}</td>
+                    <td>{{ Flora.descripcion | truncate(10, "...") }}</td>
+                    <td>{{ Flora.tipo }}</td>
                     <td>
                       <img
                         v-bind:src="'/images/flora/' + Flora.photo"
@@ -66,16 +78,23 @@
                         height="50px"
                       />
                     </td>
-                    <td class="text-capitalize">{{ Flora.fam_cientifica }}</td>
-                    <td class="text-capitalize">{{ Flora.fecha_registro }}</td>
+                    <td>{{ Flora.fam_cientifica }}</td>
+                    <td>{{ Flora.fecha_registro }}</td>
 
                     <td>
                       <a href="#" @click="editModal(Flora)">
-                        <i class="fa fa-edit blue"></i>
+                        <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a href="#" @click="eliminarFlora(Flora.id)">
-                        <i class="fa fa-trash red"></i>
+                        <i id="icono" class="fa fa-trash red"></i>
+                      </a>
+                        /
+                      <a
+                        href="#"
+                        @click="detailsModal(Flora)"
+                      >
+                        <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
                   </tr>
@@ -233,7 +252,7 @@
                           class="preview my-3"
                           :src="previewImage"
                           alt=""
-                          width="100px"
+                          width="100%"
                         />
                       </div>
                     </div>
@@ -301,6 +320,103 @@
           </div>
         </div>
       </div>
+            <!-- Modal de ver informacion -->
+      <div
+        class="modal fade"
+        id="ModalVer"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="ModalVer"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div id="modal-contentino" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles de la flora</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div id="modal-body" class="modal-body">
+              <div id="inputsModal" class="form-group">
+                <label>Nombre común</label>
+                <input
+                  v-model="form.nom_comun"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Nombre científico</label>
+                <input
+                  v-model="form.nom_cientifico"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Descripción</label>
+                <textarea v-model="form.descripcion"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles">
+                  
+                </textarea>
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Fecha registro</label>
+                <input
+                  v-model="form.fecha_registro"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Foto de la flora</label>
+                <img
+                  v-bind:src="'/images/flora/' + form.photo"
+                  width="100%"
+                  height="350px"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Tipo de flora</label>
+                <input
+                  v-model="form.tipo"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Familia científico</label>
+                <input
+                  v-model="form.fam_cientifica"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--FIN DEL MODAL VER INFORMACION-->
     </div>
   </section>
 </template>
@@ -316,6 +432,9 @@ export default {
       message: "",
       imageInfos: [],
       flora: {},
+      todoFlora: {},
+      verDetalles: true,
+      filtrarBusqueda: "",
       form: new Form({
         id: "",
         nom_comun: "",
@@ -329,6 +448,13 @@ export default {
     };
   },
   methods: {
+       filtrar() {
+      if (this.filtrarBusqueda == "") {
+        this.cargarFlora();
+      } else if (this.filtrarBusqueda != "") {
+        this.flora.data = this.floraFiltros;
+      }
+    },
     updatePhoto(e) {
       let file = e.target.files[0];
       this.previewImage = URL.createObjectURL(file);
@@ -395,11 +521,15 @@ export default {
       this.previewImage = "";
       $("#addNew").modal("show");
     },
+     detailsModal(flora) {
+      $("#ModalVer").modal("show");
+      this.form.fill(flora);
+    },
 
     cargarFlora() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios.get("/api/flora").then(({ data }) => (this.flora = data.data));
-        
+        axios.get("/api/flora/listar").then(({ data }) => (this.todoFlora = data.data));
       }
     },
 
@@ -470,14 +600,95 @@ export default {
     },
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+        floraFiltros: function () {
+      return this.todoFlora.filter((flora) => {
+        return (
+          flora.descripcion
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          flora.fam_cientifica
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          flora.fecha_registro
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          flora.nom_cientifico
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+            flora.nom_comun
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+            flora.tipo
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase())
+        );
       });
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
+.mostrar {
+  display: list-item;
+  opacity: 1;
+  background: rgba(121, 120, 120, 0.623);
+}
+#btnCancelar {
+  padding: 1px 5px;
+  margin: 1px 1px 1px 10px;
+}
+
+#icono {
+  font-size: 20px;
+}
+.card-tools {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.card-tools div {
+  padding: 10px;
+}
+.card-tools div button {
+  height: 36px;
+  font-size: 15px;
+}
+.card-title {
+  margin: 1px;
+  line-height: inherit;
+  float: left;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+.identitad {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+#modal-contentino {
+  width: 150%;
+}
+#modal-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#inputsModal {
+  width: 45%;
+  margin: 10px 15px;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: baseline;
+  border-top: 1px solid #dee2e6;
+}
+@media screen and (min-width: 900px) {
+  .modal-content {
+    width: 100%;
+  }
+}
 </style>

@@ -36,6 +36,12 @@ class ReservaController extends BaseController
         return $this->sendResponse($reservas, 'Lista reservas');
     }
 
+    function list() {
+        $reservas = $this->reserva->get();
+
+        return $this->sendResponse($reservas, 'Lista reservas');
+    }
+
     public function obtenerCedula(Request $request)
     {
         $filtro = $request->buscador;

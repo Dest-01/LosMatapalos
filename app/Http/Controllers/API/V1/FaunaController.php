@@ -25,6 +25,13 @@ class FaunaController extends BaseController
         return $this->sendResponse($fauna, 'Lista de fauna');
     }
 
+    public function list()
+    {
+        $fauna = $this->fauna->get();
+
+        return $this->sendResponse($fauna, 'Lista de fauna');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -35,28 +42,28 @@ class FaunaController extends BaseController
     {
         try {
             $rules = [
-                'nombreComun' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
-                'nombreCientifico' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
+                'nombreComun' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
+                'nombreCientifico' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
                 'descripcion' => 'required|string|max:255|min:5',
-                'tipo' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
+                'tipo' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
                 'fechaRegistro' => 'required|date|after:2020-01-01',
                 'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
-                'familiaCientifca' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
+                'familiaCientifca' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
     
             ];
         
             $messages = [
                 'nombreComun.min' =>'Mínimo 3 caracteres',
                 'nombreComun.max' => 'Máximo 30 caracteres',
-                'nombreComun.*' => 'Escriba el nombre común de la especie,  no puede estar vacio o llevar numeros',
+                'nombreComun.*' => 'Escriba el nombre común de la especie,  no puede estar vacio o llevar números',
                 'nombreCientifico.min' =>'Mínimo 3 caracteres',
                 'nombreCientifico.max' => 'Máximo 30 caracteres',
-                'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar numeros',
+                'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar números',
                 'descripcion.min' =>'Mínimo 5 caracteres',
-                'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
+                'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y máximo 255',
                 'tipo.min' =>'Mínimo 15 caracteres',
                 'tipo.max' => 'Máximo 30 caracteres',
-                'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar numeros',
+                'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar números',
                 'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
                 'imagen.*' => 'Cargue una foto',
                 'familiaCientifca.min' =>'Mínimo 3 caracteres',
@@ -113,27 +120,28 @@ class FaunaController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'nombreComun' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
-            'nombreCientifico' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
+            'nombreComun' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
+            'nombreCientifico' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'descripcion' => 'required|string|max:255|min:5',
-            'tipo' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
+            'tipo' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'fechaRegistro' => 'required|date|after:2020-01-01',
-            'familiaCientifca' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/|string|max:30|min:3',
+            'imagen' => 'sometimes|base64image:png,jpeg,jpg',
+            'familiaCientifca' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
 
         ];
     
         $messages = [
             'nombreComun.min' =>'Mínimo 3 caracteres',
             'nombreComun.max' => 'Máximo 30 caracteres',
-            'nombreComun.*' => 'Escriba el nombre común de la especie,  no puede estar vacio o llevar numeros',
+            'nombreComun.*' => 'Escriba el nombre común de la especie,  no puede estar vacio o llevar números',
             'nombreCientifico.min' =>'Mínimo 3 caracteres',
             'nombreCientifico.max' => 'Máximo 30 caracteres',
-            'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar numeros',
+            'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar números',
             'descripcion.min' =>'Mínimo 5 caracteres',
-            'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
+            'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y máximo 255',
             'tipo.min' =>'Mínimo 15 caracteres',
             'tipo.max' => 'Máximo 30 caracteres',
-            'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar numeros',
+            'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar números',
             'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
             'imagen.*' => 'Cargue una foto',
             'familiaCientifca.min' =>'Mínimo 3 caracteres',

@@ -16,11 +16,11 @@ class CreateDonativosTable extends Migration
         Schema::create('donativos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('idPersona')->nullable();
-            $table->string('identificacionPersona')->nullable();
             $table->foreign("idPersona")->references("id")->on("personas")->onDelete("cascade")->onUpdate("cascade");
+            $table->string('identificacionPersona')->nullable();
             $table->unsignedBigInteger('idOrganizacion')->nullable();
-            $table->string('identificacionOrganizacion')->nullable();
             $table->foreign("idOrganizacion")->references("id")->on("organizaciones")->onDelete("cascade")->onUpdate("cascade");
+            $table->string('identificacionOrganizacion')->nullable();
             $table->string('tipo');
             $table->string('detalle');
             $table->string('photo');

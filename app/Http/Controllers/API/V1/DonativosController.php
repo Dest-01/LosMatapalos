@@ -117,7 +117,7 @@ class DonativosController extends BaseController
         try {
             $rules = [
                 'tipo' => 'required|string|max:50',
-                'detalle' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:255|min:3',
+                'detalle' => 'required|string|min:3|max:255|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
                 'fecha' => 'required|date|after:2000-01-01',
                 'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
                 'estado' => 'required|string|',
@@ -183,7 +183,7 @@ class DonativosController extends BaseController
     {
         $rules = [
             'tipo' => 'required|string|max:50',
-            'detalle' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:255|min:3',
+            'detalle' => 'required|string|min:3|max:255|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'fecha' => 'required|date|after:2000-01-01',
             // 'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
             'estado' => 'required|string|',

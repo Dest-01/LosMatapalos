@@ -81,8 +81,6 @@
                       </a>
                       /
                       <a
-                        data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal"
                         href="#"
                         @click="detailsModal(persona)"
                       >
@@ -500,12 +498,6 @@ export default {
         correo: "",
       }),
     };
-  },
-  mounted() {
-    const plugin = document.createElement("script");
-    plugin.setAttribute("src", "/js/utilitarios.js");
-    plugin.async = true;
-    document.head.appendChild(plugin);
   },
   methods: {
 

@@ -27,6 +27,14 @@ class CatDonativosController extends BaseController
         return $this->sendResponse($catDonativo, 'Lista de donativos necesarios');
     }
 
+    
+    public function list()
+    {
+        $catDonativo = $this->catDonativos->get();
+
+        return $this->sendResponse($catDonativo, 'Lista de donativos necesarios');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -36,7 +44,7 @@ class CatDonativosController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
 
         ];
@@ -92,7 +100,7 @@ class CatDonativosController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:4',
+            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             // 'photo' => 'base64image:png,jpeg,jpg',
         ];
 
