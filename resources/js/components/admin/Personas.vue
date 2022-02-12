@@ -655,6 +655,7 @@ export default {
       }
     },
     crearPersona() {
+      if(this.form.identificacion != ""){
       this.form
         .post("/api/persona", {
           params: { identificacion: this.form.identificacion },
@@ -683,6 +684,7 @@ export default {
             title: "Complete los campos!",
           });
         });
+        }
     },
 
     eliminarPersona(id) {

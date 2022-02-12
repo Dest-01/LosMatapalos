@@ -7,7 +7,7 @@
     <div
       id="pageOrg"
       class="card-body table-responsive p-0"
-      style="width: 850px; color: black; background: white"
+      style="width: 1000px; color: black; background: white"
     >
       <div class="Encabezado">
         <h1>Sendero los Matapalos</h1>
@@ -35,13 +35,13 @@
                     :key="organizacion.id"
                   >
                     <td>{{ organizacion.id }}</td>
-                    <td class="text-capitalize">{{ organizacion.nombre }}</td>
+                    <td>{{ organizacion.nombre }}</td>
                     <td>{{ organizacion.telefono }}</td>
                     <td>{{ organizacion.correo }}</td>
                   </tr>
                 </tbody>
               </table>
-        <!-- <h2 class="total">Total: {{ organizaciones.data.length }}</h2> -->
+         <h2 class="total">Total: {{ total }}</h2> 
       </div>
     </div>
   </div>
@@ -53,6 +53,7 @@ export default {
       organizaciones: {},
       fechaActual: "",
       contarArray: "",
+      total: 0,
     };
   },
   methods: {
@@ -79,6 +80,7 @@ export default {
     this.cargarOrganizacion();
     this.$Progress.finish();
     window.onload = this.set;
+    window.onload = this.contar;
   },
   computed: {
     set: function () {

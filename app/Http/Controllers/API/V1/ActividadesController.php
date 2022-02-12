@@ -27,6 +27,11 @@ class ActividadesController extends BaseController
         $actividad = $this->actividades->latest()->paginate(10);
         return $this->sendResponse($actividad, 'Lista de Actividades');
     }
+    public function list()
+    {
+        $actividad = $this->actividades->get();
+        return $this->sendResponse($actividad, 'Lista de Actividades');
+    }
 
     /**
      * Store a newly created resource in storage.

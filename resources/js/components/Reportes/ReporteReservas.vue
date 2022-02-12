@@ -7,7 +7,7 @@
     <div
       id="pageReserva"
       class="card-body table-responsive p-0"
-      style="width: 850px; color: black; background: white"
+      style="width: 1000px; color: black; background: white"
     >
       <div class="Encabezado">
         <h1>Sendero los Matapalos</h1>
@@ -28,16 +28,15 @@
                     <th>Organización</th>
                     <th>Cantidad de Visitantes</th>
                     <th>Fecha de reservación</th>
-                    <th>Hora inicial de reservación</th>
-                    <th>Hora final de reservación</th>
-                    <th>Funciones</th>
+                    <th>Hora inicial</th>
+                    <th>Hora final</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="reserva in reservas.data" :key="reserva.id">
                     <td>{{ reserva.id }}</td>
-                    <td>{{ reserva.idPersona }}</td>
-                    <td>{{ reserva.idOrganizacion }}</td>
+                    <td>{{ reserva.identificacionPersona }}</td>
+                    <td>{{ reserva.identificacionOrganizacion }}</td>
                     <td>{{ reserva.cantidad }}</td>
                     <td>{{ reserva.fecha }}</td>
                     <td>{{ reserva.horaInicio }}</td>

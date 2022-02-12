@@ -26,7 +26,6 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Estado</th>
-                    <th>Imagen</th>
                   </tr>
                 </thead>
                   <tbody>
@@ -35,16 +34,9 @@
                       :key="catDonativo.id"
                     >
                       <td>{{ catDonativo.id }}</td>
-                      <td class="text-capitalize">{{ catDonativo.nombre }}</td>
+                      <td>{{ catDonativo.nombre }}</td>
                       <td v-if="catDonativo.estado == 0">No es necesario</td>
                       <td v-else>Es necesario</td>
-                      <td>
-                        <img
-                          v-bind:src="'/images/CatDonativos/' + catDonativo.photo"
-                          width="50px"
-                          height="50px"
-                        />
-                      </td>
                     </tr>
                   </tbody>
               </table>

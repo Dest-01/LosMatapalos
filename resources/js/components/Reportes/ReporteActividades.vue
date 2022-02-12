@@ -7,7 +7,7 @@
     <div
       id="pageActividad"
       class="card-body table-responsive p-0"
-      style="width: 850px; color: black; background: white"
+      style="width: 1000px; color: black; background: white"
     >
       <div class="Encabezado">
         <h1>Sendero los Matapalos</h1>
@@ -28,30 +28,19 @@
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Descripción</th>
-                    <th>Cant Participantes</th>
-                    <th>Imagen</th>
+                    <th>Cantidad Participantes</th>
                     <th>Tipo actividadd</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="Actividad in Actividades.data" :key="Actividad.id">
                     <td>{{ Actividad.id }}</td>
-                    <td class="text-capitalize">{{ Actividad.nombre }}</td>
-                    <td class="text-capitalize">{{ Actividad.fecha }}</td>
-                    <td class="text-capitalize">{{ Actividad.hora }}</td>
-                    <td>{{ Actividad.descripcion | truncate(30, "...") }}</td>
-                    <td class="text-capitalize">
-                      {{ Actividad.cantParticipantes }}
-                    </td>
-                    <td>
-                      <img
-                        v-bind:src="'/images/Actividades/' + Actividad.imagen"
-                        width="50px"
-                        height="50px"
-                      />
-                    </td>
-                    <td class="text-capitalize">
-                      {{ Actividad.tipo }}
+                    <td>{{ Actividad.nombre }}</td>
+                    <td>{{ Actividad.fecha }}</td>
+                    <td>{{ Actividad.hora }}</td>
+                    <td>{{Actividad.descripcion}}</td>
+                    <td>{{ Actividad.cantParticipantes}}</td>
+                    <td>{{ Actividad.tipo }}
                     </td>
                   </tr>
                 </tbody>

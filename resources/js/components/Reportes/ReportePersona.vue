@@ -7,7 +7,7 @@
     <div
       id="page"
       class="card-body table-responsive p-0"
-      style="width: 850px; color: black; background: white"
+      style="width: 1000px; color: black; background: white"
     >
       <div class="Encabezado">
         <h1>Sendero los Matapalos</h1>
@@ -33,8 +33,8 @@
           </thead>
           <tbody>
             <tr v-for="persona in personas.data" :key="persona.id">
-              <td>{{ persona.id }}</td>
-              <td class="text-capitalize">{{ persona.nombre }}</td>
+              <td>{{ persona.identificacion }}</td>
+              <td>{{ persona.nombre }}</td>
               <td>{{ persona.apellido1 }}</td>
               <td>{{ persona.apellido2 }}</td>
               <td>{{ persona.telefono }}</td>
@@ -42,7 +42,7 @@
             </tr>
           </tbody>
         </table>
-        <h2 class="total">Total: {{ personas.data.length }}</h2>
+        <h2 class="total">Total: {{ total }}</h2>
       </div>
     </div>
   </div>
@@ -52,9 +52,9 @@ export default {
   data() {
     return {
       personas: {},
+      total: 0,
       fechaActual: "",
       contarArray: "",
-     
     };
   },
   methods: {
@@ -71,7 +71,6 @@ export default {
         axios
           .get("/api/persona")
           .then(({ data }) => (this.personas = data.data));
-          
       }
     },
   },
@@ -80,6 +79,7 @@ export default {
     this.cargarPersona();
     this.$Progress.finish();
     window.onload = this.set;
+    
   },
   computed: {
     set: function () {
@@ -89,7 +89,6 @@ export default {
         .replace("m", today.getMonth() + 1)
         .replace("d", today.getDate());
       this.fechaActual = strDate;
-      
     },
   },
 };
@@ -99,7 +98,6 @@ export default {
 .card-body {
   font-size: 1.2rem;
   margin: 5px 5px 5px 45px;
-  font-family: system-ui;
   margin-left: 18%;
 }
 
@@ -154,5 +152,9 @@ h3 {
   font-size: 1.2rem;
   padding: 10px;
   color: #354942;
+}
+td {
+  padding: 5px;
+  padding-left: 5px;
 }
 </style>

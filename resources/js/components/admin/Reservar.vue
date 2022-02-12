@@ -305,6 +305,7 @@
           </div>
         </div>
       </div>
+
       <div
         class="modal fade"
         id="ModalVer"
@@ -792,6 +793,7 @@ export default {
         this.reservas.data = this.reservasFiltros;
       }
     },
+
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
     validarCedulaNacional() {
@@ -854,18 +856,18 @@ export default {
         this.CedulaNacional = true;
         this.Pasaporte = false;
         this.CedulaResidencial = false;
-        this.form.identificacion = "";
+        this.formPer.identificacion = "";
       }
       if (this.tipoIndenteficacion == "Cedula Residencial") {
         this.CedulaNacional = false;
         this.Pasaporte = false;
         this.CedulaResidencial = true;
-        this.form.identificacion = "";
+        this.formPer.identificacion = "";
       } else if (this.tipoIndenteficacion == "Pasaporte") {
         this.CedulaNacional = false;
         this.Pasaporte = true;
         this.CedulaResidencial = false;
-        this.form.identificacion = "";
+        this.formPer.identificacion = "";
       }
     },
     /*////////////////////////////////////////////////////////////*/

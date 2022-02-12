@@ -114,7 +114,7 @@
      
     </div>
     {{-- Default to the left --}}
-    <strong>Copyright &copy; 2021-2022 <a href="">Los Matapalos</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2021-2022 <a href="">Los Matapalos</a>.</strong>
   </footer>
 </div>
 {{-- ./wrapper --}}

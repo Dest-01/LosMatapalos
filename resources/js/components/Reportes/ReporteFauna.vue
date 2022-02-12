@@ -7,7 +7,7 @@
     <div
       id="pageFauna"
       class="card-body table-responsive p-0"
-      style="width: 850px; color: black; background: white"
+      style="width: 1000px; color: black; background: white"
     >
       <div class="Encabezado">
         <h1>Sendero los Matapalos</h1>
@@ -28,33 +28,21 @@
                     <th>Nombre Científico</th>
                     <th>Descripción</th>
                     <th>Tipo</th>
-                    <th>Imagen</th>
                     <th>Familia científica</th>
                     <th>Fecha de registro</th>
-                    <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="fauna in faunas.data" :key="fauna.id">
                     <td>{{ fauna.id }}</td>
-                    <td class="text-capitalize">{{ fauna.nombreComun }}</td>
-                    <td class="text-capitalize">
+                    <td>{{ fauna.nombreComun }}</td>
+                    <td>
                       {{ fauna.nombreCientifico }}
                     </td>
-                    <td>{{ fauna.descripcion | truncate(30, "...") }}</td>
-                    <td class="text-capitalize">{{ fauna.tipo }}</td>
-                    <td>
-                      <img
-                        v-bind:src="'/images/Fauna/' + fauna.imagen"
-                        width="50px"
-                        height="50px"
-                      />
-                    </td>
-                    <td class="text-capitalize">
-                      {{ fauna.familiaCientifca }}
-                    </td>
-                    <td class="text-capitalize">
-                      {{ fauna.fechaRegistro }}
+                    <td>{{fauna.descripcion}}</td>
+                    <td>{{ fauna.tipo }}</td>
+                    <td>{{ fauna.familiaCientifca }} </td>
+                    <td> {{ fauna.fechaRegistro }}
                     </td>
                   </tr>
                 </tbody>

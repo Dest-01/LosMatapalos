@@ -23,9 +23,7 @@
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div v-show="opcionPersona" class="card-header">
-              <h3 class="card-title">
-                Reportes de las personas
-              </h3>
+              <h3 class="card-title">Reportes de las personas</h3>
 
               <div class="card-tools">
                 <button
@@ -46,7 +44,11 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button @click="Cancelar()" type="button" class="btn btn-sm btn-danger">
+                <button
+                  @click="Cancelar()"
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
@@ -76,19 +78,22 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
-            <ReporteOrganizacion v-show="verComponenteOrganizacion"></ReporteOrganizacion>
-           <!---------------------------------------------------------------------------------------------------->
+            <ReporteOrganizacion
+              v-show="verComponenteOrganizacion"
+            ></ReporteOrganizacion>
+            <!---------------------------------------------------------------------------------------------------->
 
-
-
-
-           <div v-show="opcionCatDonativo" class="card-header">
+            <div v-show="opcionCatDonativo" class="card-header">
               <h3 class="card-title">Reportes de los donativos requeridos</h3>
               <div class="card-tools">
                 <button
@@ -109,20 +114,23 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
-            <ReporteCatDonativo v-show="verComponenteCatDonativo"></ReporteCatDonativo>
-           <!---------------------------------------------------------------------------------------------------->
+            <ReporteCatDonativo
+              v-show="verComponenteCatDonativo"
+            ></ReporteCatDonativo>
+            <!---------------------------------------------------------------------------------------------------->
 
-
-
-
-           <div v-show="opcionDonativo" class="card-header">
-              <h3 class="card-title">Reportes de los donativos recibidos</h3>
+            <div v-show="opcionDonativo" class="card-header">
+              <h3 class="card-title">Reportes de los donativos</h3>
               <div class="card-tools">
                 <button
                   type="button"
@@ -142,24 +150,23 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
             <ReporteDonativo v-show="verComponentDonativo"></ReporteDonativo>
-           <!---------------------------------------------------------------------------------------------------->
+            <!---------------------------------------------------------------------------------------------------->
 
-
-
-
-
-
-
-
-           <div v-show="opcionVolPer" class="card-header">
-              <h3 class="card-title">Reportes de los Voluntarios particulares</h3>
+            <div v-show="opcionVolPer" class="card-header">
+              <h3 class="card-title">
+                Reportes de los Voluntarios particulares
+              </h3>
               <div class="card-tools">
                 <button
                   type="button"
@@ -179,17 +186,25 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
-            <ReporteVolunPersona v-show="verComponentVolunPer"></ReporteVolunPersona>
-           <!---------------------------------------------------------------------------------------------------->
+            <ReporteVolunPersona
+              v-show="verComponentVolunPer"
+            ></ReporteVolunPersona>
+            <!---------------------------------------------------------------------------------------------------->
 
-           <div v-show="opcionVolEstud" class="card-header">
-              <h3 class="card-title">Reportes de los Voluntarios estudiantes</h3>
+            <div v-show="opcionVolEstud" class="card-header">
+              <h3 class="card-title">
+                Reportes de los Voluntarios estudiantes
+              </h3>
               <div class="card-tools">
                 <button
                   type="button"
@@ -209,16 +224,22 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
-            <ReporteVolEstudiante v-show="verComponentVolunEstud"></ReporteVolEstudiante>
-           <!---------------------------------------------------------------------------------------------------->
+            <ReporteVolEstudiante
+              v-show="verComponentVolunEstud"
+            ></ReporteVolEstudiante>
+            <!---------------------------------------------------------------------------------------------------->
 
-           <div v-show="opcionActividad" class="card-header">
+            <div v-show="opcionActividad" class="card-header">
               <h3 class="card-title">Reportes de actividades</h3>
               <div class="card-tools">
                 <button
@@ -239,16 +260,22 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
-            <ReporteActividades v-show="verComponentActividad"></ReporteActividades>
-           <!---------------------------------------------------------------------------------------------------->
+            <ReporteActividades
+              v-show="verComponentActividad"
+            ></ReporteActividades>
+            <!---------------------------------------------------------------------------------------------------->
 
-           <div v-show="opcionVolunActividad" class="card-header">
+            <div v-show="opcionVolunActividad" class="card-header">
               <h3 class="card-title">Reportes de voluntarios de actividades</h3>
               <div class="card-tools">
                 <button
@@ -269,17 +296,22 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
-            <ReporteVoluntarioActividad v-show="verComponentVoluntActividad"></ReporteVoluntarioActividad>
-           <!---------------------------------------------------------------------------------------------------->
+            <ReporteVoluntarioActividad
+              v-show="verComponentVoluntActividad"
+            ></ReporteVoluntarioActividad>
+            <!---------------------------------------------------------------------------------------------------->
 
-
-           <div v-show="opcionReserva" class="card-header">
+            <div v-show="opcionReserva" class="card-header">
               <h3 class="card-title">Reportes de reservas</h3>
               <div class="card-tools">
                 <button
@@ -300,18 +332,21 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
             <ReporteReservas v-show="verComponentReserva"></ReporteReservas>
-           <!---------------------------------------------------------------------------------------------------->
+            <!---------------------------------------------------------------------------------------------------->
 
-
-           <div v-show="opcionFauna" class="card-header">
-              <h3 class="card-title">Reporte de la fauna del sendero </h3>
+            <div v-show="opcionFauna" class="card-header">
+              <h3 class="card-title">Reporte de la fauna del sendero</h3>
               <div class="card-tools">
                 <button
                   type="button"
@@ -331,18 +366,21 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
             <ReporteFauna v-show="verComponentFauna"></ReporteFauna>
-           <!---------------------------------------------------------------------------------------------------->
-
+            <!---------------------------------------------------------------------------------------------------->
 
             <div v-show="opcionFlora" class="card-header">
-              <h3 class="card-title">Reporte de la flora del sendero </h3>
+              <h3 class="card-title">Reporte de la flora del sendero</h3>
               <div class="card-tools">
                 <button
                   type="button"
@@ -362,14 +400,18 @@
                   <i class="fas fa-download"></i>
                   Descargar Reporte
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="Cancelar()">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  @click="Cancelar()"
+                >
                   <i class="fas fa-window-close"></i>
                   Cancelar
                 </button>
               </div>
             </div>
             <ReporteFlora v-show="verComponentFlora"></ReporteFlora>
-           <!---------------------------------------------------------------------------------------------------->
+            <!---------------------------------------------------------------------------------------------------->
           </div>
           <!-- /.card -->
         </div>
@@ -387,17 +429,17 @@ import ReporteVolEstudiante from "../Reportes/ReporteVolEstudiante.vue";
 import ReporteActividades from "../Reportes/ReporteActividades.vue";
 import ReporteVoluntarioActividad from "../Reportes/ReporteVoluntarioActividad.vue";
 import ReporteReservas from "../Reportes/ReporteReservas.vue";
-import ReporteFauna from "../Reportes/ReporteFauna.vue"
-import ReporteFlora from "../Reportes/ReporteFlora.vue"
-import ReporteCatDonativo from "../Reportes/ReporteCatDonativo.vue"
-import ReporteDonativo from "../Reportes/ReporteDonativo.vue"
+import ReporteFauna from "../Reportes/ReporteFauna.vue";
+import ReporteFlora from "../Reportes/ReporteFlora.vue";
+import ReporteCatDonativo from "../Reportes/ReporteCatDonativo.vue";
+import ReporteDonativo from "../Reportes/ReporteDonativo.vue";
 
 export default {
   components: {
     ReportePersona: ReportePersonas,
     ReporteOrganizacion: ReporteOrganizaciones,
     ReporteCatDonativo: ReporteCatDonativo,
-    ReporteDonativo : ReporteDonativo,
+    ReporteDonativo: ReporteDonativo,
     ReporteVolunPersona: ReporteVolunPersona,
     ReporteVolEstudiante: ReporteVolEstudiante,
     ReporteActividades: ReporteActividades,
@@ -411,28 +453,28 @@ export default {
       verComponentePersonas: false,
       opcionPersona: true,
       verComponenteOrganizacion: false,
-      opcionCatDonativo:true,
-      verComponenteCatDonativo:false,
-      opcionDonativo:true,
-      verComponentDonativo:false,
+      opcionCatDonativo: true,
+      verComponenteCatDonativo: false,
+      opcionDonativo: true,
+      verComponentDonativo: false,
       opcionOrganizacion: true,
-      verComponentVolunPer:false,
-      opcionVolPer:true,
-      verComponentVolunEstud:false,
-      opcionVolEstud:true,
-      opcionActividad:true,
-      verComponentActividad:false,
-      opcionVolunActividad:true,
-      verComponentVoluntActividad:false,
-      opcionReserva:true,
-      verComponentReserva:false,
-      opcionFauna:true,
-      verComponentFauna:false,
-      opcionFlora:true,
-      verComponentFlora:false,
+      verComponentVolunPer: false,
+      opcionVolPer: true,
+      verComponentVolunEstud: false,
+      opcionVolEstud: true,
+      opcionActividad: true,
+      verComponentActividad: false,
+      opcionVolunActividad: true,
+      verComponentVoluntActividad: false,
+      opcionReserva: true,
+      verComponentReserva: false,
+      opcionFauna: true,
+      verComponentFauna: false,
+      opcionFlora: true,
+      verComponentFlora: false,
       bloquearDescarga: true,
-      verComponenteVoluntario:false,
-      fechaActual:'',
+      verComponenteVoluntario: false,
+      fechaActual: "",
     };
   },
   methods: {
@@ -442,8 +484,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+            orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: `ReportePersonas.pdf`,
@@ -456,8 +497,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+            orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteOrganizaciones.pdf",
@@ -470,8 +510,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+            orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteDonacionesNecesarias.pdf",
@@ -484,8 +523,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+           orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteDonacionesRecibidas.pdf",
@@ -498,8 +536,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+           orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteVoluntarioPersona.pdf",
@@ -512,8 +549,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+           orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteVoluntarioEstudiante.pdf",
@@ -526,8 +562,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+            orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteActividades.pdf",
@@ -540,8 +575,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+           orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteVoluntarioActividad.pdf",
@@ -554,23 +588,21 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+          orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteReservas.pdf",
         });
       });
     },
-    
+
     generateFaunaPdf() {
       let btn = document.getElementById("btnFauna");
       let page = document.getElementById("pageFauna");
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+             orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteFauna.pdf",
@@ -583,8 +615,7 @@ export default {
       btn.addEventListener("click", function () {
         html2PDF(page, {
           jsPDF: {
-            format: "a4",
-            width: 550 // was 7.5, max width of content on PDF
+          orientation: "portrait",
           },
           imageType: "image/jpeg",
           output: "ReporteFlora.pdf",
@@ -595,215 +626,212 @@ export default {
     verPersonasTabla() {
       this.verComponentePersonas = true;
       this.opcionOrganizacion = false;
-      this.opcionVolPer=false;
-      this.opcionVolEstud=false;
-      this.verComponentReserva=false;
-      this.opcionReserva=false;
-      this.opcionFauna=false;
-      this.opcionFlora=false;
-      this.opcionVolunActividad=false;
-      this.opcionActividad=false;
-      this.opcionDonativo=false;
-      this.opcionCatDonativo=false;
+      this.opcionVolPer = false;
+      this.opcionVolEstud = false;
+      this.verComponentReserva = false;
+      this.opcionReserva = false;
+      this.opcionFauna = false;
+      this.opcionFlora = false;
+      this.opcionVolunActividad = false;
+      this.opcionActividad = false;
+      this.opcionDonativo = false;
+      this.opcionCatDonativo = false;
     },
     //Muestra el componente de personas reporte
     verComponenteOrganizacionTabla() {
       this.verComponenteOrganizacion = true;
-      this.opcionPersona=false;
-      this.opcionVolPer=false;
-      this.opcionVolEstud=false;
-      this.verComponentReserva=false;
-      this.opcionReserva=false;
-      this.opcionFauna=false;
-      this.opcionFlora=false;
-      this.opcionVolunActividad=false;
-      this.opcionActividad=false;
-      this.opcionDonativo=false;
-      this.opcionCatDonativo=false;
+      this.opcionPersona = false;
+      this.opcionVolPer = false;
+      this.opcionVolEstud = false;
+      this.verComponentReserva = false;
+      this.opcionReserva = false;
+      this.opcionFauna = false;
+      this.opcionFlora = false;
+      this.opcionVolunActividad = false;
+      this.opcionActividad = false;
+      this.opcionDonativo = false;
+      this.opcionCatDonativo = false;
     },
 
     // DONATIVOS REQUERIDOS
-    verComponenteCatDonativoTabla(){
-      this.verComponenteCatDonativo=true;
-      this.opcionVolunActividad=false;
-      this.opcionDonativo=false;
+    verComponenteCatDonativoTabla() {
+      this.verComponenteCatDonativo = true;
+      this.opcionVolunActividad = false;
+      this.opcionDonativo = false;
       this.opcionVolPer = false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFlora=false;
-      this.opcionActividad=false;
-      this.opcionFauna=false;
-      this.opcionReserva=false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFlora = false;
+      this.opcionActividad = false;
+      this.opcionFauna = false;
+      this.opcionReserva = false;
     },
 
     // DONATIVOS Recibidos
-    verComponenteDonativoTabla(){
-      this.verComponentDonativo=true;
-      this.opcionCatDonativo=false;
+    verComponenteDonativoTabla() {
+      this.verComponentDonativo = true;
+      this.opcionCatDonativo = false;
       this.opcionVolPer = false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFlora=false;
-      this.opcionActividad=false;
-      this.opcionFauna=false;
-      this.opcionVolunActividad=false;
-      this.opcionReserva=false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFlora = false;
+      this.opcionActividad = false;
+      this.opcionFauna = false;
+      this.opcionVolunActividad = false;
+      this.opcionReserva = false;
     },
-
 
     verComponenteVolunPerTabla() {
       this.verComponentVolunPer = true;
       this.opcionVolPer = true;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionCatDonativo=false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFlora=false;
-      this.opcionActividad=false;
-      this.opcionFauna=false;
-      this.opcionVolunActividad=false;
-      this.opcionReserva=false;
-      this.opcionDonativo=false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionCatDonativo = false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFlora = false;
+      this.opcionActividad = false;
+      this.opcionFauna = false;
+      this.opcionVolunActividad = false;
+      this.opcionReserva = false;
+      this.opcionDonativo = false;
     },
     verComponenteVolunEstudTabla() {
-      this.verComponentVolunEstud=true;
+      this.verComponentVolunEstud = true;
       this.opcionVolPer = true;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionCatDonativo=false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFlora=false;
-      this.opcionActividad=false;
-      this.opcionFauna=false;
-      this.opcionVolunActividad=false;
-      this.opcionReserva=false;
-      this.opcionDonativo=false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionCatDonativo = false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFlora = false;
+      this.opcionActividad = false;
+      this.opcionFauna = false;
+      this.opcionVolunActividad = false;
+      this.opcionReserva = false;
+      this.opcionDonativo = false;
     },
     verComponenteActividadTabla() {
-      this.verComponentActividad=true;
+      this.verComponentActividad = true;
       this.opcionVolPer = false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionCatDonativo=false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFlora=false;
-      this.opcionFauna=false;
-      this.opcionVolunActividad=false;
-      this.opcionReserva=false;
-      this.opcionDonativo=false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionCatDonativo = false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFlora = false;
+      this.opcionFauna = false;
+      this.opcionVolunActividad = false;
+      this.opcionReserva = false;
+      this.opcionDonativo = false;
     },
-    verComponenteVolunActividadTabla(){
-      this.verComponentVoluntActividad=true;
+    verComponenteVolunActividadTabla() {
+      this.verComponentVoluntActividad = true;
       this.opcionVolPer = true;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionCatDonativo=false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFlora=false;
-      this.opcionFauna=false;
-      this.opcionReserva=false;
-      this.opcionDonativo=false;
-      this.opcionActividad=false;
-      this.opcionVolPer=false;
-    },
-    verComponenteReservaTabla(){
-      this.verComponentReserva=true;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionCatDonativo = false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFlora = false;
+      this.opcionFauna = false;
+      this.opcionReserva = false;
+      this.opcionDonativo = false;
+      this.opcionActividad = false;
       this.opcionVolPer = false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionCatDonativo=false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFlora=false;
-      this.opcionFauna=false;
-      this.opcionDonativo=false;
-      this.opcionActividad=false;
-      this.opcionVolPer=false;
-      this.opcionVolunActividad=false;
     },
-    verComponenteFaunaTabla(){
-      this.verComponentFauna=true;
+    verComponenteReservaTabla() {
+      this.verComponentReserva = true;
       this.opcionVolPer = false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionCatDonativo=false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFlora=false;
-      this.opcionDonativo=false;
-      this.opcionActividad=false;
-      this.opcionVolPer=false;
-      this.opcionReserva=false;
-      this.opcionVolunActividad=false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionCatDonativo = false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFlora = false;
+      this.opcionFauna = false;
+      this.opcionDonativo = false;
+      this.opcionActividad = false;
+      this.opcionVolPer = false;
+      this.opcionVolunActividad = false;
     },
-    verComponenteFloraTabla(){
-      this.verComponentFlora=true;
+    verComponenteFaunaTabla() {
+      this.verComponentFauna = true;
       this.opcionVolPer = false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionCatDonativo=false;
-      this.opcionOrganizacion=false;
-      this.opcionPersona=false;
-      this.opcionVolEstud=false;
-      this.opcionFauna=false;
-      this.opcionDonativo=false;
-      this.opcionActividad=false;
-      this.opcionVolPer=false;
-      this.opcionReserva=false;
-      this.opcionVolunActividad=false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionCatDonativo = false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFlora = false;
+      this.opcionDonativo = false;
+      this.opcionActividad = false;
+      this.opcionVolPer = false;
+      this.opcionReserva = false;
+      this.opcionVolunActividad = false;
+    },
+    verComponenteFloraTabla() {
+      this.verComponentFlora = true;
+      this.opcionVolPer = false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionCatDonativo = false;
+      this.opcionOrganizacion = false;
+      this.opcionPersona = false;
+      this.opcionVolEstud = false;
+      this.opcionFauna = false;
+      this.opcionDonativo = false;
+      this.opcionActividad = false;
+      this.opcionVolPer = false;
+      this.opcionReserva = false;
+      this.opcionVolunActividad = false;
     },
     //habilita el boton de descargar PDF
     habilitar() {
       this.bloquearDescarga = false;
     },
     Cancelar() {
-      this.verComponentePersonas= false;
-      this.opcionPersona= true;
-      this.verComponenteOrganizacion= false;
-      this.opcionCatDonativo=true;
-      this.verComponenteCatDonativo=false;
-      this.opcionDonativo=true;
-      this.verComponentDonativo=false;
-      this.opcionOrganizacion= true;
-      this.verComponentVolunPer=false;
-      this.opcionVolPer=true;
-      this.verComponentVolunEstud=false;
-      this.opcionVolEstud=true;
-      this.opcionActividad=true;
-      this.verComponentActividad=false;
-      this.opcionVolunActividad=true;
-      this.verComponentVoluntActividad=false;
-      this.opcionReserva=true;
-      this.verComponentReserva=false;
-      this.opcionFauna=true;
-      this.verComponentFauna=false;
-      this.opcionFlora=true;
-      this.verComponentFlora=false;
-      this.bloquearDescarga= true;
-      this.verComponenteVoluntario=false;
-      
+      this.verComponentePersonas = false;
+      this.opcionPersona = true;
+      this.verComponenteOrganizacion = false;
+      this.opcionCatDonativo = true;
+      this.verComponenteCatDonativo = false;
+      this.opcionDonativo = true;
+      this.verComponentDonativo = false;
+      this.opcionOrganizacion = true;
+      this.verComponentVolunPer = false;
+      this.opcionVolPer = true;
+      this.verComponentVolunEstud = false;
+      this.opcionVolEstud = true;
+      this.opcionActividad = true;
+      this.verComponentActividad = false;
+      this.opcionVolunActividad = true;
+      this.verComponentVoluntActividad = false;
+      this.opcionReserva = true;
+      this.verComponentReserva = false;
+      this.opcionFauna = true;
+      this.verComponentFauna = false;
+      this.opcionFlora = true;
+      this.verComponentFlora = false;
       this.bloquearDescarga = true;
-      
-      
+      this.verComponenteVoluntario = false;
+
+      this.bloquearDescarga = true;
     },
 
     ocultarTodo() {},
@@ -815,7 +843,7 @@ export default {
         .replace("Y", today.getFullYear())
         .replace("m", today.getMonth() + 1)
         .replace("d", today.getDate());
-        this.fechaActual = strDate;
+      this.fechaActual = strDate;
     },
   },
 };

@@ -28,7 +28,6 @@
                     <th>Organización Donante</th>
                     <th>Tipo donativo</th>
                     <th>Detalles de donativo</th>
-                    <th>Foto de donativo</th>
                     <th>Fecha de donativo</th>
                     <th>Estado de Donación</th>
                   </tr>
@@ -36,17 +35,10 @@
                   <tbody>
                   <tr v-for="donativo in donativos.data" :key="donativo.id">
                     <td>{{ donativo.id }}</td>
-                    <td>{{ donativo.idPersona }}</td>
-                    <td>{{ donativo.idOrganizacion }}</td>
-                    <td class="text-capitalize">{{ donativo.tipo }}</td>
-                    <td>{{ donativo.detalle | truncate(30, "...") }}</td>
-                    <td>
-                      <img
-                        v-bind:src="'/images/donativos/' + donativo.photo"
-                        width="50px"
-                        height="50px"
-                      />
-                    </td>
+                    <td>{{ donativo.identificacionPersona }}</td>
+                    <td>{{ donativo.identificacionOrganizacion }}</td>
+                    <td>{{ donativo.tipo }}</td>
+                    <td>{{ donativo.detalle}}</td>
                     <td>{{ donativo.fecha }}</td>
                     <td>{{ donativo.estado }}</td>
                   </tr>

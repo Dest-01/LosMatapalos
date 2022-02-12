@@ -7,7 +7,7 @@
     <div
       id="pageFlora"
       class="card-body table-responsive p-0"
-      style="width: 850px; color: black; background: white"
+      style="width: 1000px; color: black; background: white"
     >
       <div class="Encabezado">
         <h1>Sendero los Matapalos</h1>
@@ -28,7 +28,6 @@
                     <th>Nombre científico</th>
                     <th>Descripción</th>
                     <th>Tipo</th>
-                    <th>Imagen</th>
                     <th>Familia científico</th>
                     <th>Fecha registro</th>
                   </tr>
@@ -36,19 +35,12 @@
                 <tbody>
                   <tr v-for="Flora in flora.data" :key="Flora.id">
                     <td>{{ Flora.id }}</td>
-                    <td class="text-capitalize">{{ Flora.nom_comun }}</td>
-                    <td class="text-capitalize">{{ Flora.nom_cientifico }}</td>
-                    <td>{{ Flora.descripcion | truncate(30, "...") }}</td>
-                    <td class="text-capitalize">{{ Flora.tipo }}</td>
-                    <td>
-                      <img
-                        v-bind:src="'/images/flora/' + Flora.photo"
-                        width="50px"
-                        height="50px"
-                      />
-                    </td>
-                    <td class="text-capitalize">{{ Flora.fam_cientifica }}</td>
-                    <td class="text-capitalize">{{ Flora.fecha_registro }}</td>
+                    <td>{{ Flora.nom_comun }}</td>
+                    <td>{{ Flora.nom_cientifico }}</td>
+                    <td>{{ Flora.descripcion }}</td>
+                    <td>{{ Flora.tipo }}</td>
+                    <td>{{ Flora.fam_cientifica }}</td>
+                    <td>{{ Flora.fecha_registro }}</td>
                   </tr>
                 </tbody>
             </table>

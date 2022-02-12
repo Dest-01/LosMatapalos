@@ -26,7 +26,7 @@ class VoluntarioPersonaController extends BaseController
 
     public function obtenerCedula(Request $request)
     {
-        $filtro = $request->buscadorC;
+        $filtro = $request->buscador;
         $persona = Personas::where('identificacion', $filtro)->get();
         return $this->sendResponse($persona, 'Cedula si existe');
 
@@ -51,6 +51,14 @@ class VoluntarioPersonaController extends BaseController
 
         return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
     }
+
+    public function list()
+    {
+        $voluntarioPer = $this->voluntarioPersona->get();
+
+        return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
+    }
+
 
     public function cargarVoluntarios()
     {

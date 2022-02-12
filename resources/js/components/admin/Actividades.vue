@@ -26,6 +26,17 @@
               <h3 class="card-title">Lista de actividades</h3>
 
               <div class="card-tools">
+                   <div>
+                  <input
+                    @blur="filtrar()"
+                    v-model="filtrarBusqueda"
+                    class="form-control"
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar..."
+                  />
+                </div>
+                <div>
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
@@ -34,6 +45,7 @@
                   <i class="fa fa-plus-square"></i>
                   Agregar Nuevo
                 </button>
+                </div>
               </div>
             </div>
             <!-- /.card-header -->
@@ -54,11 +66,11 @@
                 <tbody>
                   <tr v-for="Actividad in Actividades.data" :key="Actividad.id">
                     <td>{{ Actividad.id }}</td>
-                    <td class="text-capitalize">{{ Actividad.nombre }}</td>
-                    <td class="text-capitalize">{{ Actividad.fecha }}</td>
-                    <td class="text-capitalize">{{ Actividad.hora }}</td>
+                    <td>{{ Actividad.nombre }}</td>
+                    <td>{{ Actividad.fecha }}</td>
+                    <td>{{ Actividad.hora }}</td>
                     <td>{{ Actividad.descripcion | truncate(30, "...") }}</td>
-                    <td class="text-capitalize">
+                    <td>
                       {{ Actividad.cantParticipantes }}
                     </td>
                     <td>
@@ -68,16 +80,23 @@
                         height="50px"
                       />
                     </td>
-                    <td class="text-capitalize">
+                    <td>
                       {{ Actividad.tipo }}
                     </td>
                     <td>
                       <a href="#" @click="editModal(Actividad)">
-                        <i class="fa fa-edit blue"></i>
+                        <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a href="#" @click="eliminarActividad(Actividad.id)">
-                        <i class="fa fa-trash red"></i>
+                        <i id="icono" class="fa fa-trash red"></i>
+                      </a>
+                      /
+                      <a
+                        href="#"
+                        @click="detailsModal(Actividad)"
+                      >
+                        <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
                   </tr>
@@ -252,7 +271,7 @@
                           class="preview my-3"
                           :src="previewImage"
                           alt=""
-                          width="100px"
+                          width="100%"
                         />
                       </div>
                     </div>
@@ -275,8 +294,8 @@
                     required
                   >
                     <option disabled value="">Seleccione un elemento</option>
-                    <option>Voluntarios</option>
-                    <option>Público</option>
+                    <option value="Voluntarios">Voluntarios</option>
+                    <option value="Público">Público</option>
                   </select>
 
                   <has-error :form="form" field="estado"></has-error>
@@ -307,6 +326,104 @@
           </div>
         </div>
       </div>
+            <!-- Modal de ver informacion -->
+      <div
+        class="modal fade"
+        id="ModalVer"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="ModalVer"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div id="modal-contentino" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles de la actividad</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div id="modal-body" class="modal-body">
+              <div id="inputsModal" class="form-group">
+                <label>Nombre de actividad</label>
+                <input
+                  v-model="form.nombre"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Fecha de actividad</label>
+                <input
+                  v-model="form.fecha"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+                 <div id="inputsModal" class="form-group">
+                <label>Hora de actividaad</label>
+                <input
+                  v-model="form.hora"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Descripción</label>
+                <textarea v-model="form.descripcion"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles">
+                  
+                </textarea>
+              </div>
+           
+              <div class="form-group">
+                <label>Foto de la actividad</label>
+                <img
+                  v-bind:src="'/images/actividades/' + form.imagen"
+                  width="100%"
+                  height="350px"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Cantidad de participantes</label>
+                <input
+                  v-model="form.cantParticipantes"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Tipo de actividad</label>
+                <input
+                  v-model="form.tipo"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--FIN DEL MODAL VER INFORMACION-->
     </div>
   </section>
 </template>
@@ -322,6 +439,9 @@ export default {
       message: "",
       imageInfos: [],
       Actividades: {},
+      ActividadesTodas: {},
+      verDetalles: true,
+      filtrarBusqueda: "",
       form: new Form({
         id: "",
         nombre: "",
@@ -354,6 +474,13 @@ export default {
           title: "ops...",
           text: "archivo muy grande",
         });
+      }
+    },
+    filtrar() {
+      if (this.filtrarBusqueda == "") {
+        this.cargarActividad();
+      } else if (this.filtrarBusqueda != "") {
+        this.Actividades.data = this.ActividadesFiltradas;
       }
     },
     limpiar() {
@@ -402,12 +529,19 @@ export default {
       this.previewImage = "";
       $("#addNew").modal("show");
     },
+      detailsModal(actividad) {
+      $("#ModalVer").modal("show");
+      this.form.fill(actividad);
+    },
 
     cargarActividad() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/actividad")
           .then(({ data }) => (this.Actividades = data.data));
+          axios
+          .get("/api/actividad/listar")
+          .then(({ data }) => (this.ActividadesTodas = data.data));
       }
     },
 
@@ -478,14 +612,92 @@ export default {
     },
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+    ActividadesFiltradas: function() {
+       return this.ActividadesTodas.filter((actividad) => {
+        return (
+          actividad.nombre
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          actividad.fecha
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          actividad.hora
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          actividad.descripcion
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+            actividad.tipo
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase())
+        );
       });
-    },
+    }
   },
 };
 </script>
 
-<style>
+<style scoped>
+.mostrar {
+  display: list-item;
+  opacity: 1;
+  background: rgba(121, 120, 120, 0.623);
+}
+#btnCancelar {
+  padding: 1px 5px;
+  margin: 1px 1px 1px 10px;
+}
+
+#icono {
+  font-size: 20px;
+}
+.card-tools {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.card-tools div {
+  padding: 10px;
+}
+.card-tools div button {
+  height: 36px;
+  font-size: 15px;
+}
+.card-title {
+  margin: 1px;
+  line-height: inherit;
+  float: left;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+.identitad {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+#modal-contentino {
+  width: 150%;
+}
+#modal-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#inputsModal {
+  width: 45%;
+  margin: 10px 15px;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: baseline;
+  border-top: 1px solid #dee2e6;
+}
+@media screen and (min-width: 900px) {
+  .modal-content {
+    width: 100%;
+  }
+}
 </style>

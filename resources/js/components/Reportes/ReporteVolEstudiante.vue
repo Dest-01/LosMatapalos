@@ -1,7 +1,7 @@
 <template>
   <div>
     <pagination
-      :data="voluntarioPer"
+      :data="voluntarioEst"
       @pagination-change-page="getResults"
     ></pagination>
     <div
@@ -28,7 +28,6 @@
                         <th>Id de voluntario</th>
                         <th>Carrera</th>
                         <th>Cantidad de actividades</th>
-                        <th>Foto</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,16 +46,6 @@
                           (el) => el.id == voluntarioestudiante.voluntariado_id
                         ).cantidad
                       }}
-                    </td>
-
-                    <td>
-                      <img
-                        v-bind:src="
-                          '/images/voluntariado/' + voluntarioestudiante.imagen
-                        "
-                        width="50px"
-                        height="50px"
-                      />
                     </td>
                     
                   </tr>

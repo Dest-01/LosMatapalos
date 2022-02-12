@@ -19,7 +19,7 @@ class CreateVoluntarioEstudiantesTable extends Migration
             $table->foreign("identificacion")->references("id")->on("personas")->onDelete("cascade")->onUpdate("cascade");
             $table->string('identificacionPersona')->nullable();
             $table->integer('voluntariado_id')->unsigned();
-            $table->foreign('voluntariado_id')->references('id')->on('voluntarios');
+            $table->foreign('voluntariado_id')->references('id')->on('voluntarios')->onDelete("cascade")->onUpdate("cascade");
             $table->string('carrera');
             $table->string('imagen');
             $table->timestamps();

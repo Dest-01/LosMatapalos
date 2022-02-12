@@ -166,6 +166,7 @@
                       required
                       :disabled="bloquearConsulta"
                       maxlength="18"
+                      placeholder="Escriba la identificación..."
                     />
                     <button
                       type="button"
@@ -206,6 +207,7 @@
                       id="cantidaPersonasReservacion"
                       name="cantidaPersonasReservacion"
                       v-model="formReserva.cantidad"
+                      placeholder="0"
                       type="number"
                       required
                       :disabled="bloquearCampos"
@@ -270,6 +272,7 @@
                       id="horaFinReservacion"
                       name="horaFinReservacion"
                       v-model="formReserva.horaFin"
+                      placeholder="09:00"
                       type="time"
                       required
                       :disabled="bloqueraHoras"
@@ -329,10 +332,266 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!--Modal de personas------------------------------------------------------------------------------->
     <div
       class="modal fade"
-      id="modal"
+      id="modalPersona"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Registro Persona</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-mdb-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="group">
+              <label>Tipo de identificación</label>
+              <i class="fas fa-bars iconoInput_modal"></i>
+              <select
+                class="input_modal"
+                v-model="tipoIndenteficacion"
+                :class="{
+                  'is-invalid': formPersona.errors.has('identificacion'),
+                }"
+                @change="tiposDeIndentificacon(), cambioSelect()"
+              >
+                <option disabled value="">Seleccione un tipo</option>
+                <option value="Cedula Nacional">Cédula Nacional</option>
+                <option value="Cedula Residencial">Cedula Residencial</option>
+                <option value="Pasaporte">Pasaporte</option>
+              </select>
+            </div>
+            <!---------------------------------------------------------->
+            <!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
+            <!---------------------------------------------------------->
+            <div v-show="verIdentificacion" class="group">
+              <div v-show="CedulaNacional" class="group identitad">
+                <i
+                  class="fas fa-id-card iconoInput_modal"
+                  style="margin-top: 6px; left: -2px"
+                ></i>
+                <input
+                  @blur="validarCedulaNacional()"
+                  v-model="formPersona.identificacion"
+                  :disabled="bloquearInputId"
+                  type="text"
+                  name="identificacion"
+                  class="input_modal"
+                  :class="{
+                    'is-invalid': formPersona.errors.has('identificacion'),
+                  }"
+                  placeholder="Formato #-####-####"
+                  id="nacional"
+                  onchange="validarCedulaN()"
+                />
+                <button
+                  id="btnCancelar"
+                  type="button"
+                  class="btn btn-danger"
+                  :disabled="bloquearCancelar"
+                  @click="bloquearCedula()"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+                <has-error
+                  :form="formPersona"
+                  field="identificacion"
+                ></has-error>
+              </div>
+
+              <div v-show="CedulaResidencial" class="group identitad">
+                <i
+                  class="fas fa-id-card iconoInput_modal"
+                  style="margin-top: 6px; left: -2px"
+                ></i>
+                <input
+                  @blur="validarCedulaResidencial()"
+                  v-model="formPersona.identificacion"
+                  id="residencial"
+                  :disabled="bloquearInputIdR"
+                  type="text"
+                  name="identificacion"
+                  class="input_modal"
+                  :class="{
+                    'is-invalid': formPersona.errors.has('identificacion'),
+                  }"
+                  placeholder="Formato de 10 dígitos"
+                  onchange="validateResidencial()"
+                />
+                <has-error
+                  :form="formPersona"
+                  field="identificacion"
+                ></has-error>
+                <button
+                  id="btnCancelar"
+                  type="button"
+                  class="btn btn-danger"
+                  :disabled="bloquearCancelar"
+                  @click="bloquearCedula()"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+
+              <div v-show="Pasaporte" class="group identitad">
+                <i
+                  class="fas fa-id-card iconoInput_modal"
+                  style="margin-top: 6px; left: -2px"
+                ></i>
+                <input
+                  id="pasaporte"
+                  @blur="validarPasaporte()"
+                  v-model="formPersona.identificacion"
+                  :disabled="bloquearInputIdP"
+                  type="text"
+                  name="identificacion"
+                  class="input_modal"
+                  :class="{
+                    'is-invalid': formPersona.errors.has('identificacion'),
+                  }"
+                  placeholder="Formato de 11 a 12 dígitos"
+                  onchange="validatePasaporte()"
+                />
+                <has-error
+                  :form="formPersona"
+                  field="identificacion"
+                ></has-error>
+                <button
+                  id="btnCancelar"
+                  type="button"
+                  class="btn btn-danger"
+                  :disabled="bloquearCancelar"
+                  @click="bloquearCedula()"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="group">
+                <label>Nombre</label>
+                <i class="fas fa-user-circle iconoInput_modal"></i>
+                <input
+                  v-model="formPersona.nombre"
+                  type="text"
+                  name="nombre"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formPersona.errors.has('nombre') }"
+                  placeholder="Escribar el nombre..."
+                  minlength="3"
+                  maxlength="20"
+                  required
+                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
+                />
+                <has-error :form="formPersona" field="nombre"></has-error>
+              </div>
+
+              <div class="group">
+                <label>Primer Apellido</label>
+                <i class="fas fa-user-circle iconoInput_modal"></i>
+                <input
+                  v-model="formPersona.apellido1"
+                  type="text"
+                  name="apellido1"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formPersona.errors.has('apellido1') }"
+                  placeholder="Escriba el primer apellido..."
+                  minlength="3"
+                  maxlength="20"
+                  required
+                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
+                />
+                <has-error :form="formPersona" field="apellido1"></has-error>
+              </div>
+
+              <div class="group">
+                <label>Segundo Apellido</label>
+                <i class="fas fa-user-circle iconoInput_modal"></i>
+                <input
+                  v-model="formPersona.apellido2"
+                  type="text"
+                  name="apellido2"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formPersona.errors.has('apellido2') }"
+                  placeholder="Escriba el segundo apellido..."
+                  minlength="3"
+                  maxlength="20"
+                  required
+                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
+                />
+                <has-error :form="formPersona" field="apellido2"></has-error>
+              </div>
+
+              <div class="group">
+                <label>Teléfono</label>
+                <i class="fas fa-mobile-alt iconoInput_modal"></i>
+                <input
+                  v-model="formPersona.telefono"
+                  type="tel"
+                  name="telefono"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formPersona.errors.has('telefono') }"
+                  id="phone"
+                  size="8"
+                  min="10000000"
+                  placeholder="Escriba los 8 dígitos..."
+                  pattern="[1-9][0-9]{7}"
+                  required
+                />
+                <has-error :form="formPersona" field="telefono"></has-error>
+              </div>
+              <div class="group">
+                <label>Correo</label>
+                <i class="fas fa-at iconoInput_modal"></i>
+                <input
+                  v-model="formPersona.correo"
+                  type="email"
+                  name="correo"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formPersona.errors.has('correo') }"
+                  placeholder="ejemplo@gmail.com"
+                  minlength="3"
+                  maxlength="100"
+                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                  required
+                />
+                <has-error :form="formPersona" field="correo"></has-error>
+              </div>
+            </div>
+            <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-mdb-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="crearPersona()"
+              id="botonPersonaRegistro"
+              :disabled="registroBloquear"
+            >
+              Registrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-------------------------------------------------------------------------------------->
+    <!------------------------------MODAL DE ORGANIZACION------------------------------------------------->
+    <div
+      class="modal fade"
+      id="modalOrganizacion"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -341,219 +600,22 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              {{ tituloModal }}
+              Registro Organización
             </h5>
             <button
               type="button"
               class="btn-close"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
               aria-label="Close"
-              @click="limpiarTodo()"
             ></button>
           </div>
-          <form>
-            <div class="modal-body">
-              <!-- MODAL DE PERSONA-->
-              <div v-show="soloPersona" class="group">
-                <label>Tipo de identificación</label>
-                <i class="fas fa-bars iconoInput_modal"></i>
-                <select
-                  class="input_modal"
-                  v-model="tipoIndenteficacion"
-                  :class="{
-                    'is-invalid': formReserva.errors.has('identificacion'),
-                  }"
-                  @change="tipoDeIndentificacon"
-                >
-                  <option disabled value="">Seleccione un tipo</option>
-                  <option value="Cedula Nacional">Cédula Nacional</option>
-                  <option value="Cedula Residencial">Cedula Residencial</option>
-                  <option value="Pasaporte">Pasaporte</option>
-                </select>
-              </div>
-
-              <div v-show="soloPersona" class="group">
-                <div v-show="CedulaNacional" class="group identitad">
-                  <i
-                    class="fas fa-id-card iconoInput_modal"
-                    style="margin-top: 6px; left: -2px"
-                  ></i>
-                  <input
-                    style="padding: 20px 0 0 26px;"
-                    v-model="formPersona.identificacion"
-                    @blur="validarCedulaNacional"
-                    type="text"
-                    name="identificacion"
-                    class="input_modal"
-                    :disabled="CedulaBloqueo2"
-                    :class="{
-                      'is-invalid': formPersona.errors.has('identificacion'),
-                    }"
-                    placeholder="Formato #-####-####"
-                    id="inputNacional"
-                    onchange="validaCedulaNacional()"
-                  />
-                  <button
-                    id="botonCancelar"
-                    onclick="cancelarCedula()"
-                    class="btn btn-danger"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
-                  <has-error
-                    :form="formPersona"
-                    field="identificacion"
-                  ></has-error>
-                </div>
-                <div v-show="CedulaResidencial" class="group identitad">
-                  <i class="fas fa-id-card iconoInput_modal" style="margin-top: 6px; left: -2px"></i>
-                  <input
-                    @blur="validarCedulaResidencial"
-                    style="padding: 20px 0 0 26px;"
-                    v-model="formPersona.identificacion"
-                    type="text"
-                    name="identificacion"
-                    class="input_modal"
-                    :class="{
-                      'is-invalid': formPersona.errors.has('identificacion'),
-                    }"
-                    placeholder="Formato de 10 dígitos"
-                    id="inputResidencial"
-                    onchange="validaCedulaResidencial()"
-                  />
-                  <button
-                    id="botonCancelar_residencial"
-                    onclick="cancelarCedulaResidencial()"
-                    class="btn btn-danger"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
-                  <has-error
-                    :form="formPersona"
-                    field="identificacion"
-                  ></has-error>
-                </div>
-
-                <div v-show="Pasaporte" class="group identitad">
-                  <i class="fas fa-id-card iconoInput_modal " style="margin-top: 6px; left: -2px"></i>
-                  <input
-                    @blur="validarPasaporte"
-                    style="padding: 20px 0 0 26px;"
-                    v-model="formPersona.identificacion"
-                    type="text"
-                    name="identificacion"
-                    class="input_modal"
-                    :class="{
-                      'is-invalid': formPersona.errors.has('identificacion'),
-                    }"
-                    placeholder="Formato de 11 a 12 dígitos"
-                    id="inputPasaporte"
-                    onchange="validarPasaporte()"
-                  />
-                  <button
-                    id="botonCancelar_pasaporte"
-                    onclick="cancelarPasaporte()"
-                    class="btn btn-danger"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
-                  <has-error
-                    :form="formPersona"
-                    field="identificacion"
-                  ></has-error>
-                </div>
-              </div>
-              <div v-show="soloPersona" class="group">
-                <label>Nombre</label>
-                <i class="fas fa-user-circle iconoInput_modal"></i>
-                <input
-                  class="input_modal"
-                  name="nombre"
-                  v-model="formPersona.nombre"
-                  type="text"
-                  :class="{ 'is-invalid': formPersona.errors.has('nombre') }"
-                  placeholder="Escriba su nombre"
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formPersona"
-                  field="nombre"
-                ></has-error>
-              </div>
-              <div v-show="soloPersona" class="group">
-                <label>Primer Apellido</label>
-                <i class="fas fa-user-circle iconoInput_modal"></i>
-                <input
-                  class="input_modal"
-                  name="apellido1"
-                  v-model="formPersona.apellido1"
-                  type="text"
-                  :class="{ 'is-invalid': formPersona.errors.has('apellido1') }"
-                  placeholder="Escriba su primer apellido"
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formPersona"
-                  field="apellido1"
-                ></has-error>
-              </div>
-              <div v-show="soloPersona" class="group">
-                <label>Segundo Apellido</label>
-                <i class="fas fa-user-circle iconoInput_modal"></i>
-                <input
-                  class="input_modal"
-                  name="apellido2"
-                  v-model="formPersona.apellido2"
-                  type="text"
-                  :class="{ 'is-invalid': formPersona.errors.has('apellido2') }"
-                  placeholder="Escriba su segundo apellido"
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formPersona"
-                  field="apellido2"
-                ></has-error>
-              </div>
-              <div v-show="soloPersona" class="group">
-                <label>Telefono</label>
-                <i class="fas fa-mobile-alt iconoInput_modal"></i>
-                <input
-                  class="input_modal"
-                  name="telefono"
-                  v-model="formPersona.telefono"
-                  type="number"
-                  :class="{ 'is-invalid': formPersona.errors.has('telefono') }"
-                  placeholder="#### ####"
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formPersona"
-                  field="telefono"
-                ></has-error>
-              </div>
-
-              <div v-show="soloPersona" class="group">
-                <label>Email</label>
-                <i class="fas fa-at iconoInput_modal"></i>
-                <input
-                  class="input_modal"
-                  name="correoModal"
-                  v-model="formPersona.correo"
-                  type="text"
-                  :class="{ 'is-invalid': formPersona.errors.has('correo') }"
-                  placeholder="ejemplo@gmail.com"
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formPersona"
-                  field="correo"
-                ></has-error>
-              </div>
-              <!-- FIN DE MODAL DE PERSONA -->
-              <!-- MODAL DE ORGANIZACION -->
-              <div v-show="soloOrganizacion" class="group">
+          <div class="modal-body">
+                         <div class="group">
                 <label>Cédula organización</label>
-                <i class="fas fa-id-card iconoInput_modal" style="left: -2px;"></i>
+                <i
+                  class="fas fa-id-card iconoInput_modal"
+                  style="left: -2px"
+                ></i>
                 <input
                   class="input_modal"
                   v-model="formOrganizacion.identificacion"
@@ -562,7 +624,7 @@
                   :class="{
                     'is-invalid': formOrganizacion.errors.has('identificacion'),
                   }"
-                  placeholder="#-###-######"
+                  placeholder="Formato: #-###-######"
                 />
                 <has-error
                   style="top: 80px"
@@ -570,7 +632,7 @@
                   field="identificacion"
                 ></has-error>
               </div>
-              <div v-show="soloOrganizacion" class="group">
+              <div class="group">
                 <label>Nombre de la organización</label>
                 <i class="fas fa-user-circle iconoInput_modal"></i>
                 <input
@@ -581,7 +643,7 @@
                   :class="{
                     'is-invalid': formOrganizacion.errors.has('nombre'),
                   }"
-                  placeholder="Nombre de la organización"
+                  placeholder="Escriba el nombre de la organización"
                 />
                 <has-error
                   style="top: 80px"
@@ -589,7 +651,7 @@
                   field="nombre"
                 ></has-error>
               </div>
-              <div v-show="soloOrganizacion" class="group">
+              <div class="group">
                 <i class="fas fa-mobile-alt iconoInput_modal"></i>
                 <label>Teléfono de la organización</label>
                 <input
@@ -600,7 +662,7 @@
                   :class="{
                     'is-invalid': formOrganizacion.errors.has('telefono'),
                   }"
-                  placeholder="#### ####"
+                  placeholder="Escriba los 8 dígitos..."
                 />
                 <has-error
                   style="top: 80px"
@@ -609,7 +671,7 @@
                 ></has-error>
               </div>
 
-              <div v-show="soloOrganizacion" class="group">
+              <div class="group">
                 <label>Email de la organización</label>
                 <i class="fas fa-at iconoInput_modal"></i>
                 <input
@@ -628,45 +690,52 @@
                   field="correo"
                 ></has-error>
               </div>
-              <!-- FIN DE MODAL DE ORGANIZACION -->
-              <!-- MODAL DE GRUPO -->
-              <div v-show="soloGrupo" class="group">
-                <input type="text" class="input_modal" required />
-                <label>Numero de grupo</label>
-              </div>
-              <!-- FIN DE MODAL DE GRUPO -->
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-dismiss="modal"
-                @click="limpiarTodo()"
-              >
-                Cancelar
-              </button>
-              <button
-                type="button"
-                v-show="soloPersona"
-                class="btn btn-success"
-                data-bs-dismiss="modal"
-                @click="crearPersona"
-                id="botonPersonaRegistro"
-                :disabled="registrarPersonasBoton"
-              >
-                Registrar
-              </button>
-              <button
-                type="button"
-                v-show="soloOrganizacion"
-                class="btn btn-success"
-                data-bs-dismiss="modal"
-                @click="crearOrganizacion"
-              >
-                Registrar
-              </button>
-            </div>
-          </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-mdb-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button type="button" class="btn btn-primary"  @click="crearOrganizacion()">Registrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!------------------------------MODAL DE ORGANIZACION------------------------------------------------->
+    <div
+      class="modal fade"
+      id="modalGrupo"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Registro Grupo</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-mdb-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h1>modal Grupo</h1>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-mdb-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
         </div>
       </div>
     </div>
@@ -678,32 +747,28 @@ export default {
   name: "ContactUs",
   data() {
     return {
-      bloqueraHoras: true,
-      bloquearCampos: true,
-      bloquearConsulta: false,
-      bloquearReservar: true,
-      bloquearterminos: true,
-      soloPersona: false,
-      soloOrganizacion: false,
-      soloGrupo: false,
-      CedulaBloqueo: false,
-      CedulaBloqueo2: false,
-      CedulaResidencial: false,
-      CedulaNacional: false,
-      AceptarTerminos: false,
+      bloqueraHoras: true, //Bloqueamos las horas para que esten de acuerdo al horario
+      bloquearCampos: true, //Bloqueamos los cantidad, fecha y el horario
+      bloquearConsulta: false, //Bloqueamos el campo de consulta y su boton
+      bloquearReservar: true, //Bloqueamos el boton de reserva hasta que acepte los terminos
+      bloquearterminos: true, //Bloqueamos el check de aceptar los terminos
+      AceptarTerminos: false, //Para modificar el valor del check de terminos
       CedulaResidencial: false,
       CedulaNacional: false,
       Pasaporte: false,
-      registro: false,
-      registrarPersonasBoton: true,
-      cancelarInputCedula: false,
       tipoIndenteficacion: "",
-      tituloModal: "",
-      persona: {},
-      organizacion: {},
-      grupo: {},
       mensajeExistencia: "",
       mensajeNoExistencia: "",
+      verIdentificacion: true,
+      registroBloquear: true, //Bloquear el boton para registrar
+      bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
+      bloquearInputId: false, //Bloquear el inuput de cedula
+      bloquearInputIdR: false, //Bloquear el input de residencial
+      bloquearInputIdP: false, //Bloquear el input de Pasaporte
+      persona: {}, //Array de persona
+      organizacion: {}, //array de organizacion
+      grupo: {}, //array de grupo
+
       formReserva: new Form({
         id: "",
         idPersona: "",
@@ -739,35 +804,64 @@ export default {
     };
   },
   methods: {
+    /*////////////////////////////////////////////////////////////*/
+    /*-------------------------Validaciones----------------------*/
     validarCedulaNacional() {
       if (/^[1-9]-\d{4}-\d{4}$/.test(this.formPersona.identificacion)) {
-        this.registrarPersonasBoton = false;
+        this.bloquearInputId = true;
+        this.registroBloquear = false;
+        this.bloquearCancelar = false;
         return;
       } else {
-        this.registrarPersonasBoton = true;
+        this.bloquearInputId = false;
+        this.registroBloquear = true;
+        this.bloquearCancelar = true;
         return;
       }
     },
     validarCedulaResidencial() {
-      if (/^\d{10}$/.test(this.formPersona.identificacion)) {
-        this.registrarPersonasBoton = false;
+      if (/^[1-9]\d{9}$/.test(this.formPersona.identificacion)) {
+        this.bloquearInputIdR = true;
+        this.registroBloquear = false;
+        this.bloquearCancelar = false;
         return;
       } else {
-        this.registrarPersonasBoton = true;
+        this.bloquearInputIdR = false;
+        this.registroBloquear = true;
+        this.bloquearCancelar = true;
         return;
       }
     },
     validarPasaporte() {
       if (/^\d{11,12}$/.test(this.formPersona.identificacion)) {
-        this.registrarPersonasBoton = false;
+        this.bloquearInputIdP = true;
+        this.registroBloquear = false;
+        this.bloquearCancelar = false;
         return;
       } else {
-        this.registrarPersonasBoton = true;
+        this.bloquearInputIdP = false;
+        this.registroBloquear = true;
+        this.bloquearCancelar = true;
         return;
       }
     },
+    bloquearCedula() {
+      this.formPersona.identificacion = "";
+      this.bloquearInputId = false; //Desbloqueamos el input del id
+      this.bloquearInputIdR = false;
+      this.bloquearInputIdP = false;
+      this.registroBloquear = true; //Bloqueamos el boton de registrar
+      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
+    },
+    cambioSelect() {
+      this.bloquearInputId = false; //Desbloqueamos el input del id
+      this.bloquearInputIdR = false;
+      this.bloquearInputIdP = false;
+      this.registroBloquear = true; //Bloqueamos el boton de registrar
+      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
+    },
 
-    tipoDeIndentificacon() {
+    tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
         this.CedulaNacional = true;
         this.Pasaporte = false;
@@ -786,29 +880,20 @@ export default {
         this.formPersona.identificacion = "";
       }
     },
+
     modalPersona() {
-      var modal = document.getElementById("modal");
-      new bootstrap.Modal(modal).show();
-      this.soloPersona = true;
-      this.soloOrganizacion = false;
-      this.soloGrupo = false;
-      this.tituloModal = "Registro de persona";
+      $("#modalPersona").modal("show");
+      this.formPersona.reset();
+      this.formPersona.errors.clear();
+      this.bloquearCedula();
     },
     modalOrganizacion() {
-      var modal = document.getElementById("modal");
-      new bootstrap.Modal(modal).show();
-      this.soloPersona = false;
-      this.soloOrganizacion = true;
-      this.soloGrupo = false;
-      this.tituloModal = "Registro de organizacion";
+      $("#modalOrganizacion").modal("show");
+      this.formOrganizacion.reset();
+      this.formOrganizacion.errors.clear();
     },
     modalGrupo() {
-      var modal = document.getElementById("modal");
-      new bootstrap.Modal(modal).show();
-      this.soloPersona = false;
-      this.soloOrganizacion = false;
-      this.soloGrupo = true;
-      this.tituloModal = "Registro de grupo";
+      $("#modalGrupo").modal("show");
     },
     cancelarConsulta() {
       this.formReserva.reset();
@@ -827,55 +912,44 @@ export default {
         this.bloquearReservar = false;
       }
     },
-    limpiarTodo() {
-      this.formPersona.reset();
-      this.formPersona.errors.clear();
-      this.formOrganizacion.reset();
-      this.formOrganizacion.errors.clear();
-    },
-    siExiste() {
-      for (let i = 0; i < this.persona.length; i++) {
-        if (this.persona[i].identificacion == this.formReserva.identificacion) {
-          this.mensajeExistencia = "Si esta registrado";
-          this.mensajeNoExistencia = "";
-          this.bloquearCampos = false;
-          this.bloquearConsulta = true;
-          this.formReserva.idPersona = this.persona[i].id;
-          this.formReserva.identificacionPersona =
-            this.persona[i].identificacion;
-          this.bloquearterminos = false;
-        }
-      }
-      for (let i = 0; i < this.organizacion.length; i++) {
-        if (
-          this.organizacion[i].identificacion == this.formReserva.identificacion
-        ) {
-          this.mensajeExistencia = "Si esta registrado";
-          this.mensajeNoExistencia = "";
-          this.bloquearCampos = false;
-          this.bloquearConsulta = true;
-          this.formReserva.idOrganizacion = this.organizacion[i].id;
-          this.formReserva.identificacionOrganizacion =
-            this.organizacion[i].identificacion;
-          this.bloquearterminos = false;
-        }
+    crearPersona() {
+      if (this.formPersona.identificacion != "") {
+        this.formPersona
+          .post("/api/reservarCliente/persona", {
+            params: { identificacion: this.formPersona.identificacion },
+          })
+          .then((response) => {
+            if (response.data.success == false) {
+              Swal.fire("Error!", "Cedula ya existe!", "error");
+            } else {
+              Swal.fire("Registrado!", response.data.message, "success");
+              $("#modalPersona").modal("hide");
+            }
+          })
+          .catch((error) => {
+            Swal.fire("Error!", "Complete los campos!", "error");
+          });
       }
     },
-    noExiste() {
-      if (this.formReserva.identificacion == "") {
-        this.mensajeExistencia = "";
-        this.mensajeNoExistencia =
-          "Campo vacio, por favor digite la información";
-        this.bloquearCampos = true;
-        this.bloquearConsulta = false;
-      }
-      if (this.persona.length == 0 && this.organizacion.length == 0) {
-        this.mensajeExistencia = "";
-        this.mensajeNoExistencia = "No esta registrado";
-        this.bloquearCampos = true;
-        this.bloquearConsulta = false;
-      }
+
+    crearOrganizacion() {
+      this.formOrganizacion
+        .post("/api/reservarCliente/organizacion", {
+          params: { identificacion: this.formOrganizacion.identificacion },
+        })
+        .then((response) => {
+          if (response.data.success == false) {
+            Swal.fire("Error!", "Cedula ya existe!", "error");
+          } else {
+            Swal.fire("Registrado!", response.data.message, "success");
+            $("#modalOrganizacion").modal("hide");
+          }
+        })
+        .catch((error) => {
+          Swal.fire("Error!", "Complete los campos!", "error");
+        });
     },
+
     consultarDatos() {
       this.formReserva
         .get("/api/reservarCliente/verificar", {
@@ -895,42 +969,6 @@ export default {
         .then((response) => {
           this.siExiste();
           this.noExiste();
-        });
-    },
-    crearPersona() {
-      this.formPersona
-        .post("/api/reservarCliente/persona", {
-          params: { id: this.formPersona.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
-            Swal.fire("Error!", "Cedula ya existe!", "error");
-          } else {
-            Swal.fire("Registrado!", response.data.message, "success");
-            this.limpiarTodo();
-          }
-        })
-        .catch((error) => {
-          Swal.fire("Error!", "Complete los campos!", "error");
-        });
-    },
-
-    crearOrganizacion() {
-      this.formOrganizacion
-        .post("/api/reservarCliente/organizacion", {
-          params: { id: this.formOrganizacion.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
-            Swal.fire("Error!", "Cedula ya existe!", "error");
-          } else {
-            $("#addNew").modal("hide");
-            Swal.fire("Registrado!", response.data.message, "success");
-            this.limpiarTodo();
-          }
-        })
-        .catch((error) => {
-          Swal.fire("Error!", "Complete los campos!", "error");
         });
     },
 
@@ -991,7 +1029,7 @@ export default {
     this.$Progress.finish();
   },
   computed: {},
-    mounted() {
+  mounted() {
     const plugin = document.createElement("script");
     plugin.setAttribute("src", "/js/validacionesReservacion.js");
     plugin.async = true;
@@ -1010,6 +1048,17 @@ export default {
 }
 .ValidacionBuena {
   border-bottom: 3px solid green;
+}
+
+#nacional,
+#residencial,
+#pasaporte {
+  width: 90%;
+}
+#btnCancelar {
+  width: 35px;
+  height: 35px;
+  padding: 5px;
 }
 
 #botonCancelar {
@@ -1055,11 +1104,11 @@ export default {
   animation-fill-mode: forwards;
   transition: opacity 3s;
 }
-@keyframes introAparece{
-  0%{
+@keyframes introAparece {
+  0% {
     opacity: 0;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
@@ -1083,11 +1132,11 @@ export default {
   left: -45%;
 }
 
-@keyframes aparecerCard{
-  0%{
+@keyframes aparecerCard {
+  0% {
     left: -45%;
   }
-  100%{
+  100% {
     left: 0;
   }
 }
@@ -1152,6 +1201,11 @@ td {
   justify-content: center;
   position: relative;
   padding: 3px;
+}
+.identitad {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .group select {
   outline: none;
@@ -1239,7 +1293,6 @@ span a {
 .group input {
   border: none;
   border-bottom: 1px solid #757575;
-  text-transform: capitalize;
   border-bottom: 2px solid rgb(204, 200, 200);
   transition: border 0.5s;
 }
