@@ -41,8 +41,8 @@ class PersonasRequest extends FormRequest
             'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'telefono' => 'required|regex:/^[1-9]\d{7}$/',                           
-            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|min:4|max:100',                                                     
+            'telefono' => 'required|regex:/^[2-9]\d{3}\d{4}$/',
+            'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',                                                    
         ];
     }
 
@@ -58,8 +58,8 @@ class PersonasRequest extends FormRequest
             'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'telefono' => 'required|regex:/^[1-9]\d{7}$/',                           
-            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|min:4|max:100',                                                  
+            'telefono' => 'required|regex:/^[2-9]\d{3}\d{4}$/',
+            'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',                                              
         ];
     }
 
@@ -71,7 +71,7 @@ class PersonasRequest extends FormRequest
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
             'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 20',
             'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 20',
-            'telefono.*' => 'Teléfono se requiere, mínimo 8 números',
+            'telefono.*' => 'Teléfono se requiere, 8 dígitos',
             'correo.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
         ];
     }

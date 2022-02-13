@@ -34,7 +34,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Donaciones</span>
-                <span class="info-box-number">{{ totalDonaciones }}</span>
+                <span class="info-box-number">Total: {{ totalDonaciones }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -49,7 +49,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Reservaciones</span>
-                <span class="info-box-number">{{ totalReservaciones }}</span>
+                <span class="info-box-number">Total: {{ totalReservaciones }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -68,7 +68,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Actividades</span>
-                <span class="info-box-number">{{ totalActividades }}</span>
+                <span class="info-box-number">Total: {{ totalActividades }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -83,7 +83,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Personas</span>
-                <span class="info-box-number">{{ totalPersonas }}</span>
+                <span class="info-box-number">Total: {{ totalPersonas }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -188,7 +188,7 @@
               <table class="table m-0">
                 <thead>
                   <tr>
-                    <th>Nombre</th>
+                    <th>Identificación</th>
                     <th>Fecha</th>
                     <th>Tipo</th>
                   </tr>

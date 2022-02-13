@@ -26,15 +26,27 @@
               <h3 class="card-title">Listado de los participantes</h3>
 
               <div class="card-tools">
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="newModal"
-                  onclick="esconder()"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Agregar Participante
-                </button>
+                <div>
+                  <input
+                   v-on:keyup="filtrar()"
+                    v-model="filtrarBusqueda"
+                    class="form-control"
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar..."
+                  />
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary"
+                    @click="newModal"
+                    onclick="limpiarCampo()"
+                  >
+                    <i class="fa fa-plus-square"></i>
+                    Agregar participante
+                  </button>
+                </div>
               </div>
             </div>
             <!-- /.card-header -->
@@ -47,30 +59,30 @@
                     <th>Primer Apellido</th>
                     <th>Segundo Apellido</th>
                     <th>Nacionalidad</th>
-
                     <th>Funciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    v-for="participante in participantes.data"
-                    :key="participante.id"
-                  >
-                    <td>{{ participante.identificacion }}</td>
-                    <td class="text-capitalize">{{ participante.nombre }}</td>
-                    <td>{{ participante.apellido1 }}</td>
-                    <td>{{ participante.apellido2 }}</td>
-                    <td>{{ participante.nacionalidad }}</td>
+                  <tr v-for="persona in personas.data" :key="persona.id">
+                    <td>{{ persona.identificacion }}</td>
+                    <td>{{ persona.nombre }}</td>
+                    <td>{{ persona.apellido1 }}</td>
+                    <td>{{ persona.apellido2 }}</td>
+                    <td>{{ persona.nacionalidad }}</td>
                     <td>
-                      <a href="#" @click="editModal(participante)">
-                        <i class="fa fa-edit blue"></i>
+                      <a href="#" @click="editModal(persona)">
+                        <i id="icono" class="fa fa-edit blue"></i>
+                      </a>
+                      /
+                      <a href="#" @click="eliminarPersona(persona.id)">
+                        <i id="icono" class="fa fa-trash red"></i>
                       </a>
                       /
                       <a
                         href="#"
-                        @click="eliminarParticipante(participante.id)"
+                        @click="detailsModal(persona)"
                       >
-                        <i class="fa fa-trash red"></i>
+                        <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
                   </tr>
@@ -80,7 +92,7 @@
             <!-- /.card-body -->
             <div class="card-footer">
               <pagination
-                :data="participantes"
+                :data="personas"
                 @pagination-change-page="getResults"
               ></pagination>
             </div>
@@ -125,18 +137,16 @@
             <!-- <form @submit.prevent="createUser"> -->
 
             <form
-              @submit.prevent="
-                editmode ? actualizarParticipantes() : crearParticipante()
-              "
+              @submit.prevent="editmode ? actualizarPersona() : crearPersona()"
             >
               <div class="modal-body">
-                                <div class="form-group">
+                <div v-show="verIdentificacion" class="form-group">
                   <label>Tipo de identificación</label>
                   <select
                     class="form-control"
                     v-model="tipoIndenteficacion"
                     :class="{ 'is-invalid': form.errors.has('identificacion') }"
-                    @change="tipoDeIndentificacon"
+                    @change="tiposDeIndentificacon(), cambioSelect()"
                   >
                     <option disabled value="">Seleccione un tipo</option>
                     <option value="Cedula Nacional">Cédula Nacional</option>
@@ -146,11 +156,15 @@
                     <option value="Pasaporte">Pasaporte</option>
                   </select>
                 </div>
-
-                <div class="form-group ocultar">
-                  <div v-show="CedulaNacional" class="form-group">
+                <!---------------------------------------------------------->
+<!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
+ <!---------------------------------------------------------->
+                <div v-show="verIdentificacion" class="form-group">
+                  <div v-show="CedulaNacional" class="form-group identitad">
                     <input
+                      @blur="validarCedulaNacional()"
                       v-model="form.identificacion"
+                      :disabled="bloquearInputId"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -159,17 +173,26 @@
                       }"
                       placeholder="Formato #-####-####"
                       id="nacional"
-                      onchange="validate()"
+                      onchange="validarCedulaN()"
                     />
-                    <has-error
-                      :form="form"
-                      field="identificacion"
-                    ></has-error>
+                    <button
+                      id="btnCancelar"
+                      type="button"
+                      class="btn btn-danger"
+                      :disabled="bloquearCancelar"
+                      @click="bloquearCedula()"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <has-error :form="form" field="identificacion"></has-error>
                   </div>
 
-                  <div v-show="CedulaResidencial" class="form-group">
+                  <div v-show="CedulaResidencial" class="form-group identitad">
                     <input
+                      @blur="validarCedulaResidencial()"
                       v-model="form.identificacion"
+                      id="residencial"
+                      :disabled="bloquearInputIdR"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -177,18 +200,26 @@
                         'is-invalid': form.errors.has('identificacion'),
                       }"
                       placeholder="Formato de 10 dígitos"
-                      id="residencial"
                       onchange="validateResidencial()"
                     />
-                    <has-error
-                      :form="form"
-                      field="identificacion"
-                    ></has-error>
+                    <has-error :form="form" field="identificacion"></has-error>
+                    <button
+                      id="btnCancelar"
+                      type="button"
+                      class="btn btn-danger"
+                       :disabled="bloquearCancelar"
+                      @click="bloquearCedula()"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
                   </div>
 
-                  <div v-show="Pasaporte" class="form-group">
+                  <div v-show="Pasaporte" class="form-group identitad">
                     <input
+                      id="pasaporte"
+                      @blur="validarPasaporte()"
                       v-model="form.identificacion"
+                      :disabled = "bloquearInputIdP"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -196,30 +227,48 @@
                         'is-invalid': form.errors.has('identificacion'),
                       }"
                       placeholder="Formato de 11 a 12 dígitos"
-                      id="pasaporte"
                       onchange="validatePasaporte()"
                     />
-                    <has-error
-                      :form="form"
-                      field="identificacion"
-                    ></has-error>
+                    <has-error :form="form" field="identificacion"></has-error>
+                    <button
+                      id="btnCancelar"
+                      type="button"
+                      class="btn btn-danger"
+                       :disabled="bloquearCancelar"
+                      @click="bloquearCedula()"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
                   </div>
                 </div>
+<!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
+                <div v-show="verIdentificacionedit" class="form-group">
+                  <label>Identificación</label>
+                  <input
+                    style="text-transform: capitalize"
+                    v-model="form.identificacion"
+                    type="text"
+                    name="identificacion"
+                    class="form-control"
+                    :disabled="BloquearIdentificacion"
 
+                  />
+                  <has-error :form="form" field="identificacion"></has-error>
+                </div>
                 <div class="form-group">
                   <label>Nombre</label>
                   <input
+                    style="text-transform: capitalize"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
-                    required
+                    placeholder="Nombre"
                     minlength="3"
-                    maxlength="30"
-                   pattern="[a-zA-Z'-'\s]*"
-                    placeholder="Nombre del participante"
-                   
+                    maxlength="20"
+                    required
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -227,17 +276,17 @@
                 <div class="form-group">
                   <label>Primer Apellido</label>
                   <input
+                    style="text-transform: capitalize"
                     v-model="form.apellido1"
                     type="text"
                     name="apellido1"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido1') }"
-                    
-                    required
+                    placeholder="Primer Apellido"
                     minlength="3"
-                    maxlength="30"
-                    placeholder="Primer apellido del participante"
-                    pattern="[a-zA-Z'-'\s]*"
+                    maxlength="20"
+                    required
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="apellido1"></has-error>
                 </div>
@@ -245,17 +294,17 @@
                 <div class="form-group">
                   <label>Segundo Apellido</label>
                   <input
+                    style="text-transform: capitalize"
                     v-model="form.apellido2"
                     type="text"
                     name="apellido2"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido2') }"
-                  required
+                    placeholder="Segundo Apellido"
                     minlength="3"
-                    maxlength="30"
-                     pattern="[a-zA-Z'-'\s]*"
-                    placeholder="Segundo apellido del participante"
-                  
+                    maxlength="20"
+                    required
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -267,13 +316,8 @@
                     type="text"
                     name="nacionalidad"
                     class="form-control"
-                      pattern="[a-zA-Z'-'\s]*"
                     :class="{ 'is-invalid': form.errors.has('nacionalidad') }"
-                    
-                   required
-                    minlength="3"
-                    maxlength="30"
-                    placeholder="Nacionalidad del participante"
+                    required
                   />
                   <has-error :form="form" field="nacionalidad"></has-error>
                 </div>
@@ -295,13 +339,93 @@
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
-                    id="validar"
-                  disabled="registro"
+                  :disabled="registroBloquear"
                 >
                   Registrar
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+      <!--Fin del modal-->
+      <!-- Modal de ver informacion -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles del participante</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Identificación</label>
+                <input
+                  v-model="form.identificacion"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Nombre Persona</label>
+                <input
+                  v-model="form.nombre"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Primer Apellido</label>
+                <input
+                  v-model="form.apellido1"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Segundo Apellido</label>
+                <input
+                  v-model="form.apellido2"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Nacionalidad</label>
+                <input
+                  v-model="form.nacionalidad"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cerrar
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -313,17 +437,29 @@
 export default {
   data() {
     return {
+      /*Funcionan con el selec para ocultar y mostrar los campos*/
+      tipoIndenteficacion: "",
       CedulaResidencial: false,
       CedulaNacional: false,
       Pasaporte: false,
-      tipoIndenteficacion: "",
-      registro: false,
-      CedulaBloqueo: false,
+
+      BloquearIdentificacion: true, //Bloquea el input de identificacion al editar
+      verIdentificacion: true,
+      verIdentificacionedit: false,
       editmode: false,
+      registroBloquear: true, //Bloquear el boton para registrar
+      bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
+      bloquearInputId: false,//Bloquear el inuput de cedula
+      bloquearInputIdR: false, //Bloquear el input de residencial
+      bloquearInputIdP: false, //Bloquear el input de Pasaporte
       errors: {},
-      participantes: {},
+      personas: {},
+      nuevoPersonas: {},
+      verDetalles: true,
+      filtrarBusqueda: "",
       form: new Form({
         id: "",
+        identificacion: "",
         nombre: "",
         apellido1: "",
         apellido2: "",
@@ -332,67 +468,72 @@ export default {
     };
   },
   methods: {
-    getResults(page = 1) {
-      this.$Progress.start();
 
-      axios
-        .get("/api/participantes?page=" + page)
-        .then(({ data }) => (this.participantes = data.data));
-
-      this.$Progress.finish();
-    },
-    actualizarParticipantes() {
-      this.$Progress.start();
-      this.form
-        .put("/api/participantes/" + this.form.id)
-        .then((response) => {
-          // success
-          $("#addNew").modal("hide");
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.$Progress.finish();
-          //  Fire.$emit('AfterCreate');
-
-          this.cargarParticipantes();
-        })
-        .catch(() => {
-          this.$Progress.fail();
-        });
-    },
-    editModal(participante) {
-      this.editmode = true;
-      this.CedulaBloqueo = true;
-      this.form.reset();
-      $("#addNew").modal("show");
-      this.form.fill(participante);
-      this.form.errors.clear();
-    },
-    newModal() {
-      this.editmode = false;
-      this.CedulaBloqueo = false;
-      this.form.reset();
-      $("#addNew").modal("show");
-      this.form.errors.clear();
-    },
-    limpiar() {
-      this.form.nombre = "";
-      this.form.apellido1 = "";
-      this.form.apellido2 = "";
-      this.form.nacionalidad = "";
-      this.form.errors.clear();
-    },
-
-    cargarParticipantes() {
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/participantes")
-          .then(({ data }) => (this.participantes = data.data));
+    filtrar() {
+      if (this.filtrarBusqueda == "") {
+       this.personas.data = this.nuevoPersonas;
+      } else if (this.filtrarBusqueda != "") {
+        this.personas.data = this.personasFiltradas;
       }
     },
+    /*////////////////////////////////////////////////////////////*/
+    /*-------------------------Validaciones----------------------*/
+    validarCedulaNacional() {
+      if (/^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacion)) {
+        this.bloquearInputId = true;
+        this.registroBloquear = false;
+        this.bloquearCancelar = false;
+        return;
+      } else {
+        this.bloquearInputId = false;
+        this.registroBloquear = true;
+        this.bloquearCancelar = true;
+        return;
+      }
+    },
+    validarCedulaResidencial() {
+      if (/^[1-9]\d{9}$/.test(this.form.identificacion)) {
+        this.bloquearInputIdR = true;
+        this.registroBloquear = false;
+        this.bloquearCancelar = false;
+        return;
+      } else {
+        this.bloquearInputIdR = false;
+        this.registroBloquear = true;
+        this.bloquearCancelar = true;
+        return;
+      }
+    },
+    validarPasaporte() {
+      if (/^\d{11,12}$/.test(this.form.identificacion)) {
+        this.bloquearInputIdP = true;
+        this.registroBloquear = false;
+        this.bloquearCancelar = false;
+        return;
+      } else {
+        this.bloquearInputIdP = false;
+        this.registroBloquear = true;
+        this.bloquearCancelar = true;
+        return;
+      }
+    },
+    bloquearCedula() {
+      this.form.identificacion = "";
+       this.bloquearInputId = false; //Desbloqueamos el input del id
+       this.bloquearInputIdR = false;
+       this.bloquearInputIdP = false;
+       this.registroBloquear = true; //Bloqueamos el boton de registrar
+       this.bloquearCancelar = true; //bloqueamos el boton de cancelar 
+    },
+    cambioSelect(){
+       this.bloquearInputId = false; //Desbloqueamos el input del id
+       this.bloquearInputIdR = false;
+       this.bloquearInputIdP = false;
+       this.registroBloquear = true; //Bloqueamos el boton de registrar
+       this.bloquearCancelar = true; //bloqueamos el boton de cancelar 
+    },
 
-        tipoDeIndentificacon() {
+    tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
         this.CedulaNacional = true;
         this.Pasaporte = false;
@@ -411,24 +552,81 @@ export default {
         this.form.identificacion = "";
       }
     },
-    SiExisteCedula() {
-      for (let i = 0; i < this.cedulas.length; i++) {
-        if (this.cedulas[i].identificacion == this.buscadorC) {
-          this.showMensajesCedula = false;
-          this.showMensajesCedula2 = true;
-          this.CedulaBloqueo = true;
-          this.form.identificacion = this.cedulas[i].id;
-          this.form.identificacionPersona = this.buscadorC;
-          this.bloquearCamposExtras = false;
-          this.bloquearCamposIdVoluntario = false;
-        }
+    /*////////////////////////////////////////////////////////////*/
+
+    getResults(page = 1) {
+      this.$Progress.start();
+
+      axios
+        .get("/api/participantes?page=" + page)
+        .then(({ data }) => (this.personas = data.data));
+      this.$Progress.finish();
+    },
+    actualizarPersona() {
+      this.$Progress.start();
+      this.form
+        .put("/api/participantes/" + this.form.id)
+        .then((response) => {
+          // success
+          $("#addNew").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$Progress.finish();
+          //  Fire.$emit('AfterCreate');
+
+          this.cargarPersona();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
+    },
+    editModal(persona) {
+      this.editmode = true;
+     this.verIdentificacion = false;
+      this.verIdentificacionedit = true;
+      this.form.reset();
+      $("#addNew").modal("show");
+      this.form.fill(persona);
+      this.form.errors.clear();
+    },
+    newModal() {
+      this.editmode = false;
+      this.verIdentificacion = true;
+      this.verIdentificacionedit = false;
+      this.bloquearCedula();
+      this.form.reset();
+      $("#addNew").modal("show");
+      this.form.errors.clear();
+    },
+    detailsModal(participante) {
+      $("#exampleModal").modal("show");
+      this.form.fill(participante);
+    },
+    limpiar() {
+      this.form.nombre = "";
+      this.form.apellido1 = "";
+      this.form.apellido2 = "";
+      this.form.telefono = "";
+      this.form.correo = "";
+      this.form.errors.clear();
+    },
+    cargarPersona() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios
+          .get("/api/participantes")
+          .then(({ data }) => (this.personas = data.data));
+        axios
+          .get("/api/participantes/listar")
+          .then(({ data }) => (this.nuevoPersonas = data.data));
       }
     },
-
-    crearParticipante() {
+    crearPersona() {
+      if(this.form.identificacion != ""){
       this.form
         .post("/api/participantes", {
-          params: { id: this.form.id },
+          params: { identificacion: this.form.identificacion },
         })
         .then((response) => {
           if (response.data.success == false) {
@@ -445,18 +643,19 @@ export default {
             });
 
             this.$Progress.finish();
-            this.cargarParticipantes();
+            this.cargarPersona();
           }
         })
         .catch(() => {
           Toast.fire({
             icon: "error",
-            title: "Campos vacios",
+            title: "Complete los campos!",
           });
         });
+        }
     },
 
-    eliminarParticipante(id) {
+    eliminarPersona(id) {
       Swal.fire({
         title: "Seguro que lo desea eliminar?",
         text: "Esta acción no puede revertirse!",
@@ -476,10 +675,10 @@ export default {
                 "success"
               );
               // Fire.$emit('AfterCreate');
-              this.cargarParticipantes();
+              this.cargarPersona();
             })
             .catch((data) => {
-              Swal.fire("Fallo!", data.message, "warning");
+              Swal.fire("Fallo!", "Acción no autorizada!", "warning");
             });
         }
       });
@@ -488,83 +687,69 @@ export default {
   mounted() {
     console.log("Component mounted.");
   },
-  eliminarParticipante(id) {},
-
   created() {
     this.$Progress.start();
-    this.cargarParticipantes();
+    this.cargarPersona();
     this.$Progress.finish();
+  },
+  computed: {
+    personasFiltradas: function () {
+      return this.nuevoPersonas.filter((persona) => {
+        return (
+          persona.identificacion
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          persona.nombre
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          persona.apellido1
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          persona.apellido2
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          persona.nacionalidad
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase())
+        );
+      });
+    },
   },
 };
 </script>
 
 
 <style scoped>
-.custom-select {
-  position: relative;
-  width: 100%;
-  text-align: left;
-  outline: none;
-  height: 45px;
-  line-height: 47px;
+#btnCancelar {
+  padding: 1px 5px;
+  margin: 1px 1px 1px 10px;
 }
 
-.custom-select .selected {
-  background-color: #080808;
-  border-radius: 6px;
-  border: 1px solid #666666;
-  color: #fff;
-  padding-left: 1em;
-  cursor: pointer;
-  user-select: none;
+#icono {
+  font-size: 20px;
 }
-
-.custom-select .selected.open {
-  border: 1px solid #ad8225;
-  border-radius: 6px 6px 0px 0px;
+.card-tools {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
-
-.custom-select .selected:after {
-  position: absolute;
-  content: "";
-  top: 22px;
-  right: 1em;
-  width: 0;
-  height: 0;
-  border: 5px solid transparent;
-  border-color: #fff transparent transparent transparent;
+.card-tools div {
+  padding: 10px;
 }
-
-.custom-select .items {
-  color: rgb(2, 2, 2);
-  border-radius: 0px 0px 6px 6px;
-  overflow: hidden;
-  border-right: 1px solid #ad8225;
-  border-left: 1px solid #ad8225;
-  border-bottom: 1px solid #ad8225;
-  position: absolute;
-  background-color: #ffffff;
-  left: 0;
-  right: 0;
-  z-index: 1;
+.card-tools div button {
+  height: 36px;
+  font-size: 15px;
 }
-
-.custom-select .items div {
-  color: rgb(0, 0, 0);
-  padding-left: 1em;
-  cursor: pointer;
-  user-select: none;
+.card-title {
+  margin: 1px;
+  line-height: inherit;
+  float: left;
+  font-size: 1.8rem;
+  font-weight: 400;
 }
-
-.custom-select .items div:hover {
-  background-color: #ad8225;
-}
-
-.selectHide {
-  display: none;
-}
-
-.selectHide {
-  display: none;
+.identitad{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 </style>

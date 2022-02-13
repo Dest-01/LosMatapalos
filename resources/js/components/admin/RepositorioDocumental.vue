@@ -8,6 +8,17 @@
               <h3 class="card-title">Lista Repositorio de Documentos</h3>
 
               <div class="card-tools">
+                <div>
+                  <input
+                    v-on:keyup="filtrar()"
+                    v-model="filtrarBusqueda"
+                    class="form-control"
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar..."
+                  />
+                </div>
+                <div>
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
@@ -16,6 +27,7 @@
                   <i class="fa fa-plus-square"></i>
                   Agregar Documento
                 </button>
+                </div>
               </div>
             </div>
             <!-- /.card-header -->
@@ -36,21 +48,27 @@
                     :key="repositorio.id"
                   >
                     <td>{{ repositorio.id }}</td>
-                    <td class="text-capitalize">{{ repositorio.nombre }}</td>
-                    <td class="text-capitalize">{{ repositorio.fecha }}</td>
-                    <td class="text-capitalize">
-                      {{ repositorio.descripcion | truncate(30, "...") }}
+                    <td>{{ repositorio.nombre }}</td>
+                    <td>{{ repositorio.fecha }}</td>
+                    <td>{{ repositorio.descripcion | truncate(10, "...") }}
                     </td>
                     <td>
                       <a href="#" @click="editModal(repositorio)">
-                        <i class="fa fa-edit blue"></i>
+                        <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a
                         href="#"
                         @click="eliminarRepositorioDocumental(repositorio.id)"
                       >
-                        <i class="fa fa-trash red"></i>
+                        <i id="icono" class="fa fa-trash red"></i>
+                      </a>
+                        /
+                      <a
+                        href="#"
+                        @click="detailsModal(repositorio)"
+                      >
+                        <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
                   </tr>
@@ -252,6 +270,66 @@
           </div>
         </div>
       </div>
+
+            <!-- Modal de ver informacion -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles del documento</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Nombre del documento</label>
+                <input
+                  v-model="form.nombre"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Fecha de subida</label>
+                <input
+                  v-model="form.fecha"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Descripción</label>
+                <textarea v-model="form.descripcion"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles" name="" id="" cols="30" rows="10"></textarea>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -268,6 +346,9 @@ export default {
       imageInfos: [],
       tipoPDF: true,
       repositorios: {},
+      repositoriosTodos: {},
+      verDetalles: true,
+      filtrarBusqueda: "",
       form: new Form({
         id: "",
         nombre: "",
@@ -279,6 +360,13 @@ export default {
     };
   },
   methods: {
+        filtrar() {
+      if (this.filtrarBusqueda == "") {
+        this.repositorios.data = this.repositoriosTodos;
+      } else if (this.filtrarBusqueda != "") {
+        this.repositorios.data = this.repositoriosFiltrados;
+      }
+    },
     onFileChange(e) {
       let CargarArchivo = e.target.files[0];
       if (CargarArchivo) {
@@ -318,12 +406,19 @@ export default {
       $("#addNew").modal("show");
       this.form.errors.clear();
     },
+        detailsModal(repositorio) {
+      $("#exampleModal").modal("show");
+      this.form.fill(repositorio);
+    },
 
     cargarDocumentos() {
       if (this.$gate.isAdmin()) {
         axios
           .get(`/api/repositorio`)
           .then(({ data }) => (this.repositorios = data.data));
+           axios
+          .get(`/api/repositorio/listar`)
+          .then(({ data }) => (this.repositoriosTodos = data.data));
       }
     },
     actualizarDocumento() {
@@ -406,14 +501,35 @@ export default {
     },
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+    repositoriosFiltrados: function () {
+      return this.repositoriosTodos.filter((repositorio) => {
+        return (
+          repositorio.nombre
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          repositorio.fecha
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          repositorio.descripcion
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase())
+        );
       });
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style lang="css" scoped>
+#icono {
+  font-size: 20px;
+}
+.card-tools {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.card-tools div {
+  padding: 10px;
+}
+</style>>

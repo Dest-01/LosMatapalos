@@ -26,6 +26,12 @@ class RepositorioDocumentosController extends BaseController
         return $this->sendResponse($repositorioDocumentos,"Lista de Repositorios");
     }
 
+    public function list()
+    {
+        $repositorioDocumentos = $this->repositorioDocumentos->get();
+        return $this->sendResponse($repositorioDocumentos,"Lista de Repositorios");
+    }
+
     /**
      * Store a newly created resource in storage.
      *

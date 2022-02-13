@@ -25,16 +25,16 @@ class VoluntarioEstudiantesController extends BaseController
 
     public function obtenerCedula(Request $request)
     {
-        $filtro = $request->buscadorC;
+        $filtro = $request->buscador;
         $persona = Personas::where('identificacion', $filtro)->get();
-        return $this->sendResponse($persona, 'Cedula si existe');
+        return $this->sendResponse($persona, 'Cedula si existe!');
 
     }
     public function obtenerCantidad(Request $request)
     {
         $filtro = $request->VolCantidad;
         $cantidad = Voluntario::where('id', $filtro)->get();
-        return $this->sendResponse($cantidad, 'Se encontro el id si existe');
+        return $this->sendResponse($cantidad, 'Se encontro el id si existe!');
 
     }
     /**
@@ -45,6 +45,12 @@ class VoluntarioEstudiantesController extends BaseController
     public function index()
     {
         $voluntarioEst = $this->voluntarioEstudiantes->latest()->paginate(10);
+
+        return $this->sendResponse($voluntarioEst, 'Lista de estudiantes');
+    }
+    public function list()
+    {
+        $voluntarioEst = $this->voluntarioEstudiantes->get();
 
         return $this->sendResponse($voluntarioEst, 'Lista de estudiantes');
     }

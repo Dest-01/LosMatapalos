@@ -47,7 +47,6 @@ class FaunaController extends BaseController
                 'descripcion' => 'required|string|max:255|min:5',
                 'tipo' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
                 'fechaRegistro' => 'required|date|after:2020-01-01',
-                'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
                 'familiaCientifca' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
     
             ];

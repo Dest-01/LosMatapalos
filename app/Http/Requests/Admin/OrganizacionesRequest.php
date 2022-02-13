@@ -38,9 +38,9 @@ class OrganizacionesRequest extends FormRequest
     {
         return [
             'identificacion' => 'required|regex:/^[1-9]-\d{3}-\d{6}$/',
-            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'telefono' => 'required|regex:/^[1-9]\d{7}$/',
-            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|min:4|max:100',
+            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'telefono' => 'required|regex:/^[2-9]\d{3}\d{4}$/',
+            'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',
         ];
     }
 
@@ -53,8 +53,8 @@ class OrganizacionesRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'telefono' => 'required|regex:/^[1-9]\d{7}$/',
-            'correo' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|min:4|max:100',
+            'telefono' => 'required|regex:/^[2-9]\d{3}\d{4}$/',
+            'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',
         ];
     }
 
@@ -65,7 +65,7 @@ class OrganizacionesRequest extends FormRequest
             'identificacion.*' => 'El campo de la cédula jurídica es requerido',
             'nombre.regex' => 'Solo se permite letras',
             'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
-            'telefono.*' => 'Teléfono se requiere, 8 números',
+            'telefono.*' => 'Teléfono se requiere, 8 dígitos',
             'correo.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
         ];
     }

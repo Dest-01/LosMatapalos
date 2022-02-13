@@ -41,6 +41,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('voluntarioEstudiante/obtenerCedula', 'VoluntarioEstudiantesController@obtenerCedula');
     Route::get('voluntarioEstudiante/obtenerCantidad', 'VoluntarioEstudiantesController@obtenerCantidad');
     Route::post('voluntarioEstudiante/guardarPersona', 'VoluntarioEstudiantesController@guardarPersona');
+    Route::get('voluntarioEstudiante/listar', 'VoluntarioEstudiantesController@list');
     /////////////////////////---VOLUNTARIO--PERSONA---//////////////////////////////////////////////////////////////////
     Route::get('voluntarioPersona/obtenerCedula', 'VoluntarioPersonaController@obtenerCedula');
     Route::get('voluntarioPersona/obtenerCantidad', 'VoluntarioPersonaController@obtenerCantidad');
@@ -75,6 +76,9 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('flora/listar', 'FloraController@list');
     Route::get('fauna/listar', 'FaunaController@list');
     Route::get('actividad/listar', 'ActividadesController@list');
+    Route::get('participantes/listar', 'ParticipantesController@list');
+    Route::get('repositorio/listar', 'RepositorioDocumentosController@list');
+    Route::get('articulos/listar', 'ArticuloController@list');
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
         'user' => 'UserController',

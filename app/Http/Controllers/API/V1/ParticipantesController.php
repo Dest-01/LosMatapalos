@@ -27,6 +27,13 @@ class ParticipantesController extends BaseController
         return $this->sendResponse($participante, 'Lista de participantes');
     }
 
+    public function list()
+    {
+        $participante = $this->participantes->get();
+
+        return $this->sendResponse($participante, 'Lista de participantes');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

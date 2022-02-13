@@ -325,7 +325,7 @@ export default {
   methods: {
     filtrar() {
       if (this.filtrarBusqueda == "") {
-        this.cargarCatDonativos();
+       this.catDonativos.data = this.nuevoCatDonativos;
       } else if (this.filtrarBusqueda != "") {
         this.catDonativos.data = this.catDonativosFiltrados;
       }

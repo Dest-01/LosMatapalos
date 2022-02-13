@@ -28,7 +28,7 @@
               <div class="card-tools">
                    <div>
                   <input
-                    @blur="filtrar()"
+                    v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -69,7 +69,7 @@
                     <td>{{ Actividad.nombre }}</td>
                     <td>{{ Actividad.fecha }}</td>
                     <td>{{ Actividad.hora }}</td>
-                    <td>{{ Actividad.descripcion | truncate(30, "...") }}</td>
+                    <td>{{ Actividad.descripcion | truncate(10, "...") }}</td>
                     <td>
                       {{ Actividad.cantParticipantes }}
                     </td>
@@ -478,7 +478,7 @@ export default {
     },
     filtrar() {
       if (this.filtrarBusqueda == "") {
-        this.cargarActividad();
+        this.actividades.data = this.ActividadesTodas;
       } else if (this.filtrarBusqueda != "") {
         this.Actividades.data = this.ActividadesFiltradas;
       }

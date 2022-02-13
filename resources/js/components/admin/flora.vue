@@ -450,7 +450,7 @@ export default {
   methods: {
        filtrar() {
       if (this.filtrarBusqueda == "") {
-        this.cargarFlora();
+        this.fora.data = this.todoFlora;
       } else if (this.filtrarBusqueda != "") {
         this.flora.data = this.floraFiltros;
       }

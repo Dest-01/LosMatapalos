@@ -27,7 +27,7 @@
               <div class="card-tools">
                 <div>
                   <input
-                    @blur="filtrar()"
+                    v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -315,7 +315,7 @@
         <div class="modal-dialog" role="document">
           <div id="modal-contentino" class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Detalles del donativo</h5>
+              <h5 class="modal-title">Detalles del voluntario</h5>
               <button
                 type="button"
                 class="close"
@@ -373,6 +373,8 @@
           </div>
         </div>
       </div>
+
+
       <div
         class="modal fade"
         id="modalPersona"
@@ -649,9 +651,6 @@ export default {
         id: "",
         cantidad: "",
       }),
-      id: 0,
-      tituloModal: "",
-      modal: 0,
     };
   },
   methods: {
@@ -735,7 +734,7 @@ export default {
     /*////////////////////////////////////////////////////////////*/
     filtrar() {
       if (this.filtrarBusqueda == "") {
-        this.cargarVoluntarioPer();
+         this.voluntarioPer.data = this.voluntarioPerTodo;
       } else if (this.filtrarBusqueda != "") {
         this.voluntarioPer.data = this.voluntarioPerFiltrado;
       }
@@ -765,6 +764,7 @@ export default {
       $("#modalPersona").modal("show");
       this.formPer.reset();
       this.formPer.errors.clear();
+
     },
     newModal() {
       this.editmode = false;

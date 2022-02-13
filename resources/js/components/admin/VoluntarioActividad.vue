@@ -35,16 +35,16 @@
                     :key="actividadVoluntario.id"
                   >
                     <td>{{ actividadVoluntario.id }}</td>
-                    <td class="text-capitalize">{{  actividadVoluntario.ActNombre }}</td>
-                    <td class="text-capitalize">{{  actividadVoluntario.VolPerCedula }} - {{  actividadVoluntario.NombrePersona }}</td>
-                    <td class="text-capitalize">{{  actividadVoluntario.volEstCedula }} - {{actividadVoluntario.NombreEstudiante}}</td>
+                    <td>{{  actividadVoluntario.ActNombre }}</td>
+                    <td>{{  actividadVoluntario.VolPerCedula }} - {{  actividadVoluntario.NombrePersona }}</td>
+                    <td>{{  actividadVoluntario.volEstCedula }} - {{actividadVoluntario.NombreEstudiante}}</td>
                     <td> 
                       <a href="#" @click="editModal(actividadVoluntario)">
-                        <i class="fa fa-edit blue"></i>
+                        <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a href="#" @click="eliminarActividadVoluntario(actividadVoluntario.id)">
-                        <i class="fa fa-trash red"></i>
+                        <i id="icono" class="fa fa-trash red"></i>
                       </a>
                     </td>
                   </tr>
@@ -600,4 +600,7 @@ export default {
  .drop-down-icon.dropdown{
     transform: rotate(180deg);
  }
+ #icono {
+  font-size: 20px;
+}
 </style>

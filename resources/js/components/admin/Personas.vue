@@ -28,7 +28,7 @@
               <div class="card-tools">
                 <div>
                   <input
-                    @blur="filtrar()"
+                    v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -503,7 +503,7 @@ export default {
 
     filtrar() {
       if (this.filtrarBusqueda == "") {
-        this.cargarPersona();
+        this.personas.data = this.nuevoPersonas;
       } else if (this.filtrarBusqueda != "") {
         this.personas.data = this.personasFiltradas;
       }

@@ -28,7 +28,7 @@
               <div class="card-tools">
                 <div>
                   <input
-                    @blur="filtrar()"
+                   v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -788,7 +788,7 @@ export default {
 
     filtrar() {
       if (this.filtrarBusqueda == "") {
-        this.cargarReservas();
+        this.reservas.data = this.nuevoReservaciones;
       } else if (this.filtrarBusqueda != "") {
         this.reservas.data = this.reservasFiltros;
       }

@@ -28,7 +28,7 @@
               <div class="card-tools">
                 <div>
                   <input
-                    @blur="filtrar()"
+                  v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -158,7 +158,7 @@
                     :class="{ 'is-invalid': form.errors.has('identificacion') }"
                     placeholder="Formato: #-###-######"
                     required
-                    pattern="[1-9]{1}-[1-9]{3}-[1-9]{6}"
+                    pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
                   />
                   <has-error :form="form" field="identificacion"></has-error>
                 </div>
@@ -166,7 +166,6 @@
                 <div class="form-group">
                   <label>Nombre organización</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
@@ -176,7 +175,7 @@
                     required
                     minlength="3"
                     maxlength="60"
-                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ-0-9'-'\s]*"
+
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -191,7 +190,7 @@
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     placeholder="#### ####"
                     required
-                    pattern="[1-9]{4}[0-9]{4}"
+                    pattern="[2-9]\d{3}\d{4}"
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -203,11 +202,11 @@
                     name="correo"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
-                    size="32"
                     placeholder="ejemplo@gmail.com"
                     minlength="3"
                     maxlength="64"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    required
+                    
                   />
 
                   <has-error :form="form" field="correo"></has-error>
@@ -337,7 +336,7 @@ export default {
   methods: {
     filtrar() {
       if (this.filtrarBusqueda == "") {
-        this.cargarOrganizacion();
+        this.organizaciones.data = this.nuevoOrganaciones;
       } else if (this.filtrarBusqueda != "") {
         this.organizaciones.data = this.organizacionesFiltradas;
       }

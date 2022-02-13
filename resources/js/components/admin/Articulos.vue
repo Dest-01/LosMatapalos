@@ -26,6 +26,17 @@
               <h3 class="card-title">Lista de Articulos</h3>
 
               <div class="card-tools">
+                 <div>
+                  <input
+                    v-on:keyup="filtrar()"
+                    v-model="filtrarBusqueda"
+                    class="form-control"
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar..."
+                  />
+                </div>
+                <div>
                 <button
                   type="button"
                   class="btn btn-sm btn-primary"
@@ -34,6 +45,7 @@
                   <i class="fa fa-plus-square"></i>
                   Agregar Artículo
                 </button>
+                </div>
               </div>
             </div>
             <!-- /.card-header -->
@@ -52,9 +64,9 @@
                 <tbody>
                   <tr v-for="articulo in Articulos.data" :key="articulo.id">
                     <td>{{ articulo.id }}</td>
-                    <td class="text-capitalize">{{ articulo.Nombre }}</td>
+                    <td>{{ articulo.Nombre }}</td>
                     <td>{{ articulo.Tipo }}</td>
-                    <td>{{ articulo.Descripcion | truncate(30, "...") }}</td>
+                    <td>{{ articulo.Descripcion | truncate(10, "...") }}</td>
                     <td>
                       <img
                         v-bind:src="'/images/Articulos/' + articulo.Image"
@@ -64,11 +76,18 @@
                     </td>
                     <td>
                       <a href="#" @click="editModal(articulo)">
-                        <i class="fa fa-edit blue"></i>
+                        <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
                       <a href="#" @click="eliminarArticulo(articulo.id)">
-                        <i class="fa fa-trash red"></i>
+                        <i id="icono" class="fa fa-trash red"></i>
+                      </a>
+                      /
+                      <a
+                        href="#"
+                        @click="detailsModal(articulo)"
+                      >
+                        <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
                   </tr>
@@ -210,7 +229,7 @@
                           class="preview my-3"
                           :src="previewImage"
                           alt=""
-                          width="100px"
+                          width="100%"
                         />
                       </div>
                     </div>
@@ -247,6 +266,77 @@
           </div>
         </div>
       </div>
+      <!-- Modal de ver informacion -->
+      <div
+        class="modal fade"
+        id="ModalVer"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="ModalVer"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div id="modal-contentino" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles del articulo</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div id="modal-body" class="modal-body">
+              <div id="inputsModal" class="form-group">
+                <label>Nombre del articulo</label>
+                <input
+                  v-model="form.Nombre"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Tipo de artiuclo</label>
+                <input
+                  v-model="form.Tipo"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              
+              <div class="form-group">
+                <label>Foto del articulo</label>
+                <img
+                  v-bind:src="'/images/Articulos/' + form.Image"
+                  width="100%"
+                  height="350px"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
+                <label>Descripción</label>
+                <textarea v-model="form.Descripcion"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles">
+                  
+                </textarea>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--FIN DEL MODAL VER INFORMACION-->
     </div>
   </section>
 </template>
@@ -262,6 +352,9 @@ export default {
       message: "",
       imageInfos: [],
       Articulos: {},
+      ArticulosTodos: {},
+      verDetalles: true,
+      filtrarBusqueda: "",
       form: new Form({
         id: "",
         Nombre: "",
@@ -272,6 +365,13 @@ export default {
     };
   },
   methods: {
+       filtrar() {
+      if (this.filtrarBusqueda == "") {
+        this.Articulos.data = this.ArticulosTodos;
+      } else if (this.filtrarBusqueda != "") {
+        this.Articulos.data = this.articuloFiltros;
+      }
+    },
     updatePhoto(e) {
       let file = e.target.files[0];
       this.previewImage = URL.createObjectURL(file);
@@ -340,12 +440,19 @@ export default {
       this.previewImage = "";
       $("#addNew").modal("show");
     },
+     detailsModal(articulo) {
+      $("#ModalVer").modal("show");
+      this.form.fill(articulo);
+    },
 
     cargarArticulos() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
           .get("/api/articulos")
           .then(({ data }) => (this.Articulos = data.data));
+           axios
+          .get("/api/articulos/listar")
+          .then(({ data }) => (this.ArticulosTodos = data.data));
       }
     },
 
@@ -415,14 +522,87 @@ export default {
     },
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+    articuloFiltros: function () {
+      return this.ArticulosTodos.filter((articulo) => {
+        return (
+          articulo.Nombre
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          articulo.Tipo
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          articulo.Descripcion
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) 
+        );
       });
-    },
+    }
   },
 };
 </script>
 
-<style>
+
+<style scoped>
+.mostrar {
+  display: list-item;
+  opacity: 1;
+  background: rgba(121, 120, 120, 0.623);
+}
+#btnCancelar {
+  padding: 1px 5px;
+  margin: 1px 1px 1px 10px;
+}
+
+#icono {
+  font-size: 20px;
+}
+.card-tools {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.card-tools div {
+  padding: 10px;
+}
+.card-tools div button {
+  height: 36px;
+  font-size: 15px;
+}
+.card-title {
+  margin: 1px;
+  line-height: inherit;
+  float: left;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+.identitad {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+#modal-contentino {
+  width: 150%;
+}
+#modal-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#inputsModal {
+  width: 45%;
+  margin: 10px 15px;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: baseline;
+  border-top: 1px solid #dee2e6;
+}
+@media screen and (min-width: 900px) {
+  .modal-content {
+    width: 100%;
+  }
+}
 </style>

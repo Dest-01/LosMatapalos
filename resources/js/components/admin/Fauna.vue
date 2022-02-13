@@ -452,7 +452,7 @@ export default {
   methods: {
            filtrar() {
       if (this.filtrarBusqueda == "") {
-        this.cargarFauna();
+        this.faunas.data = this.todoFauna;
       } else if (this.filtrarBusqueda != "") {
         this.faunas.data = this.faunaFiltros;
       }
