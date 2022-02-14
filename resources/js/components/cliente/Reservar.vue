@@ -159,7 +159,7 @@
                   <div class="campo_consulta">
                     <i class="fas fa-id-card iconoInput"></i>
                     <input
-                      v-model="formReserva.identificacion"
+                      v-model="buscador"
                       name="cedulaReservacion"
                       id="cedulaReservacion"
                       type="text"
@@ -172,25 +172,22 @@
                       type="button"
                       @click="consultarDatos()"
                       class="Posicionar btn btn-success"
-                      :disabled="bloquearConsulta"
                     >
                       Consulta
                     </button>
                   </div>
                   <!--div de alerta-->
                   <div>
-                    <h2
-                      v-text="mensajeExistencia"
-                      style="font-size: 15px; color: green; margin-left: 8%"
-                    >
-                      {{ mensajeExistencia }}
-                    </h2>
-                    <h2
-                      v-text="mensajeNoExistencia"
-                      style="font-size: 15px; color: red; margin-left: 8%"
-                    >
-                      {{ mensajeNoExistencia }}
-                    </h2>
+                    <label
+                      v-show="VermensajeSiExiste"
+                      v-text="mensajeDeExistencia"
+                      style="color: green"
+                    ></label>
+                    <label
+                      v-show="VermensajeNoExiste"
+                      v-text="mensajeDeExistencia"
+                      style="color: red"
+                    ></label>
                   </div>
                 </div>
                 <!--fin de div que contiene la consulta y boton-->
@@ -307,7 +304,7 @@
                 <!--Div de los botones -->
                 <div class="botones_finales">
                   <button
-                    type="submit"
+                    type="button"
                     class="btn btn-success btn-rounded"
                     @click="crearReserva()"
                     :disabled="bloquearReservar"
@@ -610,86 +607,83 @@
             ></button>
           </div>
           <div class="modal-body">
-                         <div class="group">
-                <label>Cédula organización</label>
-                <i
-                  class="fas fa-id-card iconoInput_modal"
-                  style="left: -2px"
-                ></i>
-                <input
-                  class="input_modal"
-                  v-model="formOrganizacion.identificacion"
-                  name="identificacion"
-                  type="text"
-                  :class="{
-                    'is-invalid': formOrganizacion.errors.has('identificacion'),
-                  }"
-                  placeholder="Formato: #-###-######"
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formOrganizacion"
-                  field="identificacion"
-                ></has-error>
-              </div>
-              <div class="group">
-                <label>Nombre de la organización</label>
-                <i class="fas fa-user-circle iconoInput_modal"></i>
-                <input
-                  class="input_modal"
-                  v-model="formOrganizacion.nombre"
-                  name="nombre"
-                  type="text"
-                  :class="{
-                    'is-invalid': formOrganizacion.errors.has('nombre'),
-                  }"
-                  placeholder="Escriba el nombre de la organización"
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formOrganizacion"
-                  field="nombre"
-                ></has-error>
-              </div>
-              <div class="group">
-                <i class="fas fa-mobile-alt iconoInput_modal"></i>
-                <label>Teléfono de la organización</label>
-                <input
-                  class="input_modal"
-                  v-model="formOrganizacion.telefono"
-                  name="telefono"
-                  type="number"
-                  :class="{
-                    'is-invalid': formOrganizacion.errors.has('telefono'),
-                  }"
-                  placeholder="Escriba los 8 dígitos..."
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formOrganizacion"
-                  field="telefono"
-                ></has-error>
-              </div>
+            <div class="group">
+              <label>Cédula organización</label>
+              <i class="fas fa-id-card iconoInput_modal" style="left: -2px"></i>
+              <input
+                class="input_modal"
+                v-model="formOrganizacion.identificacion"
+                name="identificacion"
+                type="text"
+                :class="{
+                  'is-invalid': formOrganizacion.errors.has('identificacion'),
+                }"
+                placeholder="Formato: #-###-######"
+              />
+              <has-error
+                style="top: 80px"
+                :form="formOrganizacion"
+                field="identificacion"
+              ></has-error>
+            </div>
+            <div class="group">
+              <label>Nombre de la organización</label>
+              <i class="fas fa-user-circle iconoInput_modal"></i>
+              <input
+                class="input_modal"
+                v-model="formOrganizacion.nombre"
+                name="nombre"
+                type="text"
+                :class="{
+                  'is-invalid': formOrganizacion.errors.has('nombre'),
+                }"
+                placeholder="Escriba el nombre de la organización"
+              />
+              <has-error
+                style="top: 80px"
+                :form="formOrganizacion"
+                field="nombre"
+              ></has-error>
+            </div>
+            <div class="group">
+              <i class="fas fa-mobile-alt iconoInput_modal"></i>
+              <label>Teléfono de la organización</label>
+              <input
+                class="input_modal"
+                v-model="formOrganizacion.telefono"
+                name="telefono"
+                type="number"
+                :class="{
+                  'is-invalid': formOrganizacion.errors.has('telefono'),
+                }"
+                placeholder="Escriba los 8 dígitos..."
+              />
+              <has-error
+                style="top: 80px"
+                :form="formOrganizacion"
+                field="telefono"
+              ></has-error>
+            </div>
 
-              <div class="group">
-                <label>Email de la organización</label>
-                <i class="fas fa-at iconoInput_modal"></i>
-                <input
-                  class="input_modal"
-                  v-model="formOrganizacion.correo"
-                  name="correo"
-                  type="email"
-                  :class="{
-                    'is-invalid': formOrganizacion.errors.has('correo'),
-                  }"
-                  placeholder="ejemplo@gmail.com"
-                />
-                <has-error
-                  style="top: 80px"
-                  :form="formOrganizacion"
-                  field="correo"
-                ></has-error>
-              </div>
+            <div class="group">
+              <label>Email de la organización</label>
+              <i class="fas fa-at iconoInput_modal"></i>
+              <input
+                class="input_modal"
+                v-model="formOrganizacion.correo"
+                name="correo"
+                type="email"
+                :class="{
+                  'is-invalid': formOrganizacion.errors.has('correo'),
+                }"
+                placeholder="ejemplo@gmail.com"
+              />
+              <has-error
+                style="top: 80px"
+                :form="formOrganizacion"
+                field="correo"
+              ></has-error>
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -699,7 +693,13 @@
             >
               Cerrar
             </button>
-            <button type="button" class="btn btn-primary"  @click="crearOrganizacion()">Registrar</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="crearOrganizacion()"
+            >
+              Registrar
+            </button>
           </div>
         </div>
       </div>
@@ -757,18 +757,27 @@ export default {
       CedulaNacional: false,
       Pasaporte: false,
       tipoIndenteficacion: "",
-      mensajeExistencia: "",
-      mensajeNoExistencia: "",
+      mensajeDeExistencia: "", //Vamos a mostrar un mensaje que valide si existe la identificacion
+      VermensajeSiExiste: false, //ver mensaje si existe
+      VermensajeNoExiste: false, //ver mensaje si no existe
       verIdentificacion: true,
       registroBloquear: true, //Bloquear el boton para registrar
       bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
       bloquearInputId: false, //Bloquear el inuput de cedula
       bloquearInputIdR: false, //Bloquear el input de residencial
       bloquearInputIdP: false, //Bloquear el input de Pasaporte
-      persona: {}, //Array de persona
-      organizacion: {}, //array de organizacion
+      personaIdArray: {}, //Array de persona
+      organizacionIdArray: {}, //array de organizacion
       grupo: {}, //array de grupo
-
+      buscador: "",
+      formCorreo: new Form({
+        cedulaReservacion: "",
+        fechaReservacion: "",
+        cantidaPersonasReservacion: "",
+        horaInicio: "",
+        horaFin: "",
+        correo: "",
+      }),
       formReserva: new Form({
         id: "",
         idPersona: "",
@@ -804,6 +813,39 @@ export default {
     };
   },
   methods: {
+    llenarFormularioCorreo() {
+        (this.formCorreo.horaInicio = this.formReserva.horaInicio),
+          (this.formCorreo.horaFin = this.formReserva.horaFin),
+          (this.formCorreo.fechaReservacion = this.formReserva.fecha),
+          (this.formCorreo.cantidaPersonasReservacion =
+            this.formReserva.cantidad);
+    },
+    enviaEmail() {
+      const templateParams = {
+        cedulaReservacion: this.formCorreo.cedulaReservacion,
+        fechaReservacion: this.formCorreo.fechaReservacion,
+        cantidaPersonasReservacion: this.formCorreo.cantidaPersonasReservacion,
+        horaInicio: this.formCorreo.horaInicio,
+        horaFin: this.formCorreo.horaFin,
+        correo: this.formCorreo.correo,
+      };
+      console.log(templateParams.correo);
+      emailjs
+        .send(
+          "service_xf6d5cg",
+          "template_kgy3kx2",
+          templateParams,
+          "user_GMf53dmaF0FI8RLY0cj3V"
+        )
+
+        .then((res) => {
+          console.log(res.json());
+        })
+        .catch((err) => {
+          console.log(err.json());
+        });
+    },
+
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
     validarCedulaNacional() {
@@ -904,6 +946,11 @@ export default {
       this.bloquearConsulta = false;
       this.bloquearterminos = true;
       this.AceptarTerminos = false;
+      this.VermensajeNoExiste = true;
+      this.VermensajeSiExiste = true;
+      this.mensajeDeExistencia = "";
+      this.personaIdArray = {};
+      this.organizacionIdArray = {};
     },
     aceptoTerminos() {
       if (this.AceptarTerminos == true) {
@@ -951,25 +998,48 @@ export default {
     },
 
     consultarDatos() {
-      this.formReserva
-        .get("/api/reservarCliente/verificar", {
-          params: { buscador: this.formReserva.identificacion },
-        })
-        .then(({ data }) => (this.persona = data.data))
-
-        .then((response) => {
-          this.siExiste();
-          this.noExiste();
-        });
-      this.formReserva
-        .get("/api/reservarCliente/verificarOrg", {
-          params: { buscador: this.formReserva.identificacion },
-        })
-        .then(({ data }) => (this.organizacion = data.data))
-        .then((response) => {
-          this.siExiste();
-          this.noExiste();
-        });
+      if (this.buscador.length != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.buscador) ||
+          /^[1-9]\d{9}$/.test(this.buscador) ||
+          /^\d{11,12}$/.test(this.buscador)
+        ) {
+          this.formReserva
+            .get("/api/reservarCliente/verificar", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.personaIdArray = data.data));
+          this.VermensajeNoExiste = false;
+          this.VermensajeSiExiste = true;
+          this.mensajeDeExistencia = "Si esta registrado!";
+          this.bloquearConsulta = true;
+          this.bloquearCampos = false;
+          this.bloquearterminos = false;
+        } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
+          this.formReserva
+            .get("/api/reservarCliente/verificarOrg", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.organizacionIdArray = data.data));
+          this.VermensajeNoExiste = false;
+          this.VermensajeSiExiste = true;
+          this.mensajeDeExistencia = "Si esta registrado!";
+          this.bloquearConsulta = true;
+          this.bloquearCampos = false;
+          this.bloquearterminos = false;
+        } else {
+          this.VermensajeNoExiste = true;
+          this.VermensajeSiExiste = false;
+          this.mensajeDeExistencia = "No esta registrado!";
+          this.bloquearConsulta = false;
+          this.bloquearCampos = true;
+          this.bloquearterminos = true;
+        }
+      } else {
+        this.VermensajeNoExiste = true;
+        this.VermensajeSiExiste = false;
+        this.mensajeDeExistencia = "Campo vacio, por digite una identificacion";
+      }
     },
 
     crearReserva() {
@@ -977,13 +1047,16 @@ export default {
         .post("/api/reservarCliente")
         .then((response) => {
           Swal.fire("Reservación Realizada!", response.data.message, "success");
-          this.formReserva.reset();
-          this.formReserva.errors.clear();
+        
           this.mensajeExistencia = "";
           this.bloquearCampos = true;
           this.bloquearConsulta = false;
           this.bloquearterminos = true;
           this.AceptarTerminos = false;
+          this.llenarFormularioCorreo();
+          this.enviaEmail();
+          this.formReserva.reset();
+          this.formReserva.errors.clear();
           this.$Progress.finish();
         })
         .catch(() => {
@@ -1028,7 +1101,30 @@ export default {
     this.$Progress.start();
     this.$Progress.finish();
   },
-  computed: {},
+  computed: {
+    totalDatos() {
+      if(this.personaIdArray.length != 0){
+      for (let i = 0; i < this.personaIdArray.length; i++) {
+        this.formReserva.idPersona = this.personaIdArray[i].id;
+        this.formReserva.identificacionPersona =
+          this.personaIdArray[i].identificacion;
+        this.formCorreo.correo = this.personaIdArray[i].correo;
+        this.formCorreo.cedulaReservacion =
+          this.personaIdArray[i].identificacion;
+      }
+      }
+      if(this.organizacionIdArray.length != 0){
+      for (let i = 0; i < this.organizacionIdArray.length; i++) {
+        this.formReserva.idOrganizacion = this.organizacionIdArray[i].id;
+        this.formReserva.identificacionOrganizacion =
+          this.organizacionIdArray[i].identificacion;
+        this.formCorreo.correo = this.organizacionIdArray[i].correo;
+        this.formCorreo.cedulaReservacion =
+          this.organizacionIdArray[i].identificacion;
+      }
+      }
+    },
+  },
   mounted() {
     const plugin = document.createElement("script");
     plugin.setAttribute("src", "/js/validacionesReservacion.js");

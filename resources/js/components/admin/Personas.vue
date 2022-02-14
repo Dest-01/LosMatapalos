@@ -120,10 +120,10 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-show="!editmode">
-                Registro de cliente
+                Registro de Persona
               </h5>
               <h5 class="modal-title" v-show="editmode">
-                Actualización de cliente
+                Actualización de Persona
               </h5>
               <button
                 type="button"

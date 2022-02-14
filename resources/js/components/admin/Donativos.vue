@@ -90,8 +90,8 @@
                     <td>{{ donativo.id }}</td>
                     <td>{{ donativo.identificacionPersona }}</td>
                     <td>{{ donativo.identificacionOrganizacion }}</td>
-                    <td class="text-capitalize">{{ donativo.tipo }}</td>
-                    <td>{{ donativo.detalle | truncate(30, "...") }}</td>
+                    <td>{{ donativo.tipo }}</td>
+                    <td>{{ donativo.detalle | truncate(10, "...") }}</td>
                     <td>
                       <img
                         v-bind:src="'/images/donativos/' + donativo.photo"
@@ -987,7 +987,7 @@ export default {
             this.mensajeDeExistencia = "Si existe!";
             this.form.identificacionPersona =
               this.personaIdArray[i].identificacion;
-              this.fomr.idPersona = this.personaIdArray[i].id;
+              this.form.idPersona = this.personaIdArray[i].id;
             this.bloquearCampoConsulta = true;
             this.bloquearCamposDonativo = false;
           }
@@ -999,7 +999,7 @@ export default {
             this.mensajeDeExistencia = "Si existe!";
             this.form.identificacionOrganizacion =
               this.organizacionIdArray[i].identificacion;
-              this.fomr.idOrganizacion = this.organizacionIdArray[i].id;
+              this.form.idOrganizacion = this.organizacionIdArray[i].id;
             this.bloquearCampoConsulta = true;
             this.bloquearCamposDonativo = false;
           }

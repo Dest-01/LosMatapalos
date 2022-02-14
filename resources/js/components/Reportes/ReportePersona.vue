@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       personas: {},
-      total: 0,
+      contarArray: {},
       fechaActual: "",
       contarArray: "",
     };
@@ -90,6 +90,9 @@ export default {
         .replace("d", today.getDate());
       this.fechaActual = strDate;
     },
+    total: function(){
+      return this.personas.data.length;
+    }
   },
 };
 </script>

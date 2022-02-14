@@ -786,6 +786,7 @@ export default {
       this.$Progress.finish();
     },
 
+
     filtrar() {
       if (this.filtrarBusqueda == "") {
         this.reservas.data = this.nuevoReservaciones;
