@@ -125,9 +125,17 @@ export default {
   margin-block: 100px;
   text-align: center;
 }
+:root{
+  --colorVerde: #39ab81;
+}
+
+.far{
+  font-size: 8rem;
+    color: var(--colorVerde);
+}
 
 h4 {
-  color: #38ab81;
+  color: var(--colorVerde);
 }
 
 span {

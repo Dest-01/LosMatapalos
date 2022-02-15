@@ -110,10 +110,7 @@
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
                       /
-                      <a
-                        href="#"
-                        @click="detailsModal(donativo)"
-                      >
+                      <a href="#" @click="detailsModal(donativo)">
                         <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
@@ -413,7 +410,7 @@
                 />
               </div>
               <div id="inputsModal" class="form-group">
-                <label>Detalles donativo</label>
+                <label>Detalles del donativo</label>
                 <textarea
                   v-model="form.detalle"
                   type="text"
@@ -487,6 +484,7 @@
                   v-model="tipoIndenteficacion"
                   :class="{ 'is-invalid': form.errors.has('identificacion') }"
                   @change="tiposDeIndentificacon(), cambioSelect()"
+                  required
                 >
                   <option disabled value="">Seleccione un tipo</option>
                   <option value="Cedula Nacional">Cédula Nacional</option>
@@ -583,17 +581,15 @@
               <div class="form-group">
                 <label>Nombre</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.nombre"
                   type="text"
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                  placeholder="Nombre"
+                  placeholder="Escriba el nombre del donante"
                   minlength="3"
                   maxlength="20"
                   required
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -601,17 +597,14 @@
               <div class="form-group">
                 <label>Primer Apellido</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.apellido1"
                   type="text"
                   name="apellido1"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                  placeholder="Primer Apellido"
+                  placeholder="Primer apellido del donante"
                   minlength="3"
                   maxlength="20"
-                  required
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -619,17 +612,16 @@
               <div class="form-group">
                 <label>Segundo Apellido</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.apellido2"
                   type="text"
                   name="apellido2"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                  placeholder="Segundo Apellido"
+                  placeholder="Segundo apellido del donante"
                   minlength="3"
                   maxlength="20"
                   required
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
+                  
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
               </div>
@@ -638,15 +630,13 @@
                 <label>Teléfono</label>
                 <input
                   v-model="formPer.telefono"
-                  type="tel"
+                  type="number"
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('telefono') }"
                   id="phone"
-                  size="8"
-                  min="10000000"
+                  min="0"
                   placeholder="#### ####"
-                  pattern="[1-9][0-9]{7}"
                   required
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
@@ -975,41 +965,6 @@ export default {
     },
     /*////////////////////////////////////////////////////////////*/
 
-    comprobarExistenciaIdentificacion() {
-      if (
-        this.personaIdArray.length != 0 ||
-        this.organizacionIdArray.length != 0
-      ) {
-        for (let i = 0; i < this.personaIdArray.length; i++) {
-          if (this.personaIdArray[i].identificacion == this.buscador) {
-            this.VermensajeSiExiste = true;
-            this.VermensajeNoExiste = false;
-            this.mensajeDeExistencia = "Si existe!";
-            this.form.identificacionPersona =
-              this.personaIdArray[i].identificacion;
-              this.form.idPersona = this.personaIdArray[i].id;
-            this.bloquearCampoConsulta = true;
-            this.bloquearCamposDonativo = false;
-          }
-        }
-        for (let i = 0; i < this.organizacionIdArray.length; i++) {
-          if (this.organizacionIdArray[i].identificacion == this.buscador) {
-            this.VermensajeSiExiste = true;
-            this.VermensajeNoExiste = false;
-            this.mensajeDeExistencia = "Si existe!";
-            this.form.identificacionOrganizacion =
-              this.organizacionIdArray[i].identificacion;
-              this.form.idOrganizacion = this.organizacionIdArray[i].id;
-            this.bloquearCampoConsulta = true;
-            this.bloquearCamposDonativo = false;
-          }
-        }
-      } else {
-        this.VermensajeSiExiste = false;
-        this.VermensajeNoExiste = true;
-        this.mensajeDeExistencia = "No existe!";
-      }
-    },
     cancelarbusqueda() {
       //vamos a cancelar la busqueda bloqueando los input de reservacion
       this.bloquearCampoConsulta = false;
@@ -1054,7 +1009,7 @@ export default {
         (this.editmode = false);
       this.form.reset();
       this.form.errors.clear();
-       $("#SubirImagen").val("");
+      $("#SubirImagen").val("");
       this.previewImage = "";
       $("#addNew").modal("show");
     },
@@ -1065,17 +1020,51 @@ export default {
     },
     ConsultaCedula() {
       if (this.buscador.length != 0) {
-        this.form
-          .get("/api/donativo/verificar", {
-            params: { buscador: this.buscador },
-          })
-          .then(({ data }) => (this.personaIdArray = data.data));
-        this.form
-          .get("/api/donativo/verificarOrg", {
-            params: { buscador: this.buscador },
-          })
-          .then(({ data }) => (this.organizacionIdArray = data.data));
-        this.comprobarExistenciaIdentificacion();
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.buscador) ||
+          /^[1-9]\d{9}$/.test(this.buscador) ||
+          /^\d{11,12}$/.test(this.buscador)
+        ) {
+          this.form
+            .get("/api/donativo/verificar", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.personaIdArray = data.data));
+          for (let i = 0; i < this.personaIdArray.length; i++) {
+            if (this.personaIdArray[i].identificacion == this.buscador) {
+              this.VermensajeSiExiste = true;
+              this.VermensajeNoExiste = false;
+              this.mensajeDeExistencia = "Si existe!";
+              this.form.identificacionPersona =
+                this.personaIdArray[i].identificacion;
+              this.form.idPersona = this.personaIdArray[i].id;
+              this.bloquearCampoConsulta = true;
+              this.bloquearCamposDonativo = false;
+            }
+          }
+        } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
+          this.form
+            .get("/api/donativo/verificarOrg", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.organizacionIdArray = data.data));
+          for (let i = 0; i < this.organizacionIdArray.length; i++) {
+            if (this.organizacionIdArray[i].identificacion == this.buscador) {
+              this.VermensajeSiExiste = true;
+              this.VermensajeNoExiste = false;
+              this.mensajeDeExistencia = "Si existe!";
+              this.form.identificacionOrganizacion =
+                this.organizacionIdArray[i].identificacion;
+              this.form.idOrganizacion = this.organizacionIdArray[i].id;
+              this.bloquearCampoConsulta = true;
+              this.bloquearCamposDonativo = false;
+            }
+          }
+        } else {
+          this.VermensajeSiExiste = false;
+          this.VermensajeNoExiste = true;
+          this.mensajeDeExistencia = "No existe!";
+        }
       } else {
         this.VermensajeSiExiste = false;
         this.VermensajeNoExiste = true;
@@ -1125,6 +1114,11 @@ export default {
         });
     },
     crearPersona() {
+      if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
+          /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
+          /^\d{11,12}$/.test(this.formPer.identificacion)
+        ) {
       this.formPer
         .post("/api/donativo/guardarPersona", {
           params: { identificacion: this.formPer.identificacion },
@@ -1151,8 +1145,15 @@ export default {
             title: "Campos Vacios!",
           });
         });
+        }else{
+          Toast.fire({
+            icon: "error",
+            title: "Formato Incorrecto!",
+          });
+        }
     },
     crearOrganizacion() {
+      if(/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)){
       this.formOrg
         .post("/api/donativo/guardarOrganizacion", {
           params: { identificacion: this.formOrg.identificacion },
@@ -1179,6 +1180,12 @@ export default {
             title: "Campos vacios!",
           });
         });
+    }else{
+      Toast.fire({
+            icon: "error",
+            title: "Formato Incorrecto!",
+          });
+    }
     },
     actualizarDonativo() {
       this.$Progress.start();

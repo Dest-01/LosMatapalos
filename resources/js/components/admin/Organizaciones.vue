@@ -126,7 +126,7 @@
                 Registrar nueva organización
               </h5>
               <h5 class="modal-title" v-show="editmode">
-                Actualizar datos de la organización
+                Actualización de la organización
               </h5>
               <button
                 type="button"

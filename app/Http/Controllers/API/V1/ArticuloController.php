@@ -43,8 +43,8 @@ class ArticuloController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'Nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
-            'Tipo' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'Nombre' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'Tipo' => 'required|string|min:3|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'Image' => 'required|sometimes|base64image:png,jpeg,jpg',
             'Descripcion' => 'required|string|max:255|min:5',
 
@@ -52,10 +52,10 @@ class ArticuloController extends BaseController
     
         $messages = [
             'Nombre.max'=>'Minimo 3 caracteres',
-            'Nombre.min'=>'Maximo 20 caracteres',
+            'Nombre.min'=>'Maximo 100 caracteres',
             'Nombre.*'=>'Digite el nombre del articulo',
             'Tipo.max'=>'Minimo 3 caracteres',
-            'Tipo.min'=>'Maximo 20 caracteres',
+            'Tipo.min'=>'Maximo 50 caracteres',
             'Tipo.*' => 'Indique tipo de articulo a publicar',
             'Image.*' => 'Cargue una foto del Articulo',
             'descripcion.min' =>'Mínimo 5 caracteres',
@@ -106,21 +106,19 @@ class ArticuloController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'Nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
-            'Tipo' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
-            'Image' => 'required|sometimes|base64image:png,jpeg,jpg',
+            'Nombre' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'Tipo' => 'required|string|min:3|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'Descripcion' => 'required|string|max:255|min:5',
 
         ];
     
         $messages = [
             'Nombre.max'=>'Minimo 3 caracteres',
-            'Nombre.min'=>'Maximo 20 caracteres',
+            'Nombre.min'=>'Maximo 100 caracteres',
             'Nombre.*'=>'Digite el nombre del articulo',
             'Tipo.max'=>'Minimo 3 caracteres',
-            'Tipo.min'=>'Maximo 20 caracteres',
+            'Tipo.min'=>'Maximo 50 caracteres',
             'Tipo.*' => 'Indique tipo de articulo a publicar',
-            'Image.*' => 'Cargue una foto del Articulo',
             'descripcion.min' =>'Mínimo 5 caracteres',
             'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
 

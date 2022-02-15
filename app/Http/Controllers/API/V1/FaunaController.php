@@ -47,6 +47,7 @@ class FaunaController extends BaseController
                 'descripcion' => 'required|string|max:255|min:5',
                 'tipo' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
                 'fechaRegistro' => 'required|date|after:2020-01-01',
+                'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
                 'familiaCientifca' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
     
             ];
@@ -124,7 +125,6 @@ class FaunaController extends BaseController
             'descripcion' => 'required|string|max:255|min:5',
             'tipo' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'fechaRegistro' => 'required|date|after:2020-01-01',
-            'imagen' => 'sometimes|base64image:png,jpeg,jpg',
             'familiaCientifca' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
 
         ];
@@ -142,7 +142,6 @@ class FaunaController extends BaseController
             'tipo.max' => 'Máximo 30 caracteres',
             'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar números',
             'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
-            'imagen.*' => 'Cargue una foto',
             'familiaCientifca.min' =>'Mínimo 3 caracteres',
             'familiaCientifca.max' => 'Máximo 30 caracteres',
             'familiaCientifca.*' => 'Nombre de la familia científca',

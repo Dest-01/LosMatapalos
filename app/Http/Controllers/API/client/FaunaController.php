@@ -25,16 +25,16 @@ class FaunaController extends BaseController
     {
         $faunas = $this->fauna->latest()->paginate(6);
         
-     
-
         return $this->sendResponse($faunas, 'Lista Fauna');
     }
 
-
     public function list()
     {
-//
+        $faunas = $this->fauna->get();
+        
+        return $this->sendResponse($faunas, 'Lista Fauna');
     }
+
 
     public function show($id)
     {

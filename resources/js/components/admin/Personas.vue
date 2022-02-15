@@ -23,7 +23,7 @@
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
-              <h3 class="card-title">Listado de los clientes</h3>
+              <h3 class="card-title">Listado de las personas</h3>
 
               <div class="card-tools">
                 <div>
@@ -80,10 +80,7 @@
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
                       /
-                      <a
-                        href="#"
-                        @click="detailsModal(persona)"
-                      >
+                      <a href="#" @click="detailsModal(persona)">
                         <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
@@ -159,8 +156,8 @@
                   </select>
                 </div>
                 <!---------------------------------------------------------->
-<!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
- <!---------------------------------------------------------->
+                <!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
+                <!---------------------------------------------------------->
                 <div v-show="verIdentificacion" class="form-group">
                   <div v-show="CedulaNacional" class="form-group identitad">
                     <input
@@ -209,7 +206,7 @@
                       id="btnCancelar"
                       type="button"
                       class="btn btn-danger"
-                       :disabled="bloquearCancelar"
+                      :disabled="bloquearCancelar"
                       @click="bloquearCedula()"
                     >
                       <i class="fas fa-times"></i>
@@ -221,7 +218,7 @@
                       id="pasaporte"
                       @blur="validarPasaporte()"
                       v-model="form.identificacion"
-                      :disabled = "bloquearInputIdP"
+                      :disabled="bloquearInputIdP"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -236,41 +233,37 @@
                       id="btnCancelar"
                       type="button"
                       class="btn btn-danger"
-                       :disabled="bloquearCancelar"
+                      :disabled="bloquearCancelar"
                       @click="bloquearCedula()"
                     >
                       <i class="fas fa-times"></i>
                     </button>
                   </div>
                 </div>
-<!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
+                <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
                 <div v-show="verIdentificacionedit" class="form-group">
                   <label>Identificación</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.identificacion"
                     type="text"
                     name="identificacion"
                     class="form-control"
                     :disabled="BloquearIdentificacion"
-
                   />
                   <has-error :form="form" field="identificacion"></has-error>
                 </div>
                 <div class="form-group">
                   <label>Nombre</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
-                    placeholder="Nombre"
-                    minlength="3"
-                    maxlength="20"
+                    placeholder="Escriba el nombre"
                     required
-                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
+                    minlength="3"
+                    maxlength="30"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -278,17 +271,15 @@
                 <div class="form-group">
                   <label>Primer Apellido</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.apellido1"
                     type="text"
                     name="apellido1"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido1') }"
-                    placeholder="Primer Apellido"
+                    placeholder="Escriba el primer apellido"
                     minlength="3"
                     maxlength="20"
                     required
-                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="apellido1"></has-error>
                 </div>
@@ -296,17 +287,15 @@
                 <div class="form-group">
                   <label>Segundo Apellido</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.apellido2"
                     type="text"
                     name="apellido2"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido2') }"
-                    placeholder="Segundo Apellido"
+                    placeholder="Escriba el segundo apellido"
                     minlength="3"
                     maxlength="20"
                     required
-                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -315,15 +304,13 @@
                   <label>Teléfono</label>
                   <input
                     v-model="form.telefono"
-                    type="tel"
+                    type="number"
                     name="telefono"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     id="phone"
-                    size="8"
-                    min="10000000"
-                    placeholder="#### ####"
-                    pattern="[1-9][0-9]{7}"
+                    min="1"
+                    placeholder="Formato: #### ####"
                     required
                   />
                   <has-error :form="form" field="telefono"></has-error>
@@ -337,9 +324,6 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
                     placeholder="ejemplo@gmail.com"
-                    minlength="3"
-                    maxlength="100"
-                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                     required
                   />
                   <has-error :form="form" field="correo"></has-error>
@@ -480,7 +464,7 @@ export default {
       editmode: false,
       registroBloquear: true, //Bloquear el boton para registrar
       bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
-      bloquearInputId: false,//Bloquear el inuput de cedula
+      bloquearInputId: false, //Bloquear el inuput de cedula
       bloquearInputIdR: false, //Bloquear el input de residencial
       bloquearInputIdP: false, //Bloquear el input de Pasaporte
       errors: {},
@@ -500,7 +484,6 @@ export default {
     };
   },
   methods: {
-
     filtrar() {
       if (this.filtrarBusqueda == "") {
         this.personas.data = this.nuevoPersonas;
@@ -551,18 +534,18 @@ export default {
     },
     bloquearCedula() {
       this.form.identificacion = "";
-       this.bloquearInputId = false; //Desbloqueamos el input del id
-       this.bloquearInputIdR = false;
-       this.bloquearInputIdP = false;
-       this.registroBloquear = true; //Bloqueamos el boton de registrar
-       this.bloquearCancelar = true; //bloqueamos el boton de cancelar 
+      this.bloquearInputId = false; //Desbloqueamos el input del id
+      this.bloquearInputIdR = false;
+      this.bloquearInputIdP = false;
+      this.registroBloquear = true; //Bloqueamos el boton de registrar
+      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
     },
-    cambioSelect(){
-       this.bloquearInputId = false; //Desbloqueamos el input del id
-       this.bloquearInputIdR = false;
-       this.bloquearInputIdP = false;
-       this.registroBloquear = true; //Bloqueamos el boton de registrar
-       this.bloquearCancelar = true; //bloqueamos el boton de cancelar 
+    cambioSelect() {
+      this.bloquearInputId = false; //Desbloqueamos el input del id
+      this.bloquearInputIdR = false;
+      this.bloquearInputIdP = false;
+      this.registroBloquear = true; //Bloqueamos el boton de registrar
+      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
     },
 
     tiposDeIndentificacon() {
@@ -595,28 +578,29 @@ export default {
       this.$Progress.finish();
     },
     actualizarPersona() {
-      this.$Progress.start();
-      this.form
-        .put("/api/persona/" + this.form.id)
-        .then((response) => {
-          // success
-          $("#addNew").modal("hide");
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.$Progress.finish();
-          //  Fire.$emit('AfterCreate');
 
-          this.cargarPersona();
-        })
-        .catch(() => {
-          this.$Progress.fail();
-        });
+        this.$Progress.start();
+        this.form
+          .put("/api/persona/" + this.form.id)
+          .then((response) => {
+            // success
+            $("#addNew").modal("hide");
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$Progress.finish();
+            //  Fire.$emit('AfterCreate');
+
+            this.cargarPersona();
+          })
+          .catch(() => {
+            this.$Progress.fail();
+          });
     },
     editModal(persona) {
       this.editmode = true;
-     this.verIdentificacion = false;
+      this.verIdentificacion = false;
       this.verIdentificacionedit = true;
       this.form.reset();
       $("#addNew").modal("show");
@@ -655,36 +639,45 @@ export default {
       }
     },
     crearPersona() {
-      if(this.form.identificacion != ""){
-      this.form
-        .post("/api/persona", {
-          params: { identificacion: this.form.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
+      if (
+        /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacion) ||
+        /^[1-9]\d{9}$/.test(this.form.identificacion) ||
+        /^\d{11,12}$/.test(this.form.identificacion)
+      ) {
+        this.form
+          .post("/api/persona", {
+            params: { identificacion: this.form.identificacion },
+          })
+          .then((response) => {
+            if (response.data.success == false) {
+              Toast.fire({
+                icon: "error",
+                title: "Cédula ya existe!",
+              });
+            } else {
+              $("#addNew").modal("hide");
+
+              Toast.fire({
+                icon: "success",
+                title: response.data.message,
+              });
+
+              this.$Progress.finish();
+              this.cargarPersona();
+            }
+          })
+          .catch(() => {
             Toast.fire({
               icon: "error",
-              title: "Cedula ya existe!",
+              title: "Complete los campos!",
             });
-          } else {
-            $("#addNew").modal("hide");
-
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
-
-            this.$Progress.finish();
-            this.cargarPersona();
-          }
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Complete los campos!",
           });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "Formato de identificación incorrecto!",
         });
-        }
+      }
     },
 
     eliminarPersona(id) {
@@ -755,6 +748,7 @@ export default {
 
 
 <style scoped>
+
 #btnCancelar {
   padding: 1px 5px;
   margin: 1px 1px 1px 10px;
@@ -782,7 +776,7 @@ export default {
   font-size: 1.8rem;
   font-weight: 400;
 }
-.identitad{
+.identitad {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

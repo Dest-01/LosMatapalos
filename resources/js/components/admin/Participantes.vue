@@ -28,7 +28,7 @@
               <div class="card-tools">
                 <div>
                   <input
-                   v-on:keyup="filtrar()"
+                    v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -78,10 +78,7 @@
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
                       /
-                      <a
-                        href="#"
-                        @click="detailsModal(persona)"
-                      >
+                      <a href="#" @click="detailsModal(persona)">
                         <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
@@ -157,8 +154,8 @@
                   </select>
                 </div>
                 <!---------------------------------------------------------->
-<!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
- <!---------------------------------------------------------->
+                <!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
+                <!---------------------------------------------------------->
                 <div v-show="verIdentificacion" class="form-group">
                   <div v-show="CedulaNacional" class="form-group identitad">
                     <input
@@ -207,7 +204,7 @@
                       id="btnCancelar"
                       type="button"
                       class="btn btn-danger"
-                       :disabled="bloquearCancelar"
+                      :disabled="bloquearCancelar"
                       @click="bloquearCedula()"
                     >
                       <i class="fas fa-times"></i>
@@ -219,7 +216,7 @@
                       id="pasaporte"
                       @blur="validarPasaporte()"
                       v-model="form.identificacion"
-                      :disabled = "bloquearInputIdP"
+                      :disabled="bloquearInputIdP"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -234,14 +231,14 @@
                       id="btnCancelar"
                       type="button"
                       class="btn btn-danger"
-                       :disabled="bloquearCancelar"
+                      :disabled="bloquearCancelar"
                       @click="bloquearCedula()"
                     >
                       <i class="fas fa-times"></i>
                     </button>
                   </div>
                 </div>
-<!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
+                <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
                 <div v-show="verIdentificacionedit" class="form-group">
                   <label>Identificación</label>
                   <input
@@ -251,24 +248,21 @@
                     name="identificacion"
                     class="form-control"
                     :disabled="BloquearIdentificacion"
-
                   />
                   <has-error :form="form" field="identificacion"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Nombre</label>
+                  <label>Nombre del participante</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
-                    placeholder="Nombre"
+                    placeholder="Escriba el nombre del participante"
                     minlength="3"
                     maxlength="20"
                     required
-                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -276,17 +270,15 @@
                 <div class="form-group">
                   <label>Primer Apellido</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.apellido1"
                     type="text"
                     name="apellido1"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido1') }"
-                    placeholder="Primer Apellido"
+                    placeholder="Escriba el primer apellido del participante"
                     minlength="3"
                     maxlength="20"
                     required
-                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="apellido1"></has-error>
                 </div>
@@ -294,17 +286,15 @@
                 <div class="form-group">
                   <label>Segundo Apellido</label>
                   <input
-                    style="text-transform: capitalize"
                     v-model="form.apellido2"
                     type="text"
                     name="apellido2"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido2') }"
-                    placeholder="Segundo Apellido"
+                    placeholder="Escriba el segundo apellido del participante"
                     minlength="3"
                     maxlength="20"
                     required
-                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -318,6 +308,7 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nacionalidad') }"
                     required
+                    placeholder="Escriba la nacionalidad del participante"
                   />
                   <has-error :form="form" field="nacionalidad"></has-error>
                 </div>
@@ -383,7 +374,7 @@
                 />
               </div>
               <div class="form-group">
-                <label>Nombre Persona</label>
+                <label>Nombre</label>
                 <input
                   v-model="form.nombre"
                   type="text"
@@ -418,7 +409,6 @@
                   :disabled="verDetalles"
                 />
               </div>
-
             </div>
 
             <div class="modal-footer">
@@ -449,7 +439,7 @@ export default {
       editmode: false,
       registroBloquear: true, //Bloquear el boton para registrar
       bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
-      bloquearInputId: false,//Bloquear el inuput de cedula
+      bloquearInputId: false, //Bloquear el inuput de cedula
       bloquearInputIdR: false, //Bloquear el input de residencial
       bloquearInputIdP: false, //Bloquear el input de Pasaporte
       errors: {},
@@ -468,10 +458,9 @@ export default {
     };
   },
   methods: {
-
     filtrar() {
       if (this.filtrarBusqueda == "") {
-       this.personas.data = this.nuevoPersonas;
+        this.personas.data = this.nuevoPersonas;
       } else if (this.filtrarBusqueda != "") {
         this.personas.data = this.personasFiltradas;
       }
@@ -519,18 +508,18 @@ export default {
     },
     bloquearCedula() {
       this.form.identificacion = "";
-       this.bloquearInputId = false; //Desbloqueamos el input del id
-       this.bloquearInputIdR = false;
-       this.bloquearInputIdP = false;
-       this.registroBloquear = true; //Bloqueamos el boton de registrar
-       this.bloquearCancelar = true; //bloqueamos el boton de cancelar 
+      this.bloquearInputId = false; //Desbloqueamos el input del id
+      this.bloquearInputIdR = false;
+      this.bloquearInputIdP = false;
+      this.registroBloquear = true; //Bloqueamos el boton de registrar
+      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
     },
-    cambioSelect(){
-       this.bloquearInputId = false; //Desbloqueamos el input del id
-       this.bloquearInputIdR = false;
-       this.bloquearInputIdP = false;
-       this.registroBloquear = true; //Bloqueamos el boton de registrar
-       this.bloquearCancelar = true; //bloqueamos el boton de cancelar 
+    cambioSelect() {
+      this.bloquearInputId = false; //Desbloqueamos el input del id
+      this.bloquearInputIdR = false;
+      this.bloquearInputIdP = false;
+      this.registroBloquear = true; //Bloqueamos el boton de registrar
+      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
     },
 
     tiposDeIndentificacon() {
@@ -584,7 +573,7 @@ export default {
     },
     editModal(persona) {
       this.editmode = true;
-     this.verIdentificacion = false;
+      this.verIdentificacion = false;
       this.verIdentificacionedit = true;
       this.form.reset();
       $("#addNew").modal("show");
@@ -623,36 +612,47 @@ export default {
       }
     },
     crearPersona() {
-      if(this.form.identificacion != ""){
-      this.form
-        .post("/api/participantes", {
-          params: { identificacion: this.form.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
-            Toast.fire({
-              icon: "error",
-              title: "Cedula ya existe!",
-            });
-          } else {
-            $("#addNew").modal("hide");
+      if (this.form.identificacion != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacion) ||
+          /^[1-9]\d{9}$/.test(this.form.identificacion) ||
+          /^\d{11,12}$/.test(this.form.identificacion)
+        ) {
+          this.form
+            .post("/api/participantes", {
+              params: { identificacion: this.form.identificacion },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Toast.fire({
+                  icon: "error",
+                  title: "Cedula ya existe!",
+                });
+              } else {
+                $("#addNew").modal("hide");
 
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
+                Toast.fire({
+                  icon: "success",
+                  title: response.data.message,
+                });
 
-            this.$Progress.finish();
-            this.cargarPersona();
-          }
-        })
-        .catch(() => {
+                this.$Progress.finish();
+                this.cargarPersona();
+              }
+            })
+            .catch(() => {
+              Toast.fire({
+                icon: "error",
+                title: "Complete los campos!",
+              });
+            });
+        } else {
           Toast.fire({
-            icon: "error",
-            title: "Complete los campos!",
-          });
-        });
+                icon: "error",
+                title: "Formato incorrecto",
+              });
         }
+      }
     },
 
     eliminarPersona(id) {
@@ -747,7 +747,7 @@ export default {
   font-size: 1.8rem;
   font-weight: 400;
 }
-.identitad{
+.identitad {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

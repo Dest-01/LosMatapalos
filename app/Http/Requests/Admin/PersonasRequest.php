@@ -38,9 +38,10 @@ class PersonasRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'identificacion' => 'required',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
             'telefono' => 'required|regex:/^[2-9]\d{3}\d{4}$/',
             'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',                                                    
         ];
@@ -54,23 +55,24 @@ class PersonasRequest extends FormRequest
     public function updateRules(): array
     {
         return [
- 
-            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
-            'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'identificacion' => 'required',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
             'telefono' => 'required|regex:/^[2-9]\d{3}\d{4}$/',
-            'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',                                              
+            'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',                                          
         ];
     }
 
     public function messages(){
         return [
+            'identificacion.*' => 'La identificación se requiere',
             'nombre.regex' => 'Solo letras en el nombre',
             'apellido1.regex' => 'Solo letras en el primer apellido',
             'apellido2.regex' => 'Solo letras en el segundo apellido',
-            'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
-            'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 20',
-            'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 20',
+            'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 30',
+            'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 30',
+            'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 30',
             'telefono.*' => 'Teléfono se requiere, 8 dígitos',
             'correo.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
         ];

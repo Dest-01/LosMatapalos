@@ -53,7 +53,7 @@ class ProfileController extends Controller
         $response = [
             'success' => true,
             'data'    => $user,
-            'message' => 'Profile has been updated',
+            'message' => 'Perfil actualizado',
         ];
         return response()->json($response, 200);
     }
@@ -73,7 +73,7 @@ class ProfileController extends Controller
         $response = [
             'success' => true,
             'data'    => [],
-            'message' => 'Password Has been updated',
+            'message' => 'Contraseña actualizada',
         ];
         return response()->json($response, 200);
     }

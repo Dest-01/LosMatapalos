@@ -27,7 +27,7 @@
               <div class="card-tools">
                 <div>
                   <input
-                   v-on:keyup="filtrar()"
+                    v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -94,8 +94,8 @@
                         v-bind:src="
                           '/images/voluntariado/' + voluntarioestudiante.imagen
                         "
-                        width="50px"
-                        height="50px"
+                        width="100px"
+                        height="70px"
                       />
                     </td>
                     <td>
@@ -122,12 +122,14 @@
                       >
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
-                       /
+                      /
                       <a
                         href="#"
                         @click="
                           detailsModal(voluntarioestudiante),
-                            ObtenerCantidad(voluntarioestudiante.voluntariado_id)
+                            ObtenerCantidad(
+                              voluntarioestudiante.voluntariado_id
+                            )
                         "
                       >
                         <i id="icono" class="fa fa-eye green"></i>
@@ -176,7 +178,6 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                @click="limpiar()"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -372,7 +373,7 @@
         </div>
       </div>
 
-            <!--Modal de ver-->
+      <!--Modal de ver-->
       <div
         class="modal fade"
         id="ModalVer"
@@ -416,12 +417,10 @@
               </div>
               <div id="inputsModal" class="form-group">
                 <img
-                        v-bind:src="
-                          '/images/voluntariado/' + form.imagen
-                        "
-                        width="320px"
-                        height="250px"
-                      />
+                  v-bind:src="'/images/voluntariado/' + form.imagen"
+                  width="320px"
+                  height="250px"
+                />
               </div>
               <div id="inputsModal" class="form-group">
                 <label>Cantidad de actividades</label>
@@ -442,7 +441,6 @@
           </div>
         </div>
       </div>
-
 
       <div
         class="modal fade"
@@ -569,33 +567,32 @@
               <div class="form-group">
                 <label>Nombre</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.nombre"
                   type="text"
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                  placeholder="Nombre"
+                  placeholder="Escriba el nombre del estudiante"
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
 
               <div class="form-group">
-                <label>Primer Apellido</label>
+                <label>Primer apellido</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.apellido1"
                   type="text"
                   name="apellido1"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                  placeholder="Primer Apellido"
+                  placeholder="Escriba el primer apellido del estudiante"
+                  required
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
 
               <div class="form-group">
-                <label>Segundo Apellido</label>
+                <label>Segundo apellido</label>
                 <input
                   style="text-transform: capitalize"
                   v-model="formPer.apellido2"
@@ -603,7 +600,7 @@
                   name="apellido2"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                  placeholder="Segundo Apellido"
+                  placeholder="Escriba el segundo apellido del estudiante"
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
               </div>
@@ -620,7 +617,6 @@
                   size="8"
                   min="10000000"
                   placeholder="#### ####"
-                  pattern="[1-9][0-9]{7}"
                   required
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
@@ -662,7 +658,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
 </template>
@@ -730,7 +725,6 @@ export default {
     };
   },
   methods: {
-      
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
     validarCedulaNacional() {
@@ -810,7 +804,7 @@ export default {
     /*////////////////////////////////////////////////////////////*/
     filtrar() {
       if (this.filtrarBusqueda == "") {
-          this.voluntarioEst.data = this.voluntarioEstTodo;
+        this.voluntarioEst.data = this.voluntarioEstTodo;
       } else if (this.filtrarBusqueda != "") {
         this.voluntarioEst.data = this.voluntarioEstFiltrado;
       }
@@ -855,8 +849,8 @@ export default {
     newModal() {
       this.editmode = false;
       (this.verCamposdeConsulta = true),
-      (this.verCampoDeIdentificacionEdit = false),
-      this.cancelarbusqueda();
+        (this.verCampoDeIdentificacionEdit = false),
+        this.cancelarbusqueda();
       this.form.reset();
       $("#SubirImagen").val("");
       this.previewImage = "";
@@ -864,7 +858,7 @@ export default {
       this.form.errors.clear();
       this.formVoluntario.errors.clear();
     },
-      detailsModal(voluntarioEstudiante) {
+    detailsModal(voluntarioEstudiante) {
       $("#ModalVer").modal("show");
       this.form.fill(voluntarioEstudiante);
       this.formVoluntario.cantidad = this.CantidadActividades.cantidad;
@@ -890,7 +884,7 @@ export default {
       }
     },
 
-        comprobarExistenciaIdentificacion() {
+    comprobarExistenciaIdentificacion() {
       if (this.personaIdArray.length != 0) {
         for (let i = 0; i < this.personaIdArray.length; i++) {
           if (this.personaIdArray[i].identificacion == this.buscador) {
@@ -923,11 +917,22 @@ export default {
 
     ConsultaCedula() {
       if (this.buscador.length != 0) {
-        this.form
-          .get("/api/voluntarioPersona/obtenerCedula", {
-            params: { buscador: this.buscador },
-          })
-          .then(({ data }) => (this.personaIdArray = data.data));
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.buscador) ||
+          /^[1-9]\d{9}$/.test(this.buscador) ||
+          /^\d{11,12}$/.test(this.buscador)
+        ) {
+          this.form
+            .get("/api/voluntarioPersona/obtenerCedula", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.personaIdArray = data.data));
+        } else {
+          this.VermensajeSiExiste = false;
+          this.VermensajeNoExiste = true;
+          this.mensajeDeExistencia = "Formato incorrecto";
+          
+        }
       } else {
         this.VermensajeSiExiste = false;
         this.VermensajeNoExiste = true;
@@ -950,39 +955,50 @@ export default {
         axios
           .get("/api/voluntarioEstudiante/")
           .then(({ data }) => (this.voluntarioEst = data.data));
-           axios
+        axios
           .get("/api/voluntarioEstudiante/listar")
           .then(({ data }) => (this.voluntarioEstTodo = data.data));
       }
     },
 
-        crearPersona() {
-      this.formPer
-        .post("/api/voluntarioPersona/guardarPersona", {
-          params: { identificacion: this.formPer.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
+    crearPersona() {
+      if (
+        /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
+        /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
+        /^\d{11,12}$/.test(this.formPer.identificacion)
+      ) {
+        this.formPer
+          .post("/api/voluntarioPersona/guardarPersona", {
+            params: { identificacion: this.formPer.identificacion },
+          })
+          .then((response) => {
+            if (response.data.success == false) {
+              Toast.fire({
+                icon: "error",
+                title: "Cedula ya existe!",
+              });
+            } else {
+              $("#modalPersona").modal("hide");
+
+              Toast.fire({
+                icon: "success",
+                title: response.data.message,
+              });
+              this.$Progress.finish();
+            }
+          })
+          .catch(() => {
             Toast.fire({
               icon: "error",
-              title: "Cedula ya existe!",
+              title: "Campos vacios!",
             });
-          } else {
-            $("#modalPersona").modal("hide");
-
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
-            this.$Progress.finish();
-          }
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Campos vacios!",
           });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "Formato Incorrecto!",
         });
+      }
     },
     cargarVoluntario() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
@@ -1153,6 +1169,12 @@ export default {
 #inputsModal {
   width: 45%;
   margin: 10px 15px;
+}
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: baseline;
+  border-top: 1px solid #dee2e6;
 }
 @media screen and (min-width: 900px) {
   .modal-content {

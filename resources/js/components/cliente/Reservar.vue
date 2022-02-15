@@ -1038,7 +1038,7 @@ export default {
       } else {
         this.VermensajeNoExiste = true;
         this.VermensajeSiExiste = false;
-        this.mensajeDeExistencia = "Campo vacio, por digite una identificacion";
+        this.mensajeDeExistencia = "Campo vacío, por favor digite una identificación";
       }
     },
 

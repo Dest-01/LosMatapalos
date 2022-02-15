@@ -111,6 +111,7 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
     Route::get('donacionesCliente/donacionesNecesarias', 'DonacionController@cargarCategoriaDonativos');
     Route::get('donacionesCliente/Donadores', 'DonacionController@Donadores');
     Route::get('floraCliente/List', 'FloraController@list');
+    Route::get('faunaCliente/List', 'FaunaController@list');
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',

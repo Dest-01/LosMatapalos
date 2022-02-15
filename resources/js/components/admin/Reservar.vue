@@ -28,7 +28,7 @@
               <div class="card-tools">
                 <div>
                   <input
-                   v-on:keyup="filtrar()"
+                    v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -76,8 +76,8 @@
                   <tr>
                     <th>ID</th>
                     <th>Identificación</th>
-                    <th>Cédula Jurídica</th>
-                    <th>Cantidad de Visitantes</th>
+                    <th>Cédula jurídica</th>
+                    <th>Cantidad de visitantes</th>
                     <th>Fecha de reservación</th>
                     <th>Hora inicial de reservación</th>
                     <th>Hora final de reservación</th>
@@ -188,7 +188,7 @@
                     type="button"
                     class="btn btn-success my-4"
                     @click="
-                      ConsultaCedula(), comprobarExistenciaIdentificacion()
+                      ConsultaCedula()
                     "
                   >
                     Consultar
@@ -232,6 +232,8 @@
                     :disabled="bloquearCamposReservacion"
                     min="1"
                     max="30"
+                    placeholder="0"
+                    required
                   />
                   <has-error :form="form" field="cantidad"></has-error>
                 </div>
@@ -245,6 +247,7 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fecha') }"
                     :disabled="bloquearCamposReservacion"
+                    required
                   />
                   <has-error :form="form" field="fecha"></has-error>
                 </div>
@@ -261,6 +264,7 @@
                     required
                     onchange="validarHora()"
                     :disabled="bloquearCamposReservacion"
+                    min="08:00:00" max="14:00:00"
                   />
                   <has-error :form="form" field="horaInicio"></has-error>
                 </div>
@@ -276,6 +280,7 @@
                     required
                     onchange="validarHora()"
                     :disabled="bloquearCamposReservacion"
+                    min="09:00:00" max="15:00:00"
                   />
                   <has-error :form="form" field="horaFin"></has-error>
                 </div>
@@ -519,13 +524,12 @@
               <div class="form-group">
                 <label>Nombre</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.nombre"
                   type="text"
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                  placeholder="Nombre"
+                 placeholder="Escriba el nombre de la personas"
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -533,13 +537,13 @@
               <div class="form-group">
                 <label>Primer Apellido</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.apellido1"
                   type="text"
                   name="apellido1"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                  placeholder="Primer Apellido"
+                  placeholder="Escriba el primer apellido de la personas"
+                  required
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -547,13 +551,12 @@
               <div class="form-group">
                 <label>Segundo Apellido</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.apellido2"
                   type="text"
                   name="apellido2"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                  placeholder="Segundo Apellido"
+                  placeholder="Escriba el segundo apellido de la personas"
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
               </div>
@@ -570,7 +573,6 @@
                   size="8"
                   min="10000000"
                   placeholder="#### ####"
-                  pattern="[1-9][0-9]{7}"
                   required
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
@@ -586,7 +588,6 @@
                   placeholder="ejemplo@gmail.com"
                   minlength="3"
                   maxlength="100"
-                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   required
                 />
                 <has-error :form="formPer" field="correo"></has-error>
@@ -786,7 +787,6 @@ export default {
       this.$Progress.finish();
     },
 
-
     filtrar() {
       if (this.filtrarBusqueda == "") {
         this.reservas.data = this.nuevoReservaciones;
@@ -873,41 +873,6 @@ export default {
     },
     /*////////////////////////////////////////////////////////////*/
 
-    comprobarExistenciaIdentificacion() {
-      if (
-        this.personaIdArray.length != 0 ||
-        this.organizacionIdArray.length != 0
-      ) {
-        for (let i = 0; i < this.personaIdArray.length; i++) {
-          if (this.personaIdArray[i].identificacion == this.buscador) {
-            this.VermensajeSiExiste = true;
-            this.VermensajeNoExiste = false;
-            this.mensajeDeExistencia = "Si existe!";
-            this.form.identificacionPersona =
-              this.personaIdArray[i].identificacion;
-            this.form.idPersona = this.personaIdArray[i].id;
-            this.bloquearCampoConsulta = true;
-            this.bloquearCamposReservacion = false;
-          }
-        }
-        for (let i = 0; i < this.organizacionIdArray.length; i++) {
-          if (this.organizacionIdArray[i].identificacion == this.buscador) {
-            this.VermensajeSiExiste = true;
-            this.VermensajeNoExiste = false;
-            this.mensajeDeExistencia = "Si existe!";
-            this.form.identificacionOrganizacion =
-              this.organizacionIdArray[i].identificacion;
-            this.form.idOrganizacion = this.organizacionIdArray[i].id;
-            this.bloquearCampoConsulta = true;
-            this.bloquearCamposReservacion = false;
-          }
-        }
-      } else {
-        this.VermensajeSiExiste = false;
-        this.VermensajeNoExiste = true;
-        this.mensajeDeExistencia = "No existe!";
-      }
-    },
     cancelarbusqueda() {
       //vamos a cancelar la busqueda bloqueando los input de reservacion
       this.bloquearCampoConsulta = false;
@@ -920,16 +885,51 @@ export default {
     },
     ConsultaCedula() {
       if (this.buscador.length != 0) {
-        this.form
-          .get("/api/reserva/verificar", {
-            params: { buscador: this.buscador },
-          })
-          .then(({ data }) => (this.personaIdArray = data.data));
-        this.form
-          .get("/api/reserva/verificarOrg", {
-            params: { buscador: this.buscador },
-          })
-          .then(({ data }) => (this.organizacionIdArray = data.data));
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.buscador) ||
+          /^[1-9]\d{9}$/.test(this.buscador) ||
+          /^\d{11,12}$/.test(this.buscador)
+        ) {
+          this.form
+            .get("/api/reserva/verificar", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.personaIdArray = data.data));
+               for (let i = 0; i < this.personaIdArray.length; i++) {
+          if (this.personaIdArray[i].identificacion == this.buscador) {
+            this.VermensajeSiExiste = true;
+            this.VermensajeNoExiste = false;
+            this.mensajeDeExistencia = "Si existe!";
+            this.form.identificacionPersona =
+              this.personaIdArray[i].identificacion;
+            this.form.idPersona = this.personaIdArray[i].id;
+            this.bloquearCampoConsulta = true;
+            this.bloquearCamposReservacion = false;
+          }
+        }
+        } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
+          this.form
+            .get("/api/reserva/verificarOrg", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.organizacionIdArray = data.data));
+            for (let i = 0; i < this.organizacionIdArray.length; i++) {
+          if (this.organizacionIdArray[i].identificacion == this.buscador) {
+            this.VermensajeSiExiste = true;
+            this.VermensajeNoExiste = false;
+            this.mensajeDeExistencia = "Si existe!";
+            this.form.identificacionOrganizacion =
+              this.organizacionIdArray[i].identificacion;
+            this.form.idOrganizacion = this.organizacionIdArray[i].id;
+            this.bloquearCampoConsulta = true;
+            this.bloquearCamposReservacion = false;
+          }
+        }
+        } else {
+          this.VermensajeSiExiste = false;
+          this.VermensajeNoExiste = true;
+          this.mensajeDeExistencia = "No existe!";
+        }
       } else {
         this.VermensajeSiExiste = false;
         this.VermensajeNoExiste = true;
@@ -973,6 +973,11 @@ export default {
     },
 
     crearPersona() {
+      if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
+          /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
+          /^\d{11,12}$/.test(this.formPer.identificacion)
+        ) {
       this.formPer
         .post("/api/reserva/guardarPersona", {
           params: { identificacion: this.formPer.identificacion },
@@ -999,8 +1004,15 @@ export default {
             title: "Campos vacios!",
           });
         });
+        }else{
+          Toast.fire({
+            icon: "error",
+            title: "Formato Icorrecto!",
+          });
+        }
     },
     crearOrganizacion() {
+      if(/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)){
       this.formOrg
         .post("/api/reserva/guardarOrganizacion", {
           params: { identificacion: this.formOrg.identificacion },
@@ -1027,6 +1039,13 @@ export default {
             title: "Campos vacios!",
           });
         });
+      }else{ 
+        Toast.fire({
+            icon: "error",
+            title: "Formato Incorrecto!",
+          });
+
+      }
     },
 
     cargarReservas() {
@@ -1034,7 +1053,7 @@ export default {
         axios
           .get("/api/reserva")
           .then(({ data }) => (this.reservas = data.data));
-           axios
+        axios
           .get("/api/reserva/listar")
           .then(({ data }) => (this.nuevoReservaciones = data.data));
       }

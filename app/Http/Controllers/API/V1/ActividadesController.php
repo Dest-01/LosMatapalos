@@ -131,7 +131,6 @@ class ActividadesController extends BaseController
             'hora' => 'required',
             'descripcion' => 'required|string|max:255|min:3',
             'cantParticipantes' => 'required|integer|min:1|max:30',
-            'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
             'tipo' => 'required',
         ];
 
@@ -147,9 +146,6 @@ class ActividadesController extends BaseController
             'cantParticipantes.min' => 'Mínimo 1 participante',
             'cantParticipantes.max' => 'Maximo 30 participantes',
             'cantParticipantes.*' => 'Cantidad de participantes se requiere',
-            'imagen.sometimes' => 'Solo imagenes, jpeg, jpg o png',
-            'imagen.base64image' => 'Solo imagenes, jpeg, jpg o png',
-            'imagen.*' => 'Cargue una imagen',
             'tipo.*' => 'Seleccione el tipo de actividad',
         ];
 

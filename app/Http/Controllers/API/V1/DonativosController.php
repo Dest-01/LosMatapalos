@@ -126,6 +126,8 @@ class DonativosController extends BaseController
 
             $messages =[
                 'tipo.*' => 'Seleccione un tipo de donativo',
+                'detalle.min' => "Mínimo 3 caracteres",
+                'detalle.max' => "Máximo 255 caracteres",
                 'detalle.*' => 'Breve descripción del donativo',
                 'fecha.*' => 'Seleccione fecha de donativo',
                 'photo.sometimes' => 'Solo imagenes, jpeg, jpg o png',
@@ -185,19 +187,18 @@ class DonativosController extends BaseController
             'tipo' => 'required|string|max:50',
             'detalle' => 'required|string|min:3|max:255|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'fecha' => 'required|date|after:2000-01-01',
-            // 'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
             'estado' => 'required|string|',
 
         ];
 
         $messages = [
             'tipo.*' => 'Seleccione un tipo de donativo',
-            'detalle.*' => 'Breve descripción del donativo',
-            'fecha.*' => 'Seleccione fecha de donativo',
-            'photo.sometimes' => 'Solo imagenes, jpeg, jpg o png',
-            'photo.base64image' => 'Solo imagenes, jpeg, jpg o png',
-            // 'photo.*' => 'Cargue una foto',
-            'estado.*' => 'Seleccione un estado del donativo',
+                'detalle.min' => "Mínimo 3 caracteres",
+                'detalle.max' => "Máximo 255 caracteres",
+                'detalle.*' => 'Breve descripción del donativo',
+                'fecha.*' => 'Seleccione fecha de donativo',
+                'photo.base64image' => 'Solo imagenes, jpeg, jpg o png',
+                'estado.*' => 'Seleccione un estado del donativo',
         ];
 
         $this->validate($request, $rules, $messages);

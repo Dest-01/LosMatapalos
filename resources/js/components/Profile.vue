@@ -40,7 +40,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <button type="submit" class="btn btn-success">Actualizar Usuario</button>
-                                                <div class="float-right d-sm-inline text-muted">Member since: <span>{{form.created_at|myDate}}</span></div>
+                                                <div class="float-right d-sm-inline text-muted">Usuario creado: <span>{{form.created_at|myDate}}</span></div>
                                             </div>
                                         </div>
                                     </form>
@@ -150,7 +150,7 @@
 
                     Toast.fire({
                         icon: 'error',
-                        title: 'Some error occured! Please try again'
+                        title: 'Ocurrio un problema'
                     });
                 });
             },
@@ -175,7 +175,7 @@
 
                     Toast.fire({
                         icon: 'error',
-                        title: 'Some error occured! Please try again'
+                        title: 'Ocurrio un problema'
                     });
                 });
             }

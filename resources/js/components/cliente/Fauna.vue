@@ -6,12 +6,13 @@
       </h1>
     </div>
     <div class="menu">
-      <button class="btn_menu">Aves</button>
-      <button class="btn_menu">Mamíferos</button>
+      <button @click="vertodo()" class="btn_menu">Todo</button>
+      <button @click="filtroDeAves()" class="btn_menu">Aves</button>
+      <button @click="filtroDeMamiferos()" class="btn_menu">Mamíferos</button>
     </div>
     <div v-if="faunas.data == 0" class="row">
       <div class="mensaje">
-        <i class="far fa-folder-open"></i>
+        <i class="far fa-image"></i>
         <h1>Oops!</h1>
         <h3>No hay registros en galería de fauna</h3>
         <h4>Muy pronto...</h4>
@@ -103,6 +104,9 @@ export default {
     return {
       bloquearCampo: true,
       faunas: {},
+      faunasTodo: {},
+      filtrarBusqueda: "Aves",
+      filtrarBusqueda2: "Mamiferos",
       form: new Form({
         id: "",
         nombreComun: "",
@@ -113,6 +117,16 @@ export default {
     };
   },
   methods: {
+    filtroDeAves(){
+      this.faunas.data = this.filtroAves;
+    },
+    filtroDeMamiferos(){
+      this.faunas.data = this.filtroMamiferos;
+
+    },
+    vertodo() {
+     this.faunas.data = this.faunasTodo;
+    },
     verImagen(fauna) {
       this.form.fill(fauna);
     },
@@ -128,6 +142,9 @@ export default {
       axios
         .get("/api/faunaCliente")
         .then(({ data }) => (this.faunas = data.data));
+        axios
+        .get("/api/faunaCliente/List")
+        .then(({ data }) => (this.faunasTodo = data.data));
     },
   },
   created() {
@@ -140,9 +157,35 @@ export default {
       return text.substring(0, length) + suffix;
     },
   },
+    computed: {
+    filtroAves: function () {
+      return this.faunasTodo.filter((fauna) => {
+        return (
+          fauna.tipo
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase()) );
+      });
+    },
+    filtroMamiferos: function () {
+      return this.faunasTodo.filter((fauna) => {
+        return (
+          fauna.tipo
+            .toLowerCase()
+            .includes(this.filtrarBusqueda2.toLowerCase()));
+      });
+    },
+  },
 };
 </script>
 <style scoped>
+:root{
+  --colorVerde: #39ab81;
+}
+
+.far{
+  font-size: 8rem;
+        color: #39ab81;
+}
 .titulo {
   margin-top: 40px;
   padding: 5px;
@@ -283,7 +326,7 @@ export default {
 .paginacion {
   margin: 10px auto;
   padding: 1em;
-  width: 300px;
+  width: 600px;
   justify-content: center;
 }
 button span {

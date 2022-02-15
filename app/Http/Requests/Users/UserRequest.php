@@ -58,4 +58,14 @@ class UserRequest extends FormRequest
             'email' => 'sometimes|string|email|max:191|unique:users,email,' . $this->get('id')
         ];
     }
+    public function messages(){
+        return [
+            'name.mun' => 'Minimo de 3 caracteres',
+            'name.max' => 'Maximo de 100 caracteres',
+            'name.*' => 'Se requiere un nombre',
+            'email.*' => 'Se require un correo',
+            'password.*' => 'Se require una contraseña',
+            'type.*' => 'Seleccione un tipo de rol',
+        ];
+    }
 }

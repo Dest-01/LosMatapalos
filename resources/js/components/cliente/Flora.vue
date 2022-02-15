@@ -12,7 +12,7 @@
     </div>
     <div v-if="floras.data == 0" class="row">
       <div class="mensaje">
-        <i class="far fa-folder-open"></i>
+        <i class="far fa-image"></i>
         <h1>Oops!</h1>
         <h3>No hay registros en galería de flora</h3>
         <h4>Muy pronto...</h4>
@@ -127,7 +127,7 @@ export default {
 
     },
     vertodo() {
-      this.cargarFlora();
+     this.floras.data = this.florasTodos;
     },
 
     verImagen(flora) {
@@ -176,15 +176,17 @@ export default {
             .toLowerCase()
             .includes(this.filtrarBusqueda2.toLowerCase()));
       });
-       
     },
-
   },
 };
 </script>
 
 
 <style scoped>
+.far{
+  font-size: 8rem;
+        color: #39ab81;
+}
 .titulo {
   margin-top: 40px;
   padding: 5px;

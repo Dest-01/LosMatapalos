@@ -119,7 +119,6 @@ class FloraController extends BaseController
             'nom_cientifico' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'descripcion' => 'required|string|max:255|min:5',
             'tipo' => 'required|string|max:50',
-            'photo' => 'base64image:png,jpeg,jpg',
             'fecha_registro' => 'required|date|after:2020-01-01',
             'fam_cientifica' =>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/]+$/u|string|max:20|min:3',
 
@@ -137,7 +136,6 @@ class FloraController extends BaseController
             'tipo.*' => 'Seleccione un tipo de flora',
             'fechaRegistro.after' => 'requiere una fecha mayor al 2020-01-01',
             'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
-            'photo.*' => 'Cargue una foto',
             'fam_cientifica.min' =>'Mínimo 3 caracteres',
             'fam_cientifica.max' => 'Máximo 30 caracteres',
             'fam_cientifica.*' => 'Nombre de la familia científca',

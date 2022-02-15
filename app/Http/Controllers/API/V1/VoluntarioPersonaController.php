@@ -103,7 +103,7 @@ class VoluntarioPersonaController extends BaseController
         try {
             $rules = [
                 'cantidad'=> 'required|integer|min:1|max:30|',
-                'lugar'=> 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:70|min:3',
+                'lugar'=> 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
                 'idVoluntario' => 'required|integer|min:1|',
             ];
             $messages = [
@@ -163,15 +163,16 @@ class VoluntarioPersonaController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
+            'idVoluntario' => 'required|integer|min:1|',
             'cantidad'=> 'required|integer|min:1|max:30|',
-            'lugar'=> 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:255|min:3',
+            'lugar'=> 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
         ];
         $messages = [
             'cantidad.min' => 'Mínimo 1 actividad',
             'cantidad.max' => 'Máximo 30 actividades',
             'cantidad.*' => 'Se requiere una cantidad de actividades',
             'lugar.min' => 'Mínimo 3 caracteres',
-            'lugar.max' => 'Máximo 70 caracteres',
+            'lugar.max' => 'Máximo 100 caracteres',
             'lugar.*' => 'Se requiere un lugar de procedencia',
         ];
         $tag = $this->voluntarioPersona->findOrFail($id);

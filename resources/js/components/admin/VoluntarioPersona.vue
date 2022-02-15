@@ -374,7 +374,6 @@
         </div>
       </div>
 
-
       <div
         class="modal fade"
         id="modalPersona"
@@ -500,13 +499,13 @@
               <div class="form-group">
                 <label>Nombre</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.nombre"
                   type="text"
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                  placeholder="Nombre"
+                  placeholder="Escriba el nombre"
+                  required
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -514,13 +513,13 @@
               <div class="form-group">
                 <label>Primer Apellido</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.apellido1"
                   type="text"
                   name="apellido1"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                  placeholder="Primer Apellido"
+                  placeholder="Escriba el primer apellido"
+                  required
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -528,13 +527,13 @@
               <div class="form-group">
                 <label>Segundo Apellido</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formPer.apellido2"
                   type="text"
                   name="apellido2"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                  placeholder="Segundo Apellido"
+                  placeholder="Escriba el segundo apellido"
+                  required
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
               </div>
@@ -548,10 +547,8 @@
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('telefono') }"
                   id="phone"
-                  size="8"
                   min="10000000"
                   placeholder="#### ####"
-                  pattern="[1-9][0-9]{7}"
                   required
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
@@ -600,6 +597,7 @@
 export default {
   data() {
     return {
+      find: undefined,
       editmode: false,
       personaIdArray: {},
       voluntarios: {},
@@ -654,7 +652,6 @@ export default {
     };
   },
   methods: {
-    
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
     validarCedulaNacional() {
@@ -734,7 +731,7 @@ export default {
     /*////////////////////////////////////////////////////////////*/
     filtrar() {
       if (this.filtrarBusqueda == "") {
-         this.voluntarioPer.data = this.voluntarioPerTodo;
+        this.voluntarioPer.data = this.voluntarioPerTodo;
       } else if (this.filtrarBusqueda != "") {
         this.voluntarioPer.data = this.voluntarioPerFiltrado;
       }
@@ -764,7 +761,6 @@ export default {
       $("#modalPersona").modal("show");
       this.formPer.reset();
       this.formPer.errors.clear();
-
     },
     newModal() {
       this.editmode = false;
@@ -819,11 +815,22 @@ export default {
     },
     ConsultaCedula() {
       if (this.buscador.length != 0) {
-        this.form
-          .get("/api/voluntarioPersona/obtenerCedula", {
-            params: { buscador: this.buscador },
-          })
-          .then(({ data }) => (this.personaIdArray = data.data));
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.buscador) ||
+          /^[1-9]\d{9}$/.test(this.buscador) ||
+          /^\d{11,12}$/.test(this.buscador)
+        ) {
+          this.form
+            .get("/api/voluntarioPersona/obtenerCedula", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.personaIdArray = data.data));
+        } else {
+          this.VermensajeSiExiste = false;
+        this.VermensajeNoExiste = true;
+        this.mensajeDeExistencia =
+          "Formato incorrecto";
+        }
       } else {
         this.VermensajeSiExiste = false;
         this.VermensajeNoExiste = true;
@@ -831,33 +838,44 @@ export default {
           "Campo vacío, por favor digite una identificación";
       }
     },
-        crearPersona() {
-      this.formPer
-        .post("/api/voluntarioPersona/guardarPersona", {
-          params: { identificacion: this.formPer.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
+    crearPersona() {
+      if (
+        /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
+        /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
+        /^\d{11,12}$/.test(this.formPer.identificacion)
+      ) {
+        this.formPer
+          .post("/api/voluntarioPersona/guardarPersona", {
+            params: { identificacion: this.formPer.identificacion },
+          })
+          .then((response) => {
+            if (response.data.success == false) {
+              Toast.fire({
+                icon: "error",
+                title: "Cedula ya existe!",
+              });
+            } else {
+              $("#modalPersona").modal("hide");
+
+              Toast.fire({
+                icon: "success",
+                title: response.data.message,
+              });
+              this.$Progress.finish();
+            }
+          })
+          .catch(() => {
             Toast.fire({
               icon: "error",
-              title: "Cedula ya existe!",
+              title: "Campos vacios!",
             });
-          } else {
-            $("#modalPersona").modal("hide");
-
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
-            this.$Progress.finish();
-          }
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Campos vacios!",
           });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "Formato Incorrecto!",
         });
+      }
     },
 
     ObtenerCantidad(VoluntarioId) {

@@ -27,14 +27,14 @@
 
               <div class="card-tools">
                 <div>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="newModal"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  agregar nuevo
-                </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary"
+                    @click="newModal"
+                  >
+                    <i class="fa fa-plus-square"></i>
+                    agregar nuevo
+                  </button>
                 </div>
               </div>
             </div>
@@ -56,13 +56,13 @@
                     :key="catDonativo.id"
                   >
                     <td>{{ catDonativo.id }}</td>
-                    <td class="text-capitalize">{{ catDonativo.nombre }}</td>
+                    <td>{{ catDonativo.nombre }}</td>
                     <td v-if="catDonativo.estado == 0">No es necesario</td>
                     <td v-else>Es necesario</td>
                     <td>
                       <img
                         v-bind:src="'/images/CatDonativos/' + catDonativo.photo"
-                        width="40%"
+                        width="30%"
                         height="100px"
                       />
                     </td>
@@ -74,11 +74,8 @@
                       <a href="#" @click="eliminarCatDonativo(catDonativo.id)">
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
-                       /
-                      <a
-                        href="#"
-                        @click="detailsModal(catDonativo)"
-                      >
+                      /
+                      <a href="#" @click="detailsModal(catDonativo)">
                         <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
@@ -169,7 +166,7 @@
                   }}</label>
                   <has-error :form="form" field="estado"></has-error>
                 </div>
-               <div class="form-group">
+                <div class="form-group">
                   <div>
                     <div class="row">
                       <div class="col-8">
@@ -234,7 +231,7 @@
           </div>
         </div>
       </div>
-            <!-- Modal de ver informacion -->
+      <!-- Modal de ver informacion -->
       <div
         class="modal fade"
         id="exampleModal"
@@ -242,11 +239,11 @@
         role="dialog"
         aria-labelledby="exampleModal"
         aria-hidden="true"
-        >
+      >
         <div class="modal-dialog" role="document">
           <div id="modal-contentino" class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Detalles de la Donativo Necesario</h5>
+              <h5 class="modal-title">Detalles del donativo necesaro</h5>
               <button
                 type="button"
                 class="close"
@@ -270,19 +267,27 @@
               <div class="form-group">
                 <label>Estado del donativo necesario</label>
                 <input
-                  v-model="form.estado"
+                  v-if="form.estado == 0"
                   type="text"
                   class="form-control"
                   :disabled="verDetalles"
+                  value="No es necesario"
+                />
+                <input
+                  v-else
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                  value="Es necesario"
                 />
               </div>
               <div class="form-group">
                 <label>Imagen</label>
-                  <img
-                        v-bind:src="'/images/CatDonativos/' + form.photo"
-                        width="100%"
-                        height="400px"
-                      />
+                <img
+                  v-bind:src="'/images/CatDonativos/' + form.photo"
+                  width="100%"
+                  height="400px"
+                />
               </div>
             </div>
 
@@ -325,7 +330,7 @@ export default {
   methods: {
     filtrar() {
       if (this.filtrarBusqueda == "") {
-       this.catDonativos.data = this.nuevoCatDonativos;
+        this.catDonativos.data = this.nuevoCatDonativos;
       } else if (this.filtrarBusqueda != "") {
         this.catDonativos.data = this.catDonativosFiltrados;
       }
@@ -407,7 +412,7 @@ export default {
       this.previewImage = "";
       $("#addNew").modal("show");
     },
-     detailsModal(catdonativo) {
+    detailsModal(catdonativo) {
       $("#exampleModal").modal("show");
       this.form.fill(catdonativo);
     },
@@ -485,10 +490,7 @@ export default {
       return text.substring(0, length) + suffix;
     },
   },
-  computed: {
-
-
-  },
+  computed: {},
 };
 </script>
 
@@ -524,10 +526,11 @@ export default {
 #modal-contentino {
   width: 150%;
 }
-.table th, .table td {
-    padding: 0.75rem;
-    vertical-align: baseline;
-    border-top: 1px solid #dee2e6;
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: baseline;
+  border-top: 1px solid #dee2e6;
 }
 @media screen and (min-width: 900px) {
   .modal-content {

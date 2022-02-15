@@ -44,13 +44,13 @@ class CatDonativosController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
 
         ];
 
         $messages = [
-            'nombre.*' => 'Escriba un nombre, maximo 20 caracteres',
+            'nombre.*' => 'Escriba un nombre, mínimo 3 y máximo 40 caracteres',
             'photo.*' => 'Cargue una foto',
         ];
 
@@ -100,13 +100,11 @@ class CatDonativosController extends BaseController
     public function update(Request $request, $id)
     {
         $rules = [
-            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            // 'photo' => 'base64image:png,jpeg,jpg',
+            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
         ];
 
         $messages = [
-            'nombre.*' => 'Escriba un nombre, maximo 20 caracteres',
-            // 'photo.*' => 'Cargue una foto',
+            'nombre.*' => 'Escriba un nombre, mínimo 3 y máximo 40 caracteres',
         ];
 
         $this->validate($request, $rules, $messages);

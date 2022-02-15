@@ -23,7 +23,7 @@
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin() || $gate.isUser()">
             <div class="card-header">
-              <h3 class="card-title">Lista de Articulos</h3>
+              <h3 class="card-title">Lista de articulos</h3>
 
               <div class="card-tools">
                  <div>

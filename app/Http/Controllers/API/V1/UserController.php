@@ -49,6 +49,8 @@ class UserController extends BaseController
      */
     public function store(UserRequest $request)
     {
+
+
         $this->authorize('isAdmin');
         
         $user = User::create([
@@ -58,7 +60,7 @@ class UserController extends BaseController
             'type' => $request['type'],
         ]);
 
-        return $this->sendResponse($user, 'User Created Successfully');
+        return $this->sendResponse($user, 'Usuario creado!');
     }
 
     /**
@@ -82,7 +84,7 @@ class UserController extends BaseController
 
         $user->update($request->all());
 
-        return $this->sendResponse($user, 'User Information has been updated');
+        return $this->sendResponse($user, 'Se actualizo el usuario!');
     }
 
     /**
@@ -101,6 +103,6 @@ class UserController extends BaseController
 
         $user->delete();
 
-        return $this->sendResponse([$user], 'User has been Deleted');
+        return $this->sendResponse([$user], 'Se elimino el usuario');
     }
 }

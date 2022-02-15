@@ -37,11 +37,11 @@ class ParticipanteRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'identificacion' => 'required|',
-            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'nacionalidad' => 'required|min:3|max:20',
+            'identificacion' => 'required',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'nacionalidad' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             
         ];
     }
@@ -55,23 +55,24 @@ class ParticipanteRequest extends FormRequest
     {
         return [
            
-            'nombre' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'apellido1' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'apellido2' => 'required|regex:/^[a-zA-Z]+$/u|string|max:20|min:3',
-            'nacionalidad' => 'required',
+            'identificacion' => 'required',
+            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'apellido1' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'apellido2' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:30|min:3',
+            'nacionalidad' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
            
         ];
     }
 
     public function messages(){
         return [
-            'identificacion.*' => 'Se requiere la identificación',
+            'identificacion.*' => 'La identificación se requiere',
             'nombre.regex' => 'Solo letras en el nombre',
             'apellido1.regex' => 'Solo letras en el primer apellido',
             'apellido2.regex' => 'Solo letras en el segundo apellido',
-            'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 20',
-            'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 20',
-            'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 20',
+            'nombre.*' => 'Nombre requiere mínimo 3 caracteres y máximo 30',
+            'apellido1.*' => 'El primer apellido requiere mínimo 3 caracteres y máximo 30',
+            'apellido2.*' => 'El segundo apellido requiere mínimo 3 caracteres y máximo 30',
             'nacionalidad.*' => 'Se requiere la nacionalidad',
            
         ];

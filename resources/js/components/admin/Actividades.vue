@@ -58,7 +58,7 @@
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Descripción</th>
-                    <th>Cantidad Participantes</th>
+                    <th>Cantidad participantes</th>
                     <th>Imagen</th>
                     <th>Tipo de actividad</th>
                   </tr>
@@ -133,10 +133,10 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-show="!editmode">
-                Crear nueva Actividad
+                Crear nueva actividad
               </h5>
               <h5 class="modal-title" v-show="editmode">
-                Actualizar Actividad
+                Actualizar actividad
               </h5>
               <button
                 type="button"

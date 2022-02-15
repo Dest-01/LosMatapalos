@@ -40,6 +40,21 @@ class RepositorioDocumentosController extends BaseController
      */
     public function store(Request $request)
     {
+        $rules = [
+            'nombre' => 'required|string|max:50',
+            'descripcion' => 'required|string|min:3|max:255|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'fecha' => 'required|date|after:2000-01-01',
+
+        ];
+
+        $messages = [
+                'nombre.*' => "Se requiere un nombre",
+                'descripcion.min' => "Mínimo 3 caracteres",
+                'descripcion.max' => "Máximo 255 caracteres",
+                'descripcion.*' => 'Breve descripción del donativo',
+                'fecha.*' => 'Seleccione fecha de donativo',
+        ];
+
         try{
             $repositorioDocumentos = $request->all();
             if($repositorioDocumentos['documento']) {
@@ -82,6 +97,21 @@ class RepositorioDocumentosController extends BaseController
      */
     public function update(Request $request, $id)
     {
+        $rules = [
+            'nombre' => 'required|string|max:50',
+            'descripcion' => 'required|string|min:3|max:255|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'fecha' => 'required|date|after:2000-01-01',
+
+        ];
+
+        $messages = [
+                'nombre.*' => "Se requiere un nombre",
+                'descripcion.min' => "Mínimo 3 caracteres",
+                'descripcion.max' => "Máximo 255 caracteres",
+                'descripcion.*' => 'Breve descripción del donativo',
+                'fecha.*' => 'Seleccione fecha de donativo',
+        ];
+        
         try{
             $repositorioDocumentos = RepositorioDocumentos::FindOrFail($id);
             $documentoActual =  $repositorioDocumentos['documento'];
@@ -90,9 +120,6 @@ class RepositorioDocumentosController extends BaseController
             }
 
 
-
-
-            
             $document_explode = explode(',', $repositorioDocumentos['documento']);
             $documento = base64_decode($document_explode[1]);
             $archivo_nombre = $repositorioDocumentos['nombre'].time().'.'.$this->getFileExtension($document_explode[0]);
