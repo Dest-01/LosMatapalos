@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Requests\Admin\GrupoRequest;
 use App\Http\Requests\Admin\OrganizacionesRequest;
 use App\Http\Requests\Admin\PersonasRequest;
 use App\Http\Requests\Admin\ReservaRequest;
 use App\Models\Organizaciones;
 use App\Models\Personas;
+use App\Models\Grupo;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
 
@@ -15,13 +17,15 @@ class ReservaController extends BaseController
     protected $personas = '';
     protected $organizaciones = '';
     protected $reserva = '';
+    protected $grupos = '';
 
-    public function __construct(Reserva $reserva, Personas $personas, Organizaciones $organizaciones)
+    public function __construct(Reserva $reserva, Personas $personas, Organizaciones $organizaciones, Grupo $grupos)
     {
         $this->middleware('auth:api');
         $this->reserva = $reserva;
         $this->personas = $personas;
         $this->organizaciones = $organizaciones;
+        $this->grupos = $grupos;
     }
     /**
      * Display a listing of the resource.
@@ -54,6 +58,14 @@ class ReservaController extends BaseController
         $filtro = $request->buscador;
         $organizacion = Organizaciones::where('identificacion', $filtro)->get();
         return $this->sendResponse($organizacion, 'Cedula si existe');
+    }
+
+    public function obtenerNombreGrupo(Request $request)
+    {
+        $filtro = $request->buscador;
+        $grupo = Grupo::where('nombre', $filtro)->get();
+        return $this->sendResponse($grupo, 'Grupo si existe!');
+
     }
 
     public function guardarPersona(PersonasRequest $request)
@@ -105,6 +117,32 @@ class ReservaController extends BaseController
 
     }
 
+    public function GuardarGrupo(GrupoRequest $request)
+    {
+        try {
+            $filtro = $request->nombre;
+            $existencia = Grupo::where('nombre', '=', $filtro)->first();
+            if ($existencia === null) {
+                $tag = $this->grupos->create([
+                    'nombre' => $request->get('nombre'),
+                    'correo' => $request->get('correo'),
+                    'cantidad' => $request->get('cantidad'),
+                    'edades' => $request->get('edades'),
+                    'lugar' => $request->get('lugar'),
+                    'tematica' => $request->get('tematica'),
+                    'detalles' => $request->get('detalles'),
+                ]);
+
+                return $this->sendResponse($tag, 'Registro exitoso!');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Nombre ya existe!']);
+            }
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -118,6 +156,8 @@ class ReservaController extends BaseController
             'identificacionPersona' => $request->get('identificacionPersona'),
             'idOrganizacion' => $request->get('idOrganizacion'),
             'identificacionOrganizacion' => $request->get('identificacionOrganizacion'),
+            'idGrupo' => $request->get('idGrupo'),
+            'nombreGrupo' => $request->get('nombreGrupo'),
             'cantidad' => $request->get('cantidad'),
             'fecha' => $request->get('fecha'),
             'horaInicio' => $request->get('horaInicio'),

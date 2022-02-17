@@ -136,7 +136,7 @@
         <!-- Copyright -->
         <div class="text-center p-3">
             <h5 style="padding: 10px">
-                Senderos los Mataplos - PGAI
+                Senderos los Matapalos - PGAI
             </h5>
             <h5 style="padding: 10px">
                 <a href="https://www.facebook.com/pgaiuna/" target="_blank"><i class="fab fa-facebook white"></i></a>

@@ -17,9 +17,9 @@ class CreateParticipanteActividadsTable extends Migration
           
             $table->bigIncrements('id');
             $table->bigInteger('IdActividad')->unsigned();
-            $table->foreign('IdActividad')->references('id')->on('actividades');
+            $table->foreign('IdActividad')->references('id')->on('actividades')->onDelete("cascade")->onUpdate("cascade");
             $table->unsignedBigInteger('IdParticipante');
-            $table->foreign('IdParticipante')->references('id')->on('participantes');
+            $table->foreign('IdParticipante')->references('id')->on('participantes')->onDelete("cascade")->onUpdate("cascade");
             $table->string('nombreActividad');
             $table->timestamps();
         });

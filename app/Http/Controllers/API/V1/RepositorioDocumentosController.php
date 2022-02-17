@@ -156,7 +156,6 @@ class RepositorioDocumentosController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
         $repositorioDocumentos = RepositorioDocumentos::FindOrFail($id);
         if(file_exists('documentos/repositorioDocumental/'. $repositorioDocumentos['documento']) AND !empty( $repositorioDocumentos['documento'])){
             unlink('documentos/repositorioDocumental/'. $repositorioDocumentos['documento']);

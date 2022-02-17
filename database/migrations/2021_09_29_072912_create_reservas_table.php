@@ -21,6 +21,9 @@ class CreateReservasTable extends Migration
             $table->unsignedBigInteger('idOrganizacion')->nullable();
             $table->foreign("idOrganizacion")->references("id")->on("organizaciones")->onDelete("cascade")->onUpdate("cascade");
             $table->string('identificacionOrganizacion')->nullable();
+            $table->unsignedBigInteger('idGrupo')->nullable();
+            $table->foreign("idGrupo")->references("id")->on("grupos")->onDelete("cascade")->onUpdate("cascade");
+            $table->string('nombreGrupo')->nullable();
             $table->integer('cantidad');
             $table->date('fecha')->format('d/m/Y');
             $table->time('horaInicio');

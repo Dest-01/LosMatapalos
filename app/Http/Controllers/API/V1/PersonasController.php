@@ -41,9 +41,9 @@ class PersonasController extends BaseController
     {
         $filtro = $request->buscador;
 
-        $persona = Personas::where('id', $filtro)->get('id');
+        $persona = Personas::where('identificacion', $filtro)->get('identificacion');
 
-        return $this->sendResponse($persona, 'Cedula si existe');
+        return $this->sendResponse($persona, 'Cedula si existe!');
 
     }
 
@@ -102,7 +102,7 @@ class PersonasController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Datos actualizados');
+        return $this->sendResponse($tag, 'Datos actualizados!');
     }
 
     /**
@@ -119,6 +119,6 @@ class PersonasController extends BaseController
 
         $personas->delete();
 
-        return $this->sendResponse($personas, 'Datos eliminados');
+        return $this->sendResponse($personas, 'Datos eliminados!');
     }
 }

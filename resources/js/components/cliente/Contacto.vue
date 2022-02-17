@@ -7,7 +7,7 @@
       <div class="figura">
         <div id="box_contacto" class="contact-wrapper animated bounceInUp">
           <div class="contact-form">
-            <h3 style="text-align: center">Sendero los Mataplos</h3>
+            <h3 style="text-align: center">Sendero los Matapalos</h3>
             <form id="contact-form">
               <input type="hidden" name="contact_number" />
               <p>

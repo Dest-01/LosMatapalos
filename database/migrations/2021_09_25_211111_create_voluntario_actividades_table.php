@@ -16,13 +16,13 @@ class CreateVoluntarioActividadesTable extends Migration
         Schema::create('voluntario_actividades', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('idActividad');
-            $table->foreign('idActividad')->references('id')->on('actividades');
+            $table->foreign('idActividad')->references('id')->on('actividades')->onDelete("cascade")->onUpdate("cascade");
             $table->unsignedBigInteger('idVoluntario_Persona')->nullable();
             $table->foreign('idVoluntario_Persona')
-            ->references('id')->on('voluntario_personas');
+            ->references('id')->on('voluntario_personas')->onDelete("cascade")->onUpdate("cascade");
             $table->unsignedBigInteger('idVoluntario_Estudiante')->nullable();
             $table->foreign('idVoluntario_Estudiante')
-            ->references('id')->on('voluntario_estudiantes');
+            ->references('id')->on('voluntario_estudiantes')->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }

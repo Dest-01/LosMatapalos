@@ -53,8 +53,10 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
    /////////////////////////---RESERVAS---//////////////////////////////////////////////////////////////////
     Route::get('reserva/verificar', 'ReservaController@obtenerCedula');
     Route::get('reserva/verificarOrg', 'ReservaController@obtenerCedulaOrg');
+    Route::get('reserva/verificarGrupo', 'ReservaController@obtenerNombreGrupo');
     Route::post('reserva/guardarPersona', 'ReservaController@guardarPersona');
     Route::post('reserva/guardarOrganizacion', 'ReservaController@guardarOrganizacion');
+    Route::post('reserva/guardarGrupo', 'ReservaController@GuardarGrupo');
     Route::get('reserva/listar', 'ReservaController@list');
 /////////////////////////---VOLUNTARIO ACTIVIDAD---//////////////////////////////////////////////////////////////////
     Route::get('voluntarioActividad/GetActividades', 'VoluntarioActividadesController@GetActividades');
@@ -72,6 +74,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     ///////////////////////////////------RUSTAS LISTAR PARA IFLTRAR ----------------////////////////////
     Route::get('organizacion/listar', 'OrganizacionesController@list');
     Route::get('personas/listar', 'PersonasController@list');
+    Route::get('grupo/listar', 'GruposController@list');
     Route::get('catDonativo/listar', 'CatDonativosController@list');
     Route::get('flora/listar', 'FloraController@list');
     Route::get('fauna/listar', 'FaunaController@list');
@@ -86,6 +89,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'catDonativo' => 'CatDonativosController',
         'donativo' => 'DonativosController',
         'persona' => 'PersonasController',
+        'grupo' => 'GruposController',
         'organizacion' => 'OrganizacionesController',
         'voluntario' => 'VoluntarioController',
         'voluntarioEstudiante' => 'VoluntarioEstudiantesController',
@@ -106,8 +110,10 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         
     Route::get('reservarCliente/verificar', 'ReservarCliController@obtenerCedula');
     Route::get('reservarCliente/verificarOrg', 'ReservarCliController@obtenerCedulaOrg');
+    Route::get('reservarCliente/verificarGrupo', 'ReservarCliController@obtenerNombreGrupo');
     Route::post('reservarCliente/persona', 'ReservarCliController@GuardarPersona');
     Route::post('reservarCliente/organizacion', 'ReservarCliController@GuardarOrganizacion');
+    Route::post('reservarCliente/grupo', 'ReservarCliController@GuardarGrupo');
     Route::get('donacionesCliente/donacionesNecesarias', 'DonacionController@cargarCategoriaDonativos');
     Route::get('donacionesCliente/Donadores', 'DonacionController@Donadores');
     Route::get('floraCliente/List', 'FloraController@list');

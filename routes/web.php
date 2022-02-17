@@ -36,7 +36,7 @@ Route::get('/dashboard', function () {
     return view('admin');
 })->where('dashboard', '[\/\w\.-]*')->middleware('auth');
 
-Route::get('//profile', function () {
+Route::get('/profile', function () {
     return view('admin');
 })->where('/profile', '[\/\w\.-]*')->middleware('auth');
 
@@ -65,6 +65,10 @@ Route::get('/admin/personas', function () {
 Route::get('/admin/organizaciones', function () {
     return view('admin');
 })->where('admin/organizaciones', '[\/\w\.-]*')->middleware('auth');
+
+Route::get('/admin/grupos', function () {
+    return view('admin');
+})->where('admin/grupos', '[\/\w\.-]*')->middleware('auth');
 /////////////////////----FIN-PERSONAS ORGANIZACION---///////////////////////
 ///////////////////////////////////////////////////////////////////////////
 //-----------------------DONATIVOS-----------------------------------------

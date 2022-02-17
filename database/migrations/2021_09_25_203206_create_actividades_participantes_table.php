@@ -16,9 +16,9 @@ class CreateActividadesParticipantesTable extends Migration
         Schema::create('actividades_participantes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('idActividad');
-            $table->foreign('idActividad')->references('id')->on('actividades');
+            $table->foreign('idActividad')->references('id')->on('actividades')->onDelete("cascade")->onUpdate("cascade");
             $table->integer('idVoluntario')->unsigned();
-            $table->foreign('idVoluntario')->references('id')->on('voluntarios');
+            $table->foreign('idVoluntario')->references('id')->on('voluntarios')->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }

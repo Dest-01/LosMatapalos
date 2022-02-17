@@ -1,6 +1,6 @@
 <template>
   <div class="contenedor-principal">
-    <section class="section--blue wow fadeInLeft" data-wow-duration="2s">>
+    <section class="section--blue wow fadeInLeft" data-wow-duration="2s">
       <h1>Eventos del <span>Sendero los Matapalos</span></h1>
 
       <div v-if="actividades.data == 0" class="row">
@@ -155,21 +155,18 @@ span {
 .paginacion {
   margin: auto;
   padding: 1em;
-  width: 300px;
+  width: 600px;
   justify-content: center;
 }
 .pagination {
   justify-content: center;
-  font-family: fantasy;
   color: black;
   background: #f0f0f0;
   padding: 5px;
-
   border-radius: 30px;
 }
 
 .sub-title {
-  font-family: "Frutiger", 700;
   font-weight: bold;
 }
 

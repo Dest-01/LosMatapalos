@@ -67,6 +67,16 @@
                     Registrar organización
                   </button>
                 </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary"
+                    @click="modalGrupo()"
+                  >
+                    <i class="fa fa-plus-square"></i>
+                    Registrar grupo
+                  </button>
+                </div>
               </div>
             </div>
             <!-- /.card-header -->
@@ -77,6 +87,7 @@
                     <th>ID</th>
                     <th>Identificación</th>
                     <th>Cédula jurídica</th>
+                    <th>Nombre Grupo</th>
                     <th>Cantidad de visitantes</th>
                     <th>Fecha de reservación</th>
                     <th>Hora inicial de reservación</th>
@@ -89,6 +100,7 @@
                     <td>{{ reserva.id }}</td>
                     <td>{{ reserva.identificacionPersona }}</td>
                     <td>{{ reserva.identificacionOrganizacion }}</td>
+                    <td>{{ reserva.nombreGrupo }}</td>
                     <td>{{ reserva.cantidad }}</td>
                     <td>{{ reserva.fecha }}</td>
                     <td>{{ reserva.horaInicio }}</td>
@@ -187,9 +199,7 @@
                   <button
                     type="button"
                     class="btn btn-success my-4"
-                    @click="
-                      ConsultaCedula()
-                    "
+                    @click="ConsultaCedula()"
                   >
                     Consultar
                   </button>
@@ -264,7 +274,8 @@
                     required
                     onchange="validarHora()"
                     :disabled="bloquearCamposReservacion"
-                    min="08:00:00" max="14:00:00"
+                    min="08:00:00"
+                    max="14:00:00"
                   />
                   <has-error :form="form" field="horaInicio"></has-error>
                 </div>
@@ -280,7 +291,8 @@
                     required
                     onchange="validarHora()"
                     :disabled="bloquearCamposReservacion"
-                    min="09:00:00" max="15:00:00"
+                    min="09:00:00"
+                    max="15:00:00"
                   />
                   <has-error :form="form" field="horaFin"></has-error>
                 </div>
@@ -529,7 +541,7 @@
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                 placeholder="Escriba el nombre de la personas"
+                  placeholder="Escriba el nombre de la personas"
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -713,6 +725,145 @@
           </div>
         </div>
       </div>
+      <!--MODAL DE GRUPO-->
+      <div
+        class="modal fade"
+        id="modalGrupo"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="modalGrupo"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Registrar grupo</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Nombre del grupo</label>
+                <input
+                  v-model="formGrupo.nombre"
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  :class="{
+                    'is-invalid': formGrupo.errors.has('nombre'),
+                  }"
+                  placeholder="Nombre del grupo, G-####"
+                  required
+                />
+                <has-error :form="formGrupo" field="nombre"></has-error>
+              </div>
+
+              <div class="form-group">
+                <label>Correo</label>
+                <input
+                  v-model="formGrupo.correo"
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('correo') }"
+                  placeholder="Escriba el correo del grupo"
+                  required
+                />
+                <has-error :form="formGrupo" field="correo"></has-error>
+              </div>
+
+              <div class="form-group">
+                <label>Cantidad del grupo</label>
+                <input
+                  v-model="formGrupo.cantidad"
+                  type="number"
+                  name="cantidad"
+                  class="form-control"
+                  :class="{ 'is-invalid': formGrupo.errors.has('cantidad') }"
+                  placeholder="####"
+                />
+                <has-error :form="formGrupo" field="cantidad"></has-error>
+              </div>
+              <div class="form-group">
+                <label>Rango de edades</label>
+                <input
+                  v-model="formGrupo.edades"
+                  type="range"
+                  name="edades"
+                  class="form-control"
+                  :class="{ 'is-invalid': formGrupo.errors.has('edades') }"
+                  min="5"
+                  max="150"
+                />
+                <label for="">Rango: {{ formGrupo.edades }}</label>
+                <has-error :form="formGrupo" field="edades"></has-error>
+              </div>
+              <div class="form-group">
+                <label>Lugar de procedencia</label>
+                <input
+                  v-model="formGrupo.lugar"
+                  type="text"
+                  name="lugar"
+                  class="form-control"
+                  :class="{ 'is-invalid': formGrupo.errors.has('lugar') }"
+                  id="phone"
+                  min="1"
+                  placeholder="Escriba el lugar de procedencia"
+                  required
+                />
+                <has-error :form="formGrupo" field="lugar"></has-error>
+              </div>
+              <div class="form-group">
+                <label>Tematica</label>
+                <input
+                  v-model="formGrupo.tematica"
+                  type="text"
+                  name="tematica"
+                  class="form-control"
+                  :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
+                  placeholder="Que tematica le gustaria tratar"
+                  required
+                />
+                <has-error :form="formGrupo" field="tematica"></has-error>
+              </div>
+              <div class="form-group">
+                <label>Detalles a considerar</label>
+                <textarea
+                  name="detalles"
+                  v-model="formGrupo.detalles"
+                  class="form-control"
+                  :class="{ 'is-invalid': formGrupo.errors.has('detalles') }"
+                  cols="5"
+                  rows="5"
+                ></textarea>
+                <has-error :form="formGrupo" field="detalles"></has-error>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click="crearGrupo()"
+              >
+                Registrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -725,6 +876,7 @@ export default {
       reservas: {}, //Se llena con ultimos 10 donativos
       personaIdArray: {}, //Array para guardar la identificacion encontrada en persona
       organizacionIdArray: {}, //Array para guardar la identificacion encontrada en organizacion
+      grupoIdArray: {},
       nuevoReservaciones: {}, //Para hacer el filtro en computed
       mensajeDeExistencia: "", //Vamos a mostrar un mensaje que valide si existe la identificacion
       VermensajeSiExiste: false, //ver mensaje si existe
@@ -754,6 +906,8 @@ export default {
         identificacionPersona: "",
         idOrganizacion: "",
         identificacionOrganizacion: "",
+        idGrupo: "",
+        nombreGrupo: "",
         cantidad: "",
         fecha: "",
         horaInicio: "",
@@ -775,7 +929,16 @@ export default {
         telefono: "",
         correo: "",
       }),
-      tituloModal: "",
+      formGrupo: new Form({
+        id: "",
+        nombre: "",
+        cantidad: "",
+        correo: "",
+        edades: "",
+        lugar: "",
+        tematica: "",
+        detalles: "",
+      }),
     };
   },
   methods: {
@@ -895,36 +1058,54 @@ export default {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.personaIdArray = data.data));
-               for (let i = 0; i < this.personaIdArray.length; i++) {
-          if (this.personaIdArray[i].identificacion == this.buscador) {
-            this.VermensajeSiExiste = true;
-            this.VermensajeNoExiste = false;
-            this.mensajeDeExistencia = "Si existe!";
-            this.form.identificacionPersona =
-              this.personaIdArray[i].identificacion;
-            this.form.idPersona = this.personaIdArray[i].id;
-            this.bloquearCampoConsulta = true;
-            this.bloquearCamposReservacion = false;
+          for (let i = 0; i < this.personaIdArray.length; i++) {
+            if (this.personaIdArray[i].identificacion == this.buscador) {
+              this.VermensajeSiExiste = true;
+              this.VermensajeNoExiste = false;
+              this.mensajeDeExistencia = "Si existe!";
+              this.form.identificacionPersona =
+                this.personaIdArray[i].identificacion;
+              this.form.idPersona = this.personaIdArray[i].id;
+              this.bloquearCampoConsulta = true;
+              this.bloquearCamposReservacion = false;
+            }
           }
-        }
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
           this.form
             .get("/api/reserva/verificarOrg", {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.organizacionIdArray = data.data));
-            for (let i = 0; i < this.organizacionIdArray.length; i++) {
-          if (this.organizacionIdArray[i].identificacion == this.buscador) {
-            this.VermensajeSiExiste = true;
-            this.VermensajeNoExiste = false;
-            this.mensajeDeExistencia = "Si existe!";
-            this.form.identificacionOrganizacion =
-              this.organizacionIdArray[i].identificacion;
-            this.form.idOrganizacion = this.organizacionIdArray[i].id;
-            this.bloquearCampoConsulta = true;
-            this.bloquearCamposReservacion = false;
+          for (let i = 0; i < this.organizacionIdArray.length; i++) {
+            if (this.organizacionIdArray[i].identificacion == this.buscador) {
+              this.VermensajeSiExiste = true;
+              this.VermensajeNoExiste = false;
+              this.mensajeDeExistencia = "Si existe!";
+              this.form.identificacionOrganizacion =
+                this.organizacionIdArray[i].identificacion;
+              this.form.idOrganizacion = this.organizacionIdArray[i].id;
+              this.bloquearCampoConsulta = true;
+              this.bloquearCamposReservacion = false;
+            }
           }
-        }
+        } else if (/^[G]{1}-\d{1,4}$/.test(this.buscador)) {
+          this.form
+            .get("/api/reserva/verificarGrupo", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.grupoIdArray = data.data));
+          for (let i = 0; i < this.grupoIdArray.length; i++) {
+            if (this.grupoIdArray[i].nombre == this.buscador) {
+              this.VermensajeSiExiste = true;
+              this.VermensajeNoExiste = false;
+              this.mensajeDeExistencia = "Si existe!";
+              this.form.nombreGrupo =
+                this.grupoIdArray[i].nombre;
+              this.form.idGrupo = this.grupoIdArray[i].id;
+              this.bloquearCampoConsulta = true;
+              this.bloquearCamposReservacion = false;
+            }
+          }
         } else {
           this.VermensajeSiExiste = false;
           this.VermensajeNoExiste = true;
@@ -947,6 +1128,11 @@ export default {
       $("#modalOrganizacion").modal("show");
       this.formOrg.reset();
       this.formOrg.errors.clear();
+    },
+    modalGrupo() {
+      $("#modalGrupo").modal("show");
+      this.formGrupo.reset();
+      this.formGrupo.errors.clear();
     },
 
     editModal(reserva) {
@@ -974,77 +1160,98 @@ export default {
 
     crearPersona() {
       if (
-          /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
-          /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
-          /^\d{11,12}$/.test(this.formPer.identificacion)
-        ) {
-      this.formPer
-        .post("/api/reserva/guardarPersona", {
-          params: { identificacion: this.formPer.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
+        /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
+        /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
+        /^\d{11,12}$/.test(this.formPer.identificacion)
+      ) {
+        this.formPer
+          .post("/api/reserva/guardarPersona", {
+            params: { identificacion: this.formPer.identificacion },
+          })
+          .then((response) => {
+            if (response.data.success == false) {
+              Toast.fire({
+                icon: "error",
+                title: "Cedula ya existe!",
+              });
+            } else {
+              $("#modalPersona").modal("hide");
+
+              Toast.fire({
+                icon: "success",
+                title: response.data.message,
+              });
+              this.$Progress.finish();
+            }
+          })
+          .catch(() => {
             Toast.fire({
               icon: "error",
-              title: "Cedula ya existe!",
+              title: "Campos vacios!",
             });
-          } else {
-            $("#modalPersona").modal("hide");
-
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
-            this.$Progress.finish();
-          }
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Campos vacios!",
           });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "Formato Icorrecto!",
         });
-        }else{
-          Toast.fire({
-            icon: "error",
-            title: "Formato Icorrecto!",
-          });
-        }
+      }
     },
     crearOrganizacion() {
-      if(/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)){
-      this.formOrg
-        .post("/api/reserva/guardarOrganizacion", {
-          params: { identificacion: this.formOrg.identificacion },
+      if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
+        this.formOrg
+          .post("/api/reserva/guardarOrganizacion", {
+            params: { identificacion: this.formOrg.identificacion },
+          })
+          .then((response) => {
+            if (response.data.success == false) {
+              Toast.fire({
+                icon: "error",
+                title: "Cedula ya existe!",
+              });
+            } else {
+              $("#modalOrganizacion").modal("hide");
+
+              Toast.fire({
+                icon: "success",
+                title: response.data.message,
+              });
+              this.$Progress.finish();
+            }
+          })
+          .catch(() => {
+            Toast.fire({
+              icon: "error",
+              title: "Campos vacios!",
+            });
+          });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "Formato Incorrecto!",
+        });
+      }
+    },
+
+        crearGrupo() {
+      if(/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)){
+      this.formGrupo
+        .post("/api/reserva/guardarGrupo", {
+          params: { nombre: this.formGrupo.nombre },
         })
         .then((response) => {
           if (response.data.success == false) {
-            Toast.fire({
-              icon: "error",
-              title: "Cedula ya existe!",
-            });
+            Swal.fire("Error!", "El nombre ya existe!", "error");
           } else {
-            $("#modalOrganizacion").modal("hide");
-
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
-            this.$Progress.finish();
+            Swal.fire("Registrado!", response.data.message, "success");
+            $("#modalGrupo").modal("hide");
           }
         })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Campos vacios!",
-          });
+        .catch((error) => {
+          Swal.fire("Error!", "Complete los campos!", "error");
         });
-      }else{ 
-        Toast.fire({
-            icon: "error",
-            title: "Formato Incorrecto!",
-          });
-
+      }else{
+        Swal.fire("Error!", "Formato de nombre incorrecto!", "error");
       }
     },
 

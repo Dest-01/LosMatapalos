@@ -22,6 +22,12 @@
                     <p>Registro Cliente</p>
                 </router-link>
             </li>
+            <li class="nav-item">
+                <router-link to="/admin/grupos" class="nav-link">
+                    <i class="fa fa-users nav-icon blue"></i>
+                    <p>Registro Grupo</p>
+                </router-link>
+            </li>
         @can('isAdmin')
             <li class="nav-item">
                 <router-link to="/users" class="nav-link">
@@ -29,7 +35,7 @@
                     <p>Usuarios</p>
                 </router-link>
             </li>
-            <li class="nav-item">
+           <!-- <li class="nav-item">
                 <router-link to="/developer" class="nav-link">
                     <i class="nav-icon fas fa-cogs dark blue"></i>
                     <p>
@@ -37,6 +43,7 @@
                     </p>
                 </router-link>
             </li>
+            -->
         @endcan
 
             <li class="nav-item has-treeview">

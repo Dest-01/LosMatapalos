@@ -99,6 +99,7 @@ class ParticipantesController extends BaseController
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $participantes = $this->participantes->findOrFail($id);
 
         $participantes->delete();

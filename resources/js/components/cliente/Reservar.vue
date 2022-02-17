@@ -105,6 +105,48 @@
                       </button>
                     </td>
                   </tr>
+                  <tr>
+                    <td>03:00 p.m.</td>
+                    <td>04:00 p.m.</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora7()"
+                        :disabled="bloquearCampos"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>04:00 p.m.</td>
+                    <td>05:00 p.m.</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora7()"
+                        :disabled="bloquearCampos"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>05:00 p.m.</td>
+                    <td>06:00 p.m.</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm px-3"
+                        @click="opcionHora7()"
+                        :disabled="bloquearCampos"
+                      >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -112,7 +154,7 @@
           <div class="col-md-6">
             <div class="card-body">
               <div class="reservar_indicaciones">
-                <h5 class="card-title">Formulario de Reservación</h5>
+                <h2 class="card-title">Formulario de Reservación</h2>
                 <div class="indicaciones_posicion">
                   <i class="fas fa-info-circle"> Indicaciones</i>
                   <i class="fas fa-angle-right"
@@ -153,31 +195,36 @@
               <!--CONTENEDOR DE TODO EL FORMULARIO DE RESERVACION-->
               <form id="contact-form" class="material-form">
                 <input type="hidden" name="contact_number" />
-                <div class="group">
-                  <h3>Busqueda identificación</h3>
-
+                <div class="group group_reservacion">
+                  <div>
+                    <h3>Busqueda identificación</h3>
+                  </div>
                   <div class="campo_consulta">
-                    <i class="fas fa-id-card iconoInput"></i>
-                    <input
-                      v-model="buscador"
-                      name="cedulaReservacion"
-                      id="cedulaReservacion"
-                      type="text"
-                      required
-                      :disabled="bloquearConsulta"
-                      maxlength="18"
-                      placeholder="Escriba la identificación..."
-                    />
-                    <button
-                      type="button"
-                      @click="consultarDatos()"
-                      class="Posicionar btn btn-success"
-                    >
-                      Consulta
-                    </button>
+                    <div class="input_buscador">
+                      <i class="fas fa-id-card iconoInput"></i>
+                      <input
+                        v-model="buscador"
+                        name="cedulaReservacion"
+                        id="cedulaReservacion"
+                        type="text"
+                        required
+                        :disabled="bloquearConsulta"
+                        maxlength="18"
+                        placeholder="Escriba la identificación..."
+                      />
+                    </div>
+                    <div class="btn_consultar">
+                      <button
+                        type="button"
+                        @click="consultarDatos()"
+                        class="Posicionar btn btn-success"
+                      >
+                        Consulta
+                      </button>
+                    </div>
                   </div>
                   <!--div de alerta-->
-                  <div>
+                  <div style="height: 20px">
                     <label
                       v-show="VermensajeSiExiste"
                       v-text="mensajeDeExistencia"
@@ -192,96 +239,111 @@
                 </div>
                 <!--fin de div que contiene la consulta y boton-->
                 <!--div de cantidad de visitantes y fecha-->
-                <div class="group">
-                  <div class="campo">
-                    <h3>Cantidad de visitantes</h3>
-
-                    <h3 class="labelH3">Fecha de llegada</h3>
+                <div class="group group_reservacion">
+                  <div class="contenedor_inputs">
+                    <div class="input_titulos">
+                      <h3>Cantidad de visitantes</h3>
+                    </div>
+                    <div class="input_titulos">
+                      <h3>Fecha de llegada</h3>
+                    </div>
                   </div>
-                  <div class="campo_form_1">
-                    <i class="fas fa-users iconoInput"></i>
-                    <input
-                      id="cantidaPersonasReservacion"
-                      name="cantidaPersonasReservacion"
-                      v-model="formReserva.cantidad"
-                      placeholder="0"
-                      type="number"
-                      required
-                      :disabled="bloquearCampos"
-                      min="1"
-                      max="30"
-                      :class="{
-                        'is-invalid': formReserva.errors.has('cantidad'),
-                      }"
-                    />
-                    <has-error
-                      class="error2"
-                      :form="formReserva"
-                      field="cantidad"
-                    ></has-error>
-                    <i class="fas fa-calendar-check iconoInput icono"></i>
-                    <input
-                      id="fechaReservacion"
-                      name="fechaReservacion"
-                      v-model="formReserva.fecha"
-                      type="date"
-                      value="Fecha"
-                      required
-                      :disabled="bloquearCampos"
-                      :class="{
-                        'is-invalid': formReserva.errors.has('fecha'),
-                      }"
-                    />
+                  <div class="contenedor_inputs">
+                    <div class="input_titulos">
+                      <i class="fas fa-users iconoInput"></i>
+                      <input
+                        id="cantidaPersonasReservacion"
+                        name="cantidaPersonasReservacion"
+                        v-model="formReserva.cantidad"
+                        placeholder="0"
+                        type="number"
+                        required
+                        :disabled="bloquearCampos"
+                        min="1"
+                        max="30"
+                        :class="{
+                          'is-invalid': formReserva.errors.has('cantidad'),
+                        }"
+                      />
+                      <has-error
+                        class="error"
+                        :form="formReserva"
+                        field="cantidad"
+                      ></has-error>
+                    </div>
+                    <div class="input_titulos">
+                      <i class="fas fa-calendar-check iconoInput icono"></i>
+                      <input
+                        id="fechaReservacion"
+                        name="fechaReservacion"
+                        v-model="formReserva.fecha"
+                        type="date"
+                        value="Fecha"
+                        required
+                        :disabled="bloquearCampos"
+                        :class="{
+                          'is-invalid': formReserva.errors.has('fecha'),
+                        }"
+                      />
 
-                    <has-error
-                      class="error"
-                      :form="formReserva"
-                      field="fecha"
-                    ></has-error>
+                      <has-error
+                        class="error"
+                        :form="formReserva"
+                        field="fecha"
+                      ></has-error>
+                    </div>
                   </div>
                 </div>
                 <!--Div que contiene hora inicio y fin-->
-                <div class="group">
-                  <div class="campo">
-                    <h3>Hora de llegada</h3>
-                    <h3 class="labelH3">Hora de Salida</h3>
+                <div class="group group_reservacion">
+                  <div class="contenedor_inputs">
+                    <div class="input_titulos">
+                      <h3>Hora de llegada</h3>
+                    </div>
+                    <div class="input_titulos">
+                      <h3 class="labelH3">Hora de Salida</h3>
+                    </div>
                   </div>
-                  <div class="campo_form_1">
-                    <i class="fas fa-clock iconoInput"></i>
-                    <input
-                      id="horaLLegaReservacion"
-                      name="horaLLegaReservacion"
-                      v-model="formReserva.horaInicio"
-                      type="time"
-                      required
-                      :disabled="bloqueraHoras"
-                      :class="{
-                        'is-invalid': formReserva.errors.has('horaInicio'),
-                      }"
-                    />
-                    <has-error
-                      class="error2"
-                      :form="formReserva"
-                      field="horaInicio"
-                    ></has-error>
-                    <i class="fas fa-clock iconoInput icono"></i>
-                    <input
-                      id="horaFinReservacion"
-                      name="horaFinReservacion"
-                      v-model="formReserva.horaFin"
-                      placeholder="09:00"
-                      type="time"
-                      required
-                      :disabled="bloqueraHoras"
-                      :class="{
-                        'is-invalid': formReserva.errors.has('horaFin'),
-                      }"
-                    />
-                    <has-error
-                      class="error"
-                      :form="formReserva"
-                      field="horaFin"
-                    ></has-error>
+                  <div class="contenedor_inputs">
+                    <div class="input_titulos">
+                      <i class="fas fa-clock iconoInput"></i>
+                      <input
+                        id="horaLLegaReservacion"
+                        name="horaLLegaReservacion"
+                        v-model="formReserva.horaInicio"
+                        type="time"
+                        required
+                        :disabled="bloqueraHoras"
+                        :class="{
+                          'is-invalid': formReserva.errors.has('horaInicio'),
+                        }"
+                      />
+                      <has-error
+                        class="error"
+                        :form="formReserva"
+                        field="horaInicio"
+                      ></has-error>
+                    </div>
+                    <div class="input_titulos">
+                      <i class="fas fa-clock iconoInput icono"></i>
+                      <input
+                        id="horaFinReservacion"
+                        name="horaFinReservacion"
+                        v-model="formReserva.horaFin"
+                        placeholder="09:00"
+                        type="time"
+                        required
+                        :disabled="bloqueraHoras"
+                        :class="{
+                          'is-invalid': formReserva.errors.has('horaFin'),
+                        }"
+                      />
+                      <has-error
+                        class="error"
+                        :form="formReserva"
+                        field="horaFin"
+                      ></has-error>
+                    </div>
                   </div>
                 </div>
                 <!--fin del div que contines hora fin y inicio-->
@@ -329,7 +391,7 @@
       </div>
     </div>
 
-    <!--Modal de personas------------------------------------------------------------------------------->
+    <!--MODAL DE PERSONA------------------------------------------------------------------------------->
     <div
       class="modal fade"
       id="modalPersona"
@@ -484,9 +546,8 @@
                   minlength="3"
                   maxlength="20"
                   required
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                 />
-                <has-error :form="formPersona" field="nombre"></has-error>
+                <has-error class="error_modal" :form="formPersona" field="nombre"></has-error>
               </div>
 
               <div class="group">
@@ -502,9 +563,8 @@
                   minlength="3"
                   maxlength="20"
                   required
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                 />
-                <has-error :form="formPersona" field="apellido1"></has-error>
+                <has-error class="error_modal" :form="formPersona" field="apellido1"></has-error>
               </div>
 
               <div class="group">
@@ -520,9 +580,8 @@
                   minlength="3"
                   maxlength="20"
                   required
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'-'\s]*"
                 />
-                <has-error :form="formPersona" field="apellido2"></has-error>
+                <has-error class="error_modal" :form="formPersona" field="apellido2"></has-error>
               </div>
 
               <div class="group">
@@ -538,10 +597,9 @@
                   size="8"
                   min="10000000"
                   placeholder="Escriba los 8 dígitos..."
-                  pattern="[1-9][0-9]{7}"
                   required
                 />
-                <has-error :form="formPersona" field="telefono"></has-error>
+                <has-error class="error_modal" :form="formPersona" field="telefono"></has-error>
               </div>
               <div class="group">
                 <label>Correo</label>
@@ -558,7 +616,7 @@
                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   required
                 />
-                <has-error :form="formPersona" field="correo"></has-error>
+                <has-error  class="error_modal" :form="formPersona" field="correo"></has-error>
               </div>
             </div>
             <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
@@ -704,7 +762,7 @@
         </div>
       </div>
     </div>
-    <!------------------------------MODAL DE ORGANIZACION------------------------------------------------->
+    <!------------------------------MODAL DE GRUPO------------------------------------------------->
     <div
       class="modal fade"
       id="modalGrupo"
@@ -724,7 +782,112 @@
             ></button>
           </div>
           <div class="modal-body">
-            <h1>modal Grupo</h1>
+           <div class="group">
+                <label>Nombre del grupo</label>
+                <i class="fas fa-user-circle iconoInput_modal"></i>
+                <input
+                  v-model="formGrupo.nombre"
+                  type="text"
+                  name="nombre"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formGrupo.errors.has('nombre') }"
+                  placeholder="Escribar el nombre del grupo..."
+                  minlength="3"
+                  maxlength="20"
+                  required
+                />
+                <has-error :form="formGrupo" field="nombre"></has-error>
+              </div>
+              <div class="group">
+                <label>Correo</label>
+                <i class="fas fa-at iconoInput_modal"></i>
+                <input
+                  v-model="formGrupo.correo"
+                  type="email"
+                  name="correo"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formGrupo.errors.has('correo') }"
+                  placeholder="ejemplo@gmail.com"
+                  minlength="3"
+                  maxlength="100"
+                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                  required
+                />
+                <has-error :form="formGrupo" field="correo"></has-error>
+              </div>
+              <div class="group">
+                <label>cantidad del grupo</label>
+                <i class="fas fa-user-circle iconoInput_modal"></i>
+                <input
+                  v-model="formGrupo.cantidad"
+                  type="number"
+                  name="cantidad"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formGrupo.errors.has('cantidad') }"
+                  placeholder="Cantidad del grupo..."
+                  minlength="3"
+                  maxlength="20"
+                  required
+                />
+                <has-error :form="formGrupo" field="cantidad"></has-error>
+              </div>
+              <div class="group">
+                <label>Rango de edades del grupo</label>
+                <input
+                  v-model="formGrupo.edades"
+                  type="range"
+                  name="edades"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formGrupo.errors.has('edades') }"
+                  placeholder="Cantidad del grupo..."
+                  min="1" max="100" value="50"
+                  required
+                />
+                <has-error :form="formGrupo" field="edades"></has-error>
+              </div>
+              <div class="group">
+                <label>Lugar de procedencia</label>
+                <input
+                  v-model="formGrupo.lugar"
+                  type="text"
+                  name="lugar"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formGrupo.errors.has('lugar') }"
+                  placeholder="Lugar de procedencia..."
+                  required
+                />
+                <has-error :form="formGrupo" field="lugar"></has-error>
+              </div>
+              <div class="group">
+                <label>tematica a tratar</label>
+                <input
+                  v-model="formGrupo.tematica"
+                  type="text"
+                  name="tematica"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
+                  placeholder="Escriba la tematica de interes..."
+                  required
+                />
+                <has-error :form="formGrupo" field="tematica"></has-error>
+              </div>
+              <div class="group">
+                <label>Observaciones o consideraciones</label>
+                <textarea 
+                v-model="formGrupo.detalles"
+                  type="text"
+                  name="detalles"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formGrupo.errors.has('detalles') }"
+                  placeholder="Algunas consideraciones que deberiamos tener en cuenta..."
+                  required
+                >
+                </textarea>
+
+                <has-error :form="formGrupo" field="detalles"></has-error>
+              </div>
+
+              
           </div>
           <div class="modal-footer">
             <button
@@ -734,7 +897,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" @click="crearGrupo()" class="btn btn-primary">Registrar</button>
           </div>
         </div>
       </div>
@@ -768,6 +931,7 @@ export default {
       bloquearInputIdP: false, //Bloquear el input de Pasaporte
       personaIdArray: {}, //Array de persona
       organizacionIdArray: {}, //array de organizacion
+      grupoIdArray: {}, 
       grupo: {}, //array de grupo
       buscador: "",
       formCorreo: new Form({
@@ -784,6 +948,8 @@ export default {
         identificacionPersona: "",
         idOrganizacion: "",
         identificacionOrganizacion: "",
+        idGrupo: "",
+        nombreGrupo: "",
         cantidad: "",
         fecha: "",
         horaInicio: "",
@@ -807,18 +973,23 @@ export default {
       }),
       formGrupo: new Form({
         id: "",
-        idPersona: "",
-        photo: "",
+        nombre: "",
+        cantidad: "",
+        correo: "",
+        edades: "",
+        lugar: "",
+        tematica: "",
+        detalles: "",
       }),
     };
   },
   methods: {
     llenarFormularioCorreo() {
-        (this.formCorreo.horaInicio = this.formReserva.horaInicio),
-          (this.formCorreo.horaFin = this.formReserva.horaFin),
-          (this.formCorreo.fechaReservacion = this.formReserva.fecha),
-          (this.formCorreo.cantidaPersonasReservacion =
-            this.formReserva.cantidad);
+      (this.formCorreo.horaInicio = this.formReserva.horaInicio),
+        (this.formCorreo.horaFin = this.formReserva.horaFin),
+        (this.formCorreo.fechaReservacion = this.formReserva.fecha),
+        (this.formCorreo.cantidaPersonasReservacion =
+          this.formReserva.cantidad);
     },
     enviaEmail() {
       const templateParams = {
@@ -936,6 +1107,8 @@ export default {
     },
     modalGrupo() {
       $("#modalGrupo").modal("show");
+      this.formGrupo.reset();
+      this.formGrupo.errors.clear();
     },
     cancelarConsulta() {
       this.formReserva.reset();
@@ -961,6 +1134,9 @@ export default {
     },
     crearPersona() {
       if (this.formPersona.identificacion != "") {
+        if( /^[1-9]-\d{4}-\d{4}$/.test(this.formPersona.identificacion) ||
+          /^[1-9]\d{9}$/.test(this.formPersona.identificacion) ||
+          /^\d{11,12}$/.test(this.formPersona.identificacion)){
         this.formPersona
           .post("/api/reservarCliente/persona", {
             params: { identificacion: this.formPersona.identificacion },
@@ -976,10 +1152,14 @@ export default {
           .catch((error) => {
             Swal.fire("Error!", "Complete los campos!", "error");
           });
+      }else{
+        Swal.fire("Error!", "Formato de identificacion incorrecto!", "error");
+      }
       }
     },
 
     crearOrganizacion() {
+      if(/^[1-9]-\d{3}-\d{6}$/.test(this.formOrganizacion.identificacion)){
       this.formOrganizacion
         .post("/api/reservarCliente/organizacion", {
           params: { identificacion: this.formOrganizacion.identificacion },
@@ -995,6 +1175,30 @@ export default {
         .catch((error) => {
           Swal.fire("Error!", "Complete los campos!", "error");
         });
+      }else{
+         Swal.fire("Error!", "Formato de cedula juridca incorrecto!", "error");
+      }
+    },
+    crearGrupo() {
+      if(/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)){
+      this.formGrupo
+        .post("/api/reservarCliente/grupo", {
+          params: { nombre: this.formGrupo.nombre },
+        })
+        .then((response) => {
+          if (response.data.success == false) {
+            Swal.fire("Error!", "El nombre ya existe!", "error");
+          } else {
+            Swal.fire("Registrado!", response.data.message, "success");
+            $("#modalGrupo").modal("hide");
+          }
+        })
+        .catch((error) => {
+          Swal.fire("Error!", "Complete los campos!", "error");
+        });
+      }else{
+        Swal.fire("Error!", "Formato de nombre incorrecto!", "error");
+      }
     },
 
     consultarDatos() {
@@ -1027,6 +1231,19 @@ export default {
           this.bloquearConsulta = true;
           this.bloquearCampos = false;
           this.bloquearterminos = false;
+        }else if(/^[G]{1}-\d{1,4}$/.test(this.buscador)){
+           this.formReserva
+            .get("/api/reservarCliente/verificarGrupo", {
+              params: { buscador: this.buscador },
+            })
+            .then(({ data }) => (this.grupoIdArray = data.data));
+          this.VermensajeNoExiste = false;
+          this.VermensajeSiExiste = true;
+          this.mensajeDeExistencia = "Si esta registrado!";
+          this.bloquearConsulta = true;
+          this.bloquearCampos = false;
+          this.bloquearterminos = false;
+
         } else {
           this.VermensajeNoExiste = true;
           this.VermensajeSiExiste = false;
@@ -1038,7 +1255,8 @@ export default {
       } else {
         this.VermensajeNoExiste = true;
         this.VermensajeSiExiste = false;
-        this.mensajeDeExistencia = "Campo vacío, por favor digite una identificación";
+        this.mensajeDeExistencia =
+          "Campo vacío, por favor digite una identificación";
       }
     },
 
@@ -1047,7 +1265,7 @@ export default {
         .post("/api/reservarCliente")
         .then((response) => {
           Swal.fire("Reservación Realizada!", response.data.message, "success");
-        
+
           this.mensajeExistencia = "";
           this.bloquearCampos = true;
           this.bloquearConsulta = false;
@@ -1103,26 +1321,37 @@ export default {
   },
   computed: {
     totalDatos() {
-      if(this.personaIdArray.length != 0){
-      for (let i = 0; i < this.personaIdArray.length; i++) {
-        this.formReserva.idPersona = this.personaIdArray[i].id;
-        this.formReserva.identificacionPersona =
-          this.personaIdArray[i].identificacion;
-        this.formCorreo.correo = this.personaIdArray[i].correo;
-        this.formCorreo.cedulaReservacion =
-          this.personaIdArray[i].identificacion;
+      if (this.personaIdArray.length != 0) {
+        for (let i = 0; i < this.personaIdArray.length; i++) {
+          this.formReserva.idPersona = this.personaIdArray[i].id;
+          this.formReserva.identificacionPersona =
+            this.personaIdArray[i].identificacion;
+          this.formCorreo.correo = this.personaIdArray[i].correo;
+          this.formCorreo.cedulaReservacion =
+            this.personaIdArray[i].identificacion;
+        }
       }
+      if (this.organizacionIdArray.length != 0) {
+        for (let i = 0; i < this.organizacionIdArray.length; i++) {
+          this.formReserva.idOrganizacion = this.organizacionIdArray[i].id;
+          this.formReserva.identificacionOrganizacion =
+            this.organizacionIdArray[i].identificacion;
+          this.formCorreo.correo = this.organizacionIdArray[i].correo;
+          this.formCorreo.cedulaReservacion =
+            this.organizacionIdArray[i].identificacion;
+        }
       }
-      if(this.organizacionIdArray.length != 0){
-      for (let i = 0; i < this.organizacionIdArray.length; i++) {
-        this.formReserva.idOrganizacion = this.organizacionIdArray[i].id;
-        this.formReserva.identificacionOrganizacion =
-          this.organizacionIdArray[i].identificacion;
-        this.formCorreo.correo = this.organizacionIdArray[i].correo;
-        this.formCorreo.cedulaReservacion =
-          this.organizacionIdArray[i].identificacion;
+      if (this.grupoIdArray.length != 0) {
+        for (let i = 0; i < this.grupoIdArray.length; i++) {
+          this.formReserva.idGrupo = this.grupoIdArray[i].id;
+          this.formReserva.nombreGrupo =
+            this.grupoIdArray[i].nombre;
+          this.formCorreo.correo = this.grupoIdArray[i].correo;
+          this.formCorreo.cedulaReservacion =
+            this.grupoIdArray[i].nombre;
+        }
       }
-      }
+      
     },
   },
   mounted() {
@@ -1137,13 +1366,6 @@ export default {
 <style scoped>
 .contenedor {
   margin: 40px auto;
-}
-
-.ValidacionError {
-  border-bottom: 3px solid red;
-}
-.ValidacionBuena {
-  border-bottom: 3px solid green;
 }
 
 #nacional,
@@ -1210,6 +1432,7 @@ export default {
 }
 
 .contenedor-2 {
+  /*Contiene toda la card*/
   display: flex;
   margin: 10px;
   justify-content: space-evenly;
@@ -1236,9 +1459,7 @@ export default {
     left: 0;
   }
 }
-.card-body {
-  padding: 10px;
-}
+
 /*COLUMNA DE LOS HORARIOS*/
 .col-md-5 {
   padding: 5px;
@@ -1250,45 +1471,94 @@ export default {
   background-blend-mode: lighten;
   background-size: 700px;
   color: white;
-  font-family: "Poppins";
   padding-top: 20px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
-  width: 42%;
+  width: 45%;
 }
 tr,
 td {
   color: #fff;
   font-size: 20px;
   font-weight: 500;
-  padding: 20px 5px;
   text-align: center;
 }
 .col-md-6 {
-  width: 58%;
+  width: 55%;
   padding: 10px 5px;
+}
+
+.card-body {
+  height: 100%;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 5px;
+}
+#contact-form{
+  margin-top: 40px;
+}
+.reservar_indicaciones {
+  margin: 5px;
+  padding: 5px;
+}
+.card-title {
+  text-align: center;
 }
 .indicaciones_posicion {
   display: flex;
   flex-direction: column;
-}
-.reservar_indicaciones {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.reservar_indicaciones i {
+  flex-wrap: wrap;
+  margin: 5px;
   padding: 5px;
 }
+.fas {
+  font-weight: 900;
+  padding: 5px;
+  font-size: 18px;
+}
 .botones_opciones {
-  padding: 10px;
-  width: 100%;
   text-align: center;
 }
-.card-title {
-  font-size: 30px;
-  font-weight: 900;
+button {
+  text-transform: capitalize;
+  font-size: 15px;
 }
+.campo_form_1 input,
+.campo_consulta input,
+.group input,
+.group textarea {
+  border: none;
+  border-bottom: 1px solid #757575;
+  border-bottom: 2px solid rgb(204, 200, 200);
+  transition: border 0.5s;
+}
+
+.campo_form_1 input:focus,
+.campo_consulta input:focus,
+.group input:focus,
+.group textarea:focus {
+  outline: none;
+  border-bottom: 2px solid rgb(14, 14, 170);
+}
+
+.campo_consulta {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.contenedor_inputs{
+  display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+.input_titulos{
+  width: 50%;
+}
+.input_titulos input{
+  width: 80%;
+}
+
 .group {
   display: flex;
   flex-direction: column;
@@ -1296,8 +1566,48 @@ td {
   align-content: center;
   justify-content: center;
   position: relative;
-  padding: 3px;
+  padding: 5px;
+  margin: 5px;
 }
+
+.group_reservacion{
+  margin: 5px 5px 30px 5px;
+}
+.input_buscador{
+  width: 65%;
+}
+.input_buscador input{
+  width: 80%;
+}
+.btn_consultar{
+  width: 35%;
+}
+.aceptar{
+  text-align: center;
+    font-size: 22px;
+    padding: 5px;
+    margin: 5px;
+}
+.botones_finales{
+  text-align: center;
+    padding: 10px;
+    /* font-size: 48px; */
+    /* line-height: 3rem; */
+    margin: 10px;
+}
+
+h3 {
+  color: #000000ad;
+  font-size: 20px;
+  font-weight: normal;
+  pointer-events: none;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+/*MODAL DISEÑO*/
+
 .identitad {
   display: flex;
   flex-direction: row;
@@ -1308,6 +1618,10 @@ td {
   border: 0;
   border-bottom: 2px solid #ccc8c8;
   color: #252525;
+}
+.error{
+  margin-top: 10px;
+    margin-left: 39px;
 }
 
 .iconoInput,
@@ -1326,104 +1640,13 @@ td {
   padding-left: 30px;
   margin-bottom: 10px;
 }
-
-h3 {
-  color: #000000ad;
-  font-size: 20px;
-  font-weight: normal;
-  pointer-events: none;
-
-  transition: 0.2s ease all;
-  -moz-transition: 0.2s ease all;
-  -webkit-transition: 0.2s ease all;
-}
-.campo {
-  display: flex;
+.error_modal{
+      margin-top: 75px;
+    margin-left: 0;
 }
 
-.campo h3 {
-  width: 50%;
-  padding: 5px;
-}
-.group h3 {
-  padding: 5px;
-}
 
-.campo_consulta {
-  display: flex;
-  margin: 1px 10px;
-}
-.campo_consulta input,
-.campo_consulta button {
-  margin: 5px;
-}
-.campo_consulta input {
-  width: 50%;
-}
-.campo_consulta button {
-  width: 30%;
-}
-.campo_form_1 {
-  display: flex;
-  margin: 5px;
-}
-
-.campo_form_1 input {
-  width: 42.2%;
-  padding: 5px;
-  margin: 5px 5px;
-}
-.aceptar {
-  margin: 10px;
-  text-align: center;
-}
-.aceptar span,
-span a {
-  font-size: 20px;
-}
-.botones_finales {
-  text-align: center;
-}
-.campo_form_1 input,
-.campo_consulta input,
-.group input {
-  border: none;
-  border-bottom: 1px solid #757575;
-  border-bottom: 2px solid rgb(204, 200, 200);
-  transition: border 0.5s;
-}
-
-.campo_form_1 input:focus,
-.campo_consulta input:focus,
-.group input:focus {
-  outline: none;
-  border-bottom: 2px solid rgb(14, 14, 170);
-}
-.Posicionar {
-  margin: 5px 1px 5px 10px;
-  width: 30%;
-}
-.modal-content {
-  width: 540px;
-  border: 0;
-  -webkit-box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
-  box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
-  height: auto;
-}
-.btn {
-  font-size: 15px;
-  text-transform: capitalize;
-}
-.help-block,
-.invalid-feedback {
-  top: 100%;
-}
-.error2 {
-  left: 8%;
-}
-.error {
-  left: 55%;
-}
+/*FIN DEL DISEÑO DEL MODAL*/
 
 @media only screen and (max-width: 800px) {
   .row {
