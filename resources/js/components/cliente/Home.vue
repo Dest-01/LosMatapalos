@@ -161,6 +161,7 @@ export default {
     plugin.setAttribute("src", "/js/validacionHome.js");
     plugin.async = true;
     document.head.appendChild(plugin);
+
   },
 };
 </script>
