@@ -73,14 +73,16 @@ nav.navbar ul.navbar-nav {
     border: none;
 }
 
-nav.navbar ul.navbar-nav a {
+nav.navbar ul.navbar-nav a, nav.navbar ul.navbar-nav select {
     /*Borde a poner el puntero*/
     border-radius: 15px;
     color: #fff;
 }
 
 nav.navbar ul.navbar-nav a:hover,
-nav.navbar ul.navbar-nav a:focus {
+nav.navbar ul.navbar-nav a:focus,
+nav.navbar ul.navbar-nav select:hover,
+nav.navbar ul.navbar-nav select:focus {
     /*Color a poner el puntero*/
     color: rgb(29, 23, 23);
     background: #339966;
@@ -174,6 +176,10 @@ px
     color: #fff;
 }
 
+.language{
+    border: 0;
+    background: linear-gradient(358deg, #e8e8e8, #fbfbfb);
+}
 
 @media screen and (max-width:900px) {
     .header {

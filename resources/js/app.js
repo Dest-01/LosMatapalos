@@ -11,16 +11,6 @@
 
 Vue.config.productionTip = false
 
-//añadimos la libreria
-var Lang = require('vue-lang');
- 
-var locales = {
-  "en": require("../lang/en/en.json"),
-  "es": require("../lang/es/es.json")
-}
- 
-Vue.use(Lang, {lang: 'en', locales: locales})
- 
  import { Form, HasError, AlertError } from 'vform';
  window.Form = Form;
  
@@ -61,16 +51,35 @@ Vue.use(Lang, {lang: 'en', locales: locales})
  /**
   * Routes imports and assigning
   */
+  import VueI18n from 'vue-i18n'
+  import messages from '../lang'
+
+  Vue.use(VueI18n)
+
+  export const i18n = new VueI18n({
+    locale: 'en',
+    fallbackLocale: 'en',
+    messages
+  })
+
  import VueRouter from 'vue-router';
  Vue.use(VueRouter);
  import routes from './routes';
  
  const router = new VueRouter({
      mode: 'history',
+     base: process.env.BASE_URL,
      routes
  });
  // Routes End
- 
+
+ router.beforeEach((to, from, next) => {
+    i18n.locale = localStorage.getItem('language') || 'en'
+    return next()
+    
+  })
+  
+  export default router
  
  /**
   * Next, we will create a fresh Vue application instance and attach it to
@@ -81,41 +90,39 @@ Vue.use(Lang, {lang: 'en', locales: locales})
   
  // Components
  Vue.component('pagination', require('laravel-vue-pagination'));
- Vue.component('dashboard', require('./components/Dashboard.vue'));
+ Vue.component('dashboard', require('./components/admin/Dashboard.vue'));
  
  Vue.component(
      'passport-clients',
      require('./components/passport/Clients.vue').default
  );
- 
+
  Vue.component(
      'passport-authorized-clients',
      require('./components/passport/AuthorizedClients.vue').default
  );
- 
+
  Vue.component(
      'passport-personal-access-tokens',
      require('./components/passport/PersonalAccessTokens.vue').default
  );
- 
+
  Vue.component(
      'not-found',
-     require('./components/NotFound.vue').default
+     require('./components/views/NotFound.vue').default
  );
- 
+
  // Filter Section
- 
  Vue.filter('myDate',function(created){
      return moment(created).format('MMMM Do YYYY');
  });
- 
+
  Vue.filter('yesno', value => (value ? '<i class="fas fa-check green"></i>' : '<i class="fas fa-times red"></i>'));
- 
  // end Filter
- 
  Vue.component('example-component', require('./components/ExampleComponent.vue'));
  
  const app = new Vue({
      el: '#app',
-     router
+     router,
+     i18n,
  });

@@ -28,29 +28,29 @@ Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->na
 Route::get('/cliente', [App\Http\Controllers\ClienteController::class, 'index'])->name('cliente');
 
 
-
 ////////////////////////////////////////////////////////////////////////////
 //-----------------------RUTAS ADMIN Y PRUEBAS------------------------------
 ////////////////////////////////////////////////////////////////////////////
-Route::get('/dashboard', function () {
-    return view('admin');
-})->where('dashboard', '[\/\w\.-]*')->middleware('auth');
 
-Route::get('/profile', function () {
+Route::get('/admin/dashboard', function () {
     return view('admin');
-})->where('/profile', '[\/\w\.-]*')->middleware('auth');
+})->where('/admin/dashboard', '[\/\w\.-]*')->middleware('auth');
 
-Route::get('/users', function () {
+Route::get('/admin/perfil', function () {
     return view('admin');
-})->where('users', '[\/\w\.-]*')->middleware('auth');
+})->where('/admin/perfil', '[\/\w\.-]*')->middleware('auth');
 
-Route::get('/admin/reportes1', function () {
+Route::get('/admin/usuarios', function () {
     return view('admin');
-})->where('admin/reportes1', '[\/\w\.-]*')->middleware('auth');
+})->where('/admin/usuarios', '[\/\w\.-]*')->middleware('auth');
 
-Route::get('/reporte', function () {
+Route::get('/admin/reportes', function () {
     return view('admin');
-})->where('reporte', '[\/\w\.-]*')->middleware('auth');
+})->where('admin/reportes', '[\/\w\.-]*')->middleware('auth');
+
+Route::get('/admin/reporte', function () {
+    return view('admin');
+})->where('/admin/reporte', '[\/\w\.-]*')->middleware('auth');
 
 
 /////////////////////----FIN-ADMIN Y PRUEBAS---//////////////////////////////

@@ -30,7 +30,7 @@
             </li>
         @can('isAdmin')
             <li class="nav-item">
-                <router-link to="/users" class="nav-link">
+                <router-link to="/admin/usuarios" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
                     <p>Usuarios</p>
                 </router-link>

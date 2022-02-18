@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="background: white" lang="en">
+<html style="background: white" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -46,6 +46,7 @@
 </head>
 
 <body>
+    <!--
     <header>
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
@@ -76,7 +77,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/donaciones') }}">Donaciones</a>
                         </li>
-
+                        <li>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -101,56 +103,25 @@
                             <a class="nav-link" href="{{ url('/AboutUs') }}">¿Quiénes somos?</a>
                         </li>
                     </ul>
-
-
-                    <!--<form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                  <button class="btn btn-outline-success" style="background: #ffffff;" type="submit">Buscar</button>
-                </form> -->
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="wrapper" id="app">
 
+    </header>
+-->
+    <div class="wrapper" id="app">
         {{-- Content Wrapper. Contains page content --}}
         <div class="Main-content">
+            
             {{-- Main content --}}
-
-
-
             <!-- Main content -->
-
             <router-view></router-view>
-
             <vue-progress-bar></vue-progress-bar>
-
             {{-- /.content --}}
         </div>
         {{-- /.content-wrapper --}}
-
     </div>
     {{-- ./wrapper --}}
-
-    <footer class="bg-dark text-center text-white">
-        <!-- Copyright -->
-        <div class="text-center p-3">
-            <h5 style="padding: 10px">
-                Senderos los Matapalos - PGAI
-            </h5>
-            <h5 style="padding: 10px">
-                <a href="https://www.facebook.com/pgaiuna/" target="_blank"><i class="fab fa-facebook white"></i></a>
-                <a href="https://www.instagram.com/pgaiuna/?r=nametag" target="_blank"><i
-                        class="fab fa-instagram white"></i></a>
-            </h5>
-            <h5 style="padding: 10px">
-                © 2021-2022 Todos los derechos reservados.
-            </h5>
-
-        </div>
-        <!-- Copyright -->
-    </footer>
-
     <!-- Bootstrap SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">

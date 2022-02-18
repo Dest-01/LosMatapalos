@@ -1,49 +1,176 @@
-export default [
+/*IMPORTAN LOS DE ADMIN*/
+import Personas from './components/admin/Personas.vue'
+import Organizaciones from './components/admin/Organizaciones.vue'
+import Grupos from './components/admin/Grupos.vue'
+import DonativosAdmin from './components/admin/Donativos.vue'
+import CatDonativos from './components/admin/CatDonativos.vue'
+import Voluntario from './components/admin/Voluntario.vue'
+import VoluntarioPersona from './components/admin/VoluntarioPersona.vue'
+import VoluntarioEstudiante from './components/admin/VoluntarioEstudiante.vue'
+import ActividadesAdmin from './components/admin/Actividades.vue'
+import ActividadesParticipantes from './components/admin/ActividadesParticipantes.vue'
+import Participantes from './components/admin/Participantes.vue'
+import ReservacionAdmin from './components/admin/Reservar.vue'
+import VoluntarioActividad from './components/admin/VoluntarioActividad'
+import FaunaAdmin from './components/admin/Fauna'
+import FloraAdmin from './components/admin/flora.vue'
+import Articulos from './components/admin/Articulos.vue'
+import Reportes from './components/admin/Reportes1.vue'
+import RepositorioAdmin from './components/admin/RepositorioDocumental.vue'
+import Dashboard from './components/admin/Dashboard.vue'
+import Perfil from './components/admin/Profile.vue'
+import Usuarios from './components/admin/Users.vue'
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //--------------------------------------------------RUTAS GUIA Y PRUEBA------------------------------------------------
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        { path: '/dashboard', component: require('./components/Dashboard.vue').default },
-        { path: '/profile', component: require('./components/Profile.vue').default },
-        { path: '/developer', component: require('./components/Developer.vue').default },
-        { path: '/users', component: require('./components/Users.vue').default },
-        { path: '*', component: require('./components/NotFound.vue').default },
-    
+/*IMPORTAN LOS DE CLIENTE*/
+import App from './components/layouts/App.vue'
+import NotFound from './components/views/NotFound.vue'
+
+import Home from './components/cliente/Home.vue'
+import Reservacion from './components/cliente/Reservar.vue'
+import Donacion from './components/cliente/Donaciones.vue'
+import Fauna from './components/cliente/Fauna.vue'
+import Flora from './components/cliente/Flora.vue'
+import Repositorio from './components/cliente/Repositorio.vue'
+import Marca from './components/cliente/Productos.vue'
+import AcercaDe from './components/cliente/AboutUs.vue'
+
+
+
+
+export default [
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //--------------------------------------------------RUTAS ADMIN------------------------------------------------
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-       
-        { path: '/admin/personas', component: require('./components/admin/Personas.vue').default },
-        { path: '/admin/organizaciones', component: require('./components/admin/Organizaciones.vue').default },
-        { path: '/admin/grupos', component: require('./components/admin/Grupos.vue').default },
-        { path: '/admin/donativos', component: require('./components/admin/Donativos.vue').default },
-        { path: '/admin/Catdonativos', component: require('./components/admin/CatDonativos.vue').default },
-        { path: '/admin/voluntario', component: require('./components/admin/Voluntario.vue').default },
-        { path: '/admin/voluntarioPersona', component: require('./components/admin/VoluntarioPersona.vue').default },
-        { path: '/admin/voluntarioEstudiante', component: require('./components/admin/VoluntarioEstudiante.vue').default },
-        { path: '/admin/actividad', component: require('./components/admin/Actividades.vue').default },
-        { path: '/admin/actividadParticipantes', component: require('./components/admin/ActividadesParticipantes.vue').default },
-        { path: '/admin/participantes', component: require('./components/admin/Participantes.vue').default },
-        { path: '/admin/reservar', component: require('./components/admin/Reservar.vue').default },
-        { path: '/admin/voluntarioActividad', component: require('./components/admin/VoluntarioActividad').default },
-        { path: '/admin/fauna', component: require('./components/admin/Fauna').default },
-        { path: '/admin/flora', component: require('./components/admin/flora.vue').default },
-        { path: '/admin/articulos', component: require('./components/admin/Articulos.vue').default },
-        { path: '/admin/reportes1', component: require('./components/admin/Reportes1.vue').default },
-        { path: '/reporte', component: require('./components/PruebaReporte.vue').default },
-        { path: '/admin/repositorio', component: require('./components/admin/RepositorioDocumental.vue').default },
+    {
+        path: '/admin/personas',
+        component: Personas
+    },
+    {
+        path: '/admin/organizaciones',
+        component: Organizaciones
+    },
+    {
+        path: '/admin/grupos',
+        component: Grupos
+    },
+    {
+        path: '/admin/donativos',
+        component: DonativosAdmin
+    },
+    {
+        path: '/admin/Catdonativos',
+        component: CatDonativos
+    },
+    {
+        path: '/admin/voluntario',
+        component: Voluntario
+    },
+    {
+        path: '/admin/voluntarioPersona',
+        component: VoluntarioPersona
+    },
+    {
+        path: '/admin/voluntarioEstudiante',
+        component: VoluntarioEstudiante
+    },
+    {
+        path: '/admin/actividad',
+        component: ActividadesAdmin
+    },
+    {
+        path: '/admin/actividadParticipantes',
+        component: ActividadesParticipantes
+    },
+    {
+        path: '/admin/participantes',
+        component: Participantes
+    },
+    {
+        path: '/admin/reservar',
+        component: ReservacionAdmin
+    },
+    {
+        path: '/admin/voluntarioActividad',
+        component: VoluntarioActividad
+    },
+    {
+        path: '/admin/fauna',
+        component: FaunaAdmin
+    },
+    {
+        path: '/admin/flora',
+        component: FloraAdmin
+    },
+    {
+        path: '/admin/articulos',
+        component: Articulos
+    },
+    {
+        path: '/admin/reportes',
+        component: Reportes
+    },
+    {
+        path: '/admin/repositorio',
+        component: RepositorioAdmin
+    },
+    {
+        path: '/admin/dashboard',
+        component: Dashboard
+    },
+    {
+        path: '/admin/perfil',
+        component: Perfil
+    },
+    {
+        path: '/admin/usuarios',
+        component: Usuarios
+    },
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //------------------=-------------------------------RUTAS CLIENTE-------------------------------------------------
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        { path: '/', component: require('./components/cliente/Home.vue').default },
-        { path: '/home', component: require('./components/cliente/Home.vue').default },
-        { path: '/reservacion', component: require('./components/cliente/Reservar.vue').default },
-        { path: '/donaciones', component: require('./components/cliente/Donaciones.vue').default },
-        { path: '/actividades', component: require('./components/cliente/Actividades.vue').default },
-        { path: '/fauna', component: require('./components/cliente/Fauna.vue').default },
-        { path: '/flora', component: require('./components/cliente/Flora.vue').default },
-        { path: '/AboutUs', component: require('./components/cliente/AboutUs.vue').default },
-        { path: '/productos', component: require('./components/cliente/Productos.vue').default },
-        { path: '/repositorio', component: require('./components/cliente/Repositorio.vue').default },
-    ];
-    
+    {
+        path: '/',
+        component: App,
+        children: [{
+                path: '',
+                component: Home,
+            },
+            {
+                path: '/home',
+                component: Home,
+            },
+            {
+                path: '/reservacion',
+                component: Reservacion,
+            },
+            {
+                path: '/donaciones',
+                component: Donacion,
+            },
+            {
+                path: '/fauna',
+                component: Fauna,
+            },
+            {
+                path: '/flora',
+                component: Flora,
+            },
+            {
+                path: '/AcercaDe',
+                component: AcercaDe,
+            },
+            {
+                path: '/marca',
+                component: Marca,
+            },
+            {
+                path: '/repositorio',
+                component: Repositorio,
+            },
+            {
+                path: '*',
+                component: NotFound,
+            },
+        ],
+    },
+];

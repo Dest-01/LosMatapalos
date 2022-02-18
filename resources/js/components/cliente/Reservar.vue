@@ -974,6 +974,9 @@
 
 <script>
 export default {
+    components: {
+
+  },
   name: "ContactUs",
   data() {
     return {

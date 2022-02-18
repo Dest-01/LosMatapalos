@@ -5,9 +5,7 @@
         <dir class="marcont">
           <h1>#AprendemosDeLaNaturaleza</h1>
           <p>Sello <span>UNA</span></p>
-          <ul>
-  <li v-for="lang in $langs" @click="$setLang(lang)">{{lang}}</li>
-</ul>
+          <p>{{ $t('hello') }}</p>
         </dir>
       </div>
 
@@ -41,7 +39,6 @@
           <div class="row">
             <div class="wow fadeInUp" data-wow-duration="2s">
               <div class="col-md-12">
-
                 <div class="site-heading text-center">
                   <h2>¿Que ofrece nuestro <span>Sendero</span>?</h2>
                 </div>
@@ -151,6 +148,7 @@ import Inicios from "../cliente/NuestrosInicios.vue";
 import Proyectos from "../cliente/Proyectos.vue";
 
 export default {
+  name: "locale-changer",
   components: {
     Actividades: Actividades,
     Contacto: Contacto,
@@ -158,7 +156,7 @@ export default {
     Proyectos: Proyectos,
   },
   data() {
-    return {};
+    return { langs: ['en', 'es']};
   },
   mounted() {
     const plugin = document.createElement("script");
@@ -171,6 +169,7 @@ export default {
 
 
 <style scoped>
+
 .contenedor_contacto {
   margin-bottom: 10px;
   background: #fff;

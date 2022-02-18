@@ -20,13 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!-- estilos vue -->
-
-
-
-
 </head>
-
 <body>
     <div id="app">
         <main class="content">
@@ -38,10 +32,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
-    <script>
-        window._locale = '{{ app()->getLocale() }}';
-        window._translations = {!! cache('translations') !!};
-    </script>
 
 </body>
 
