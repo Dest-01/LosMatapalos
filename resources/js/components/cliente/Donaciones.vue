@@ -167,7 +167,6 @@ export default {
       text: "Portada",
       donativos: {},
       donativosNecesarios: {},
-      donadores:{},
       modDonativos:{},
     };
   },
@@ -181,21 +180,6 @@ export default {
       this.$Progress.finish();
     },
 
-
- /* a(){ this.$Progress.start();
-      axios
-        .get("/api/donacionesCliente")
-        .then(response=>{
-          this.donativos= response.data.data.data;
-          // console.log(this.donativos);
-          this.donativos = this.donativos.slice(this.donativos.length-5);
-           this.$Progress.finish();
-        
-        })
-     
-    },*/
-
-
     cargarDonativos() {
       axios
         .get("/api/donacionesCliente")
@@ -203,9 +187,6 @@ export default {
       axios
         .get("/api/donacionesCliente/donacionesNecesarias")
         .then(({ data }) => (this.donativosNecesarios = data.data));
-        axios
-        .get("/api/donacionesCliente/Donadores")
-        .then(({ data }) => (this.donadores = data.data));
     },
 
   },
@@ -213,12 +194,7 @@ export default {
     this.$Progress.start();   
     this.cargarDonativos(); 
     this.$Progress.finish();  
-    this.a();
   },
-  computed:{
-    soloDonadores: function () {  
-      return this.donadores.id == this.donativos.idPersonas
-  }},
 };
 </script>
 

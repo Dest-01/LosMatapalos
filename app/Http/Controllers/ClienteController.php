@@ -24,6 +24,6 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return view('cliente');
+        return view('layouts/master');
     }
 }

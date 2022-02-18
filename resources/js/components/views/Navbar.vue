@@ -23,13 +23,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
-               <router-link class="nav-link" to="/home">Inicio</router-link>
+               <router-link class="nav-link" to="/home">{{ $t('Inicio') }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/reservacion">Reservación</router-link>
+              <router-link class="nav-link" to="/reservacion">{{ $t('Reservacion') }}</router-link>
             </li>
             <li class="nav-item">
-               <router-link class="nav-link" to="/donaciones">Donaciones</router-link>
+               <router-link class="nav-link" to="/donaciones">{{ $t('Donacion') }}</router-link>
             </li>
             <li></li>
             <li class="nav-item dropdown">
@@ -41,7 +41,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Galería
+                {{ $t('Galeria') }}
               </a>
               <ul
                 class="dropdown-menu"
@@ -52,21 +52,22 @@
                   background: #38ab81;
                 "
               >
-                <li><a class="dropdown-item" href="">Flora</a></li>
+                <li>
+                   <router-link class="dropdown-item" to="/flora">{{ $t('Flora') }}</router-link>
                 <li>
                   <hr class="dropdown-divider" />
                 </li>
-                <li><a class="dropdown-item" href="">Fauna</a></li>
+                <router-link class="dropdown-item" to="/fauna">{{ $t('Fauna') }}</router-link>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Repositorio</a>
+              <router-link class="nav-link" to="/repositorio">{{ $t('Repositorio') }}</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Marca</a>
+              <router-link class="nav-link" to="/marca">{{ $t('Marca') }}</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">¿Quiénes somos?</a>
+              <router-link class="nav-link" to="/AcercaDe">{{ $t('Quienes') }}</router-link>
             </li>
             <li class="nav-item">
               <select class="nav-link language" v-model="$i18n.locale">

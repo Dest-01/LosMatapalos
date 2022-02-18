@@ -118,6 +118,10 @@ export default [
         component: Dashboard
     },
     {
+        path: '/admin',
+        component: Dashboard
+    },
+    {
         path: '/admin/perfil',
         component: Perfil
     },

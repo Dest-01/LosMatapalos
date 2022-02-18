@@ -46,69 +46,6 @@
 </head>
 
 <body>
-    <!--
-    <header>
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand icono_una" href="https://www.una.ac.cr">
-                    <img src="images/una.png" alt="" width="120" height="60">
-                </a>
-                <a class="navbar-brand " href="https://sendero.herokuapp.com/">
-                    <img src="images/logo2.png" alt="" width="120" height="60">
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon">
-                    </span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 ">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ url('/') }}">{{ __('navbar.inicio') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/login') }}">Administrador</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/reservacion') }}">Reservación</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/donaciones') }}">Donaciones</a>
-                        </li>
-                        <li>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Galería
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
-                                style="border-top-radius: 50px; border-bottom-radius: 10px; background: #38ab81;">
-                                <li><a class="dropdown-item" href="{{ url('/flora') }}">Flora</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="{{ url('/fauna') }}">Fauna</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/repositorio') }}">Repositorio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/productos') }}">Marca</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/AboutUs') }}">¿Quiénes somos?</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-    </header>
--->
     <div class="wrapper" id="app">
         {{-- Content Wrapper. Contains page content --}}
         <div class="Main-content">

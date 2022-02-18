@@ -5,7 +5,6 @@
         <dir class="marcont">
           <h1>#AprendemosDeLaNaturaleza</h1>
           <p>Sello <span>UNA</span></p>
-          <p>{{ $t('hello') }}</p>
         </dir>
       </div>
 

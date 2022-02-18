@@ -1,4 +1,18 @@
 {
-    "hello": "Ingles",
-    "messages": "You have {0} {1} messages"
-  }
+  
+  "Inicio":"Home",
+  "Reservacion":"Reservation",
+  "Donacion":"Donation",
+  "Galeria":"Gallery",
+  "Flora":"Flora",
+  "Fauna":"Fauna",
+  "Repositorio":"Repository",
+  "Marca":"Brand",
+  "Quienes":"About us?",
+
+  "Nuestros" : "Our",
+  "Inicios" : "Beginnings",
+  "Nuestros_parrafo1": "The National University in its Liberia Campus has had a significant regeneration and biological enrichment that has been used to develop a university trail project called Los Matapalos, a name that derives from the abundance of this species and the leafy specimens that are at the trailhead.",
+  "Nuestros_parrafo2": "The Los Matapalos trail had its beginnings around 2017 when, through different groups and races, they took on the challenge of reforesting and beginning to carry out studies that would allow proper management and through them the step to follow was decided.",
+  "Nuestros_parrafo3": "The Los Matapalos trail officially opened its doors in 2019, and to date it has been visited by different community groups and institutions such as the Agricultural College, Adventist School, UCR of the province of Limón, older adults, a group of retired teachers from ADEP Liberia , among others. This trail emerged as a space for coexistence where the student population was allowed to be the interpreters of the trail and show its visitors its environmental, cultural and historical importance."
+}

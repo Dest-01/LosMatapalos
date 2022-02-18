@@ -1,7 +1,7 @@
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-            <router-link to="/dashboard" class="nav-link">
+            <router-link to="/admin/dashboard" class="nav-link">
                 <i class="nav-icon fas fa-home blue"></i>
                 <p>
                     Inicio
@@ -217,7 +217,7 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item">
-                        <router-link to="/admin/reportes1" class="nav-link">
+                        <router-link to="/admin/reportes" class="nav-link">
                             <i class="nav-icon fas fa-print white"></i>
                             <p>
                                 Consultar Reporte
