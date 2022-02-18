@@ -143,6 +143,7 @@ h2{
   margin: 0 20px;
   justify-content: space-between;
   gap: 10px;
+      flex-wrap: wrap;
 }
 .main-card .cards .card {
   width: calc(100% / 3 - 10px);

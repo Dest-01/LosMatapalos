@@ -8,7 +8,10 @@
     <div class="menu">
       <button @click="vertodo()" class="btn_menu">Todo</button>
       <button @click="filtroDeAves()" class="btn_menu">Aves</button>
+      <button @click="filtroAnfibios()" class="btn_menu">Anfibios</button>
+      <button @click="filtroInsectos()" class="btn_menu">Insectos</button>
       <button @click="filtroDeMamiferos()" class="btn_menu">Mamíferos</button>
+      <button @click="filtroReptiles()" class="btn_menu">Reptiles</button>
     </div>
     <div v-if="faunas.data == 0" class="row">
       <div class="mensaje">
@@ -98,6 +101,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -106,7 +110,10 @@ export default {
       faunas: {},
       faunasTodo: {},
       filtrarBusqueda: "Aves",
-      filtrarBusqueda2: "Mamiferos",
+      filtrarAnfibios: "Anfibios",
+      filtrarInsectos: "Insectos",
+      filtrarReptiles: "Reptiles",
+      filtrarMamiferos: "Mamiferos",
       form: new Form({
         id: "",
         nombreComun: "",
@@ -117,16 +124,25 @@ export default {
     };
   },
   methods: {
-    filtroDeAves(){
-      this.faunas.data = this.filtroAves;
-    },
-    filtroDeMamiferos(){
-      this.faunas.data = this.filtroMamiferos;
-
-    },
     vertodo() {
      this.faunas.data = this.faunasTodo;
     },
+    filtroDeAves(){
+      this.faunas.data = this.filtroAves;
+    },
+    filtroAnfibios(){
+      this.faunas.data = this.filtroAnfibio;
+    },
+    filtroInsectos(){
+      this.faunas.data = this.filtroInsecto;
+    },
+    filtroDeMamiferos(){
+      this.faunas.data = this.filtroMamifero;
+    },
+    filtroReptiles(){
+      this.faunas.data = this.filtroReptile;
+    },
+    
     verImagen(fauna) {
       this.form.fill(fauna);
     },
@@ -171,7 +187,31 @@ export default {
         return (
           fauna.tipo
             .toLowerCase()
-            .includes(this.filtrarBusqueda2.toLowerCase()));
+            .includes(this.filtrarMamiferos.toLowerCase()));
+      });
+    },
+    filtroAnfibio: function () {
+      return this.faunasTodo.filter((fauna) => {
+        return (
+          fauna.tipo
+            .toLowerCase()
+            .includes(this.filtrarAnfibios.toLowerCase()));
+      });
+    },
+    filtroInsecto: function () {
+      return this.faunasTodo.filter((fauna) => {
+        return (
+          fauna.tipo
+            .toLowerCase()
+            .includes(this.filtrarInsectos.toLowerCase()));
+      });
+    },
+    filtroReptile: function () {
+      return this.faunasTodo.filter((fauna) => {
+        return (
+          fauna.tipo
+            .toLowerCase()
+            .includes(this.filtrarReptiles.toLowerCase()));
       });
     },
   },
@@ -181,7 +221,9 @@ export default {
 :root{
   --colorVerde: #39ab81;
 }
-
+.row{
+  width: 100%;
+}
 .far{
   font-size: 8rem;
         color: #39ab81;

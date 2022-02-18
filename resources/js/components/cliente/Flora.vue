@@ -183,6 +183,9 @@ export default {
 
 
 <style scoped>
+.row{
+  width: 100%;
+}
 .far{
   font-size: 8rem;
         color: #39ab81;

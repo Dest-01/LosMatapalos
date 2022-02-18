@@ -5,15 +5,34 @@
         Repositorio <span style="color: #38ab81">Documentos</span>
       </h1>
     </div>
-    <div class="secundario">
+    <div class="menu">
+      <button @click="vertodo()" class="btn_menu">Todo</button>
+      <button @click="filtroPP()" class="btn_menu">
+        Prácticas Profesionales
+      </button>
+      <button @click="filtroTesis()" class="btn_menu">Tesis</button>
+      <button @click="filtroArticulosCientificos()" class="btn_menu">
+        Artículos Científicos
+      </button>
+      <button @click="filtroLibros()" class="btn_menu">Libros</button>
+    </div>
+    <div v-if="documentosRepositorio.data == 0" class="row">
+      <div class="mensaje">
+        <i class="far fa-folder-open"></i>
+        <h1>Oops!</h1>
+        <h3>No hay documentos en el repositorio</h3>
+        <h4>Muy pronto...</h4>
+      </div>
+    </div>
+    <div v-else class="secundario">
       <table>
         <thead>
           <tr>
             <th class="icono"></th>
             <th class="nombre" scope="col">Nombre</th>
             <th class="descripcion" scope="col">Descripción</th>
-            <th class="botones" scope="col"></th>
-            <th class="botones" scope="col"></th>
+            <th class="botones" scope="col">Ver</th>
+            <th class="botones" scope="col">Descargar</th>
           </tr>
         </thead>
         <tbody>
@@ -71,9 +90,30 @@ export default {
   data() {
     return {
       documentosRepositorio: {},
+      todosDocumentos: {},
+      filtrarPracticasPro: "Prácticas Profesionales",
+      filtrarTesis: "Tesis",
+      filtrarArticulos: "Artículos Científicos",
+      filtrarLibros: "Libros",
     };
   },
   methods: {
+    vertodo() {
+      this.documentosRepositorio.data = this.todosDocumentos;
+    },
+    filtroPP() {
+      this.documentosRepositorio.data = this.arrayPP;
+    },
+    filtroLibros() {
+      this.documentosRepositorio.data = this.arrayLibros;
+    },
+    filtroArticulosCientificos() {
+      this.documentosRepositorio.data = this.arrayArticulos;
+    },
+    filtroTesis() {
+      this.documentosRepositorio.data = this.arrayTesis;
+    },
+
     getResults(page = 1) {
       this.$Progress.start();
 
@@ -87,6 +127,9 @@ export default {
       axios
         .get("/api/repositorioCliente")
         .then(({ data }) => (this.documentosRepositorio = data.data));
+      axios
+        .get("/api/repositorioCliente/List")
+        .then(({ data }) => (this.todosDocumentos = data.data));
     },
   },
   created() {
@@ -94,15 +137,81 @@ export default {
     this.cargarDocumentos();
     this.$Progress.finish();
   },
+  computed: {
+    arrayPP: function () {
+      return this.todosDocumentos.filter((documento) => {
+        return documento.tipo
+          .toLowerCase()
+          .includes(this.filtrarPracticasPro.toLowerCase());
+      });
+    },
+    arrayLibros: function () {
+      return this.todosDocumentos.filter((documento) => {
+        return documento.tipo
+          .toLowerCase()
+          .includes(this.filtrarLibros.toLowerCase());
+      });
+    },
+    arrayTesis: function () {
+      return this.todosDocumentos.filter((documento) => {
+        return documento.tipo
+          .toLowerCase()
+          .includes(this.filtrarTesis.toLowerCase());
+      });
+    },
+    arrayArticulos: function () {
+      return this.todosDocumentos.filter((documento) => {
+        return documento.tipo
+          .toLowerCase()
+          .includes(this.filtrarArticulos.toLowerCase());
+      });
+    },
+  },
 };
 </script>
 
 <style scoped>
+.menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px auto;
+  padding: 5px;
+  justify-content: center;
+}
+.btn_menu {
+  margin: 5px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  background: #1290accf;
+  width: 180px;
+  height: 80px;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  transition: all 0.4s;
+}
+.btn_menu:hover {
+  background: #0c7c96;
+}
+
+.mensaje {
+  width: 100%;
+  margin-top: 100px;
+  margin-block: 100px;
+  text-align: center;
+}
+
+.far {
+  font-size: 8rem;
+  color: #39ab81;
+}
 .principal {
   margin-top: 50px;
   padding: 0;
 }
-.titulo{
+.titulo {
   opacity: 0;
   animation-name: aparecerTitulo;
   animation-delay: 1s;
@@ -165,23 +274,23 @@ th {
   font-weight: 900;
 }
 
-@keyframes aparecerTitulo{
-  0%{
+@keyframes aparecerTitulo {
+  0% {
     opacity: 0;
   }
-  50%{
+  50% {
     opacity: 0.5;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
 
-@keyframes moverArribaAbajo{
-  0%{
+@keyframes moverArribaAbajo {
+  0% {
     margin-top: -300px;
   }
-  100%{
+  100% {
     margin-top: 10px;
   }
 }

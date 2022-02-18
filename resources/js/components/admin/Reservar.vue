@@ -365,6 +365,15 @@
                 />
               </div>
               <div id="inputsModal" class="form-group">
+                <label>Nombre de grupo</label>
+                <input
+                  v-model="form.nombreGrupo"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+              </div>
+              <div id="inputsModal" class="form-group">
                 <label>Cantidad de visitantes</label>
                 <input
                   v-model="form.cantidad"

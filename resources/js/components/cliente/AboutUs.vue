@@ -65,6 +65,7 @@
     </div>
 
     <NuestroEsquipo></NuestroEsquipo>
+    <voluntariosEstudiante></voluntariosEstudiante>
     <Nosotros></Nosotros>
   </div>
 </template>
@@ -72,11 +73,12 @@
 <script>
 import NuestroEsquipo from "../cliente/NuestroEquipo.vue";
 import Nosotros from "../cliente/Nosotros.vue";
-
+import voluntariosEstudiante from "../cliente/voluntariosEstudiantes.vue";
 export default {
   components: {
     NuestroEsquipo: NuestroEsquipo,
     Nosotros: Nosotros,
+    voluntariosEstudiante: voluntariosEstudiante,
   },
 
   data() {
@@ -174,7 +176,9 @@ export default {
 .valores > h2 {
   text-align: center;
 }
-
+.mision, .vision, .valores{
+  margin: 10px 0;
+}
 .encargados p {
   margin-top: 150px;
 }

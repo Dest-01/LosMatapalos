@@ -161,7 +161,7 @@
                     placeholder="Breve descripción"
                     required
                     minlength="3"
-                    maxlength="60"
+                    maxlength="255"
                     id=""
                     rows="3"
                   ></textarea>
@@ -223,19 +223,18 @@
                 </div>
                 <div class="form-group">
                   <label>Tipo de archivo</label>
-                  <input
-                    v-model="form.tipo"
-                    type="text"
-                    name="tipo"
+                  <select
                     class="form-control"
-                    placeholder="Tipo de archivo"
+                    v-model="form.tipo"
+                    :class="{ 'is-invalid': form.errors.has('tipo') }"
                     required
-                    :disabled="tipoPDF"
-                    value="PDF"
-                    :class="{
-                      'is-invalid': form.errors.has('tipo'),
-                    }"
-                  />
+                  >
+                    <option disabled value="">Seleccione el tipo de archivo</option>
+                    <option value="Prácticas Profesionales">Prácticas Profesionales</option>
+                    <option value="Tesis">Tesis</option>
+                    <option value="Artículos Científicos">Artículos Científicos</option>
+                    <option value="Libros">Libros</option>
+                  </select>
                   <has-error :form="form" field="tipo"></has-error>
                 </div>
               </div>
@@ -344,7 +343,6 @@ export default {
       progress: 0,
       message: "",
       imageInfos: [],
-      tipoPDF: true,
       repositorios: {},
       repositoriosTodos: {},
       verDetalles: true,
@@ -354,7 +352,7 @@ export default {
         nombre: "",
         fecha: "",
         descripcion: "",
-        tipo: "PDF",
+        tipo: "",
         documento: "",
       }),
     };

@@ -125,7 +125,7 @@
               <table class="table m-0">
                 <thead>
                   <tr>
-                    <th>Identificación</th>
+                    <th>Identificación o Grupo</th>
                     <th>Fecha</th>
                     <th>Cantidad Visitantes</th>
                   </tr>
@@ -134,7 +134,7 @@
                   <tr v-for="reserva in reservaciones.data" :key="reserva.id">
                     <td>
                       <a href="pages/examples/invoice.html"
-                        >{{ reserva.identificacionPersona }} {{ reserva.identificacionOrganizacion }}</a
+                        >{{ reserva.identificacionPersona }} {{ reserva.identificacionOrganizacion }} {{reserva.nombreGrupo}}</a
                       >
                     </td>
                     <td>{{ reserva.fecha }}</td>

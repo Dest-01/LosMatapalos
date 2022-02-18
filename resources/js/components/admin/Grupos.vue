@@ -195,7 +195,7 @@
                     step="1"
                   />
                   <has-error :form="form" field="edades"></has-error>
-                  <label for="">Rango edad: {{form.edades}}</label>
+                  <label for="">Rango edad: {{ form.edades }}</label>
                 </div>
 
                 <div class="form-group">
@@ -206,8 +206,6 @@
                     name="lugar"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('lugar') }"
-                    id="phone"
-                    min="1"
                     placeholder="Escriba el lugar de procedencia"
                     required
                   />
@@ -215,15 +213,32 @@
                 </div>
                 <div class="form-group">
                   <label>Tematica</label>
-                  <input
-                    v-model="form.tematica"
-                    type="text"
-                    name="tematica"
+                  <select
                     class="form-control"
+                    v-model="form.tematica"
                     :class="{ 'is-invalid': form.errors.has('tematica') }"
-                    placeholder="Que tematica le gustaria tratar"
                     required
-                  />
+                    @change="verInputOtraTematica()"
+                  >
+                    <option disabled value="">Seleccione una tematica</option>
+                    <option value="Todas las tematicas">
+                      Todas las tematicas
+                    </option>
+                    <option value="Biodiversidad">Biodiversidad</option>
+                    <option value="Cultura">Cultura</option>
+                    <option value="Otros">Otros</option>
+                  </select>
+                  <div id="inputOtros" v-show="VerOtraTematica">
+                    <input
+                      type="text"
+                      v-model="form.tematica"
+                      name="lugar"
+                      class="form-control"
+                      :class="{ 'is-invalid': form.errors.has('tematica') }"
+                      placeholder="Escriba la otra tematica de interes..."
+                      required
+                    />
+                  </div>
                   <has-error :form="form" field="tematica"></has-error>
                 </div>
                 <div class="form-group">
@@ -382,6 +397,7 @@ export default {
       nuevoGrupos: {},
       verDetalles: true,
       filtrarBusqueda: "",
+      VerOtraTematica: false,
       form: new Form({
         id: "",
         nombre: "",
@@ -400,6 +416,14 @@ export default {
         this.grupos.data = this.nuevoGrupos;
       } else if (this.filtrarBusqueda != "") {
         this.grupos.data = this.gruposFiltradas;
+      }
+    },
+    verInputOtraTematica() {
+      if (this.form.tematica == "Otros") {
+        this.VerOtraTematica = true;
+        this.form.tematica = "Escriba la tematica..."
+      } else {
+        this.VerOtraTematica = false;
       }
     },
     editModal(grupo) {
@@ -543,7 +567,7 @@ export default {
     this.cargarGrupos();
     this.$Progress.finish();
   },
-   filters: {
+  filters: {
     truncate: function (text, length, suffix) {
       return text.substring(0, length) + suffix;
     },
@@ -582,6 +606,9 @@ export default {
 
 
 <style scoped>
+#inputOtros{
+  margin-top: 10px;
+}
 #btnCancelar {
   padding: 1px 5px;
   margin: 1px 1px 1px 10px;

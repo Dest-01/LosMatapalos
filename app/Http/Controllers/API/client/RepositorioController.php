@@ -23,7 +23,12 @@ class RepositorioController extends BaseController
      */
     public function index()
     {
-        $repositorioDocumentos = $this->repositorioDocumentos->latest()->paginate(2);
+        $repositorioDocumentos = $this->repositorioDocumentos->latest()->paginate(5);
+        return $this->sendResponse($repositorioDocumentos,"Lista de Repositorios");
+    }
+    public function list()
+    {
+        $repositorioDocumentos = $this->repositorioDocumentos->get();
         return $this->sendResponse($repositorioDocumentos,"Lista de Repositorios");
     }
 

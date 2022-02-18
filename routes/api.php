@@ -118,6 +118,7 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
     Route::get('donacionesCliente/Donadores', 'DonacionController@Donadores');
     Route::get('floraCliente/List', 'FloraController@list');
     Route::get('faunaCliente/List', 'FaunaController@list');
+    Route::get('repositorioCliente/List', 'RepositorioController@list');
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',
@@ -127,5 +128,6 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         'actividadCliente' => 'ActividadController',
         'articulosCliente' => 'ArticuloController',
         'repositorioCliente' => 'RepositorioController',
+        'voluntariosCliente' => 'VoluntarioEstudiantesController',
     ]);
 });

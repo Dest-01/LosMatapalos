@@ -211,8 +211,9 @@
                     <option disabled value="">Seleccione un elemento</option>
                     <option value="Aves">Aves</option>
                     <option value="Mamíferos">Mamíferos</option>
-                    <option value="Reptiles"> Reptiles</option>
-                     <option value="Insectos"> Insectos</option>
+                    <option value="Reptiles">Reptiles</option>
+                     <option value="Insectos">Insectos</option>
+                     <option value="Anfibios">Anfibios</option>
                   </select>
                   <has-error :form="form" field="tipo"></has-error>
                 </div>
