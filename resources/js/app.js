@@ -9,12 +9,17 @@
  window.Vue = require('vue');
  import moment from 'moment';
 
-
 Vue.config.productionTip = false
 
 //añadimos la libreria
-
-Vue.mixin(require('./trans'))
+var Lang = require('vue-lang');
+ 
+var locales = {
+  "en": require("../lang/en/en.json"),
+  "es": require("../lang/es/es.json")
+}
+ 
+Vue.use(Lang, {lang: 'en', locales: locales})
  
  import { Form, HasError, AlertError } from 'vform';
  window.Form = Form;

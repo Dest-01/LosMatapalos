@@ -7,7 +7,6 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta lang="en">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -66,7 +65,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 ">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ url('/') }}">Inicio</a>
+                            <a class="nav-link" aria-current="page" href="{{ url('/') }}">{{ __('navbar.inicio') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/login') }}">Administrador</a>

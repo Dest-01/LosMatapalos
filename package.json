@@ -44,7 +44,7 @@
         "sweetalert2": "^9.17.2",
         "swiper": "^7.4.1",
         "vform": "^1.0.1",
-        "vue-i18n": "^8.26.7",
+        "vue-lang": "^0.2.5",
         "vue-pdf": "^4.3.0",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.5.2"

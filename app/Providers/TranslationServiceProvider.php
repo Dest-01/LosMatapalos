@@ -18,21 +18,26 @@ class TranslationServiceProvider extends ServiceProvider
     {
         Cache::rememberForever('translations', function () {
             $translations = collect();
-
-            foreach (['en', 'es'] as $locale) { // suported locales
+            $locales = array_map(
+                function($dir) {
+                    return basename($dir);
+                }, glob('../../resources/lang/*')
+            );
+    
+            foreach ($locales as $locale) {
                 $translations[$locale] = [
                     'php' => $this->phpTranslations($locale),
                     'json' => $this->jsonTranslations($locale),
                 ];
             }
-
+    
             return $translations;
         });
     }
 
     private function phpTranslations($locale)
     {
-        $path = resource_path("lang/$locale");
+        $path = resource_path("lang" . DIRECTORY_SEPARATOR . $locale);
 
         return collect(File::allFiles($path))->flatMap(function ($file) use ($locale) {
             $key = ($translation = $file->getBasename('.php'));

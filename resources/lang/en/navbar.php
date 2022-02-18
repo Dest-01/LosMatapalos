@@ -14,5 +14,6 @@ return [
     */
 
     'inicio' => 'Home',
+    'Example Component' => 'Probando a ver',
 
 ];
