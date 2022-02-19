@@ -15,9 +15,10 @@ class UserController extends BaseController
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $users)
     {
         $this->middleware('auth:api');
+        $this->users = $users;
     }
 
     /**
@@ -27,15 +28,24 @@ class UserController extends BaseController
      */
     public function index()
     {
-        if (!Gate::allows('isAdmin')) {
+       /* if (!Gate::allows('isAdmin')) {
             return $this->unauthorizedResponse();
-        }
+        }*/
         // $this->authorize('isAdmin');
 
         $users = User::latest()->paginate(10);
 
         return $this->sendResponse($users, 'Users list');
     }
+
+    public function list()
+    {
+        $users = User::get();
+
+        return $this->sendResponse($users, 'Users list');
+    }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -49,10 +59,7 @@ class UserController extends BaseController
      */
     public function store(UserRequest $request)
     {
-
-
         $this->authorize('isAdmin');
-        
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],

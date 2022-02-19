@@ -82,9 +82,11 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('participantes/listar', 'ParticipantesController@list');
     Route::get('repositorio/listar', 'RepositorioDocumentosController@list');
     Route::get('articulos/listar', 'ArticuloController@list');
+    Route::get('usuarios/listar', 'UserController@list');
+
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
-        'user' => 'UserController',
+        'usuarios' => 'UserController',
         ////RUTAS ADMIN API
         'catDonativo' => 'CatDonativosController',
         'donativo' => 'DonativosController',

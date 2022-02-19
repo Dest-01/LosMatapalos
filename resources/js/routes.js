@@ -19,7 +19,7 @@ import Reportes from './components/admin/Reportes1.vue'
 import RepositorioAdmin from './components/admin/RepositorioDocumental.vue'
 import Dashboard from './components/admin/Dashboard.vue'
 import Perfil from './components/admin/Profile.vue'
-import Usuarios from './components/admin/Users.vue'
+import Usuarios from './components/admin/Usuarios.vue'
 
 /*IMPORTAN LOS DE CLIENTE*/
 import App from './components/layouts/App.vue'
