@@ -3,13 +3,11 @@
     <section class="section--blue wow fadeInLeft" data-wow-duration="2s">
       <h1>Eventos del <span>Sendero los Matapalos</span></h1>
 
-      <div v-if="actividades.data == 0" class="row">
-        <div class="mensaje">
-          <i class="far fa-folder-open"></i>
-          <h1>Oops!</h1>
-          <h3>No hay eventos en el Sendero</h3>
-          <h4>Muy pronto...</h4>
-        </div>
+      <div v-if="actividades.data == 0" class="mensaje">
+        <i class="far fa-folder-open"></i>
+        <h1>Oops!</h1>
+        <h3>No hay eventos en el Sendero</h3>
+        <h4>Muy pronto...</h4>
       </div>
       <ul class="contenedor-todo">
         <div
@@ -125,13 +123,13 @@ export default {
   margin-block: 100px;
   text-align: center;
 }
-:root{
+:root {
   --colorVerde: #39ab81;
 }
 
-.far{
+.far {
   font-size: 8rem;
-    color: var(--colorVerde);
+  color: var(--colorVerde);
 }
 
 h4 {
@@ -409,8 +407,9 @@ h1 {
 }
 
 @media screen and (max-width: 900px) {
-   .paginacion{
-        margin: 1px auto;
-    }
+  .paginacion {
+    margin: 1px auto;
+    width: 100%;
+  }
 }
 </style>

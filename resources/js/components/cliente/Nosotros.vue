@@ -1,5 +1,14 @@
 <template>
-  <div class="contenedor  wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
+  <div
+    class="contenedor wow fadeInLeft"
+    data-wow-delay="0.2s"
+    style="
+      visibility: visible;
+      -webkit-animation-delay: 0.2s;
+      -moz-animation-delay: 0.2s;
+      animation-delay: 0.2s;
+    "
+  >
     <div class="site-heading text-center">
       <h2>Equipo de <span>Desarrollo</span></h2>
     </div>
@@ -119,16 +128,16 @@
   padding: 20px 0;
   margin: 20px 0;
 }
-span{
-    color: #034991d1;
+span {
+  color: #034991d1;
 }
-h2{
-    font-weight: 700;
+h2 {
+  font-weight: 700;
 }
-.site-heading{
-    margin: 5px;
-    padding: 5px;
-    font-weight: 700;
+.site-heading {
+  margin: 5px;
+  padding: 5px;
+  font-weight: 700;
 }
 .contenedor .main-card {
   display: flex;
@@ -143,7 +152,7 @@ h2{
   margin: 0 20px;
   justify-content: space-between;
   gap: 10px;
-      flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .main-card .cards .card {
   width: calc(100% / 3 - 10px);
@@ -252,6 +261,22 @@ input[type="radio"] {
   .main-card .cards .card {
     /* margin: 20px 0 10px 0; */
     width: 100%;
+  }
+}
+@media only screen and (max-device-width: 1023px) {
+  .contenedor .main-card .cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+@media only screen and (min-device-width: 400px) and (max-device-width: 900px) {
+  .main-card {
+    margin: 20px 0 100px 0;
+  }
+}
+@media only screen and (max-device-width: 399px) {
+  .main-card {
+    margin: 20px 0 160px 0;
   }
 }
 </style>

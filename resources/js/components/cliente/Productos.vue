@@ -3,8 +3,15 @@
     <div class="site-heading text-center">
       <h1>Nuestros <span style="color: #38ab81">Productos</span></h1>
     </div>
-
-    <div class="todo_productos wow fadeInUp" data-wow-duration="2s">
+    <div v-if="Productos.data == 0" class="row">
+      <div class="mensaje">
+        <i class="far fa-folder-open"></i>
+        <h1>Oops!</h1>
+        <h3>No hay productos del sendero</h3>
+        <h4>Muy pronto...</h4>
+      </div>
+    </div>
+    <div v-else class="todo_productos wow fadeInUp" data-wow-duration="2s">
       <div
         v-for="producto in Productos.data"
         :key="producto.id"
@@ -160,6 +167,9 @@ export default {
 };
 </script>
 <style scoped>
+.row {
+  width: 100%;
+}
 .contenedor {
   margin: 50px 0;
   padding: 0;
@@ -243,17 +253,20 @@ button:hover {
 
 .paginacion {
   margin: 10px auto;
-  padding: 1em;
-  width: 300px;
+  padding: 1.5em;
+  display: flex;
   justify-content: center;
+  align-content: center;
+  flex-direction: row-reverse;
 }
+
 .pagination {
   justify-content: center;
   font-family: fantasy;
   color: black;
   background: #f0f0f0;
-  padding: 5px;
-  border-radius: 30px;
+  padding: 10px;
+  border-radius: 10px;
   font-weight: 900;
 }
 /*MODAL ESTILO*/
@@ -321,4 +334,54 @@ button:hover {
     opacity: 1;
   }
 }
+.mensaje {
+  width: 100%;
+  margin-top: 100px;
+  margin-block: 100px;
+  text-align: center;
+}
+
+.far {
+  font-size: 8rem;
+  color: #39ab81;
+}
+@media only screen and (min-device-width: 335px) and (max-device-width: 1199px) {
+  .contenedor {
+    margin: 50px 5px 130px 5px;
+  }
+  .todo_productos {
+    margin: 15px 25px 15px 5px;
+  }
+  .modal {
+    left: 0%;
+  }
+  .modal-content,
+  .modal-body {
+    width: 100%;
+  }
+}
+@media only screen and (min-device-width: 280px) and (max-device-width: 453px) {
+  .productos {
+    width: 100%;
+  }
+  .productos img {
+    width: 100%;
+  }
+}
+@media only screen and (max-device-width: 334px){
+  .contenedor {
+    margin: 50px 5px 160px 5px;
+  }
+    .todo_productos {
+    margin: 15px 25px 15px 5px;
+  }
+  .modal {
+    left: 0%;
+  }
+  .modal-content,
+  .modal-body {
+    width: 100%;
+  }
+}
+
 </style>

@@ -42,9 +42,11 @@
           <span class="text">Familia: {{ flora.fam_cientifica }}</span>
           <button
             @click="verImagen(flora)"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            class="btn btn-danger"
+           data-mdb-toggle="modal"
+            data-mdb-target="#exampleModal"
+            class="btn btn-outline-info"
+            data-mdb-ripple-color="dark"
+            id="btnVer"
           >
             Ver
           </button>
@@ -60,7 +62,6 @@
       ></pagination>
     </div>
 
-    <!-- Modal -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -72,28 +73,27 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              Nombre Cientifico: {{ form.nom_cientifico }}
+              Nombre común: {{ form.nom_comun }}
             </h5>
             <button
               type="button"
-              class="btn-close white"
-              data-bs-dismiss="modal"
+              class="btn-close"
+              data-mdb-dismiss="modal"
               aria-label="Close"
             ></button>
           </div>
           <div class="modal-body">
+            <img
+              v-bind:src="'/images/flora/' + form.photo"
+              v-bind:alt="form.nom_comun"
+              width="100%"
+              height="720px"
+            />
             <div>
-              <img
-                v-bind:src="'/images/flora/' + form.photo"
-                width="100%"
-                height="100%"
-                alt=""
-              />
-            </div>
-            <div class="modal-footer">
-              <label>Descripcion: {{ form.descripcion }}</label>
+              <h5>Descripcion: {{ form.descripcion }}</h5>
             </div>
           </div>
+          <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
         </div>
       </div>
     </div>
@@ -181,14 +181,16 @@ export default {
 };
 </script>
 
-
 <style scoped>
-.row{
+:root {
+  --colorVerde: #39ab81;
+}
+.row {
   width: 100%;
 }
-.far{
+.far {
   font-size: 8rem;
-        color: #39ab81;
+  color: #39ab81;
 }
 .titulo {
   margin-top: 40px;
@@ -279,73 +281,61 @@ export default {
 .btn_menu:hover {
   background: #0c7c96;
 }
-.btn {
+#btnVer {
   width: 50%;
-  left: 25%;
-  position: relative;
-  background: #1290accf;
+  background: #3fa5bcd6;
+  color: #fff;
+  font-weight: 500;
+  font-size: 17px;
+  text-transform: capitalize;
+  margin-left: 25%;
 }
-
+.modal-content {
+  width: 1000px;
+  left: -50%;
+   border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.modal-body {
+  padding: 0rem;
+  border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.modal-body,
+.modal-header {
+  background: #000000a1;
+  color: #fff;
+}
+.modal-header{
+  border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
 .container > .descripcion:hover {
   opacity: 1;
 }
-.modal-content {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 800;
-  background: rgba(17, 17, 17, 0.76);
-  border: 0;
-  box-shadow: 1px 1px 10px 0 black;
-  padding: 0;
-  width: 55vw;
-  height: 70vh;
-  box-sizing: content-box;
-  left: -15vw;
-}
 
-.modal-body {
-  width: 55vw;
-  height: 70vh;
-  box-sizing: content-box;
-  padding: 1px;
-}
-.modal-body img {
-  box-sizing: border-box;
-  object-fit: cover;
-  width: 55vw;
-  height: 70vh;
-}
-
-.modal-footer {
-  background: rgba(17, 17, 17, 0.76);
-  justify-content: start;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom: 1px solid black;
-  box-shadow: -2px 2px 3px 0 #000000ab;
-}
-.modal-footer label {
-  color: #fff;
-}
-
-.paginacion {
-  margin: 10px auto;
-  padding: 1em;
-  width: 300px;
-  justify-content: center;
-}
 button span {
   color: #fff;
   font-size: 1.25rem;
   font-weight: 500;
 }
+
+.paginacion {
+  margin: 10px auto;
+  padding: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: row-reverse;
+}
+
 .pagination {
   justify-content: center;
   font-family: fantasy;
   color: black;
   background: #f0f0f0;
-  padding: 5px;
-  border-radius: 30px;
+  padding: 10px;
+  border-radius: 10px;
   font-weight: 900;
 }
 
@@ -364,9 +354,27 @@ button span {
   }
 }
 
-@media screen and (max-width: 900px) {
-  .paginacion {
+@media only screen and (max-device-width: 900px) {
+  .container-all {
+    margin: 5px auto 5px auto;
+    padding: 0;
+  }
+  .modal-content{
     width: 100%;
+    left: 0%;
+  }
+  .modal-body img{
+    height: 350px;
+  }
+}
+@media only screen and (min-device-width: 200px) and (max-device-width: 399px) {
+  .paginacion {
+    margin: 60px 0 180px 0;
+  }
+}
+@media only screen and (min-device-width: 400px) and (max-device-width: 900px) {
+  .paginacion {
+    margin: 65px 0 150px 0;
   }
 }
 </style>

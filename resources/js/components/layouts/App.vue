@@ -3,10 +3,11 @@
     <navbar>
         
     </navbar>
-
+    
     <router-view></router-view>
+    <vue-progress-bar></vue-progress-bar>
     <!-- Aca se renderizaran las vistas vue dependiendo las rutas -->
-   <div>
+    <div class="footer">
         <footer class="bg-dark text-center text-white">
         <!-- Copyright -->
         <div class="text-center p-3">
@@ -25,7 +26,7 @@
         </div>
         <!-- Copyright -->
     </footer>
-    </div>
+      </div>
   </div>
 </template>
 

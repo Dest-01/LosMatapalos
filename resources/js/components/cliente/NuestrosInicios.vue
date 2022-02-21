@@ -217,10 +217,34 @@ figure.snip0057.hover:before {
     left: 0px;
   }
 }
-@media only screen and (min-device-width: 375px) and (max-device-width: 900px) {
+@media only screen and (max-device-width: 451px) {
   figure.snip0057{
     margin: 0px;
-        height: 1100px;
+        height: 1095px;
+  }
+  figure.snip0057::before {
+    width: 0%;
+  }
+  figure.snip0057 .image {
+    transform: skewX(0deg) translateX(0px);
+    width: 100%;
+  }
+  figure.snip0057 figcaption {
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    /* right: 0; */
+    width: 100%;
+  }
+  figure.snip0057 .image img {
+    left: 0%;
+    width: 100%;
+    min-height: 400px;
+  }
+}
+@media only screen and (min-device-width: 452px) and (max-device-width: 900px) {
+    figure.snip0057{
+    margin: 0px;
+        height: 915px;
   }
   figure.snip0057::before {
     width: 0%;

@@ -48,16 +48,10 @@
 <body>
     <div class="wrapper" id="app">
         {{-- Content Wrapper. Contains page content --}}
-        <div class="Main-content">
-            
-            {{-- Main content --}}
-            <!-- Main content -->
             <router-view></router-view>
             <vue-progress-bar></vue-progress-bar>
-            {{-- /.content --}}
-        </div>
-        {{-- /.content-wrapper --}}
     </div>
+    
     {{-- ./wrapper --}}
     <!-- Bootstrap SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

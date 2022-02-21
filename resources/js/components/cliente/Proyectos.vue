@@ -411,4 +411,9 @@
     margin-left:45px;
   }
 }
+@media screen and (max-width: 900px) {
+  .content-txt{
+    width: 300px;
+  }
+}
 </style>

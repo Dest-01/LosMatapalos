@@ -155,7 +155,7 @@ export default {
     Proyectos: Proyectos,
   },
   data() {
-    return { langs: ['en', 'es']};
+    return { langs: ["en", "es"] };
   },
   mounted() {
     const plugin = document.createElement("script");
@@ -168,12 +168,6 @@ export default {
 
 
 <style scoped>
-
-.contenedor_contacto {
-  margin-bottom: 10px;
-  background: #fff;
-}
-
 #hero {
   min-height: 60vh;
   position: relative;
@@ -438,13 +432,62 @@ p {
   color: #38ab81 !important;
 }
 
-@media only screen and (min-device-width: 375px) and (max-device-width: 900px) {
+@media screen and (max-device-width: 300px) {
   .promo h1 {
     width: 100%;
     font-size: 10px;
   }
-  .marcont {
+}
+
+@media only screen and (min-device-width: 301px) and (max-device-width: 799px) {
+  .promo h1 {
     width: 100%;
+    font-size: 18px;
+  }
+  .marcont {
+    width: 190%;
+  }
+}
+
+@media only screen and (min-device-width: 800px) and (max-device-width: 819px) {
+  video {
+    width: 100%;
+    height: 100%;
+  }
+  .wave {
+    bottom: 0;
+    top: 23rem;
+  }
+  #hero {
+    min-height: 43vh;
+    height: 61vh;
+  }
+  .lema {
+    min-height: 50vh;
+  }
+  .capa {
+    height: 100%;
+  }
+  .item {
+    height: 600px;
+  }
+}
+@media only screen and (min-device-width: 820px) and (max-device-width: 820px) {
+  #hero {
+    min-height: 43vh;
+    height: 43vh;
+  }
+}
+@media only screen and (min-device-height: 281px) and (max-device-height: 600px) {
+  #hero {
+    min-height: 110vh;
+    height: 110vh;
+  }
+}
+@media only screen and (max-device-height: 280px) {
+  #hero {
+    min-height: 130vh;
+    height: 130vh;
   }
 }
 </style>

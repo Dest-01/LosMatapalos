@@ -111,17 +111,22 @@ span {
     margin-top: 35px;
 }
 .paginacion {
-  margin: auto;
-  padding: 1em;
-  width: 600px;
+  margin: 10px auto;
+  padding: 1.5em;
+  display: flex;
   justify-content: center;
+  align-content: center;
+  flex-direction: row-reverse;
 }
+
 .pagination {
   justify-content: center;
+  font-family: fantasy;
   color: black;
   background: #f0f0f0;
-  padding: 5px;
-  border-radius: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 900;
 }
 .contenedor_voluntarios{
     display: flex;

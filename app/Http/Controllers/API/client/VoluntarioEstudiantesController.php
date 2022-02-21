@@ -30,7 +30,7 @@ class VoluntarioEstudiantesController extends BaseController
         $voluntarioEstudiantes = DB::table('voluntario_estudiantes')
         ->join('personas', 'voluntario_estudiantes.identificacion', '=', 'personas.id')
         ->select('personas.nombre', 'personas.apellido1', 'personas.apellido2','voluntario_estudiantes.imagen', 'voluntario_estudiantes.id', 'voluntario_estudiantes.carrera')
-        ->paginate(8);
+        ->paginate(4);
 
     return $this->sendResponse($voluntarioEstudiantes, 'Lista de estudiantes voluntariados!');
     }

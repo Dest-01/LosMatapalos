@@ -24,7 +24,7 @@
         <h4>Muy pronto...</h4>
       </div>
     </div>
-    <div v-else class="secundario">
+    <div v-else class="secundario" style="overflow-x:auto;">
       <table>
         <thead>
           <tr>
@@ -261,16 +261,20 @@ th {
 
 .paginacion {
   margin: 10px auto;
-  padding: 1em;
-  width: 300px;
+  padding: 1.5em;
+  display: flex;
   justify-content: center;
+  align-content: center;
+  flex-direction: row-reverse;
 }
 
 .pagination {
   justify-content: center;
-  padding: 5px;
+  font-family: fantasy;
+  color: black;
   background: #f0f0f0;
-  border-radius: 30px;
+  padding: 10px;
+  border-radius: 10px;
   font-weight: 900;
 }
 
@@ -295,12 +299,19 @@ th {
   }
 }
 
-@media screen and (max-width: 900px) {
+@media only screen and (max-width: 900px) {
   .secundario {
-    min-height: 700px;
-    max-height: auto;
-    width: 100%;
-    margin: 0;
+    width: 95%;
+    margin: 10px 10px 170px 10px;
+  }
+  .icono{
+    padding: 5px 5px 5px 130px;
+  }
+  .icono img{
+    width: 50px;
+  }
+  table{
+    margin: 10px 20px;
   }
 }
 </style>

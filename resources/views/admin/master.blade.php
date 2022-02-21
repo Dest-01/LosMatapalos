@@ -45,7 +45,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <router-link to="/dashboard" class="brand-link">
+    <router-link to="/admin/dashboard" class="brand-link">
       <img src="{{ asset('/images/logo.png') }}" alt="The Logo" class="brand-image elevation-3"
            style="opacity: .9">
       <span style="font-size: 18px" class="brand-text font-weight-light" >{{ config('app.name', 'Laravel') }}</span>
@@ -54,7 +54,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-        <router-link to="/profile">
+        <router-link to="/admin/perfil">
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
               <div class="image">
                 <img src="{{ asset('/images/profile.png') }}" class="img-circle elevation-2" alt="User Image">

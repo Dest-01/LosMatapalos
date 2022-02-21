@@ -369,8 +369,6 @@
                     class="btn btn-success btn-rounded"
                     @click="crearReserva()"
                     :disabled="bloquearReservar"
-                    onclick="enviarCorreoReservacion()"
-                    value="Send"
                   >
                     Reservar
                   </button>
@@ -904,21 +902,19 @@
             <div class="group">
               <label>tematica a tratar</label>
               <i class="fas fa-comment-alt iconoInput_modal"></i>
-               <select
-                     class="input_modal"
-                    v-model="formGrupo.tematica"
-                    :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
-                    required
-                    @change="verInputOtraTematica()"
-                  >
-                    <option disabled value="">Seleccione una tematica</option>
-                    <option value="Todas las tematicas">
-                      Todas las tematicas
-                    </option>
-                    <option value="Biodiversidad">Biodiversidad</option>
-                    <option value="Cultura">Cultura</option>
-                    <option value="Otros">Otros</option>
-                  </select>
+              <select
+                class="input_modal"
+                v-model="formGrupo.tematica"
+                :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
+                required
+                @change="verInputOtraTematica()"
+              >
+                <option disabled value="">Seleccione una tematica</option>
+                <option value="Todas las tematicas">Todas las tematicas</option>
+                <option value="Biodiversidad">Biodiversidad</option>
+                <option value="Cultura">Cultura</option>
+                <option value="Otros">Otros</option>
+              </select>
               <has-error
                 class="error_modal"
                 :form="formGrupo"
@@ -927,17 +923,17 @@
             </div>
             <div class="group">
               <div id="inputOtros" v-show="VerOtraTematica">
-                    <input
-                    style="padding-left: 0px;"
-                      type="text"
-                      v-model="formGrupo.tematica"
-                      name="tematica"
-                      class="input_modal"
-                      :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
-                      placeholder="Escriba la otra tematica de interes..."
-                      required
-                    />
-                  </div>
+                <input
+                  style="padding-left: 0px"
+                  type="text"
+                  v-model="formGrupo.tematica"
+                  name="tematica"
+                  class="input_modal"
+                  :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
+                  placeholder="Escriba la otra tematica de interes..."
+                  required
+                />
+              </div>
             </div>
             <div class="group">
               <label>Consideraciones</label>
@@ -974,9 +970,7 @@
 
 <script>
 export default {
-    components: {
-
-  },
+  components: {},
   name: "ContactUs",
   data() {
     return {
@@ -1058,7 +1052,7 @@ export default {
     verInputOtraTematica() {
       if (this.formGrupo.tematica == "Otros") {
         this.VerOtraTematica = true;
-        this.formGrupo.tematica = "Escriba la tematica..."
+        this.formGrupo.tematica = "Escriba la tematica...";
       } else {
         this.VerOtraTematica = false;
       }
@@ -1568,7 +1562,8 @@ export default {
 }
 
 .intro {
-  margin: auto auto 20px auto;
+  margin: 10px auto 40px auto;
+  padding: 15px 0;
   height: 45px;
   text-align: center;
   font-size: 25px;
@@ -1592,9 +1587,8 @@ export default {
 .contenedor-2 {
   /*Contiene toda la card*/
   display: flex;
-  margin: 10px;
+  margin: 20px 10px 130px 10px;
   justify-content: space-evenly;
-  margin: 10px;
 }
 /*CARD QUE CONTIENE HORARIO Y FORMULARIO */
 .card {
@@ -1715,6 +1709,8 @@ button {
 }
 .input_titulos input {
   width: 80%;
+  padding: 10px 0;
+  font-size: 18px;
 }
 
 .group {
@@ -1736,6 +1732,8 @@ button {
 }
 .input_buscador input {
   width: 80%;
+  padding: 10px 0;
+  font-size: 18px;
 }
 .btn_consultar {
   width: 35%;
@@ -1805,10 +1803,13 @@ h3 {
 
 /*FIN DEL DISEÑO DEL MODAL*/
 
-@media only screen and (max-width: 800px) {
+@media only screen and (min-device-width: 280px) and (max-device-width: 800px) {
   .row {
     display: flex;
     flex-direction: column;
+  }
+  .contenedor {
+    margin: 40px auto;
   }
   .col-md-5,
   .col-md-6 {
@@ -1816,6 +1817,7 @@ h3 {
   }
   .col-md-5 {
     border-bottom-left-radius: 0;
+    border-top-right-radius: 20px;
   }
   .botones_opciones {
     display: flex;
@@ -1838,11 +1840,80 @@ h3 {
   h5 {
     font-size: 20px;
   }
-  .campo_consulta button {
-    width: 37%;
+  .campo_consulta {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .input_buscador {
+    width: 100%;
+    margin: 10px 0;
+  }
+  .btn_consultar {
+    width: 100%;
+    margin: 10px;
+  }
+  .input_titulos {
+    margin: 5px 0;
+  }
+  .error {
+    margin-top: 10px;
+    margin-left: 0px;
+    width: 40%;
+  }
+  .identitad {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .error_modal {
+    margin-top: 95px;
+    margin-left: 0;
+  }
+  .input_titulos input {
+    width: 98%;
+  }
+}
+@media only screen and (min-device-width: 340px) and (max-device-width: 900px) {
+  .contenedor-2 {
+    display: flex;
+    margin: 20px 10px 150px 10px;
+    justify-content: space-evenly;
   }
 }
 
+@media only screen and (max-device-width: 339px) {
+  .contenedor-2 {
+    display: flex;
+    margin: 20px 10px 200px 10px;
+    justify-content: space-evenly;
+  }
+}
+@media only screen and (max-device-width: 280px) {
+  td{
+    font-size: 15px;
+  }
+  .px-3{
+    width: 40px;
+    height: 34px;
+  }
+  .px-3 i{
+    font-size: 10px;
+    padding: 0;
+  }
+  tr{
+    font-size: 12px;
+  }
+  .horas{
+    width: 100%;
+  }
+  .Posicionar {
+    width: 55%;
+  }
+  .botones_finales .btn-success, .botones_finales .btn-danger{
+    margin: 5px 0;
+  }
+}
 /***********RESPONSIVE MODE***************************/
 </style>
 

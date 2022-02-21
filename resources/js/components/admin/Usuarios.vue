@@ -6,7 +6,7 @@
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="breadcrumb breadcrumb-style">
               <li class="breadcrumb-item">
-                <h4 class="page-title">Grupos</h4>
+                <h4 class="page-title">Usuarios</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
                 <a href="/dashboard">
@@ -14,7 +14,7 @@
                   Inicio
                 </a>
               </li>
-              <li class="breadcrumb-item active">Grupos</li>
+              <li class="breadcrumb-item active">Usuarios</li>
             </ul>
           </div>
         </div>

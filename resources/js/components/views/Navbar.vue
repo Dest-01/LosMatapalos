@@ -3,10 +3,10 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand icono_una" href="https://www.una.ac.cr">
-          <img src="images/una.png" alt="" width="120" height="60" />
+          <img src="images/una.png" alt="" width="100%" height="100%" />
         </a>
-        <a class="navbar-brand" href="https://sendero.herokuapp.com/">
-          <img src="images/logo2.png" alt="" width="120" height="60" />
+        <a class="navbar-brand icono_sendero" href="https://sendero.herokuapp.com/">
+          <img src="images/logo2.png" alt="" width="100%" height="100%" />
         </a>
 
         <button
@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
-               <router-link class="nav-link" to="/home">{{ $t('Inicio') }}</router-link>
+               <router-link class="nav-link" to="/inicio">{{ $t('Inicio') }}</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/reservacion">{{ $t('Reservacion') }}</router-link>

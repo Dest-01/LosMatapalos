@@ -140,7 +140,7 @@ export default [
                 component: Home,
             },
             {
-                path: '/home',
+                path: '/inicio',
                 component: Home,
             },
             {
