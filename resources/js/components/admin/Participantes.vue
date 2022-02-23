@@ -143,7 +143,7 @@
                     class="form-control"
                     v-model="tipoIndenteficacion"
                     :class="{ 'is-invalid': form.errors.has('identificacion') }"
-                    @change="tiposDeIndentificacon(), cambioSelect()"
+                    @change="tiposDeIndentificacon()"
                   >
                     <option disabled value="">Seleccione un tipo</option>
                     <option value="Cedula Nacional">Cédula Nacional</option>
@@ -159,9 +159,7 @@
                 <div v-show="verIdentificacion" class="form-group">
                   <div v-show="CedulaNacional" class="form-group identitad">
                     <input
-                      @blur="validarCedulaNacional()"
                       v-model="form.identificacion"
-                      :disabled="bloquearInputId"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -172,24 +170,13 @@
                       id="nacional"
                       onchange="validarCedulaN()"
                     />
-                    <button
-                      id="btnCancelar"
-                      type="button"
-                      class="btn btn-danger"
-                      :disabled="bloquearCancelar"
-                      @click="bloquearCedula()"
-                    >
-                      <i class="fas fa-times"></i>
-                    </button>
                     <has-error :form="form" field="identificacion"></has-error>
                   </div>
 
                   <div v-show="CedulaResidencial" class="form-group identitad">
                     <input
-                      @blur="validarCedulaResidencial()"
                       v-model="form.identificacion"
                       id="residencial"
-                      :disabled="bloquearInputIdR"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -200,23 +187,12 @@
                       onchange="validateResidencial()"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
-                    <button
-                      id="btnCancelar"
-                      type="button"
-                      class="btn btn-danger"
-                      :disabled="bloquearCancelar"
-                      @click="bloquearCedula()"
-                    >
-                      <i class="fas fa-times"></i>
-                    </button>
                   </div>
 
                   <div v-show="Pasaporte" class="form-group identitad">
                     <input
                       id="pasaporte"
-                      @blur="validarPasaporte()"
                       v-model="form.identificacion"
-                      :disabled="bloquearInputIdP"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -227,15 +203,6 @@
                       onchange="validatePasaporte()"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
-                    <button
-                      id="btnCancelar"
-                      type="button"
-                      class="btn btn-danger"
-                      :disabled="bloquearCancelar"
-                      @click="bloquearCedula()"
-                    >
-                      <i class="fas fa-times"></i>
-                    </button>
                   </div>
                 </div>
                 <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
@@ -330,7 +297,6 @@
                   v-show="!editmode"
                   type="submit"
                   class="btn btn-primary"
-                  :disabled="registroBloquear"
                 >
                   Registrar
                 </button>
@@ -437,11 +403,6 @@ export default {
       verIdentificacion: true,
       verIdentificacionedit: false,
       editmode: false,
-      registroBloquear: true, //Bloquear el boton para registrar
-      bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
-      bloquearInputId: false, //Bloquear el inuput de cedula
-      bloquearInputIdR: false, //Bloquear el input de residencial
-      bloquearInputIdP: false, //Bloquear el input de Pasaporte
       errors: {},
       personas: {},
       nuevoPersonas: {},
@@ -467,60 +428,6 @@ export default {
     },
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
-    validarCedulaNacional() {
-      if (/^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacion)) {
-        this.bloquearInputId = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputId = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarCedulaResidencial() {
-      if (/^[1-9]\d{9}$/.test(this.form.identificacion)) {
-        this.bloquearInputIdR = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdR = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarPasaporte() {
-      if (/^\d{11,12}$/.test(this.form.identificacion)) {
-        this.bloquearInputIdP = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdP = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    bloquearCedula() {
-      this.form.identificacion = "";
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
-    cambioSelect() {
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
 
     tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
@@ -584,7 +491,6 @@ export default {
       this.editmode = false;
       this.verIdentificacion = true;
       this.verIdentificacionedit = false;
-      this.bloquearCedula();
       this.form.reset();
       $("#addNew").modal("show");
       this.form.errors.clear();
@@ -647,11 +553,10 @@ export default {
               });
             });
         } else {
-          Toast.fire({
-                icon: "error",
-                title: "Formato incorrecto",
-              });
+          Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
         }
+      }else{
+Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
       }
     },
 

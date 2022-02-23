@@ -29,7 +29,6 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora1()"
-                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -43,7 +42,6 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora2()"
-                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -57,7 +55,6 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora3()"
-                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -71,7 +68,6 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora4()"
-                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -85,7 +81,6 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora6()"
-                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -99,7 +94,6 @@
                         type="button"
                         class="btn btn-danger btn-sm px-3"
                         @click="opcionHora7()"
-                        :disabled="bloquearCampos"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -112,8 +106,7 @@
                       <button
                         type="button"
                         class="btn btn-danger btn-sm px-3"
-                        @click="opcionHora7()"
-                        :disabled="bloquearCampos"
+                        @click="opcionHora8()"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -126,8 +119,7 @@
                       <button
                         type="button"
                         class="btn btn-danger btn-sm px-3"
-                        @click="opcionHora7()"
-                        :disabled="bloquearCampos"
+                        @click="opcionHora9()"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -140,8 +132,7 @@
                       <button
                         type="button"
                         class="btn btn-danger btn-sm px-3"
-                        @click="opcionHora7()"
-                        :disabled="bloquearCampos"
+                        @click="opcionHora10()"
                       >
                         <i class="fas fa-plus"></i>
                       </button>
@@ -217,6 +208,7 @@
                         type="button"
                         @click="consultarDatos()"
                         class="Posicionar btn btn-success"
+                        :disabled="bloquearConsulta"
                       >
                         Consulta
                       </button>
@@ -257,7 +249,6 @@
                         placeholder="0"
                         type="number"
                         required
-                        :disabled="bloquearCampos"
                         min="1"
                         max="30"
                         :class="{
@@ -279,7 +270,6 @@
                         type="date"
                         value="Fecha"
                         required
-                        :disabled="bloquearCampos"
                         :class="{
                           'is-invalid': formReserva.errors.has('fecha'),
                         }"
@@ -352,13 +342,12 @@
                     type="checkbox"
                     v-model="AceptarTerminos"
                     @click="aceptoTerminos()"
-                    :disabled="bloquearterminos"
                     name="field name"
                     value="Initial value"
                   />
                   <span
                     >Acepta los
-                    <a href="" target="_BLANK">terminos y condiciones</a></span
+                    <a href="#" target="_BLANK">terminos y condiciones</a></span
                   >
                 </div>
                 <!--fin del div de terminos y condicones-->
@@ -417,7 +406,7 @@
                 :class="{
                   'is-invalid': formPersona.errors.has('identificacion'),
                 }"
-                @change="tiposDeIndentificacon(), cambioSelect()"
+                @change="tiposDeIndentificacon()"
               >
                 <option disabled value="">Seleccione un tipo</option>
                 <option value="Cedula Nacional">Cédula Nacional</option>
@@ -429,15 +418,13 @@
             <!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
             <!---------------------------------------------------------->
             <div v-show="verIdentificacion" class="group">
-              <div v-show="CedulaNacional" class="group identitad">
+              <div v-show="CedulaNacional" class="group">
                 <i
                   class="fas fa-id-card iconoInput_modal"
                   style="margin-top: 6px; left: -2px"
                 ></i>
                 <input
-                  @blur="validarCedulaNacional()"
                   v-model="formPersona.identificacion"
-                  :disabled="bloquearInputId"
                   type="text"
                   name="identificacion"
                   class="input_modal"
@@ -448,31 +435,20 @@
                   id="nacional"
                   onchange="validarCedulaN()"
                 />
-                <button
-                  id="btnCancelar"
-                  type="button"
-                  class="btn btn-danger"
-                  :disabled="bloquearCancelar"
-                  @click="bloquearCedula()"
-                >
-                  <i class="fas fa-times"></i>
-                </button>
                 <has-error
                   :form="formPersona"
                   field="identificacion"
                 ></has-error>
               </div>
 
-              <div v-show="CedulaResidencial" class="group identitad">
+              <div v-show="CedulaResidencial" class="group">
                 <i
                   class="fas fa-id-card iconoInput_modal"
                   style="margin-top: 6px; left: -2px"
                 ></i>
                 <input
-                  @blur="validarCedulaResidencial()"
                   v-model="formPersona.identificacion"
                   id="residencial"
-                  :disabled="bloquearInputIdR"
                   type="text"
                   name="identificacion"
                   class="input_modal"
@@ -486,27 +462,16 @@
                   :form="formPersona"
                   field="identificacion"
                 ></has-error>
-                <button
-                  id="btnCancelar"
-                  type="button"
-                  class="btn btn-danger"
-                  :disabled="bloquearCancelar"
-                  @click="bloquearCedula()"
-                >
-                  <i class="fas fa-times"></i>
-                </button>
               </div>
 
-              <div v-show="Pasaporte" class="group identitad">
+              <div v-show="Pasaporte" class="group">
                 <i
                   class="fas fa-id-card iconoInput_modal"
                   style="margin-top: 6px; left: -2px"
                 ></i>
                 <input
                   id="pasaporte"
-                  @blur="validarPasaporte()"
                   v-model="formPersona.identificacion"
-                  :disabled="bloquearInputIdP"
                   type="text"
                   name="identificacion"
                   class="input_modal"
@@ -520,15 +485,6 @@
                   :form="formPersona"
                   field="identificacion"
                 ></has-error>
-                <button
-                  id="btnCancelar"
-                  type="button"
-                  class="btn btn-danger"
-                  :disabled="bloquearCancelar"
-                  @click="bloquearCedula()"
-                >
-                  <i class="fas fa-times"></i>
-                </button>
               </div>
               <div class="group">
                 <label>Nombre</label>
@@ -651,7 +607,6 @@
               class="btn btn-primary"
               @click="crearPersona()"
               id="botonPersonaRegistro"
-              :disabled="registroBloquear"
             >
               Registrar
             </button>
@@ -808,7 +763,7 @@
                 name="nombre"
                 class="input_modal"
                 :class="{ 'is-invalid': formGrupo.errors.has('nombre') }"
-                placeholder="Escribar el nombre del grupo..."
+                placeholder="Escribar el nombre del grupo G-####"
                 minlength="3"
                 maxlength="20"
                 required
@@ -861,8 +816,8 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>Rango de edades del grupo</label>
-              <label for="">Rango: {{ formGrupo.edades }}</label>
+              <label>Promedio de edades del grupo</label>
+              <label for="">Promedio: {{ formGrupo.edades }}</label>
               <input
                 v-model="formGrupo.edades"
                 type="range"
@@ -971,11 +926,10 @@
 <script>
 export default {
   components: {},
-  name: "ContactUs",
+  name: "Reservacion",
   data() {
     return {
       bloqueraHoras: true, //Bloqueamos las horas para que esten de acuerdo al horario
-      bloquearCampos: true, //Bloqueamos los cantidad, fecha y el horario
       bloquearConsulta: false, //Bloqueamos el campo de consulta y su boton
       bloquearReservar: true, //Bloqueamos el boton de reserva hasta que acepte los terminos
       bloquearterminos: true, //Bloqueamos el check de aceptar los terminos
@@ -988,11 +942,6 @@ export default {
       VermensajeSiExiste: false, //ver mensaje si existe
       VermensajeNoExiste: false, //ver mensaje si no existe
       verIdentificacion: true,
-      registroBloquear: true, //Bloquear el boton para registrar
-      bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
-      bloquearInputId: false, //Bloquear el inuput de cedula
-      bloquearInputIdR: false, //Bloquear el input de residencial
-      bloquearInputIdP: false, //Bloquear el input de Pasaporte
       personaIdArray: {}, //Array de persona
       organizacionIdArray: {}, //array de organizacion
       grupoIdArray: {},
@@ -1092,60 +1041,6 @@ export default {
 
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
-    validarCedulaNacional() {
-      if (/^[1-9]-\d{4}-\d{4}$/.test(this.formPersona.identificacion)) {
-        this.bloquearInputId = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputId = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarCedulaResidencial() {
-      if (/^[1-9]\d{9}$/.test(this.formPersona.identificacion)) {
-        this.bloquearInputIdR = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdR = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarPasaporte() {
-      if (/^\d{11,12}$/.test(this.formPersona.identificacion)) {
-        this.bloquearInputIdP = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdP = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    bloquearCedula() {
-      this.formPersona.identificacion = "";
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
-    cambioSelect() {
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
 
     tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
@@ -1171,7 +1066,6 @@ export default {
       $("#modalPersona").modal("show");
       this.formPersona.reset();
       this.formPersona.errors.clear();
-      this.bloquearCedula();
     },
     modalOrganizacion() {
       $("#modalOrganizacion").modal("show");
@@ -1186,11 +1080,11 @@ export default {
     cancelarConsulta() {
       this.formReserva.reset();
       this.formReserva.errors.clear();
+      this.bloquearReservar = true;
       this.mensajeExistencia = "";
       this.mensajeNoExistencia = "";
-      this.bloquearCampos = true;
+      this.buscador = "";
       this.bloquearConsulta = false;
-      this.bloquearterminos = true;
       this.AceptarTerminos = false;
       this.VermensajeNoExiste = true;
       this.VermensajeSiExiste = true;
@@ -1228,51 +1122,69 @@ export default {
               Swal.fire("Error!", "Complete los campos!", "error");
             });
         } else {
-          Swal.fire("Error!", "Formato de identificacion incorrecto!", "error");
+          Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
         }
+      } else {
+        Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
       }
     },
 
     crearOrganizacion() {
-      if (/^[1-9]-\d{3}-\d{6}$/.test(this.formOrganizacion.identificacion)) {
-        this.formOrganizacion
-          .post("/api/reservarCliente/organizacion", {
-            params: { identificacion: this.formOrganizacion.identificacion },
-          })
-          .then((response) => {
-            if (response.data.success == false) {
-              Swal.fire("Error!", "Cedula ya existe!", "error");
-            } else {
-              Swal.fire("Registrado!", response.data.message, "success");
-              $("#modalOrganizacion").modal("hide");
-            }
-          })
-          .catch((error) => {
-            Swal.fire("Error!", "Complete los campos!", "error");
-          });
+      if (this.formOrganizacion.identificacion != "") {
+        if (/^[1-9]-\d{3}-\d{6}$/.test(this.formOrganizacion.identificacion)) {
+          this.formOrganizacion
+            .post("/api/reservarCliente/organizacion", {
+              params: { identificacion: this.formOrganizacion.identificacion },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Swal.fire("Error!", "Cedula ya existe!", "error");
+              } else {
+                Swal.fire("Registrado!", response.data.message, "success");
+                $("#modalOrganizacion").modal("hide");
+              }
+            })
+            .catch((error) => {
+              Swal.fire("Error!", "Complete los campos!", "error");
+            });
+        } else {
+          Swal.fire(
+            "Error!",
+            "Formato de cédula juridica incorrecto!",
+            "error"
+          );
+        }
       } else {
-        Swal.fire("Error!", "Formato de cedula juridca incorrecto!", "error");
+        Swal.fire("Error!", "Campo de cédula juridica esta vacio!", "error");
       }
     },
     crearGrupo() {
-      if (/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)) {
-        this.formGrupo
-          .post("/api/reservarCliente/grupo", {
-            params: { nombre: this.formGrupo.nombre },
-          })
-          .then((response) => {
-            if (response.data.success == false) {
-              Swal.fire("Error!", "El nombre ya existe!", "error");
-            } else {
-              Swal.fire("Registrado!", response.data.message, "success");
-              $("#modalGrupo").modal("hide");
-            }
-          })
-          .catch((error) => {
-            Swal.fire("Error!", "Complete los campos!", "error");
-          });
+      if (this.formGrupo.nombre != "") {
+        if (/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)) {
+          this.formGrupo
+            .post("/api/reservarCliente/grupo", {
+              params: { nombre: this.formGrupo.nombre },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Swal.fire("Error!", "El nombre ya existe!", "error");
+              } else {
+                Swal.fire("Registrado!", response.data.message, "success");
+                $("#modalGrupo").modal("hide");
+              }
+            })
+            .catch((error) => {
+              Swal.fire("Error!", "Complete los campos!", "error");
+            });
+        } else {
+          Swal.fire(
+            "Error!",
+            "Formato de nombre del grupo incorrecto!",
+            "error"
+          );
+        }
       } else {
-        Swal.fire("Error!", "Formato de nombre incorrecto!", "error");
+        Swal.fire("Error!", "Campo de nombre del grupo vacio!", "error");
       }
     },
 
@@ -1292,7 +1204,6 @@ export default {
           this.VermensajeSiExiste = true;
           this.mensajeDeExistencia = "Si esta registrado!";
           this.bloquearConsulta = true;
-          this.bloquearCampos = false;
           this.bloquearterminos = false;
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
           this.formReserva
@@ -1304,7 +1215,6 @@ export default {
           this.VermensajeSiExiste = true;
           this.mensajeDeExistencia = "Si esta registrado!";
           this.bloquearConsulta = true;
-          this.bloquearCampos = false;
           this.bloquearterminos = false;
         } else if (/^[G]{1}-\d{1,4}$/.test(this.buscador)) {
           this.formReserva
@@ -1316,126 +1226,78 @@ export default {
           this.VermensajeSiExiste = true;
           this.mensajeDeExistencia = "Si esta registrado!";
           this.bloquearConsulta = true;
-          this.bloquearCampos = false;
           this.bloquearterminos = false;
         } else {
           this.VermensajeNoExiste = true;
           this.VermensajeSiExiste = false;
-          this.mensajeDeExistencia = "No esta registrado!";
+          this.mensajeDeExistencia = "No esta registrado o formato incorrecto!";
           this.bloquearConsulta = false;
-          this.bloquearCampos = true;
           this.bloquearterminos = true;
         }
       } else {
         this.VermensajeNoExiste = true;
         this.VermensajeSiExiste = false;
         this.mensajeDeExistencia =
-          "Campo vacío, por favor digite una identificación";
+          "Campo vacío, por favor digite una identificación o nombre de grupo";
       }
     },
 
+    reservar() {
+      this.formReserva
+        .post("/api/reservarCliente")
+        .then((response) => {
+          Swal.fire("Reservación Realizada!", response.data.message, "success");
+          this.mensajeExistencia = "";
+          this.bloquearConsulta = false;
+          this.bloquearterminos = true;
+          this.AceptarTerminos = false;
+          this.llenarFormularioCorreo();
+          this.enviaEmail();
+          this.formReserva.reset();
+          this.formReserva.errors.clear();
+          this.$Progress.finish();
+        })
+        .catch(() => {
+          Swal.fire(
+            "Error!",
+            "No se realizo la reservación, revise los campos",
+            "error"
+          );
+        });
+    },
+
     crearReserva() {
+      if(this.buscador.length != ""){
       if (
         /^[1-9]-\d{4}-\d{4}$/.test(this.formReserva.identificacionPersona) ||
         /^[1-9]\d{9}$/.test(this.formReserva.identificacionPersona) ||
         (/^\d{11,12}$/.test(this.formReserva.identificacionPersona) &&
           this.formReserva.idPersona != 0)
       ) {
-        this.formReserva
-          .post("/api/reservarCliente")
-          .then((response) => {
-            Swal.fire(
-              "Reservación Realizada!",
-              response.data.message,
-              "success"
-            );
-
-            this.mensajeExistencia = "";
-            this.bloquearCampos = true;
-            this.bloquearConsulta = false;
-            this.bloquearterminos = true;
-            this.AceptarTerminos = false;
-            this.llenarFormularioCorreo();
-            this.enviaEmail();
-            this.formReserva.reset();
-            this.formReserva.errors.clear();
-            this.$Progress.finish();
-          })
-          .catch(() => {
-            Swal.fire(
-              "Error!",
-              "No se realizo la reservación, revise los campos",
-              "error"
-            );
-          });
+        this.reservar();
       } else if (
         /^[1-9]-\d{3}-\d{6}$/.test(
           this.formReserva.identificacionOrganizacion
         ) &&
         this.formReserva.idOrganizacion != 0
       ) {
-        this.formReserva
-          .post("/api/reservarCliente")
-          .then((response) => {
-            Swal.fire(
-              "Reservación Realizada!",
-              response.data.message,
-              "success"
-            );
-
-            this.mensajeExistencia = "";
-            this.bloquearCampos = true;
-            this.bloquearConsulta = false;
-            this.bloquearterminos = true;
-            this.AceptarTerminos = false;
-            this.llenarFormularioCorreo();
-            this.enviaEmail();
-            this.formReserva.reset();
-            this.formReserva.errors.clear();
-            this.$Progress.finish();
-          })
-          .catch(() => {
-            Swal.fire(
-              "Error!",
-              "No se realizo la reservación, revise los campos",
-              "error"
-            );
-          });
+        this.reservar();
       } else if (
         /^[G]{1}-\d{1,4}$/.test(this.formReserva.nombreGrupo) &&
         this.formReserva.idGrupo != 0
       ) {
-        this.formReserva
-          .post("/api/reservarCliente")
-          .then((response) => {
-            Swal.fire(
-              "Reservación Realizada!",
-              response.data.message,
-              "success"
-            );
-
-            this.mensajeExistencia = "";
-            this.bloquearCampos = true;
-            this.bloquearConsulta = false;
-            this.bloquearterminos = true;
-            this.AceptarTerminos = false;
-            this.llenarFormularioCorreo();
-            this.enviaEmail();
-            this.formReserva.reset();
-            this.formReserva.errors.clear();
-            this.$Progress.finish();
-          })
-          .catch(() => {
-            Swal.fire(
-              "Error!",
-              "No se realizo la reservación, revise los campos",
-              "error"
-            );
-          });
+        this.reservar();
       } else {
         Swal.fire(
           "Error!",
-          "No se realizo la reservación, revise los campos",
+          "Identificacion o nombre de grupo formato incorrecto!",
+          "error"
+        );
+      }
+      }else{
+         Swal.fire(
+          "Error!",
+          "Primero verifique que este registrado!",
           "error"
         );
       }
@@ -1468,6 +1330,18 @@ export default {
     opcionHora7() {
       this.formReserva.horaInicio = "14:00";
       this.formReserva.horaFin = "15:00";
+    },
+    opcionHora8() {
+      this.formReserva.horaInicio = "15:00";
+      this.formReserva.horaFin = "16:00";
+    },
+    opcionHora9() {
+      this.formReserva.horaInicio = "16:00";
+      this.formReserva.horaFin = "17:00";
+    },
+    opcionHora10() {
+      this.formReserva.horaInicio = "17:00";
+      this.formReserva.horaFin = "18:00";
     },
   },
   created() {
@@ -1518,47 +1392,6 @@ export default {
 <style scoped>
 .contenedor {
   margin: 40px auto;
-}
-
-#nacional,
-#residencial,
-#pasaporte {
-  width: 90%;
-}
-#btnCancelar {
-  width: 35px;
-  height: 35px;
-  padding: 5px;
-}
-
-#botonCancelar {
-  visibility: hidden;
-  width: 35px;
-  height: 32px;
-  padding: 2px;
-  position: absolute;
-  left: 90%;
-  top: 40%;
-}
-
-#botonCancelar_residencial {
-  visibility: hidden;
-  width: 35px;
-  height: 32px;
-  padding: 2px;
-  position: absolute;
-  left: 90%;
-  top: 40%;
-}
-
-#botonCancelar_pasaporte {
-  visibility: hidden;
-  width: 35px;
-  height: 32px;
-  padding: 2px;
-  position: absolute;
-  left: 90%;
-  top: 40%;
 }
 
 .intro {
@@ -1764,11 +1597,6 @@ h3 {
 
 /*MODAL DISEÑO*/
 
-.identitad {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
 .group select {
   outline: none;
   border: 0;
@@ -1861,11 +1689,6 @@ h3 {
     margin-left: 0px;
     width: 40%;
   }
-  .identitad {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
   .error_modal {
     margin-top: 95px;
     margin-left: 0;
@@ -1890,27 +1713,28 @@ h3 {
   }
 }
 @media only screen and (max-device-width: 280px) {
-  td{
+  td {
     font-size: 15px;
   }
-  .px-3{
+  .px-3 {
     width: 40px;
     height: 34px;
   }
-  .px-3 i{
+  .px-3 i {
     font-size: 10px;
     padding: 0;
   }
-  tr{
+  tr {
     font-size: 12px;
   }
-  .horas{
+  .horas {
     width: 100%;
   }
   .Posicionar {
     width: 55%;
   }
-  .botones_finales .btn-success, .botones_finales .btn-danger{
+  .botones_finales .btn-success,
+  .botones_finales .btn-danger {
     margin: 5px 0;
   }
 }

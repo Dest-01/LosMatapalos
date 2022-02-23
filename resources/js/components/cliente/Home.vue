@@ -159,7 +159,7 @@ export default {
   },
   mounted() {
     const plugin = document.createElement("script");
-    plugin.setAttribute("src", "/js/validacionHome.js");
+    plugin.setAttribute("src", "/js/FuncionesHome.js");
     plugin.async = true;
     document.head.appendChild(plugin);
   },

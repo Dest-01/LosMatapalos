@@ -449,6 +449,7 @@
                   v-model="tipoIndenteficacion"
                   :class="{ 'is-invalid': form.errors.has('identificacion') }"
                   @change="tiposDeIndentificacon(), cambioSelect()"
+                  required
                 >
                   <option disabled value="">Seleccione un tipo</option>
                   <option value="Cedula Nacional">Cédula Nacional</option>
@@ -462,9 +463,7 @@
               <div class="form-group">
                 <div v-show="CedulaNacional" class="form-group identitad">
                   <input
-                    @blur="validarCedulaNacional()"
                     v-model="formPer.identificacion"
-                    :disabled="bloquearInputId"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -475,24 +474,14 @@
                     id="nacional"
                     onchange="validarCedulaN()"
                   />
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
+
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
 
-                <div v-show="CedulaResidencial" class="form-group identitad">
+                <div v-show="CedulaResidencial" class="form-group">
                   <input
-                    @blur="validarCedulaResidencial()"
                     v-model="formPer.identificacion"
                     id="residencial"
-                    :disabled="bloquearInputIdR"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -503,23 +492,12 @@
                     onchange="validateResidencial()"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
                 </div>
 
                 <div v-show="Pasaporte" class="form-group identitad">
                   <input
                     id="pasaporte"
-                    @blur="validarPasaporte()"
                     v-model="formPer.identificacion"
-                    :disabled="bloquearInputIdP"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -530,15 +508,6 @@
                     onchange="validatePasaporte()"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
                 </div>
               </div>
               <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
@@ -550,7 +519,10 @@
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                  placeholder="Escriba el nombre de la personas"
+                  placeholder="Escriba el nombre del donante"
+                  minlength="3"
+                  maxlength="20"
+                  required
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -563,8 +535,9 @@
                   name="apellido1"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                  placeholder="Escriba el primer apellido de la personas"
-                  required
+                  placeholder="Primer apellido del donante"
+                  minlength="3"
+                  maxlength="20"
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -577,7 +550,10 @@
                   name="apellido2"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                  placeholder="Escriba el segundo apellido de la personas"
+                  placeholder="Segundo apellido del donante"
+                  minlength="3"
+                  maxlength="20"
+                  required
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
               </div>
@@ -586,13 +562,12 @@
                 <label>Teléfono</label>
                 <input
                   v-model="formPer.telefono"
-                  type="tel"
+                  type="number"
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('telefono') }"
                   id="phone"
-                  size="8"
-                  min="10000000"
+                  min="0"
                   placeholder="#### ####"
                   required
                 />
@@ -609,6 +584,7 @@
                   placeholder="ejemplo@gmail.com"
                   minlength="3"
                   maxlength="100"
+                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   required
                 />
                 <has-error :form="formPer" field="correo"></has-error>
@@ -625,7 +601,6 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                :disabled="registroBloquear"
                 @click="crearPersona()"
               >
                 Registrar
@@ -902,11 +877,6 @@ export default {
       CedulaResidencial: false,
       CedulaNacional: false,
       Pasaporte: false,
-      registroBloquear: true, //Bloquear el boton para registrar
-      bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
-      bloquearInputId: false, //Bloquear el inuput de cedula
-      bloquearInputIdR: false, //Bloquear el input de residencial
-      bloquearInputIdP: false, //Bloquear el input de Pasaporte
       verDetalles: true,
       editmode: false,
       form: new Form({
@@ -968,62 +938,6 @@ export default {
     },
 
     /*////////////////////////////////////////////////////////////*/
-    /*-------------------------Validaciones----------------------*/
-    validarCedulaNacional() {
-      if (/^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputId = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputId = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarCedulaResidencial() {
-      if (/^[1-9]\d{9}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputIdR = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdR = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarPasaporte() {
-      if (/^\d{11,12}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputIdP = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdP = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    bloquearCedula() {
-      this.form.identificacion = "";
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
-    cambioSelect() {
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
-
     tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
         this.CedulaNacional = true;
@@ -1108,8 +1022,7 @@ export default {
               this.VermensajeSiExiste = true;
               this.VermensajeNoExiste = false;
               this.mensajeDeExistencia = "Si existe!";
-              this.form.nombreGrupo =
-                this.grupoIdArray[i].nombre;
+              this.form.nombreGrupo = this.grupoIdArray[i].nombre;
               this.form.idGrupo = this.grupoIdArray[i].id;
               this.bloquearCampoConsulta = true;
               this.bloquearCamposReservacion = false;
@@ -1168,99 +1081,113 @@ export default {
     },
 
     crearPersona() {
-      if (
-        /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
-        /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
-        /^\d{11,12}$/.test(this.formPer.identificacion)
-      ) {
-        this.formPer
-          .post("/api/reserva/guardarPersona", {
-            params: { identificacion: this.formPer.identificacion },
-          })
-          .then((response) => {
-            if (response.data.success == false) {
+      if (this.formPer.identificacion != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
+          /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
+          /^\d{11,12}$/.test(this.formPer.identificacion)
+        ) {
+          this.formPer
+            .post("/api/reserva/guardarPersona", {
+              params: { identificacion: this.formPer.identificacion },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Toast.fire({
+                  icon: "error",
+                  title: "Cedula ya existe!",
+                });
+              } else {
+                $("#modalPersona").modal("hide");
+
+                Toast.fire({
+                  icon: "success",
+                  title: response.data.message,
+                });
+                this.$Progress.finish();
+              }
+            })
+            .catch(() => {
               Toast.fire({
                 icon: "error",
-                title: "Cedula ya existe!",
+                title: "Campos vacios!",
               });
-            } else {
-              $("#modalPersona").modal("hide");
-
-              Toast.fire({
-                icon: "success",
-                title: response.data.message,
-              });
-              this.$Progress.finish();
-            }
-          })
-          .catch(() => {
-            Toast.fire({
-              icon: "error",
-              title: "Campos vacios!",
             });
-          });
+        } else {
+          Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
+        }
       } else {
-        Toast.fire({
-          icon: "error",
-          title: "Formato Icorrecto!",
-        });
+        Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
       }
     },
     crearOrganizacion() {
-      if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
-        this.formOrg
-          .post("/api/reserva/guardarOrganizacion", {
-            params: { identificacion: this.formOrg.identificacion },
-          })
-          .then((response) => {
-            if (response.data.success == false) {
+      if (this.formOrg.identificacion != "") {
+        if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
+          this.formOrg
+            .post("/api/reserva/guardarOrganizacion", {
+              params: { identificacion: this.formOrg.identificacion },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Toast.fire({
+                  icon: "error",
+                  title: "Cedula ya existe!",
+                });
+              } else {
+                $("#modalOrganizacion").modal("hide");
+
+                Toast.fire({
+                  icon: "success",
+                  title: response.data.message,
+                });
+                this.$Progress.finish();
+              }
+            })
+            .catch(() => {
               Toast.fire({
                 icon: "error",
-                title: "Cedula ya existe!",
+                title: "Campos vacios!",
               });
-            } else {
-              $("#modalOrganizacion").modal("hide");
-
-              Toast.fire({
-                icon: "success",
-                title: response.data.message,
-              });
-              this.$Progress.finish();
-            }
-          })
-          .catch(() => {
-            Toast.fire({
-              icon: "error",
-              title: "Campos vacios!",
             });
-          });
+        } else {
+          Swal.fire(
+            "Error!",
+            "Formato de cédula juridica incorrecto!",
+            "error"
+          );
+        }
       } else {
-        Toast.fire({
-          icon: "error",
-          title: "Formato Incorrecto!",
-        });
+        Swal.fire("Error!", "Campo de cédula juridica esta vacio!", "error");
       }
     },
 
-        crearGrupo() {
-      if(/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)){
-      this.formGrupo
-        .post("/api/reserva/guardarGrupo", {
-          params: { nombre: this.formGrupo.nombre },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
-            Swal.fire("Error!", "El nombre ya existe!", "error");
-          } else {
-            Swal.fire("Registrado!", response.data.message, "success");
-            $("#modalGrupo").modal("hide");
-          }
-        })
-        .catch((error) => {
-          Swal.fire("Error!", "Complete los campos!", "error");
-        });
-      }else{
-        Swal.fire("Error!", "Formato de nombre incorrecto!", "error");
+    crearGrupo() {
+       if (this.formGrupo.nombre != "") {
+      if (/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)) {
+        this.formGrupo
+          .post("/api/reserva/guardarGrupo", {
+            params: { nombre: this.formGrupo.nombre },
+          })
+          .then((response) => {
+            if (response.data.success == false) {
+              Swal.fire("Error!", "El nombre ya existe!", "error");
+            } else {
+              Swal.fire("Registrado!", response.data.message, "success");
+              $("#modalGrupo").modal("hide");
+            }
+          })
+          .catch((error) => {
+            Swal.fire("Error!", "Complete los campos!", "error");
+          });
+      } else {
+          Swal.fire(
+            "Error!",
+            "Formato de nombre del grupo incorrecto!",
+            "error"
+          );
+        }
+      } else {
+        Swal.fire("Error!", "Campo de nombre del grupo vacio!", "error");
       }
     },
 
@@ -1274,7 +1201,7 @@ export default {
           .then(({ data }) => (this.nuevoReservaciones = data.data));
       }
     },
-    crearReserva() {
+    reservar() {
       this.$Progress.start();
       this.form
         .post("/api/reserva")
@@ -1295,6 +1222,42 @@ export default {
             title: "Ocurrio un error!",
           });
         });
+    },
+    crearReserva(){
+      if(this.buscador.length != ""){
+      if (
+        /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
+        /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||
+        (/^\d{11,12}$/.test(this.form.identificacionPersona) &&
+          this.form.idPersona != 0)
+      ) {
+        this.reservar();
+      } else if (
+        /^[1-9]-\d{3}-\d{6}$/.test(
+          this.form.identificacionOrganizacion
+        ) &&
+        this.form.idOrganizacion != 0
+      ) {
+        this.reservar();
+      } else if (
+        /^[G]{1}-\d{1,4}$/.test(this.form.nombreGrupo) &&
+        this.form.idGrupo != 0
+      ) {
+        this.reservar();
+      } else {
+        Swal.fire(
+          "Error!",
+          "Identificacion o nombre de grupo formato incorrecto!",
+          "error"
+        );
+      }
+      }else{
+         Swal.fire(
+          "Error!",
+          "Primero verifique que este registrado!",
+          "error"
+        );
+      }
     },
     actualizarReserva() {
       this.$Progress.start();

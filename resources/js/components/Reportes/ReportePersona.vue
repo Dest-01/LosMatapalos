@@ -1,13 +1,14 @@
 <template>
   <div>
+    <div>
     <pagination
       :data="personas"
       @pagination-change-page="getResults"
     ></pagination>
+    </div>
     <div
       id="page"
       class="card-body table-responsive p-0"
-      style="width: 1000px; color: black; background: white"
     >
       <div class="Encabezado">
         <h1>Sendero los Matapalos</h1>
@@ -98,10 +99,14 @@ export default {
 </script>
 
 <style scoped>
+#page{
+  width: 90%; 
+  color: black; 
+  background: white;
+}
 .card-body {
   font-size: 1.2rem;
-  margin: 5px 5px 5px 45px;
-  margin-left: 18%;
+  margin: 15px 5px 5px 45px;
 }
 
 .btn {
@@ -159,5 +164,12 @@ h3 {
 td {
   padding: 5px;
   padding-left: 5px;
+}
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    justify-content: space-evenly;
 }
 </style>

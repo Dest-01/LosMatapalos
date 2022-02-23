@@ -498,9 +498,7 @@
               <div class="form-group">
                 <div v-show="CedulaNacional" class="form-group identitad">
                   <input
-                    @blur="validarCedulaNacional()"
                     v-model="formPer.identificacion"
-                    :disabled="bloquearInputId"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -511,24 +509,14 @@
                     id="nacional"
                     onchange="validarCedulaN()"
                   />
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
+
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
 
-                <div v-show="CedulaResidencial" class="form-group identitad">
+                <div v-show="CedulaResidencial" class="form-group">
                   <input
-                    @blur="validarCedulaResidencial()"
                     v-model="formPer.identificacion"
                     id="residencial"
-                    :disabled="bloquearInputIdR"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -539,23 +527,12 @@
                     onchange="validateResidencial()"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
                 </div>
 
                 <div v-show="Pasaporte" class="form-group identitad">
                   <input
                     id="pasaporte"
-                    @blur="validarPasaporte()"
                     v-model="formPer.identificacion"
-                    :disabled="bloquearInputIdP"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -566,15 +543,6 @@
                     onchange="validatePasaporte()"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
                 </div>
               </div>
               <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
@@ -621,7 +589,6 @@
                   minlength="3"
                   maxlength="20"
                   required
-                  
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
               </div>
@@ -669,7 +636,6 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                :disabled="registroBloquear"
                 @click="crearPersona()"
               >
                 Registrar
@@ -818,11 +784,6 @@ export default {
       CedulaResidencial: false,
       CedulaNacional: false,
       Pasaporte: false,
-      registroBloquear: true, //Bloquear el boton para registrar
-      bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
-      bloquearInputId: false, //Bloquear el inuput de cedula
-      bloquearInputIdR: false, //Bloquear el input de residencial
-      bloquearInputIdP: false, //Bloquear el input de Pasaporte
       verDetalles: true,
       form: new Form({
         id: "",
@@ -886,62 +847,6 @@ export default {
       } else if (this.filtrarBusqueda != "") {
         this.donativos.data = this.donativosFiltradas;
       }
-    },
-    /*////////////////////////////////////////////////////////////*/
-    /*-------------------------Validaciones----------------------*/
-    validarCedulaNacional() {
-      if (/^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputId = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputId = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarCedulaResidencial() {
-      if (/^[1-9]\d{9}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputIdR = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdR = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarPasaporte() {
-      if (/^\d{11,12}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputIdP = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdP = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    bloquearCedula() {
-      this.form.identificacion = "";
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
-    cambioSelect() {
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
     },
 
     tiposDeIndentificacon() {
@@ -1091,7 +996,7 @@ export default {
           .then(({ data }) => (this.nuevoDonativos = data.data));
       }
     },
-    crearDonativo() {
+    donativo() {
       this.$Progress.start();
       this.form
         .post("/api/donativo")
@@ -1113,79 +1018,107 @@ export default {
           });
         });
     },
+
+    crearDonativo() {
+      if (this.buscador.length != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
+          /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||
+          (/^\d{11,12}$/.test(this.form.identificacionPersona) &&
+            this.form.idPersona != 0)
+        ) {
+          this.donativo();
+        } else if (
+          /^[1-9]-\d{3}-\d{6}$/.test(this.form.identificacionOrganizacion) &&
+          this.form.idOrganizacion != 0
+        ) {
+          this.donativo();
+        } else {
+          Swal.fire("Error!", "Identificacion formato incorrecto!", "error");
+        }
+      } else {
+        Swal.fire("Error!", "Primero verifique que existe!", "error");
+      }
+    },
     crearPersona() {
-      if (
+      if (this.formPer.identificacion != "") {
+        if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
           /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
           /^\d{11,12}$/.test(this.formPer.identificacion)
         ) {
-      this.formPer
-        .post("/api/donativo/guardarPersona", {
-          params: { identificacion: this.formPer.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
-            Toast.fire({
-              icon: "error",
-              title: "Cedula ya existe!",
-            });
-          } else {
-            $("#modalPersona").modal("hide");
+          this.formPer
+            .post("/api/donativo/guardarPersona", {
+              params: { identificacion: this.formPer.identificacion },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Toast.fire({
+                  icon: "error",
+                  title: "Cedula ya existe!",
+                });
+              } else {
+                $("#modalPersona").modal("hide");
 
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
+                Toast.fire({
+                  icon: "success",
+                  title: response.data.message,
+                });
+                this.$Progress.finish();
+              }
+            })
+            .catch(() => {
+              Toast.fire({
+                icon: "error",
+                title: "Campos Vacios!",
+              });
             });
-            this.$Progress.finish();
-          }
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Campos Vacios!",
-          });
-        });
-        }else{
-          Toast.fire({
-            icon: "error",
-            title: "Formato Incorrecto!",
-          });
+        } else {
+          Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
         }
+      } else {
+        Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
+      }
     },
     crearOrganizacion() {
-      if(/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)){
-      this.formOrg
-        .post("/api/donativo/guardarOrganizacion", {
-          params: { identificacion: this.formOrg.identificacion },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
-            Toast.fire({
-              icon: "error",
-              title: "Cedula ya existe!",
-            });
-          } else {
-            $("#modalOrganizacion").modal("hide");
+      if (this.formOrg.identificacion != "") {
+        if (/^[1-9]-\d{3}-\d{6}$/.test(this.formOrg.identificacion)) {
+          this.formOrg
+            .post("/api/donativo/guardarOrganizacion", {
+              params: { identificacion: this.formOrg.identificacion },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Toast.fire({
+                  icon: "error",
+                  title: "Cedula ya existe!",
+                });
+              } else {
+                $("#modalOrganizacion").modal("hide");
 
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
+                Toast.fire({
+                  icon: "success",
+                  title: response.data.message,
+                });
+                this.$Progress.finish();
+              }
+            })
+            .catch(() => {
+              Toast.fire({
+                icon: "error",
+                title: "Campos vacios!",
+              });
             });
-            this.$Progress.finish();
-          }
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Campos vacios!",
-          });
-        });
-    }else{
-      Toast.fire({
-            icon: "error",
-            title: "Formato Incorrecto!",
-          });
-    }
+        } else {
+          Swal.fire(
+            "Error!",
+            "Formato de cédula juridica incorrecto!",
+            "error"
+          );
+        }
+      } else {
+        Swal.fire("Error!", "Campo de cédula juridica esta vacio!", "error");
+      }
     },
     actualizarDonativo() {
       this.$Progress.start();

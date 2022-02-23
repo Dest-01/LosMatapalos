@@ -1,9 +1,9 @@
 <template>
   <div class="contenedor-contacto">
     <div class="titulo">
-    <h1 class="logo" style="margin-bottom: 20px">
-      Contacta<span style="color: #38ab81">nos</span>
-    </h1>
+      <h1 class="logo" style="margin-bottom: 20px">
+        Contacta<span style="color: #38ab81">nos</span>
+      </h1>
     </div>
     <div class="contenedor_triple">
       <div class="figura">
@@ -14,25 +14,25 @@
             <p>
               <label>Nombre completo</label>
               <input
-                onchange="validar()"
                 type="text"
-                id="nombre"
+                v-model="form.nombreCompleto"
                 name="nombre"
+                id="nombre"
               />
             </p>
             <p>
               <label>Email</label>
               <input
-                onchange="validar()"
-                type="email"
                 id="email"
+                type="email"
+                v-model="form.correo"
                 name="email"
               />
             </p>
             <p>
               <label>Número de celular</label>
               <input
-                onchange="validar()"
+                v-model="form.numero"
                 type="tel"
                 id="celular"
                 name="celular"
@@ -41,7 +41,7 @@
             <p>
               <label>Asunto</label>
               <input
-                onchange="validar()"
+                v-model="form.asunto"
                 type="text"
                 id="asunto"
                 name="asunto"
@@ -51,18 +51,17 @@
               <p class="block">
                 <label>Mensaje</label>
                 <textarea
-                  onchange="validar()"
                   name="mensaje"
-                  id="mensaje"
+                  v-model="form.mensaje"
                   rows="3"
+                  id="mensaje"
                 ></textarea>
               </p>
               <p class="block btn_enviar" style="text-align: center">
                 <button
-                  id="enviarMensaje"
                   class="btn btn-danger btn-sm px-3"
-                  type="submit"
-                  value="Send"
+                  type="button"
+                  @click="enviaEmail()"
                 >
                   Enviar
                 </button>
@@ -72,43 +71,95 @@
         </div>
         <div class="contact-info">
           <div class="informacion">
-          <h4>Mas información</h4>
-          <ul>
-            <li><i class="fas fa-phone"></i> (506) 0000-0000</li>
-            <li><i class="fas fa-envelope-open-text"></i> sendero.una.ac.cr</li>
-          </ul>
-          <i class="fas fa-map-marker-alt"></i>
-          <p>
-            Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus
-            Liberia, Sede Regional Chorotega, Universidad Nacional
-          </p>
+            <h4>Mas información</h4>
+            <ul>
+              <li><i class="fas fa-phone"></i> (506) 0000-0000</li>
+              <li>
+                <i class="fas fa-envelope-open-text"></i> sendero.una.ac.cr
+              </li>
+            </ul>
+            <i class="fas fa-map-marker-alt"></i>
+            <p>
+              Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus
+              Liberia, Sede Regional Chorotega, Universidad Nacional
+            </p>
           </div>
         </div>
       </div>
 
       <div class="contenedor_mapa">
         <div class="map-cont">
-          <div class="map-box">
-            <!-- <img src="img/ilustracion4.svg" alt="">-->
-            <iframe
-              src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=es&amp;q=JG8X+XCW,%20El%20Capul%C3%ADn,%20Provincia%20de%20Guanacaste+(Universidad%20Nacional%20Campus%20Liberia%20-%20Costa%20Rica)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-              width="100%"
-              height="450"
-              allowfullscreen=""
-              loading="lazy"
-              frameborder="0"
-              scrolling="no"
-              marginheight="0"
-              marginwidth="0"
-            ></iframe>
+          <div class="map-box" id="map">
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      nombreCompleto: "",
+      correo: "",
+      numero: "",
+      asunto: "",
+      mensaje: "",
+      form: new Form({
+        nombreCompleto: "",
+        correo: "",
+        numero: "",
+        asunto: "",
+        mensaje: "",
+      }),
+    };
+  },
+  methods: {
+    limpiar() {
+      this.form.reset();
+    },
+    enviaEmail() {
+      if (
+        /^([A-Z]{1}[a-zñáéíóú]+[\s]*)+$/.test(this.form.nombreCompleto) &&
+        /[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/.test(this.form.correo) &&
+        /^[2-9]\d{3}\d{4}$/.test(this.form.numero) &&
+        /^.{3,}$/.test(this.form.asunto) &&
+        /^.{5,}$/.test(this.form.mensaje)
+      ) {
+        const templateParams = {
+          nombreCompleto: this.form.nombreCompleto,
+          correo: this.form.correo,
+          numero: this.form.numero,
+          asunto: this.form.asunto,
+          mensaje: this.form.mensaje,
+        };
+        console.log(templateParams.correo);
+        emailjs
+          .send(
+            "service_xf6d5cg",
+            "template_oqin6bo",
+            templateParams,
+            "user_GMf53dmaF0FI8RLY0cj3V"
+          )
+          Swal.fire("Listo!", "Mensaje enviado!", "success");
+          this.limpiar();
+      } else {
+        Swal.fire("Error!", "Complete los campos!", "error");
+      }
+    },
+  },
+  mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyAf2BTaIHXz95AJVwvHuoFd2CkF8gTcuvM");
+    plugin.async = true;
+    plugin.defer = true;
+    document.head.appendChild(plugin);
+  },
+};
+</script>
 <style scoped>
-.titulo{
+.titulo {
   text-align: center;
 }
 /*Contenedor principal*/
@@ -134,33 +185,25 @@
   width: 55%;
   position: relative;
 }
-.contact-form{
+.contact-form {
   background: #000000ba;
-    color: #fff;
-    padding: 15px;
-    width:60%;
+  color: #fff;
+  padding: 15px;
+  width: 60%;
 }
-.contact-info{
-    background: #000000e6;
-    color: #fff;
-    width: 50%;
-    -webkit-clip-path: polygon(0 0, 100% 0%, 88% 100%, 0% 100%);
-    clip-path: polygon(0 0, 100% 0%, 88% 100%, 0% 100%);
-    position: absolute;
-    height: 100%;
-    left: 60%;
-
+.contact-info {
+  background: #000000e6;
+  color: #fff;
+  width: 40%;
+  height: 100%;
 }
-.contenedor_mapa{
+.contenedor_mapa {
   width: 45%;
-  clip-path: polygon(12% 0, 100% 0%, 100% 100%, 0% 100%);
-
 }
-.informacion{
+.informacion {
   width: 80%;
-      padding: 15px;
+  padding: 15px;
 }
-
 
 .map {
   background: #fff;
@@ -182,7 +225,7 @@
 #email:focus,
 #asunto:focus,
 #mensaje:focus {
-  border-bottom: 1px solid blue;
+  border-bottom: 2px solid blue;
 }
 
 .contact-form form button,
@@ -212,29 +255,27 @@ textarea {
   color: rgba(184, 13, 13, 0.938);
 }
 @media only screen and (min-device-width: 100px) and (max-device-width: 950px) {
-  .contenedor_triple{
+  .contenedor_triple {
     display: flex;
     flex-direction: column;
-
   }
-  .figura{
+  .figura {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
-  .contact-form{
+  .contact-form {
     width: 100%;
   }
-  .contact-info{
+  .contact-info {
     width: 100%;
     clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
     position: relative;
     left: 0;
   }
-  .contenedor_mapa{
+  .contenedor_mapa {
     width: 100%;
     clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
   }
-  
 }
 </style>

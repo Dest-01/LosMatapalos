@@ -182,7 +182,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Rango de edades</label>
+                  <label>Promedio de edades</label>
                   <input
                     v-model="form.edades"
                     type="range"
@@ -195,7 +195,7 @@
                     step="1"
                   />
                   <has-error :form="form" field="edades"></has-error>
-                  <label for="">Rango edad: {{ form.edades }}</label>
+                  <label for="">Promedio: {{ form.edades }}</label>
                 </div>
 
                 <div class="form-group">

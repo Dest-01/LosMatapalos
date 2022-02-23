@@ -4,10 +4,10 @@ function validarCedulaN() {
     var cedulaNacional2 = document.getElementById("nacional");
     var re = /^[1-9]-\d{4}-\d{4}$/;
     if (re.test(cedulaNacional)) {
-        cedulaNacional2.style.borderBottom = "#0a9d00 solid 2px";
+        cedulaNacional2.style.border = "#0a9d00 solid 2px";
         return true;
     } else {
-        cedulaNacional2.style.borderBottom = "red solid 2px";
+        cedulaNacional2.style.border = "red solid 2px";
         return false;
     }
 }
@@ -21,10 +21,10 @@ function validateResidencial() {
     var residencialIdent2 = document.getElementById("residencial");
     var re = /^[1-9]\d{9}$/;
     if (re.test(residencialIdent)) {
-        residencialIdent2.style.borderBottom = "#0a9d00 solid 2px";
+        residencialIdent2.style.border = "#0a9d00 solid 2px";
         return true;
     } else {
-        residencialIdent2.style.borderBottom = "red solid 2px";
+        residencialIdent2.style.border = "red solid 2px";
         return false;
     }
 }
@@ -36,10 +36,10 @@ function validatePasaporte() {
     var pasaporteIdent2 = document.getElementById("pasaporte");
     var re = /^\d{11,12}$/;
     if (re.test(pasaporteIdent)) {
-        pasaporteIdent2.style.borderBottom = "#0a9d00 solid 2px";
+        pasaporteIdent2.style.border = "#0a9d00 solid 2px";
         return true;
     } else {
-        pasaporteIdent2.style.borderBottom = "red solid 2px";
+        pasaporteIdent2.style.border = "red solid 2px";
         return false;
     }
 }

@@ -257,6 +257,7 @@ th {
 }
 .botones {
   width: 50px;
+  text-align: center;
 }
 
 .paginacion {

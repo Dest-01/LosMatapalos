@@ -402,7 +402,7 @@
                   class="form-control"
                   v-model="tipoIndenteficacion"
                   :class="{ 'is-invalid': form.errors.has('identificacion') }"
-                  @change="tiposDeIndentificacon(), cambioSelect()"
+                  @change="tiposDeIndentificacon()"
                 >
                   <option disabled value="">Seleccione un tipo</option>
                   <option value="Cedula Nacional">Cédula Nacional</option>
@@ -416,9 +416,7 @@
               <div class="form-group">
                 <div v-show="CedulaNacional" class="form-group identitad">
                   <input
-                    @blur="validarCedulaNacional()"
                     v-model="formPer.identificacion"
-                    :disabled="bloquearInputId"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -429,24 +427,13 @@
                     id="nacional"
                     onchange="validarCedulaN()"
                   />
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
 
                 <div v-show="CedulaResidencial" class="form-group identitad">
                   <input
-                    @blur="validarCedulaResidencial()"
                     v-model="formPer.identificacion"
                     id="residencial"
-                    :disabled="bloquearInputIdR"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -457,23 +444,12 @@
                     onchange="validateResidencial()"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
                 </div>
 
                 <div v-show="Pasaporte" class="form-group identitad">
                   <input
                     id="pasaporte"
-                    @blur="validarPasaporte()"
                     v-model="formPer.identificacion"
-                    :disabled="bloquearInputIdP"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -484,15 +460,6 @@
                     onchange="validatePasaporte()"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
-                  <button
-                    id="btnCancelar"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="bloquearCancelar"
-                    @click="bloquearCedula()"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
                 </div>
               </div>
               <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
@@ -581,7 +548,6 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                :disabled="registroBloquear"
                 @click="crearPersona()"
               >
                 Registrar
@@ -622,11 +588,6 @@ export default {
       CedulaResidencial: false,
       CedulaNacional: false,
       Pasaporte: false,
-      registroBloquear: true, //Bloquear el boton para registrar
-      bloquearCancelar: true, //Bloquear el boton de cancelar de los inputs de indentificacion
-      bloquearInputId: false, //Bloquear el inuput de cedula
-      bloquearInputIdR: false, //Bloquear el input de residencial
-      bloquearInputIdP: false, //Bloquear el input de Pasaporte
       form: new Form({
         id: "",
         idVoluntario: "",
@@ -654,61 +615,6 @@ export default {
   methods: {
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
-    validarCedulaNacional() {
-      if (/^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputId = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputId = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarCedulaResidencial() {
-      if (/^[1-9]\d{9}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputIdR = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdR = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    validarPasaporte() {
-      if (/^\d{11,12}$/.test(this.formPer.identificacion)) {
-        this.bloquearInputIdP = true;
-        this.registroBloquear = false;
-        this.bloquearCancelar = false;
-        return;
-      } else {
-        this.bloquearInputIdP = false;
-        this.registroBloquear = true;
-        this.bloquearCancelar = true;
-        return;
-      }
-    },
-    bloquearCedula() {
-      this.form.identificacion = "";
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
-    cambioSelect() {
-      this.bloquearInputId = false; //Desbloqueamos el input del id
-      this.bloquearInputIdR = false;
-      this.bloquearInputIdP = false;
-      this.registroBloquear = true; //Bloqueamos el boton de registrar
-      this.bloquearCancelar = true; //bloqueamos el boton de cancelar
-    },
-
     tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
         this.CedulaNacional = true;
@@ -839,6 +745,7 @@ export default {
       }
     },
     crearPersona() {
+       if (this.formPer.identificacion != "") {
       if (
         /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
         /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
@@ -871,10 +778,10 @@ export default {
             });
           });
       } else {
-        Toast.fire({
-          icon: "error",
-          title: "Formato Incorrecto!",
-        });
+          Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
+        }
+      } else {
+        Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
       }
     },
 
@@ -906,7 +813,7 @@ export default {
           .then(({ data }) => (this.voluntarios = data.data));
       }
     },
-    crearVoluntarioPer() {
+    voluntariosPer() {
       this.$Progress.start();
       this.form.voluntariado_id = this.form.idVoluntario;
       this.form
@@ -938,6 +845,23 @@ export default {
           });
         });
     },
+    crearVoluntarioPer(){
+      if (this.form.identificacionPersona.length != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
+          /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||
+          (/^\d{11,12}$/.test(this.form.identificacionPersona) &&
+            this.form.idPersona != 0)
+        ) {
+          this.voluntariosPer();
+        } else {
+          Swal.fire("Error!", "Identificacion formato incorrecto!", "error");
+        }
+      } else {
+        Swal.fire("Error!", "Primero verifique que existe!", "error");
+      }
+    },
+
     actualizarVoluntarioPer() {
       this.$Progress.start();
       this.formVoluntario.id = this.form.idVoluntario;

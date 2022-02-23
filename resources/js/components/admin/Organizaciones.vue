@@ -410,6 +410,8 @@ export default {
     },
 
     crearOrganizacion() {
+      if(this.form.identificacion !=""){
+        if(/^[1-9]-\d{3}-\d{6}$/.test(this.form.identificacion)){
       this.form
         .post("/api/organizacion", {
           params: { id: this.form.id },
@@ -438,6 +440,16 @@ export default {
           });
           console.log(error.message);
         });
+        }else{
+           Swal.fire(
+            "Error!",
+            "Formato de cédula juridica incorrecto!",
+            "error"
+          );
+        }
+      }else{
+         Swal.fire("Error!", "Campo de cédula juridica esta vacio!", "error");
+      }
     },
 
     eliminarOrganizacion(id) {
