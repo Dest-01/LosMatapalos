@@ -26,12 +26,12 @@ class ArticuloController extends BaseController
     public function index()
     {
         $Articulos = $this->articulo->latest()->paginate(10);
-        return $this->sendResponse($Articulos, 'Lista 10');
+        return $this->sendResponse($Articulos, 'Lista artículos!');
     }
     public function list()
     {
         $Articulos = $this->articulo->get();
-        return $this->sendResponse($Articulos, 'Lista todo');
+        return $this->sendResponse($Articulos, 'Lista todo los artículos!');
     }
 
     /**
@@ -51,13 +51,13 @@ class ArticuloController extends BaseController
         ];
     
         $messages = [
-            'Nombre.max'=>'Minimo 3 caracteres',
+            'Nombre.max'=>'Mínimo 3 caracteres',
             'Nombre.min'=>'Maximo 100 caracteres',
-            'Nombre.*'=>'Digite el nombre del articulo',
-            'Tipo.max'=>'Minimo 3 caracteres',
+            'Nombre.*'=>'Digité el nombre del artículo',
+            'Tipo.max'=>'Mínimo 3 caracteres',
             'Tipo.min'=>'Maximo 50 caracteres',
-            'Tipo.*' => 'Indique tipo de articulo a publicar',
-            'Image.*' => 'Cargue una foto del Articulo',
+            'Tipo.*' => 'Indique tipo de artículo',
+            'Image.*' => 'Cargue una foto del artículo',
             'descripcion.min' =>'Mínimo 5 caracteres',
             'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
 
@@ -82,7 +82,7 @@ class ArticuloController extends BaseController
             'Descripcion' => $request->get('Descripcion'),
             
         ]);
-        return $this->sendResponse($tag, 'Articulo creado');
+        return $this->sendResponse($tag, 'Artículo registrado!');
     }
 
     /**
@@ -113,12 +113,12 @@ class ArticuloController extends BaseController
         ];
     
         $messages = [
-            'Nombre.max'=>'Minimo 3 caracteres',
+            'Nombre.max'=>'Mínimo 3 caracteres',
             'Nombre.min'=>'Maximo 100 caracteres',
-            'Nombre.*'=>'Digite el nombre del articulo',
-            'Tipo.max'=>'Minimo 3 caracteres',
+            'Nombre.*'=>'Digité el nombre del artículo',
+            'Tipo.max'=>'Mínimo 3 caracteres',
             'Tipo.min'=>'Maximo 50 caracteres',
-            'Tipo.*' => 'Indique tipo de articulo a publicar',
+            'Tipo.*' => 'Indique tipo de artículo',
             'descripcion.min' =>'Mínimo 5 caracteres',
             'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y maximo 255',
 
@@ -147,7 +147,7 @@ class ArticuloController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Articulo Actualizado');
+        return $this->sendResponse($tag, 'Artículo Actualizado!');
     }
 
     /**

@@ -110,6 +110,6 @@ class UserController extends BaseController
 
         $user->delete();
 
-        return $this->sendResponse([$user], 'Se elimino el usuario');
+        return $this->sendResponse([$user], 'Se elimino el usuario!');
     }
 }

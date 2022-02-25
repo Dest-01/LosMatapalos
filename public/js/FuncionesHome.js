@@ -1,3 +1,4 @@
+/*
 window.onload = iniciarMap;
 
 function iniciarMap(){
@@ -13,7 +14,7 @@ function iniciarMap(){
     })
 }
 
-
+*/
 
 var swiper = new Swiper('.blog-slider', {
     spaceBetween: 30,

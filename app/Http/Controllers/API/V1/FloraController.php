@@ -90,7 +90,7 @@ class FloraController extends BaseController
             'fam_cientifica' => $request->get('fam_cientifica')
             
         ]);
-        return $this->sendResponse($tag, 'datos registrados!');
+        return $this->sendResponse($tag, 'Flora registrada!');
     }
 
     /**
@@ -163,7 +163,7 @@ class FloraController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Datos Actualizados!');
+        return $this->sendResponse($tag, 'Flora actualizada!');
     }
 
     /**

@@ -68,7 +68,7 @@ class VoluntarioActividadesController extends BaseController
             'idVoluntario_Persona' => $request->get('idVoluntario_Persona'),
             'idVoluntario_Estudiante' => $request->get('idVoluntario_Estudiante'),
         ]);
-        return $this->sendResponse($tag, 'Actividad Voluntarios registrados');
+        return $this->sendResponse($tag, 'Actividad voluntarios registrados!');
     }
 
     /**
@@ -93,7 +93,7 @@ class VoluntarioActividadesController extends BaseController
     {
         $tag = $this->voluntarioActividades->findOrFail($id);
         $tag->update($request->all());
-        return $this->sendResponse($tag, 'Activiadades Voluntarios Actualizada');
+        return $this->sendResponse($tag, 'Activiadades voluntarios Actualizada!');
     }
 
     /**
@@ -106,7 +106,7 @@ class VoluntarioActividadesController extends BaseController
     {
         $voluntarioActividades = $this->voluntarioActividades->findOrFail($id);
         $voluntarioActividades->delete();
-        return $this->sendResponse($voluntarioActividades, 'Datos Eliminados');
+        return $this->sendResponse($voluntarioActividades, 'Activiadades voluntario Eliminado!');
     }
     public function GetActividades()
     {

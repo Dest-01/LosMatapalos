@@ -114,7 +114,7 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background-image: url('https:/dl.dropbox.com/s/wfhypdcxbxvsuym/20210803030336_IMG_0548.JPG?dl=0'); 
+  background-image: url('/images/login.jpg'); 
   background-size: cover;
   clip-path: polygon(20% 0, 73% 0, 73% 100%, 20% 100%);
   animation-name: containerPrincipal;

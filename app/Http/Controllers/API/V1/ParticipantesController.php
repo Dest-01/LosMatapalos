@@ -24,14 +24,14 @@ class ParticipantesController extends BaseController
     {
         $participante = $this->participantes->latest()->paginate(10);
 
-        return $this->sendResponse($participante, 'Lista de participantes');
+        return $this->sendResponse($participante, 'Lista de participantes!');
     }
 
     public function list()
     {
         $participante = $this->participantes->get();
 
-        return $this->sendResponse($participante, 'Lista de participantes');
+        return $this->sendResponse($participante, 'Lista de todos los participantes!');
     }
 
     /**
@@ -54,9 +54,9 @@ class ParticipantesController extends BaseController
                     'nacionalidad' => $request->get('nacionalidad'),
 
                 ]);
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Participante registrado!');
             } else {
-                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                return response()->json(['success' => false, 'message' => 'Identificación ya existe!']);
             }
 
         } catch (\Exception$e) {
@@ -88,7 +88,7 @@ class ParticipantesController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Datos actualizados');
+        return $this->sendResponse($tag, 'Participante actualizado!');
     }
 
     /**
@@ -104,6 +104,6 @@ class ParticipantesController extends BaseController
 
         $participantes->delete();
 
-        return $this->sendResponse($participantes, 'Datos eliminados');
+        return $this->sendResponse($participantes, 'Participante eliminado!');
     }
 }

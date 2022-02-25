@@ -26,14 +26,14 @@ class GruposController extends BaseController
     {
         $grupo = $this->grupos->latest()->paginate(10);
 
-        return $this->sendResponse($grupo, 'Lista de Grupos');
+        return $this->sendResponse($grupo, 'Lista de grupos!');
     }
 
     public function list()
     {
         $grupo = $this->grupos->get();
 
-        return $this->sendResponse($grupo, 'Lista de Grupos');
+        return $this->sendResponse($grupo, 'Lista de todos los grupos!');
     }
 
     /**
@@ -58,7 +58,7 @@ class GruposController extends BaseController
             'detalles' => $request->get('detalles'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Grupo registrado!');
             }else{
                 return response()->json(['success' => false, 'message' => 'Nombre ya existe!']);
             }
@@ -92,7 +92,7 @@ class GruposController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Grupo Actualizado!');
+        return $this->sendResponse($tag, 'Grupo actualizado!');
         
     }
 

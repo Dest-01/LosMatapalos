@@ -47,14 +47,14 @@ class DonativosController extends BaseController
     {
         $filtro = $request->buscador;
         $persona = Personas::where('identificacion', $filtro)->get();
-        return $this->sendResponse($persona, 'Cedula si existe');
+        return $this->sendResponse($persona, 'Cedula si existe!');
 
     }
     public function obtenerCedulaOrg(Request $request)
     {
         $filtro = $request->buscador;
         $organizacion = Organizaciones::where('identificacion', $filtro)->get();
-        return $this->sendResponse($organizacion, 'Cedula si existe');
+        return $this->sendResponse($organizacion, 'Identificación si existe!');
     }
 
     public function guardarPersona(PersonasRequest $request)
@@ -72,7 +72,7 @@ class DonativosController extends BaseController
                     'correo' => $request->get('correo'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Persona registrada!');
             } else {
                 return response()->json(['success' => false, 'message' => 'Identificación ya existe!']);
             }
@@ -95,7 +95,7 @@ class DonativosController extends BaseController
                     'correo' => $request->get('correo'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Organización registrada!');
             } else {
                 return response()->json(['success' => false, 'message' => 'Cédula jurídica ya existe!']);
             }
@@ -222,7 +222,7 @@ class DonativosController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Donativo Actualizado!');
+        return $this->sendResponse($tag, 'Donativo actualizado!');
     }
 
     /**

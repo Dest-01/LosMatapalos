@@ -28,7 +28,7 @@ class VoluntarioPersonaController extends BaseController
     {
         $filtro = $request->buscador;
         $persona = Personas::where('identificacion', $filtro)->get();
-        return $this->sendResponse($persona, 'Cedula si existe');
+        return $this->sendResponse($persona, 'Identificación si existe!');
 
     }
 
@@ -82,9 +82,9 @@ class VoluntarioPersonaController extends BaseController
                     'correo' => $request->get('correo'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Persona registrada!');
             } else {
-                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                return response()->json(['success' => false, 'message' => 'Identificación ya existe!']);
             }
 
         } catch (\Exception$e) {
@@ -131,7 +131,7 @@ class VoluntarioPersonaController extends BaseController
                     'voluntariado_id' => $request->get('voluntariado_id'),
                     'lugar' => $request->get('lugar'),
                 ]);
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Voluntario persona registrado!');
             } else {
                 return response()->json(['success' => false, 'message' => 'El id del voluntario ya existe!']);
             }
@@ -189,6 +189,6 @@ class VoluntarioPersonaController extends BaseController
     {
         $voluntarioPer = $this->voluntarioPersona->findOrFail($id);
         $voluntarioPer->delete();
-        return $this->sendResponse($voluntarioPer, 'Voluntario Persona eliminada');
+        return $this->sendResponse($voluntarioPer, 'Voluntario persona eliminada!');
     }
 }

@@ -24,7 +24,7 @@ class CatDonativosController extends BaseController
     {
         $catDonativo = $this->catDonativos->latest()->paginate(10);
 
-        return $this->sendResponse($catDonativo, 'Lista de donativos necesarios');
+        return $this->sendResponse($catDonativo, 'Lista de donativos necesarios!');
     }
 
     
@@ -32,7 +32,7 @@ class CatDonativosController extends BaseController
     {
         $catDonativo = $this->catDonativos->get();
 
-        return $this->sendResponse($catDonativo, 'Lista de donativos necesarios');
+        return $this->sendResponse($catDonativo, 'Lista de todos los donativos necesarios!');
     }
 
     /**
@@ -72,7 +72,7 @@ class CatDonativosController extends BaseController
             'photo' => $request->get('photo')
             
         ]);
-        return $this->sendResponse($tag, 'donativo necesario creado');
+        return $this->sendResponse($tag, 'donativo necesario registrado!');
     }
     catch(\PDOException | Exception $e){
         return response()->json(["errors" => $e->getMessage()],500);
@@ -130,7 +130,7 @@ class CatDonativosController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Donativo Necesario Actualizado');
+        return $this->sendResponse($tag, 'Donativo necesario actualizado!');
     }
 
     /**

@@ -25,12 +25,12 @@ class ActividadesController extends BaseController
     public function index()
     {
         $actividad = $this->actividades->latest()->paginate(10);
-        return $this->sendResponse($actividad, 'Lista de Actividades');
+        return $this->sendResponse($actividad, 'Lista de Actividades!');
     }
     public function list()
     {
         $actividad = $this->actividades->get();
-        return $this->sendResponse($actividad, 'Lista de Actividades');
+        return $this->sendResponse($actividad, 'Lista de Actividades!');
     }
 
     /**
@@ -88,7 +88,7 @@ class ActividadesController extends BaseController
                 'tipo' => $request->get('tipo'),
 
             ]);
-            return $this->sendResponse($tag, 'Actividad Creada');
+            return $this->sendResponse($tag, 'Actividad Creada!');
         } catch (\PDOException | Exception $e) {
             return response()->json(["errors" => $e->getMessage()], 500);
         }
@@ -166,7 +166,7 @@ class ActividadesController extends BaseController
             }
         }
         $tag->update($request->all());
-        return $this->sendResponse($tag, 'Actividad Actualizada');
+        return $this->sendResponse($tag, 'Actividad Actualizada!');
     }
 
     /**

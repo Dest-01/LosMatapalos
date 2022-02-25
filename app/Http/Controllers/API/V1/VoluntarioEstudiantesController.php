@@ -27,7 +27,7 @@ class VoluntarioEstudiantesController extends BaseController
     {
         $filtro = $request->buscador;
         $persona = Personas::where('identificacion', $filtro)->get();
-        return $this->sendResponse($persona, 'Cedula si existe!');
+        return $this->sendResponse($persona, 'Identificación si existe!');
 
     }
     public function obtenerCantidad(Request $request)
@@ -46,13 +46,13 @@ class VoluntarioEstudiantesController extends BaseController
     {
         $voluntarioEst = $this->voluntarioEstudiantes->latest()->paginate(10);
 
-        return $this->sendResponse($voluntarioEst, 'Lista de estudiantes');
+        return $this->sendResponse($voluntarioEst, 'Lista de estudiantes!');
     }
     public function list()
     {
         $voluntarioEst = $this->voluntarioEstudiantes->get();
 
-        return $this->sendResponse($voluntarioEst, 'Lista de estudiantes');
+        return $this->sendResponse($voluntarioEst, 'Lista de todos los estudiantes!');
     }
 
     public function guardarPersona(PersonasRequest $request)
@@ -70,9 +70,9 @@ class VoluntarioEstudiantesController extends BaseController
                     'correo' => $request->get('correo'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Persona registrada!');
             } else {
-                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                return response()->json(['success' => false, 'message' => 'Identificación ya existe!']);
             }
 
         } catch (\Exception$e) {
@@ -98,7 +98,7 @@ class VoluntarioEstudiantesController extends BaseController
         ];
 
         $messages = [
-            'carrera.*' => 'Se requiere la carrera del Estudiante',
+            'carrera.*' => 'Se requiere la carrera del estudiante',
             'carrera.min' => 'Mínimo 3 caracteres',
             'carrera.max' => 'Maximo 50 caracteres',
             'imagen.*' => 'Se requiere la foto del estudiante',
@@ -133,7 +133,7 @@ class VoluntarioEstudiantesController extends BaseController
                     'carrera' => $request->get('carrera'),
                     'imagen' => $request->get('imagen'),
                 ]);
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Voluntario estudiante registrado!');
             } else {
                 return response()->json(['success' => false, 'message' => 'El id del voluntario ya existe!']);
             }
@@ -199,7 +199,7 @@ class VoluntarioEstudiantesController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Voluntariado estudiante Actualizado');
+        return $this->sendResponse($tag, 'Voluntariado estudiante actualizado!');
     }
 
     /**
@@ -225,7 +225,7 @@ class VoluntarioEstudiantesController extends BaseController
         }
         if ($bug == 0) {
             echo "success";
-            return $this->sendResponse($voluntarioEst, 'Voluntario Estudiante eliminado');
+            return $this->sendResponse($voluntarioEst, 'Voluntario estudiante eliminado!');
         } else {
             echo 'error';
         }

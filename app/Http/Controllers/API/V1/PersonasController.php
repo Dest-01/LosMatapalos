@@ -28,13 +28,13 @@ class PersonasController extends BaseController
     {
         $persona = $this->personas->latest()->paginate(10);
 
-        return $this->sendResponse($persona, 'Lista de Personas');
+        return $this->sendResponse($persona, 'Lista de personas');
     }
     public function list()
     {
         $persona = $this->personas->get();
 
-        return $this->sendResponse($persona, 'Lista de Personas');
+        return $this->sendResponse($persona, 'Lista de todas las personas');
     }
 
     public function obtenerCedula(Request $request)
@@ -43,7 +43,7 @@ class PersonasController extends BaseController
 
         $persona = Personas::where('identificacion', $filtro)->get('identificacion');
 
-        return $this->sendResponse($persona, 'Cedula si existe!');
+        return $this->sendResponse($persona, 'Identifación si existe!');
 
     }
 
@@ -68,9 +68,9 @@ class PersonasController extends BaseController
                         'correo' => $request->get('correo'),
                     ]);
     
-                    return $this->sendResponse($tag, 'Registro exitoso!');
+                    return $this->sendResponse($tag, 'Persona registrada!');
                 }else{
-                    return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                    return response()->json(['success' => false, 'message' => 'Identifación ya existe!']);
                 }
     
             } catch (\Exception $e) {
@@ -102,7 +102,7 @@ class PersonasController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Datos actualizados!');
+        return $this->sendResponse($tag, 'Persona actualizada!');
     }
 
     /**
@@ -119,6 +119,6 @@ class PersonasController extends BaseController
 
         $personas->delete();
 
-        return $this->sendResponse($personas, 'Datos eliminados!');
+        return $this->sendResponse($personas, 'Persona eliminada!');
     }
 }

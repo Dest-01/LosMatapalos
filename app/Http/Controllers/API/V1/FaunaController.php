@@ -22,14 +22,14 @@ class FaunaController extends BaseController
     {
         $fauna = $this->fauna->latest()->paginate(10);
 
-        return $this->sendResponse($fauna, 'Lista de fauna');
+        return $this->sendResponse($fauna, 'Lista de fauna!');
     }
 
     public function list()
     {
         $fauna = $this->fauna->get();
 
-        return $this->sendResponse($fauna, 'Lista de fauna');
+        return $this->sendResponse($fauna, 'Lista de toda la fauna!');
     }
 
     /**
@@ -60,7 +60,7 @@ class FaunaController extends BaseController
                 'nombreCientifico.max' => 'Máximo 30 caracteres',
                 'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar números',
                 'descripcion.min' =>'Mínimo 5 caracteres',
-                'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y máximo 255',
+                'descripcion.*' => 'Breve descripción de la especie, debe tener al menos 3 caracteres y máximo 255',
                 'tipo.min' =>'Mínimo 15 caracteres',
                 'tipo.max' => 'Máximo 30 caracteres',
                 'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar números',
@@ -93,7 +93,7 @@ class FaunaController extends BaseController
                 'familiaCientifca' => $request->get('familiaCientifca'),
 
             ]);
-            return $this->sendResponse($tag, 'datos registrados');
+            return $this->sendResponse($tag, 'Fauna registrada!');
         } catch (\PDOException | Exception $e) {
             return response()->json(["errors" => $e->getMessage()], 500);
         }
@@ -137,7 +137,7 @@ class FaunaController extends BaseController
             'nombreCientifico.max' => 'Máximo 30 caracteres',
             'nombreCientifico.*' => 'Escriba el nombre científico de la especie  no puede estar vacio o llevar números',
             'descripcion.min' =>'Mínimo 5 caracteres',
-            'descripcion.*' => 'Breve descripción de la especie debe tener al menos 3 caracteres y máximo 255',
+            'descripcion.*' => 'Breve descripción de la especie, debe tener al menos 3 caracteres y máximo 255',
             'tipo.min' =>'Mínimo 15 caracteres',
             'tipo.max' => 'Máximo 30 caracteres',
             'tipo.*' => 'Nombre del tipo de especie no puede estar vacio o llevar números',
@@ -169,7 +169,7 @@ class FaunaController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Datos Actualizados');
+        return $this->sendResponse($tag, 'Fauna actualizada!');
     }
 
     /**

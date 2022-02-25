@@ -26,7 +26,7 @@ class VoluntarioController extends BaseController
     {
         $voluntarios = $this->voluntario->latest()->paginate(10);
 
-        return $this->sendResponse($voluntarios, 'Lista de voluntariado');
+        return $this->sendResponse($voluntarios, 'Lista de voluntariado!');
     }
 
     /**
@@ -42,7 +42,7 @@ class VoluntarioController extends BaseController
             'cantidad' => $request->get('cantidad')
             
         ]);
-        return $this->sendResponse($tag, 'Voluntariado creado');
+        return $this->sendResponse($tag, 'Voluntariado creado!');
     }
 
     /**
@@ -69,7 +69,7 @@ class VoluntarioController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Voluntariado Actualizada');
+        return $this->sendResponse($tag, 'Voluntariado actualizado!');
     }
 
     /**
@@ -86,6 +86,6 @@ class VoluntarioController extends BaseController
 
         $voluntario->delete();
 
-        return $this->sendResponse($voluntario, 'Voluntariado eliminado');
+        return $this->sendResponse($voluntario, 'Voluntariado eliminado!');
     }
 }

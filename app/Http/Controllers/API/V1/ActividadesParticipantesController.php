@@ -36,7 +36,7 @@ class ActividadesParticipantesController extends BaseController
     public function index()
     {
         $actividadesParticipantes = $this->actividadesParticipantes->latest()->paginate(10);
-        return $this->sendResponse($actividadesParticipantes, 'Personas en actividades');
+        return $this->sendResponse($actividadesParticipantes, 'Personas en actividades!');
     }
 
 
@@ -56,9 +56,9 @@ class ActividadesParticipantesController extends BaseController
                 'idVoluntario' => $request->get('idVoluntario'),
                 'idActividad' => $request->get('idActividad'),
             ]);
-            return $this->sendResponse($tag, 'Participante anadido a actividad');
+            return $this->sendResponse($tag, 'Participante añadido a actividad!');
         }
-        return this->sendResponse('','Error al anadir a actividad');
+        return this->sendResponse('','Error al anadir a actividad!');
     }
 
     /**
@@ -83,7 +83,7 @@ class ActividadesParticipantesController extends BaseController
     {
         $tag = $this->actividadesParticipantes->findOrFail($id);
         $tag->update($request->all());
-        return $this->sendResponse($tag, 'Subscripcion actualizada correctamente');
+        return $this->sendResponse($tag, 'Subscripción actualizada correctamente!');
     }
 
     /**
@@ -99,6 +99,6 @@ class ActividadesParticipantesController extends BaseController
 
         $actividadesParticipantes->delete();
 
-        return $this->sendResponse($actividadesParticipantes, 'Subscripcion eliminada');
+        return $this->sendResponse($actividadesParticipantes, 'Subscripción eliminada!');
     }
 }

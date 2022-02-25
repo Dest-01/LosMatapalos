@@ -37,7 +37,7 @@
      "Contactanos":"Contactanos",
      "us":"",
      "nombre_c":"Nombre completo",
-     "numero_tel":"Numero telefónico",
+     "numero_tel":"Número telefónico",
      "asunto":"Asunto",
      "Mensaje":"Mensaje",
      "Enviar":"Enviar",
@@ -88,8 +88,8 @@
      "Registrar_Grup":"Registro de grupo",
      "Nombre_Grup":"Nombre de Grupo",
      "Cantidad_Grup":"Cantidad de Grupo",
-     "Rango_edad":"Ramgo de edades",
-     "Rango":"Rango",
+     "Rango_edad":"Promedio de edades",
+     "Rango":"Promedio",
      "Lugar_Procedencia":"Lugar de Procedencia",
      "Tematica_Tratar":"Temática a tratar",
      "Seleccion__Tematica":"Seleccione la temática",
@@ -129,7 +129,7 @@
      "Herbacias":"Herbaceas",     
      "Leñosas":"Leñosas",
      "No_hay_data":"No hay registros en galería de flora",
-     "Nombre_Comun":"Nombre Comun",
+     "Nombre_Comun":"Nombre Común",
      "Nombre_Cientifico":"Nombre Científico",
      "Familia":"Familia",
 
@@ -154,7 +154,7 @@
      "ReservacionMensaje1": "Reservación Realizada!",
      "ReservacionMensaje2": "Esperamos su visita pronto!",
      "ReservacionMensaje3": "No se realizo la reservación, revise los campos!",
-     "ReservacionMensaje4": "Identificacion o nombre de grupo formato incorrecto!",
+     "ReservacionMensaje4": "Identificación o nombre de grupo formato incorrecto!",
      "ReservacionMensaje5": "Primero verifique que este registrado!"
 
 

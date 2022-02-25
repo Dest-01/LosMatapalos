@@ -37,27 +37,27 @@ class ReservaController extends BaseController
         $reservas = $this->reserva->latest()->with('personas', 'organizaciones')->paginate(10);
         //  $products = $this->product->latest()->with('category', 'tags')->paginate(10);
 
-        return $this->sendResponse($reservas, 'Lista reservas');
+        return $this->sendResponse($reservas, 'Lista reservas!');
     }
 
     function list() {
         $reservas = $this->reserva->get();
 
-        return $this->sendResponse($reservas, 'Lista reservas');
+        return $this->sendResponse($reservas, 'Lista de todas las reservas!');
     }
 
     public function obtenerCedula(Request $request)
     {
         $filtro = $request->buscador;
         $persona = Personas::where('identificacion', $filtro)->get();
-        return $this->sendResponse($persona, 'Cedula si existe');
+        return $this->sendResponse($persona, 'Identifación si existe!');
 
     }
     public function obtenerCedulaOrg(Request $request)
     {
         $filtro = $request->buscador;
         $organizacion = Organizaciones::where('identificacion', $filtro)->get();
-        return $this->sendResponse($organizacion, 'Cedula si existe');
+        return $this->sendResponse($organizacion, 'Cédula jurídica si existe!');
     }
 
     public function obtenerNombreGrupo(Request $request)
@@ -83,9 +83,9 @@ class ReservaController extends BaseController
                     'correo' => $request->get('correo'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Perosna registrada!');
             } else {
-                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                return response()->json(['success' => false, 'message' => 'Identifación ya existe!']);
             }
 
         } catch (\Exception$e) {
@@ -106,9 +106,9 @@ class ReservaController extends BaseController
                     'correo' => $request->get('correo'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Organización registrada!');
             } else {
-                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                return response()->json(['success' => false, 'message' => 'Cédula jurídica ya existe!']);
             }
 
         } catch (\Exception$e) {
@@ -133,7 +133,7 @@ class ReservaController extends BaseController
                     'detalles' => $request->get('detalles'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Grupo registrado!');
             } else {
                 return response()->json(['success' => false, 'message' => 'Nombre ya existe!']);
             }

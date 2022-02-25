@@ -130,14 +130,8 @@ class RepositorioDocumentosController extends BaseController
 
 
 
-
-
-
-
-
-
             if($repositorioResult =  $repositorioDocumentos->update($request->all())):
-                return $this->sendResponse($repositorioResult, 'Documento Actualizado!');
+                return $this->sendResponse($repositorioResult, 'Documento actualizado!');
             endif;
             return $this->sendResponse('No se actualizo!');
         }catch(\Exception $e){

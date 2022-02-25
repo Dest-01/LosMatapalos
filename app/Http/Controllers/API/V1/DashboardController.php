@@ -34,14 +34,14 @@ class DashboardController extends BaseController
 
     public function ultimasReservaciones(){
         $ultimas = DB::table('reservas')->latest()->paginate(5);
-        return $this->sendResponse($ultimas, 'Ultimas 5 reservaciones');
+        return $this->sendResponse($ultimas, 'Ultimás 5 reservaciones');
     }
     public function ultimasDonaciones(){
         $ultimas = DB::table('donativos')->latest()->paginate(5);
-        return $this->sendResponse($ultimas, 'Ultimas 5 donativos');
+        return $this->sendResponse($ultimas, 'Ultimás 5 donativos');
     }
     public function ultimasActividades(){
         $ultimas = DB::table('actividades')->latest()->paginate(5);
-        return $this->sendResponse($ultimas, 'Ultimas 5 actividades');
+        return $this->sendResponse($ultimas, 'Ultimás 5 actividades');
     }
 }

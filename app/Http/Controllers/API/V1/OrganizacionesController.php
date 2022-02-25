@@ -26,7 +26,7 @@ class OrganizacionesController extends BaseController
     {
         $organizacion = $this->organizaciones->latest()->paginate(10);
 
-        return $this->sendResponse($organizacion, 'Lista de Organizaciones');
+        return $this->sendResponse($organizacion, 'Lista de organizaciones!');
     }
 
     function list() {
@@ -34,7 +34,7 @@ class OrganizacionesController extends BaseController
         $organizacion = $this->organizaciones->get();
       //  $organizacion = $this->organizaciones->pluck('id', 'id');
 
-        return $this->sendResponse($organizacion, 'Lista Organizaciones');
+        return $this->sendResponse($organizacion, 'Lista de todas las organizaciones!');
     }
 
     /**
@@ -56,9 +56,9 @@ class OrganizacionesController extends BaseController
                     'correo' => $request->get('correo'),
                 ]);
 
-                return $this->sendResponse($tag, 'Registro exitoso!');
+                return $this->sendResponse($tag, 'Organización registrada!');
             }else{
-                return response()->json(['success' => false, 'message' => 'Cedula ya existe!']);
+                return response()->json(['success' => false, 'message' => 'Cédula jurídica ya existe!']);
             }
 
         } catch (\Exception $e) {
@@ -91,7 +91,7 @@ class OrganizacionesController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Datos actualizados');
+        return $this->sendResponse($tag, 'Organización actualizada!');
     }
 
     /**
@@ -108,6 +108,6 @@ class OrganizacionesController extends BaseController
 
         $organizaciones->delete();
 
-        return $this->sendResponse($organizaciones, 'Datos eliminados');
+        return $this->sendResponse($organizaciones, 'Organización eliminada!');
     }
 }

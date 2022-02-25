@@ -1263,8 +1263,39 @@ export default {
           );
         });
     },
+    totalDatosFuncion(){
+if (this.personaIdArray.length != 0) {
+        for (let i = 0; i < this.personaIdArray.length; i++) {
+          this.formReserva.idPersona = this.personaIdArray[i].id;
+          this.formReserva.identificacionPersona =
+            this.personaIdArray[i].identificacion;
+          this.formCorreo.correo = this.personaIdArray[i].correo;
+          this.formCorreo.cedulaReservacion =
+            this.personaIdArray[i].identificacion;
+        }
+      }
+      if (this.organizacionIdArray.length != 0) {
+        for (let i = 0; i < this.organizacionIdArray.length; i++) {
+          this.formReserva.idOrganizacion = this.organizacionIdArray[i].id;
+          this.formReserva.identificacionOrganizacion =
+            this.organizacionIdArray[i].identificacion;
+          this.formCorreo.correo = this.organizacionIdArray[i].correo;
+          this.formCorreo.cedulaReservacion =
+            this.organizacionIdArray[i].identificacion;
+        }
+      }
+      if (this.grupoIdArray.length != 0) {
+        for (let i = 0; i < this.grupoIdArray.length; i++) {
+          this.formReserva.idGrupo = this.grupoIdArray[i].id;
+          this.formReserva.nombreGrupo = this.grupoIdArray[i].nombre;
+          this.formCorreo.correo = this.grupoIdArray[i].correo;
+          this.formCorreo.cedulaReservacion = this.grupoIdArray[i].nombre;
+        }
+      }
+    },
 
     crearReserva() {
+      this.totalDatosFuncion();
       if(this.buscador.length != ""){
       if (
         /^[1-9]-\d{4}-\d{4}$/.test(this.formReserva.identificacionPersona) ||
@@ -1347,7 +1378,7 @@ export default {
     this.$Progress.finish();
   },
   computed: {
-    totalDatos() {
+    totalDatos: function() {
       if (this.personaIdArray.length != 0) {
         for (let i = 0; i < this.personaIdArray.length; i++) {
           this.formReserva.idPersona = this.personaIdArray[i].id;
