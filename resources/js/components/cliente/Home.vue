@@ -10,7 +10,7 @@
 
       <video muted autoplay loop>
         <source
-          src="https://dl.dropbox.com/s/hmffv7hp4mfkooh/Biblioteca%20-%203%20de%208.mov"
+          src="/video/VideoIntro.mov"
           type="Video/mp4"
         />
       </video>
@@ -39,7 +39,7 @@
             <div class="wow fadeInUp" data-wow-duration="2s">
               <div class="col-md-12">
                 <div class="site-heading text-center">
-                  <h2>¿Que ofrece nuestro <span>Sendero</span>?</h2>
+                  <h2>{{$t('Que_Ofrecemos')}} <span>{{$t('Sendero?')}}</span></h2>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@
             >
               <div class="item">
                 <i class="fas fa-chalkboard-teacher"></i>
-                <h4>Capacitaciones y Cursos</h4>
+                <h4>{{$t('Capacitaciones_y_Cursos')}}</h4>
                 <p>
                   El Sendero Los Matapalos cuenta con una amplia variedad de
                   cursos referentes al ambiente y su cuidado al igual que una
@@ -117,7 +117,7 @@
             >
               <div class="item">
                 <i class="fas fa-book"></i>
-                <h4>Educación ambiental</h4>
+                <h4>{{$t('Educacion_ambiental')}}</h4>
                 <p>
                   El Sendero Los Matapalos cuenta con una amplia variedad de
                   cursos referentes al ambiente y su cuidado al igual que una

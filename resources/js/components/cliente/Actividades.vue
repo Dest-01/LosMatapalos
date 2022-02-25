@@ -1,13 +1,13 @@
 <template>
   <div class="contenedor-principal">
     <section class="section--blue wow fadeInLeft" data-wow-duration="2s">
-      <h1>Eventos del <span>Sendero los Matapalos</span></h1>
+      <h1>{{$t('Eventos')}} <span>{{$t('Matapalos')}}</span></h1>
 
       <div v-if="actividades.data == 0" class="mensaje">
         <i class="far fa-folder-open"></i>
         <h1>Oops!</h1>
-        <h3>No hay eventos en el Sendero</h3>
-        <h4>Muy pronto...</h4>
+        <h3>{{$t('no_hay')}}</h3>
+        <h4>{{$t('coming_soon')}}</h4>
       </div>
       <ul class="contenedor-todo">
         <div
@@ -24,13 +24,13 @@
           >
             <div class="book-container">
               <div class="content">
-                <button class="btn">Actividad</button>
+                <button class="btn">{{$t('Actividad')}}</button>
               </div>
             </div>
             <div class="informations-container">
               <h2 class="title">{{ actividad.nombre }}</h2>
-              <p class="sub-title">Para: {{ actividad.tipo }}</p>
-              <p class="sub-title">Hora: {{ actividad.hora }}</p>
+              <p class="sub-title">{{$t('Para')}} {{ actividad.tipo }}</p>
+              <p class="sub-title">{{$t('Hora')}} {{ actividad.hora }}</p>
               <div class="more-information">
                 <div class="info-and-date-container">
                   <div class="box info">
@@ -44,7 +44,7 @@
                         d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
                       />
                     </svg>
-                    <p>Cantidad de participantes</p>
+                    <p>{{$t('Cantidad_P')}}</p>
                     <p>{{ actividad.cantParticipantes }}</p>
                   </div>
                   <div class="box date">
@@ -58,7 +58,7 @@
                         d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z"
                       />
                     </svg>
-                    <p>Fecha de actividad</p>
+                    <p>{{$t('Fecha_A')}}</p>
                     <p>{{ actividad.fecha }}</p>
                   </div>
                 </div>

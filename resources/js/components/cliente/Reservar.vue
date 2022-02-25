@@ -2,21 +2,21 @@
   <div class="contenedor">
     <div class="intro" style="text-align: center">
       <h2>
-        Reservación del
-        <span style="color: #38ab81">Sendero los Matapalos</span>
+        {{$t('Reserva_')}}
+        <span style="color: #38ab81">{{$t('Los_MP')}}</span>
       </h2>
     </div>
     <div class="contenedor-2">
       <div class="card mb-3">
         <div class="row g-0">
           <div class="col-md-5">
-            <H2 style="text-align: center">Horario Sendero</H2>
+            <H2 style="text-align: center">{{$t('Horario_')}}</H2>
             <div class="horas">
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Hora Llegada</th>
-                    <th scope="col">Hora Salida</th>
+                    <th scope="col">{{$t('Hora_llegada')}} </th>
+                    <th scope="col">{{$t('Hora_salida')}}</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -145,18 +145,17 @@
           <div class="col-md-6">
             <div class="card-body">
               <div class="reservar_indicaciones">
-                <h2 class="card-title">Formulario de Reservación</h2>
+                <h2 class="card-title">{{$t('Formulario_R')}}</h2>
                 <div class="indicaciones_posicion">
-                  <i class="fas fa-info-circle"> Indicaciones</i>
+                  <i class="fas fa-info-circle">{{$t('Indicaciones')}}</i>
                   <i class="fas fa-angle-right"
-                    >Puede registrar cliente, organización o grupo.</i
+                    >{{$t('Indicacion1')}}</i
                   >
                   <i class="fas fa-angle-right"
-                    >Es necesario comprobar que esta registrado.</i
+                    >{{$t('Indicacion2')}}</i
                   >
                   <i class="fas fa-angle-right"
-                    >Se enviara un correo con la información de la
-                    reservación.</i
+                    >{{$t('Indicacion3')}}</i
                   >
                 </div>
                 <div class="botones_opciones">
@@ -165,21 +164,21 @@
                     class="btn btn-primary"
                     @click="modalPersona()"
                   >
-                    Persona
+                    {{$t('Persona')}}
                   </button>
                   <button
                     type="button"
                     class="btn btn-primary"
                     @click="modalGrupo()"
                   >
-                    Grupo
+                    {{$t('Grupo')}}
                   </button>
                   <button
                     type="button"
                     class="btn btn-primary"
                     @click="modalOrganizacion()"
                   >
-                    Organización
+                    {{$t('Organizacion')}}
                   </button>
                 </div>
               </div>
@@ -188,7 +187,7 @@
                 <input type="hidden" name="contact_number" />
                 <div class="group group_reservacion">
                   <div>
-                    <h3>Busqueda identificación o nombre de grupo</h3>
+                    <h3>{{$t('Busqueda_')}}</h3>
                   </div>
                   <div class="campo_consulta">
                     <div class="input_buscador">
@@ -210,7 +209,7 @@
                         class="Posicionar btn btn-success"
                         :disabled="bloquearConsulta"
                       >
-                        Consulta
+                        {{$t('Consulta')}}
                       </button>
                     </div>
                   </div>
@@ -233,10 +232,10 @@
                 <div class="group group_reservacion">
                   <div class="contenedor_inputs">
                     <div class="input_titulos">
-                      <h3>Cantidad de visitantes</h3>
+                      <h3>{{$t('Cantidad_Visita')}}</h3>
                     </div>
                     <div class="input_titulos">
-                      <h3>Fecha de llegada</h3>
+                      <h3>{{$t('Fecha_llegada')}}</h3>
                     </div>
                   </div>
                   <div class="contenedor_inputs">
@@ -287,10 +286,10 @@
                 <div class="group group_reservacion">
                   <div class="contenedor_inputs">
                     <div class="input_titulos">
-                      <h3>Hora de llegada</h3>
+                      <h3>{{$t('Hora_llegada')}}</h3>
                     </div>
                     <div class="input_titulos">
-                      <h3 class="labelH3">Hora de Salida</h3>
+                      <h3 class="labelH3">{{$t('Hora_salida')}}</h3>
                     </div>
                   </div>
                   <div class="contenedor_inputs">
@@ -346,8 +345,8 @@
                     value="Initial value"
                   />
                   <span
-                    >Acepta los
-                    <a href="#" target="_BLANK">terminos y condiciones</a></span
+                    >{{$t('Acepta_los')}}
+                    <a href="#" target="_BLANK">{{$t('Terminos')}}</a></span
                   >
                 </div>
                 <!--fin del div de terminos y condicones-->
@@ -359,14 +358,14 @@
                     @click="crearReserva()"
                     :disabled="bloquearReservar"
                   >
-                    Reservar
+                    {{$t('Reservar')}} 
                   </button>
                   <button
                     type="button"
                     class="btn btn-danger btn-rounded"
                     @click="cancelarConsulta()"
                   >
-                    Cancelar
+                    {{$t('Cancelar')}}
                   </button>
                 </div>
                 <!--FIN DEL DIV DE LOS BOTONES-->
@@ -388,7 +387,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Registro Persona</h5>
+            <h5 class="modal-title" id="exampleModalLabel">{{$t('Registro_Persona')}}</h5>
             <button
               type="button"
               class="btn-close"
@@ -398,7 +397,7 @@
           </div>
           <div class="modal-body">
             <div class="group">
-              <label>Tipo de identificación</label>
+              <label>{{$t('Type_of_identity')}}</label>
               <i class="fas fa-bars iconoInput_modal"></i>
               <select
                 class="input_modal"
@@ -408,10 +407,10 @@
                 }"
                 @change="tiposDeIndentificacon()"
               >
-                <option disabled value="">Seleccione un tipo</option>
-                <option value="Cedula Nacional">Cédula Nacional</option>
-                <option value="Cedula Residencial">Cedula Residencial</option>
-                <option value="Pasaporte">Pasaporte</option>
+                <option disabled value="">{{$t('Seleccione_tipo')}}</option>
+                <option value="Cedula Nacional">{{$t('Cedula_Nacional')}}</option>
+                <option value="Cedula Residencial">{{$t('Cedula_Residencial')}}</option>
+                <option value="Pasaporte">{{$t('Pasaporte')}}</option>
               </select>
             </div>
             <!---------------------------------------------------------->
@@ -487,7 +486,7 @@
                 ></has-error>
               </div>
               <div class="group">
-                <label>Nombre</label>
+                <label>{{$t('Nombre')}}</label>
                 <i class="fas fa-user-circle iconoInput_modal"></i>
                 <input
                   v-model="formPersona.nombre"
@@ -508,7 +507,7 @@
               </div>
 
               <div class="group">
-                <label>Primer Apellido</label>
+                <label>{{$t('Apellido1')}} </label>
                 <i class="fas fa-user-circle iconoInput_modal"></i>
                 <input
                   v-model="formPersona.apellido1"
@@ -529,7 +528,7 @@
               </div>
 
               <div class="group">
-                <label>Segundo Apellido</label>
+                <label>{{$t('Apellido2')}}</label>
                 <i class="fas fa-user-circle iconoInput_modal"></i>
                 <input
                   v-model="formPersona.apellido2"
@@ -550,7 +549,7 @@
               </div>
 
               <div class="group">
-                <label>Teléfono</label>
+                <label>{{$t('Telefono')}}</label>
                 <i class="fas fa-mobile-alt iconoInput_modal"></i>
                 <input
                   v-model="formPersona.telefono"
@@ -571,7 +570,7 @@
                 ></has-error>
               </div>
               <div class="group">
-                <label>Correo</label>
+                <label>{{$t('Correo')}}</label>
                 <i class="fas fa-at iconoInput_modal"></i>
                 <input
                   v-model="formPersona.correo"
@@ -600,7 +599,7 @@
               class="btn btn-secondary"
               data-mdb-dismiss="modal"
             >
-              Cerrar
+              {{$t('Cerrar')}}
             </button>
             <button
               type="button"
@@ -608,7 +607,7 @@
               @click="crearPersona()"
               id="botonPersonaRegistro"
             >
-              Registrar
+              {{$t('Registrar')}}
             </button>
           </div>
         </div>
@@ -627,7 +626,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              Registro Organización
+              {{$t('Registro_Org')}}
             </h5>
             <button
               type="button"
@@ -638,7 +637,7 @@
           </div>
           <div class="modal-body">
             <div class="group">
-              <label>Cédula organización</label>
+              <label>{{$t('Cedula_Org')}}</label>
               <i class="fas fa-id-card iconoInput_modal" style="left: -2px"></i>
               <input
                 class="input_modal"
@@ -657,7 +656,7 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>Nombre de la organización</label>
+              <label>{{$t('Nombre_Org')}}</label>
               <i class="fas fa-user-circle iconoInput_modal"></i>
               <input
                 class="input_modal"
@@ -677,7 +676,7 @@
             </div>
             <div class="group">
               <i class="fas fa-mobile-alt iconoInput_modal"></i>
-              <label>Teléfono de la organización</label>
+              <label>{{$t('Telefono_Org')}}</label>
               <input
                 class="input_modal"
                 v-model="formOrganizacion.telefono"
@@ -696,7 +695,7 @@
             </div>
 
             <div class="group">
-              <label>Email de la organización</label>
+              <label>{{$t('Correo_Org')}}</label>
               <i class="fas fa-at iconoInput_modal"></i>
               <input
                 class="input_modal"
@@ -721,14 +720,14 @@
               class="btn btn-secondary"
               data-mdb-dismiss="modal"
             >
-              Cerrar
+              {{$t('Cerrar')}}
             </button>
             <button
               type="button"
               class="btn btn-primary"
               @click="crearOrganizacion()"
             >
-              Registrar
+              {{$t('Registrar')}} 
             </button>
           </div>
         </div>
@@ -745,7 +744,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Registro Grupo</h5>
+            <h5 class="modal-title" id="exampleModalLabel">{{$t('Registrar_Grup')}}</h5>
             <button
               type="button"
               class="btn-close"
@@ -755,7 +754,7 @@
           </div>
           <div class="modal-body">
             <div class="group">
-              <label>Nombre del grupo</label>
+              <label>{{$t('Nombre_Grup')}}</label>
               <i class="fas fa-file-signature iconoInput_modal"></i>
               <input
                 v-model="formGrupo.nombre"
@@ -775,7 +774,7 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>Correo</label>
+              <label>{{$t('Correo')}}</label>
               <i class="fas fa-at iconoInput_modal"></i>
               <input
                 v-model="formGrupo.correo"
@@ -796,7 +795,7 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>cantidad del grupo</label>
+              <label>{{$t('Cantidad_Grup')}}</label>
               <i class="fas fa-user-circle iconoInput_modal"></i>
               <input
                 v-model="formGrupo.cantidad"
@@ -816,8 +815,8 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>Promedio de edades del grupo</label>
-              <label for="">Promedio: {{ formGrupo.edades }}</label>
+              <label>{{$t('Rango_edad')}}</label>
+              <label for="">{{$t('Rango')}} {{ formGrupo.edades }}</label>
               <input
                 v-model="formGrupo.edades"
                 type="range"
@@ -837,7 +836,7 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>Lugar de procedencia</label>
+              <label>{{$t('Lugar_Procedencia')}}</label>
               <i class="fas fa-globe iconoInput_modal"></i>
               <input
                 v-model="formGrupo.lugar"
@@ -855,7 +854,7 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>tematica a tratar</label>
+              <label>{{$t('Tematica_Tratar')}}</label>
               <i class="fas fa-comment-alt iconoInput_modal"></i>
               <select
                 class="input_modal"
@@ -864,11 +863,11 @@
                 required
                 @change="verInputOtraTematica()"
               >
-                <option disabled value="">Seleccione una tematica</option>
-                <option value="Todas las tematicas">Todas las tematicas</option>
-                <option value="Biodiversidad">Biodiversidad</option>
-                <option value="Cultura">Cultura</option>
-                <option value="Otros">Otros</option>
+                <option disabled value="">{{$t('Seleccion__Tematica')}}</option>
+                <option value="Todas las tematicas">{{$t('Todas_Tema')}} </option>
+                <option value="Biodiversidad">{{$t('Biodiversidad')}}</option>
+                <option value="Cultura">{{$t('Cultura')}}</option>
+                <option value="Otros">{{$t('Otros')}}</option>
               </select>
               <has-error
                 class="error_modal"
@@ -891,7 +890,7 @@
               </div>
             </div>
             <div class="group">
-              <label>Consideraciones</label>
+              <label>{{$t('Consideraciones')}}</label>
               <textarea
                 style="padding-left: 1px"
                 v-model="formGrupo.detalles"
@@ -911,10 +910,10 @@
               class="btn btn-secondary"
               data-mdb-dismiss="modal"
             >
-              Cerrar
+              {{$t('Cerrar')}}  
             </button>
             <button type="button" @click="crearGrupo()" class="btn btn-primary">
-              Registrar
+               {{$t('Registrar')}} 
             </button>
           </div>
         </div>
@@ -1112,20 +1111,20 @@ export default {
             })
             .then((response) => {
               if (response.data.success == false) {
-                Swal.fire("Error!", "Cedula ya existe!", "error");
+                Swal.fire("Error!", this.$t('IDExiste'), "error");
               } else {
-                Swal.fire("Registrado!", response.data.message, "success");
+                Swal.fire("success", this.$t('RegistradoExitoso'), "success");
                 $("#modalPersona").modal("hide");
               }
             })
             .catch((error) => {
-              Swal.fire("Error!", "Complete los campos!", "error");
+              Swal.fire("Error!", this.$t('CamposVacios'), "error");
             });
         } else {
-          Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
+          Swal.fire("Error!", this.$t('FormatoIDError'), "error");
         }
       } else {
-        Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
+        Swal.fire("Error!", this.$t('CampoIDVacio'), "error");
       }
     },
 
@@ -1138,24 +1137,24 @@ export default {
             })
             .then((response) => {
               if (response.data.success == false) {
-                Swal.fire("Error!", "Cedula ya existe!", "error");
+                Swal.fire("Error!", this.$t('IDExiste'), "error");
               } else {
-                Swal.fire("Registrado!", response.data.message, "success");
+                Swal.fire(this.$t('Registrado'), this.$t('RegistradoExitoso'), "success");
                 $("#modalOrganizacion").modal("hide");
               }
             })
             .catch((error) => {
-              Swal.fire("Error!", "Complete los campos!", "error");
+              Swal.fire("Error!", this.$t('CamposVacios'), "error");
             });
         } else {
           Swal.fire(
             "Error!",
-            "Formato de cédula juridica incorrecto!",
+            this.$t('FormatoIDOrga'),
             "error"
           );
         }
       } else {
-        Swal.fire("Error!", "Campo de cédula juridica esta vacio!", "error");
+        Swal.fire("Error!", this.$t('CampoIDOrgan'), "error");
       }
     },
     crearGrupo() {
@@ -1167,24 +1166,24 @@ export default {
             })
             .then((response) => {
               if (response.data.success == false) {
-                Swal.fire("Error!", "El nombre ya existe!", "error");
+                Swal.fire("Error!", this.$t('NombreGrupoExiste'), "error");
               } else {
-                Swal.fire("Registrado!", response.data.message, "success");
+                Swal.fire(this.$t('Registrado'), this.$t('RegistradoExitoso'), "success");
                 $("#modalGrupo").modal("hide");
               }
             })
             .catch((error) => {
-              Swal.fire("Error!", "Complete los campos!", "error");
+              Swal.fire("Error!", $t('CamposVacios'), "error");
             });
         } else {
           Swal.fire(
             "Error!",
-            "Formato de nombre del grupo incorrecto!",
+            this.$t('FormatoNombreGrupo'),
             "error"
           );
         }
       } else {
-        Swal.fire("Error!", "Campo de nombre del grupo vacio!", "error");
+        Swal.fire("Error!", this.$t('CampoNombreGrupo'), "error");
       }
     },
 
@@ -1202,7 +1201,7 @@ export default {
             .then(({ data }) => (this.personaIdArray = data.data));
           this.VermensajeNoExiste = false;
           this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = "Si esta registrado!";
+          this.mensajeDeExistencia = this.$t('YaRegistrado');
           this.bloquearConsulta = true;
           this.bloquearterminos = false;
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
@@ -1213,7 +1212,7 @@ export default {
             .then(({ data }) => (this.organizacionIdArray = data.data));
           this.VermensajeNoExiste = false;
           this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = "Si esta registrado!";
+          this.mensajeDeExistencia = this.$t('YaRegistrado');
           this.bloquearConsulta = true;
           this.bloquearterminos = false;
         } else if (/^[G]{1}-\d{1,4}$/.test(this.buscador)) {
@@ -1224,21 +1223,20 @@ export default {
             .then(({ data }) => (this.grupoIdArray = data.data));
           this.VermensajeNoExiste = false;
           this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = "Si esta registrado!";
+          this.mensajeDeExistencia = this.$t('YaRegistrado');
           this.bloquearConsulta = true;
           this.bloquearterminos = false;
         } else {
           this.VermensajeNoExiste = true;
           this.VermensajeSiExiste = false;
-          this.mensajeDeExistencia = "No esta registrado o formato incorrecto!";
+          this.mensajeDeExistencia = this.$t('NoEstaRegistrado');
           this.bloquearConsulta = false;
           this.bloquearterminos = true;
         }
       } else {
         this.VermensajeNoExiste = true;
         this.VermensajeSiExiste = false;
-        this.mensajeDeExistencia =
-          "Campo vacío, por favor digite una identificación o nombre de grupo";
+        this.mensajeDeExistencia =this.$t('ErrorConsulta');
       }
     },
 
@@ -1246,7 +1244,7 @@ export default {
       this.formReserva
         .post("/api/reservarCliente")
         .then((response) => {
-          Swal.fire("Reservación Realizada!", response.data.message, "success");
+          Swal.fire(this.$t('ReservacionMensaje1'), this.$t('ReservacionMensaje2'), "success");
           this.mensajeExistencia = "";
           this.bloquearConsulta = false;
           this.bloquearterminos = true;
@@ -1260,7 +1258,7 @@ export default {
         .catch(() => {
           Swal.fire(
             "Error!",
-            "No se realizo la reservación, revise los campos",
+             this.$t('ReservacionMensaje3'),
             "error"
           );
         });
@@ -1290,14 +1288,14 @@ export default {
       } else {
         Swal.fire(
           "Error!",
-          "Identificacion o nombre de grupo formato incorrecto!",
+           this.$t('ReservacionMensaje4'),
           "error"
         );
       }
       }else{
          Swal.fire(
           "Error!",
-          "Primero verifique que este registrado!",
+           this.$t('ReservacionMensaje5'),
           "error"
         );
       }

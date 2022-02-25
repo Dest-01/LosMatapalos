@@ -2,17 +2,18 @@
   <div class="contenedor-contacto">
     <div class="titulo">
       <h1 class="logo" style="margin-bottom: 20px">
-        Contacta<span style="color: #38ab81">nos</span>
+        {{ $t("Contactanos")
+        }}<span style="color: #38ab81">{{ $t("us") }}</span>
       </h1>
     </div>
     <div class="contenedor_triple">
       <div class="figura">
         <div class="contact-form">
-          <h3 style="text-align: center">Sendero los Matapalos</h3>
+          <h3 style="text-align: center">{{ $t("Los_MP") }}</h3>
           <form id="contact-form">
             <input type="hidden" name="contact_number" />
             <p>
-              <label>Nombre completo</label>
+              <label>{{ $t("nombre_c") }}</label>
               <input
                 type="text"
                 v-model="form.nombreCompleto"
@@ -30,7 +31,7 @@
               />
             </p>
             <p>
-              <label>Número de celular</label>
+              <label>{{ $t("numero_tel") }}</label>
               <input
                 v-model="form.numero"
                 type="tel"
@@ -39,7 +40,7 @@
               />
             </p>
             <p>
-              <label>Asunto</label>
+              <label>{{ $t("asunto") }}</label>
               <input
                 v-model="form.asunto"
                 type="text"
@@ -49,7 +50,7 @@
             </p>
             <div class="final_enviar">
               <p class="block">
-                <label>Mensaje</label>
+                <label>{{ $t("Mensaje") }}</label>
                 <textarea
                   name="mensaje"
                   v-model="form.mensaje"
@@ -63,7 +64,7 @@
                   type="button"
                   @click="enviaEmail()"
                 >
-                  Enviar
+                  {{ $t("Enviar") }}
                 </button>
               </p>
             </div>
@@ -71,7 +72,7 @@
         </div>
         <div class="contact-info">
           <div class="informacion">
-            <h4>Mas información</h4>
+            <h4>{{ $t("Mas_informacion") }}</h4>
             <ul>
               <li><i class="fas fa-phone"></i> (506) 0000-0000</li>
               <li>
@@ -80,8 +81,7 @@
             </ul>
             <i class="fas fa-map-marker-alt"></i>
             <p>
-              Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus
-              Liberia, Sede Regional Chorotega, Universidad Nacional
+              {{ $t("Parrafo_Info1") }}
             </p>
           </div>
         </div>
@@ -89,8 +89,7 @@
 
       <div class="contenedor_mapa">
         <div class="map-cont">
-          <div class="map-box" id="map">
-          </div>
+          <div class="map-box" id="map"></div>
         </div>
       </div>
     </div>
@@ -106,6 +105,7 @@ export default {
       numero: "",
       asunto: "",
       mensaje: "",
+      
       form: new Form({
         nombreCompleto: "",
         correo: "",
@@ -120,6 +120,7 @@ export default {
       this.form.reset();
     },
     enviaEmail() {
+      if(this.form.nombreCompleto != "" && this.form.correo != "" && this.form.numero != "" && this.form.asunto != "" && this.form.mensaje != ""){
       if (
         /^([A-Z]{1}[a-zñáéíóú]+[\s]*)+$/.test(this.form.nombreCompleto) &&
         /[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/.test(this.form.correo) &&
@@ -142,18 +143,20 @@ export default {
             templateParams,
             "user_GMf53dmaF0FI8RLY0cj3V"
           )
-          Swal.fire("Listo!", "Mensaje enviado!", "success");
+          Swal.fire("Listo!", this.$t('MensajeEnviado'), "success");
           this.limpiar();
       } else {
-        Swal.fire("Error!", "Complete los campos!", "error");
+        Swal.fire("Error!", this.$t('FormatoIncorrecto'), "error");
       }
-    },
+    }else{
+      Swal.fire("Error!", this.$t('CamposVacios'), "error");
+    }
+    }
   },
   mounted() {
     const plugin = document.createElement("script");
     plugin.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyAf2BTaIHXz95AJVwvHuoFd2CkF8gTcuvM");
     plugin.async = true;
-    plugin.defer = true;
     document.head.appendChild(plugin);
   },
 };

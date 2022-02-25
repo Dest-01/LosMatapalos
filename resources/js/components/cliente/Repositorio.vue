@@ -2,26 +2,26 @@
   <div class="principal">
     <div class="titulo">
       <h1 style="text-align: center">
-        Repositorio <span style="color: #38ab81">Documentos</span>
+        {{$t('Repo_Doc')}} <span style="color: #38ab81">{{$t('Docs')}}</span>
       </h1>
     </div>
     <div class="menu">
-      <button @click="vertodo()" class="btn_menu">Todo</button>
+      <button @click="vertodo()" class="btn_menu">{{$t('Todo')}}</button>
       <button @click="filtroPP()" class="btn_menu">
-        Prácticas Profesionales
+        {{$t('Practicas_P')}}
       </button>
-      <button @click="filtroTesis()" class="btn_menu">Tesis</button>
+      <button @click="filtroTesis()" class="btn_menu">{{$t('Tesis')}}</button>
       <button @click="filtroArticulosCientificos()" class="btn_menu">
-        Artículos Científicos
+        {{$t('Articulos_C')}}
       </button>
-      <button @click="filtroLibros()" class="btn_menu">Libros</button>
+      <button @click="filtroLibros()" class="btn_menu">{{$t('Libros')}}</button>
     </div>
     <div v-if="documentosRepositorio.data == 0" class="row">
       <div class="mensaje">
         <i class="far fa-folder-open"></i>
         <h1>Oops!</h1>
-        <h3>No hay documentos en el repositorio</h3>
-        <h4>Muy pronto...</h4>
+        <h3>{{$t('no_hay_docs')}}</h3>
+        <h4>{{$t('coming_soon')}}</h4>
       </div>
     </div>
     <div v-else class="secundario" style="overflow-x:auto;">
@@ -29,10 +29,10 @@
         <thead>
           <tr>
             <th class="icono"></th>
-            <th class="nombre" scope="col">Nombre</th>
-            <th class="descripcion" scope="col">Descripción</th>
-            <th class="botones" scope="col">Ver</th>
-            <th class="botones" scope="col">Descargar</th>
+            <th class="nombre" scope="col">{{$t('Nombre')}}</th>
+            <th class="descripcion" scope="col">{{$t('Descripcion')}}</th>
+            <th class="botones" scope="col">{{$t('Ver')}}</th>
+            <th class="botones" scope="col">{{$t('Descargar')}}</th>
           </tr>
         </thead>
         <tbody>
@@ -172,12 +172,18 @@ export default {
 
 <style scoped>
 .menu {
+  opacity: 0;
+  animation-name: aparecerTitulo;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin: 10px auto;
   padding: 5px;
   justify-content: center;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+  animation-duration: 3s;
+  transition: opacity 3s;
 }
 .btn_menu {
   margin: 5px;

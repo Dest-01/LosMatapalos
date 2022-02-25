@@ -2,20 +2,20 @@
   <div class="Total">
     <div class="titulo">
       <h1 style="text-align: center">
-        Galeria <span style="color: #38ab81">Flora</span>
+        {{$t('Galeria1')}} <span style="color: #38ab81">{{$t('Flora1')}}</span>
       </h1>
     </div>
     <div class="menu">
-      <button @click="vertodo()" class="btn_menu">Todo</button>
-      <button @click="pasarFiltro()" class="btn_menu">Herbaceas</button>
-      <button @click="segundoFiltro()" class="btn_menu">Leñosas</button>
+      <button @click="vertodo()" class="btn_menu">{{$t('Todo')}}</button>
+      <button @click="pasarFiltro()" class="btn_menu">{{$t('Herbacias')}}</button>
+      <button @click="segundoFiltro()" class="btn_menu">{{$t('Leñosas')}}</button>
     </div>
     <div v-if="floras.data == 0" class="row">
       <div class="mensaje">
         <i class="far fa-image"></i>
         <h1>Oops!</h1>
-        <h3>No hay registros en galería de flora</h3>
-        <h4>Muy pronto...</h4>
+        <h3>{{$t('No_hay_data')}}</h3>
+        <h4>{{$t('coming_soon')}}</h4>
       </div>
     </div>
     <div v-else class="container-all wow fadeInLeft" data-wow-duration="2s">
@@ -34,12 +34,12 @@
           data-bs-target="#exampleModal"
         />
         <div class="descripcion">
-          <span class="text">Nombre comun: {{ flora.nom_comun }}</span>
+          <span class="text">{{$t('Nombre_Comun')}}: {{ flora.nom_comun }}</span>
           <span class="text"
-            >Nombre Cientifico: {{ flora.nom_cientifico }}</span
+            >{{$t('Nombre_Cientifico')}}: {{ flora.nom_cientifico }}</span
           >
-          <span class="text">Tipo: {{ flora.tipo }}</span>
-          <span class="text">Familia: {{ flora.fam_cientifica }}</span>
+          <span class="text">{{$t('Tipo')}}: {{ flora.tipo }}</span>
+          <span class="text">{{$t('Familia')}}: {{ flora.fam_cientifica }}</span>
           <button
             @click="verImagen(flora)"
            data-mdb-toggle="modal"
@@ -48,7 +48,7 @@
             data-mdb-ripple-color="dark"
             id="btnVer"
           >
-            Ver
+            {{$t('Ver')}}
           </button>
         </div>
       </div>
@@ -73,7 +73,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              Nombre común: {{ form.nom_comun }}
+                {{$t('Nombre_Cientifico')}}: {{ form.nom_cientifico }}
             </h5>
             <button
               type="button"
@@ -90,7 +90,7 @@
               height="720px"
             />
             <div>
-              <h5>Descripcion: {{ form.descripcion }}</h5>
+              <h5>{{$t('Descripcion')}}: {{ form.descripcion }}</h5>
             </div>
           </div>
           <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->

@@ -413,8 +413,8 @@ article img {
 }
 
 .carda .content .img {
-  height: 130px;
-  width: 130px;
+  height: 250px;
+  width: 350px;
   border-radius: 30px;
   padding: 3px;
   background: #034991d1;
