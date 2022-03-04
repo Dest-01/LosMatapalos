@@ -171,6 +171,9 @@ export default {
 </script>
 
 <style scoped>
+.row{
+  width: 100%;
+}
 .menu {
   opacity: 0;
   animation-name: aparecerTitulo;

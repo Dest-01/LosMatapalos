@@ -5,7 +5,10 @@
         <a class="navbar-brand icono_una" href="https://www.una.ac.cr">
           <img src="images/una.png" alt="" width="100%" height="100%" />
         </a>
-        <a class="navbar-brand icono_sendero" href="https://sendero.herokuapp.com/">
+        <a
+          class="navbar-brand icono_sendero"
+          href="https://sendero.herokuapp.com/"
+        >
           <img src="images/logo2.png" alt="" width="100%" height="100%" />
         </a>
 
@@ -23,13 +26,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
-               <router-link class="nav-link" to="/inicio">{{ $t('Inicio') }}</router-link>
+              <router-link class="nav-link" to="/inicio">{{
+                $t("Inicio")
+              }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/reservacion">{{ $t('Reservacion') }}</router-link>
+              <router-link class="nav-link" to="/reservacion">{{
+                $t("Reservacion")
+              }}</router-link>
             </li>
             <li class="nav-item">
-               <router-link class="nav-link" to="/donaciones">{{ $t('Donacion') }}</router-link>
+              <router-link class="nav-link" to="/donaciones">{{
+                $t("Donacion")
+              }}</router-link>
             </li>
             <li></li>
             <li class="nav-item dropdown">
@@ -41,7 +50,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                {{ $t('Galeria') }}
+                {{ $t("Galeria") }}
               </a>
               <ul
                 class="dropdown-menu"
@@ -53,34 +62,36 @@
                 "
               >
                 <li>
-                   <router-link class="dropdown-item" to="/flora">{{ $t('Flora') }}</router-link>
+                  <router-link class="dropdown-item" to="/flora">{{
+                    $t("Flora")
+                  }}</router-link>
+                </li>
+
                 <li>
                   <hr class="dropdown-divider" />
                 </li>
-                <router-link class="dropdown-item" to="/fauna">{{ $t('Fauna') }}</router-link>
+                <router-link class="dropdown-item" to="/fauna">{{
+                  $t("Fauna")
+                }}</router-link>
               </ul>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/repositorio">{{ $t('Repositorio') }}</router-link>
+              <router-link class="nav-link" to="/repositorio">{{
+                $t("Repositorio")
+              }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/marca">{{ $t('Marca') }}</router-link>
+              <router-link class="nav-link" to="/marca">{{
+                $t("Marca")
+              }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/AcercaDe">{{ $t('Quienes') }}</router-link>
+              <router-link class="nav-link" to="/AcercaDe">{{
+                $t("Quienes")
+              }}</router-link>
             </li>
             <li class="nav-item">
-              <select class="nav-link language" v-model="$i18n.locale">
-                <option
-                  class="dropdown-item"
-                  style="color: #f8f8f8; font-size: 20px; font-weight: 400"
-                  v-for="(lang, i) in langs"
-                  :key="`Lang${i}`"
-                  :value="lang"
-                >
-                  {{ lang }}
-                </option>
-              </select>
+              <a class="nav-link" @click="changeLang()" href="#">{{IdiomaSeleccionado}}</a>
             </li>
           </ul>
         </div>
@@ -93,7 +104,29 @@
 export default {
   name: "locale-changer",
   data() {
-    return { langs: ["es", "en"] };
+    return { 
+      IdiomaSeleccionado: "",
+      langs: ["es", "en"] 
+    };
   },
+  methods: {
+    changeLang() {
+      this.lang = localStorage.getItem("locale") || "es";
+      this.IdiomaSeleccionado = "es";
+      if (this.lang === "es") {
+        this.lang = "en";
+        this.$i18n.locale = this.lang;
+        this.IdiomaSeleccionado = "en";
+      } else {
+        this.lang = "es";
+        this.$i18n.locale = this.lang;
+        this.IdiomaSeleccionado = "es";
+      }
+      localStorage.setItem("locale", this.lang);
+    },
+  },
+  created() {
+    this.changeLang();
+  }
 };
 </script>

@@ -48,9 +48,7 @@
             <div class="content-txt">
               <h1>{{ $t("Melipo") }}</h1>
               <h2>
-                Nam ultrices pellentesque facilisis. In semper tellus mollis
-                nisl pulvinar vitae vulputate lorem consequat. Fusce odio
-                tortor, pretium sit amet auctor ut, ultrices vel nibh.
+               El proyecto de abejas inició en el 2016 con un Hotel de Abejas sin Aguijón (consolidado el 15 de octubre del 2016), por parte de la carrera Arte y Comunicación Visual como un proyecto de graduación. Al ser una carrera que se promocionó sólo una única vez como plan piloto, decide trasladar este proyecto al grupo de voluntariado del Campus, UNA Cultura Ambiental.
               </h2>
             </div>
           </div>
@@ -64,9 +62,7 @@
             <div class="content-txt">
               <h1>{{ $t("Reservorio") }}</h1>
               <h2>
-                Nam ultrices pellentesque facilisis. In semper tellus mollis
-                nisl pulvinar vitae vulputate lorem consequat. Fusce odio
-                tortor, pretium sit amet auctor ut, ultrices vel nibh.
+               El campus fue construido en un terreno con relieves topográficos relativamente planos y por lo general en la época lluviosa el agua tiende a estancarse muy poco, sin embargo al construir toda la infraestructura de techos el flujo de agua incrementaría, convirtiéndose en problemas de inundación, que para evitarse, se instaló un sistema de manejo de agua residual tipo pluvial que consta de un sistema de captación de aguas de lluvia  (techos), conducción (drenajes), almacenamiento  (tanques subsuperficiales) y evacuación (sistema de bombeo). Las aguas son desviadas a un drenaje natural tipo acequia que drena hacia la calle pública. 
               </h2>
             </div>
           </div>

@@ -2,21 +2,25 @@
   <div class="contenedor">
     <div class="intro" style="text-align: center">
       <h2>
-        {{$t('Reserva_')}}
-        <span style="color: #38ab81">{{$t('Los_MP')}}</span>
+        {{ $t("Reserva_") }}
+        <span style="color: #38ab81">{{ $t("Los_MP") }}</span>
       </h2>
     </div>
     <div class="contenedor-2">
       <div class="card mb-3">
         <div class="row g-0">
           <div class="col-md-5">
-            <H2 style="text-align: center">{{$t('Horario_')}}</H2>
+            <H2 style="text-align: center">{{ $t("Horario_") }}</H2>
             <div class="horas">
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">{{$t('Hora_llegada')}} </th>
-                    <th scope="col">{{$t('Hora_salida')}}</th>
+                    <th scope="col">
+                      {{ $t("Hora_llegada") }}
+                    </th>
+                    <th scope="col">
+                      {{ $t("Hora_salida") }}
+                    </th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -145,18 +149,14 @@
           <div class="col-md-6">
             <div class="card-body">
               <div class="reservar_indicaciones">
-                <h2 class="card-title">{{$t('Formulario_R')}}</h2>
+                <h2 class="card-title">
+                  {{ $t("Formulario_R") }}
+                </h2>
                 <div class="indicaciones_posicion">
-                  <i class="fas fa-info-circle">{{$t('Indicaciones')}}</i>
-                  <i class="fas fa-angle-right"
-                    >{{$t('Indicacion1')}}</i
-                  >
-                  <i class="fas fa-angle-right"
-                    >{{$t('Indicacion2')}}</i
-                  >
-                  <i class="fas fa-angle-right"
-                    >{{$t('Indicacion3')}}</i
-                  >
+                  <i class="fas fa-info-circle">{{ $t("Indicaciones") }}</i>
+                  <i class="fas fa-angle-right">{{ $t("Indicacion1") }}</i>
+                  <i class="fas fa-angle-right">{{ $t("Indicacion2") }}</i>
+                  <i class="fas fa-angle-right">{{ $t("Indicacion3") }}</i>
                 </div>
                 <div class="botones_opciones">
                   <button
@@ -164,21 +164,21 @@
                     class="btn btn-primary"
                     @click="modalPersona()"
                   >
-                    {{$t('Persona')}}
+                    {{ $t("Persona") }}
                   </button>
                   <button
                     type="button"
                     class="btn btn-primary"
                     @click="modalGrupo()"
                   >
-                    {{$t('Grupo')}}
+                    {{ $t("Grupo") }}
                   </button>
                   <button
                     type="button"
                     class="btn btn-primary"
                     @click="modalOrganizacion()"
                   >
-                    {{$t('Organizacion')}}
+                    {{ $t("Organizacion") }}
                   </button>
                 </div>
               </div>
@@ -187,7 +187,7 @@
                 <input type="hidden" name="contact_number" />
                 <div class="group group_reservacion">
                   <div>
-                    <h3>{{$t('Busqueda_')}}</h3>
+                    <h3>{{ $t("Busqueda_") }}</h3>
                   </div>
                   <div class="campo_consulta">
                     <div class="input_buscador">
@@ -199,7 +199,7 @@
                         type="text"
                         required
                         :disabled="bloquearConsulta"
-                        placeholder="Escriba los datos a consultar..."
+                        v-bind:placeholder="$t('EscribaElIDCOnsultar')"
                       />
                     </div>
                     <div class="btn_consultar">
@@ -209,7 +209,7 @@
                         class="Posicionar btn btn-success"
                         :disabled="bloquearConsulta"
                       >
-                        {{$t('Consulta')}}
+                        {{ $t("Consulta") }}
                       </button>
                     </div>
                   </div>
@@ -232,10 +232,10 @@
                 <div class="group group_reservacion">
                   <div class="contenedor_inputs">
                     <div class="input_titulos">
-                      <h3>{{$t('Cantidad_Visita')}}</h3>
+                      <h3>{{ $t("Cantidad_Visita") }}</h3>
                     </div>
                     <div class="input_titulos">
-                      <h3>{{$t('Fecha_llegada')}}</h3>
+                      <h3>{{ $t("Fecha_llegada") }}</h3>
                     </div>
                   </div>
                   <div class="contenedor_inputs">
@@ -286,10 +286,12 @@
                 <div class="group group_reservacion">
                   <div class="contenedor_inputs">
                     <div class="input_titulos">
-                      <h3>{{$t('Hora_llegada')}}</h3>
+                      <h3>{{ $t("Hora_llegada") }}</h3>
                     </div>
                     <div class="input_titulos">
-                      <h3 class="labelH3">{{$t('Hora_salida')}}</h3>
+                      <h3 class="labelH3">
+                        {{ $t("Hora_salida") }}
+                      </h3>
                     </div>
                   </div>
                   <div class="contenedor_inputs">
@@ -345,8 +347,8 @@
                     value="Initial value"
                   />
                   <span
-                    >{{$t('Acepta_los')}}
-                    <a href="#" target="_BLANK">{{$t('Terminos')}}</a></span
+                    >{{ $t("Acepta_los") }}
+                    <a href="/documentos/Terminos y Condiciones.pdf" target="_BLANK">{{ $t("Terminos") }}</a></span
                   >
                 </div>
                 <!--fin del div de terminos y condicones-->
@@ -358,14 +360,14 @@
                     @click="crearReserva()"
                     :disabled="bloquearReservar"
                   >
-                    {{$t('Reservar')}} 
+                    {{ $t("Reservar") }}
                   </button>
                   <button
                     type="button"
                     class="btn btn-danger btn-rounded"
                     @click="cancelarConsulta()"
                   >
-                    {{$t('Cancelar')}}
+                    {{ $t("Cancelar") }}
                   </button>
                 </div>
                 <!--FIN DEL DIV DE LOS BOTONES-->
@@ -387,7 +389,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{$t('Registro_Persona')}}</h5>
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ $t("Registro_Persona") }}
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -397,7 +401,7 @@
           </div>
           <div class="modal-body">
             <div class="group">
-              <label>{{$t('Type_of_identity')}}</label>
+              <label>{{ $t("Type_of_identity") }}</label>
               <i class="fas fa-bars iconoInput_modal"></i>
               <select
                 class="input_modal"
@@ -407,10 +411,14 @@
                 }"
                 @change="tiposDeIndentificacon()"
               >
-                <option disabled value="">{{$t('Seleccione_tipo')}}</option>
-                <option value="Cedula Nacional">{{$t('Cedula_Nacional')}}</option>
-                <option value="Cedula Residencial">{{$t('Cedula_Residencial')}}</option>
-                <option value="Pasaporte">{{$t('Pasaporte')}}</option>
+                <option disabled value="">{{ $t("Seleccione_tipo") }}</option>
+                <option value="Cedula Nacional">
+                  {{ $t("Cedula_Nacional") }}
+                </option>
+                <option value="Cedula Residencial">
+                  {{ $t("Cedula_Residencial") }}
+                </option>
+                <option value="Pasaporte">{{ $t("Pasaporte") }}</option>
               </select>
             </div>
             <!---------------------------------------------------------->
@@ -430,7 +438,7 @@
                   :class="{
                     'is-invalid': formPersona.errors.has('identificacion'),
                   }"
-                  placeholder="Formato #-####-####"
+                  v-bind:placeholder="$t('EscribaIDNacional')"
                   id="nacional"
                   onchange="validarCedulaN()"
                 />
@@ -454,7 +462,7 @@
                   :class="{
                     'is-invalid': formPersona.errors.has('identificacion'),
                   }"
-                  placeholder="Formato de 10 dígitos"
+                 v-bind:placeholder="$t('EscribaResidencial')"
                   onchange="validateResidencial()"
                 />
                 <has-error
@@ -477,7 +485,7 @@
                   :class="{
                     'is-invalid': formPersona.errors.has('identificacion'),
                   }"
-                  placeholder="Formato de 11 a 12 dígitos"
+                  v-bind:placeholder="$t('EscribaPasaporte')"
                   onchange="validatePasaporte()"
                 />
                 <has-error
@@ -486,15 +494,17 @@
                 ></has-error>
               </div>
               <div class="group">
-                <label>{{$t('Nombre')}}</label>
+                <label>{{ $t("Nombre") }}</label>
                 <i class="fas fa-user-circle iconoInput_modal"></i>
                 <input
                   v-model="formPersona.nombre"
                   type="text"
                   name="nombre"
                   class="input_modal"
-                  :class="{ 'is-invalid': formPersona.errors.has('nombre') }"
-                  placeholder="Escribar el nombre..."
+                  :class="{
+                    'is-invalid': formPersona.errors.has('nombre'),
+                  }"
+                  v-bind:placeholder="$t('EscribaNombre')"
                   minlength="3"
                   maxlength="20"
                   required
@@ -507,15 +517,17 @@
               </div>
 
               <div class="group">
-                <label>{{$t('Apellido1')}} </label>
+                <label>{{ $t("Apellido1") }} </label>
                 <i class="fas fa-user-circle iconoInput_modal"></i>
                 <input
                   v-model="formPersona.apellido1"
                   type="text"
                   name="apellido1"
                   class="input_modal"
-                  :class="{ 'is-invalid': formPersona.errors.has('apellido1') }"
-                  placeholder="Escriba el primer apellido..."
+                  :class="{
+                    'is-invalid': formPersona.errors.has('apellido1'),
+                  }"
+                 v-bind:placeholder="$t('EscribaApellido1')"
                   minlength="3"
                   maxlength="20"
                   required
@@ -528,15 +540,17 @@
               </div>
 
               <div class="group">
-                <label>{{$t('Apellido2')}}</label>
+                <label>{{ $t("Apellido2") }}</label>
                 <i class="fas fa-user-circle iconoInput_modal"></i>
                 <input
                   v-model="formPersona.apellido2"
                   type="text"
                   name="apellido2"
                   class="input_modal"
-                  :class="{ 'is-invalid': formPersona.errors.has('apellido2') }"
-                  placeholder="Escriba el segundo apellido..."
+                  :class="{
+                    'is-invalid': formPersona.errors.has('apellido2'),
+                  }"
+                  v-bind:placeholder="$t('EscribaApellido2')"
                   minlength="3"
                   maxlength="20"
                   required
@@ -549,18 +563,20 @@
               </div>
 
               <div class="group">
-                <label>{{$t('Telefono')}}</label>
+                <label>{{ $t("Telefono") }}</label>
                 <i class="fas fa-mobile-alt iconoInput_modal"></i>
                 <input
                   v-model="formPersona.telefono"
                   type="tel"
                   name="telefono"
                   class="input_modal"
-                  :class="{ 'is-invalid': formPersona.errors.has('telefono') }"
+                  :class="{
+                    'is-invalid': formPersona.errors.has('telefono'),
+                  }"
                   id="phone"
                   size="8"
                   min="10000000"
-                  placeholder="Escriba los 8 dígitos..."
+                 v-bind:placeholder="$t('EscibaNumero')"
                   required
                 />
                 <has-error
@@ -570,15 +586,17 @@
                 ></has-error>
               </div>
               <div class="group">
-                <label>{{$t('Correo')}}</label>
+                <label>{{ $t("Correo") }}</label>
                 <i class="fas fa-at iconoInput_modal"></i>
                 <input
                   v-model="formPersona.correo"
                   type="email"
                   name="correo"
                   class="input_modal"
-                  :class="{ 'is-invalid': formPersona.errors.has('correo') }"
-                  placeholder="ejemplo@gmail.com"
+                  :class="{
+                    'is-invalid': formPersona.errors.has('correo'),
+                  }"
+                  v-bind:placeholder="$t('EscribaCorreo')"
                   minlength="3"
                   maxlength="100"
                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
@@ -599,7 +617,7 @@
               class="btn btn-secondary"
               data-mdb-dismiss="modal"
             >
-              {{$t('Cerrar')}}
+              {{ $t("Cerrar") }}
             </button>
             <button
               type="button"
@@ -607,7 +625,7 @@
               @click="crearPersona()"
               id="botonPersonaRegistro"
             >
-              {{$t('Registrar')}}
+              {{ $t("Registrar") }}
             </button>
           </div>
         </div>
@@ -626,7 +644,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              {{$t('Registro_Org')}}
+              {{ $t("Registro_Org") }}
             </h5>
             <button
               type="button"
@@ -637,7 +655,7 @@
           </div>
           <div class="modal-body">
             <div class="group">
-              <label>{{$t('Cedula_Org')}}</label>
+              <label>{{ $t("Cedula_Org") }}</label>
               <i class="fas fa-id-card iconoInput_modal" style="left: -2px"></i>
               <input
                 class="input_modal"
@@ -647,7 +665,7 @@
                 :class="{
                   'is-invalid': formOrganizacion.errors.has('identificacion'),
                 }"
-                placeholder="Formato: #-###-######"
+                v-bind:placeholder="$t('CedulaOrga')"
               />
               <has-error
                 style="top: 80px"
@@ -656,7 +674,7 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>{{$t('Nombre_Org')}}</label>
+              <label>{{ $t("Nombre_Org") }}</label>
               <i class="fas fa-user-circle iconoInput_modal"></i>
               <input
                 class="input_modal"
@@ -666,7 +684,7 @@
                 :class="{
                   'is-invalid': formOrganizacion.errors.has('nombre'),
                 }"
-                placeholder="Escriba el nombre de la organización"
+                v-bind:placeholder="$t('NombreOrga')"
               />
               <has-error
                 style="top: 80px"
@@ -676,7 +694,7 @@
             </div>
             <div class="group">
               <i class="fas fa-mobile-alt iconoInput_modal"></i>
-              <label>{{$t('Telefono_Org')}}</label>
+              <label>{{ $t("Telefono_Org") }}</label>
               <input
                 class="input_modal"
                 v-model="formOrganizacion.telefono"
@@ -685,7 +703,7 @@
                 :class="{
                   'is-invalid': formOrganizacion.errors.has('telefono'),
                 }"
-                placeholder="Escriba los 8 dígitos..."
+                v-bind:placeholder="$t('CelularOrga')"
               />
               <has-error
                 style="top: 80px"
@@ -695,7 +713,7 @@
             </div>
 
             <div class="group">
-              <label>{{$t('Correo_Org')}}</label>
+              <label>{{ $t("Correo_Org") }}</label>
               <i class="fas fa-at iconoInput_modal"></i>
               <input
                 class="input_modal"
@@ -705,7 +723,7 @@
                 :class="{
                   'is-invalid': formOrganizacion.errors.has('correo'),
                 }"
-                placeholder="ejemplo@gmail.com"
+               v-bind:placeholder="$t('CorreoOrga')"
               />
               <has-error
                 style="top: 80px"
@@ -720,14 +738,14 @@
               class="btn btn-secondary"
               data-mdb-dismiss="modal"
             >
-              {{$t('Cerrar')}}
+              {{ $t("Cerrar") }}
             </button>
             <button
               type="button"
               class="btn btn-primary"
               @click="crearOrganizacion()"
             >
-              {{$t('Registrar')}} 
+              {{ $t("Registrar") }}
             </button>
           </div>
         </div>
@@ -744,7 +762,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{$t('Registrar_Grup')}}</h5>
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ $t("Registrar_Grup") }}
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -754,15 +774,17 @@
           </div>
           <div class="modal-body">
             <div class="group">
-              <label>{{$t('Nombre_Grup')}}</label>
+              <label>{{ $t("Nombre_Grup") }}</label>
               <i class="fas fa-file-signature iconoInput_modal"></i>
               <input
                 v-model="formGrupo.nombre"
                 type="text"
                 name="nombre"
                 class="input_modal"
-                :class="{ 'is-invalid': formGrupo.errors.has('nombre') }"
-                placeholder="Escribar el nombre del grupo G-####"
+                :class="{
+                  'is-invalid': formGrupo.errors.has('nombre'),
+                }"
+               v-bind:placeholder="$t('EscribaNombreG')"
                 minlength="3"
                 maxlength="20"
                 required
@@ -774,15 +796,17 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>{{$t('Correo')}}</label>
+              <label>{{ $t("Correo") }}</label>
               <i class="fas fa-at iconoInput_modal"></i>
               <input
                 v-model="formGrupo.correo"
                 type="email"
                 name="correo"
                 class="input_modal"
-                :class="{ 'is-invalid': formGrupo.errors.has('correo') }"
-                placeholder="ejemplo@gmail.com"
+                :class="{
+                  'is-invalid': formGrupo.errors.has('correo'),
+                }"
+                v-bind:placeholder="$t('EscribaCorreo')"
                 minlength="3"
                 maxlength="100"
                 pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
@@ -795,15 +819,17 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>{{$t('Cantidad_Grup')}}</label>
+              <label>{{ $t("Cantidad_Grup") }}</label>
               <i class="fas fa-user-circle iconoInput_modal"></i>
               <input
                 v-model="formGrupo.cantidad"
                 type="number"
                 name="cantidad"
                 class="input_modal"
-                :class="{ 'is-invalid': formGrupo.errors.has('cantidad') }"
-                placeholder="Cantidad del grupo..."
+                :class="{
+                  'is-invalid': formGrupo.errors.has('cantidad'),
+                }"
+                v-bind:placeholder="$t('EscribaCantidadG')"
                 minlength="3"
                 maxlength="20"
                 required
@@ -815,17 +841,19 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>{{$t('Rango_edad')}}</label>
-              <label for="">{{$t('Rango')}} {{ formGrupo.edades }}</label>
+              <label>{{ $t("Rango_edad") }}</label>
+              <label for="">{{ $t("Rango") }} {{ formGrupo.edades }}</label>
               <input
                 v-model="formGrupo.edades"
                 type="range"
                 name="edades"
                 class="input_modal"
-                :class="{ 'is-invalid': formGrupo.errors.has('edades') }"
+                :class="{
+                  'is-invalid': formGrupo.errors.has('edades'),
+                }"
                 placeholder="Cantidad del grupo..."
                 min="1"
-                max="150"
+                max="105"
                 value="50"
                 required
               />
@@ -836,15 +864,17 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>{{$t('Lugar_Procedencia')}}</label>
+              <label>{{ $t("Lugar_Procedencia") }}</label>
               <i class="fas fa-globe iconoInput_modal"></i>
               <input
                 v-model="formGrupo.lugar"
                 type="text"
                 name="lugar"
                 class="input_modal"
-                :class="{ 'is-invalid': formGrupo.errors.has('lugar') }"
-                placeholder="Lugar de procedencia..."
+                :class="{
+                  'is-invalid': formGrupo.errors.has('lugar'),
+                }"
+                v-bind:placeholder="$t('EscribaLugarG')"
                 required
               />
               <has-error
@@ -854,20 +884,26 @@
               ></has-error>
             </div>
             <div class="group">
-              <label>{{$t('Tematica_Tratar')}}</label>
+              <label>{{ $t("Tematica_Tratar") }}</label>
               <i class="fas fa-comment-alt iconoInput_modal"></i>
               <select
                 class="input_modal"
                 v-model="formGrupo.tematica"
-                :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
+                :class="{
+                  'is-invalid': formGrupo.errors.has('tematica'),
+                }"
                 required
                 @change="verInputOtraTematica()"
               >
-                <option disabled value="">{{$t('Seleccion__Tematica')}}</option>
-                <option value="Todas las tematicas">{{$t('Todas_Tema')}} </option>
-                <option value="Biodiversidad">{{$t('Biodiversidad')}}</option>
-                <option value="Cultura">{{$t('Cultura')}}</option>
-                <option value="Otros">{{$t('Otros')}}</option>
+                <option disabled value="">
+                  {{ $t("Seleccion__Tematica") }}
+                </option>
+                <option value="Todas las tematicas">
+                  {{ $t("Todas_Tema") }}
+                </option>
+                <option value="Biodiversidad">{{ $t("Biodiversidad") }}</option>
+                <option value="Cultura">{{ $t("Cultura") }}</option>
+                <option value="Otros">{{ $t("Otros") }}</option>
               </select>
               <has-error
                 class="error_modal"
@@ -883,22 +919,26 @@
                   v-model="formGrupo.tematica"
                   name="tematica"
                   class="input_modal"
-                  :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
-                  placeholder="Escriba la otra tematica de interes..."
+                  :class="{
+                    'is-invalid': formGrupo.errors.has('tematica'),
+                  }"
+                  v-bind:placeholder="$t('EscribaTematica')"
                   required
                 />
               </div>
             </div>
             <div class="group">
-              <label>{{$t('Consideraciones')}}</label>
+              <label>{{ $t("Consideraciones") }}</label>
               <textarea
                 style="padding-left: 1px"
                 v-model="formGrupo.detalles"
                 type="text"
                 name="detalles"
                 class="input_modal"
-                :class="{ 'is-invalid': formGrupo.errors.has('detalles') }"
-                placeholder="Algunas consideraciones que deberiamos tener en cuenta..."
+                :class="{
+                  'is-invalid': formGrupo.errors.has('detalles'),
+                }"
+                v-bind:placeholder="$t('EscribaConsideraciones')"
                 required
               >
               </textarea>
@@ -910,10 +950,10 @@
               class="btn btn-secondary"
               data-mdb-dismiss="modal"
             >
-              {{$t('Cerrar')}}  
+              {{ $t("Cerrar") }}
             </button>
             <button type="button" @click="crearGrupo()" class="btn btn-primary">
-               {{$t('Registrar')}} 
+              {{ $t("Registrar") }}
             </button>
           </div>
         </div>
@@ -986,7 +1026,7 @@ export default {
       }),
       formGrupo: new Form({
         id: "",
-        nombre: "",
+        nombre: "G-",
         cantidad: "",
         correo: "",
         edades: "",
@@ -1000,7 +1040,7 @@ export default {
     verInputOtraTematica() {
       if (this.formGrupo.tematica == "Otros") {
         this.VerOtraTematica = true;
-        this.formGrupo.tematica = "Escriba la tematica...";
+        this.formGrupo.tematica = "";
       } else {
         this.VerOtraTematica = false;
       }
@@ -1107,24 +1147,26 @@ export default {
         ) {
           this.formPersona
             .post("/api/reservarCliente/persona", {
-              params: { identificacion: this.formPersona.identificacion },
+              params: {
+                identificacion: this.formPersona.identificacion,
+              },
             })
             .then((response) => {
               if (response.data.success == false) {
-                Swal.fire("Error!", this.$t('IDExiste'), "error");
+                Swal.fire("Error!", this.$t("IDExiste"), "error");
               } else {
-                Swal.fire("success", this.$t('RegistradoExitoso'), "success");
+                Swal.fire("success", this.$t("RegistradoExitoso"), "success");
                 $("#modalPersona").modal("hide");
               }
             })
             .catch((error) => {
-              Swal.fire("Error!", this.$t('CamposVacios'), "error");
+              Swal.fire("Error!", this.$t("CamposVacios"), "error");
             });
         } else {
-          Swal.fire("Error!", this.$t('FormatoIDError'), "error");
+          Swal.fire("Error!", this.$t("FormatoIDError"), "error");
         }
       } else {
-        Swal.fire("Error!", this.$t('CampoIDVacio'), "error");
+        Swal.fire("Error!", this.$t("CampoIDVacio"), "error");
       }
     },
 
@@ -1133,28 +1175,30 @@ export default {
         if (/^[1-9]-\d{3}-\d{6}$/.test(this.formOrganizacion.identificacion)) {
           this.formOrganizacion
             .post("/api/reservarCliente/organizacion", {
-              params: { identificacion: this.formOrganizacion.identificacion },
+              params: {
+                identificacion: this.formOrganizacion.identificacion,
+              },
             })
             .then((response) => {
               if (response.data.success == false) {
-                Swal.fire("Error!", this.$t('IDExiste'), "error");
+                Swal.fire("Error!", this.$t("IDExiste"), "error");
               } else {
-                Swal.fire(this.$t('Registrado'), this.$t('RegistradoExitoso'), "success");
+                Swal.fire(
+                  this.$t("Registrado"),
+                  this.$t("RegistradoExitoso"),
+                  "success"
+                );
                 $("#modalOrganizacion").modal("hide");
               }
             })
             .catch((error) => {
-              Swal.fire("Error!", this.$t('CamposVacios'), "error");
+              Swal.fire("Error!", this.$t("CamposVacios"), "error");
             });
         } else {
-          Swal.fire(
-            "Error!",
-            this.$t('FormatoIDOrga'),
-            "error"
-          );
+          Swal.fire("Error!", this.$t("FormatoIDOrga"), "error");
         }
       } else {
-        Swal.fire("Error!", this.$t('CampoIDOrgan'), "error");
+        Swal.fire("Error!", this.$t("CampoIDOrgan"), "error");
       }
     },
     crearGrupo() {
@@ -1166,24 +1210,24 @@ export default {
             })
             .then((response) => {
               if (response.data.success == false) {
-                Swal.fire("Error!", this.$t('NombreGrupoExiste'), "error");
+                Swal.fire("Error!", this.$t("NombreGrupoExiste"), "error");
               } else {
-                Swal.fire(this.$t('Registrado'), this.$t('RegistradoExitoso'), "success");
+                Swal.fire(
+                  this.$t("Registrado"),
+                  this.$t("RegistradoExitoso"),
+                  "success"
+                );
                 $("#modalGrupo").modal("hide");
               }
             })
             .catch((error) => {
-              Swal.fire("Error!", $t('CamposVacios'), "error");
+              Swal.fire("Error!", $t("CamposVacios"), "error");
             });
         } else {
-          Swal.fire(
-            "Error!",
-            this.$t('FormatoNombreGrupo'),
-            "error"
-          );
+          Swal.fire("Error!", this.$t("FormatoNombreGrupo"), "error");
         }
       } else {
-        Swal.fire("Error!", this.$t('CampoNombreGrupo'), "error");
+        Swal.fire("Error!", this.$t("CampoNombreGrupo"), "error");
       }
     },
 
@@ -1201,7 +1245,7 @@ export default {
             .then(({ data }) => (this.personaIdArray = data.data));
           this.VermensajeNoExiste = false;
           this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = this.$t('YaRegistrado');
+          this.mensajeDeExistencia = this.$t("YaRegistrado");
           this.bloquearConsulta = true;
           this.bloquearterminos = false;
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
@@ -1212,7 +1256,7 @@ export default {
             .then(({ data }) => (this.organizacionIdArray = data.data));
           this.VermensajeNoExiste = false;
           this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = this.$t('YaRegistrado');
+          this.mensajeDeExistencia = this.$t("YaRegistrado");
           this.bloquearConsulta = true;
           this.bloquearterminos = false;
         } else if (/^[G]{1}-\d{1,4}$/.test(this.buscador)) {
@@ -1223,48 +1267,46 @@ export default {
             .then(({ data }) => (this.grupoIdArray = data.data));
           this.VermensajeNoExiste = false;
           this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = this.$t('YaRegistrado');
+          this.mensajeDeExistencia = this.$t("YaRegistrado");
           this.bloquearConsulta = true;
           this.bloquearterminos = false;
         } else {
           this.VermensajeNoExiste = true;
           this.VermensajeSiExiste = false;
-          this.mensajeDeExistencia = this.$t('NoEstaRegistrado');
+          this.mensajeDeExistencia = this.$t("NoEstaRegistrado");
           this.bloquearConsulta = false;
           this.bloquearterminos = true;
         }
       } else {
         this.VermensajeNoExiste = true;
         this.VermensajeSiExiste = false;
-        this.mensajeDeExistencia =this.$t('ErrorConsulta');
+        this.mensajeDeExistencia = this.$t("ErrorConsulta");
       }
     },
 
-    reservar() {
-      this.formReserva
-        .post("/api/reservarCliente")
-        .then((response) => {
-          Swal.fire(this.$t('ReservacionMensaje1'), this.$t('ReservacionMensaje2'), "success");
-          this.mensajeExistencia = "";
-          this.bloquearConsulta = false;
-          this.bloquearterminos = true;
-          this.AceptarTerminos = false;
-          this.llenarFormularioCorreo();
-          this.enviaEmail();
-          this.formReserva.reset();
-          this.formReserva.errors.clear();
-          this.$Progress.finish();
-        })
-        .catch(() => {
-          Swal.fire(
-            "Error!",
-             this.$t('ReservacionMensaje3'),
-            "error"
-          );
-        });
+    async reservar() {
+      try {
+        await this.formReserva.post("/api/reservarCliente");
+        Swal.fire(
+          this.$t("ReservacionMensaje1"),
+          this.$t("ReservacionMensaje2"),
+          "success"
+        );
+        this.mensajeExistencia = "";
+        this.bloquearConsulta = false;
+        this.bloquearterminos = true;
+        this.AceptarTerminos = false;
+        this.llenarFormularioCorreo();
+        this.enviaEmail();
+        this.formReserva.reset();
+        this.formReserva.errors.clear();
+        this.$Progress.finish();
+      } catch (error) {
+        Swal.fire("Error!", this.$t("ReservacionMensaje3"), "error");
+      }
     },
-    totalDatosFuncion(){
-if (this.personaIdArray.length != 0) {
+    totalDatosFuncion() {
+      if (this.personaIdArray.length != 0) {
         for (let i = 0; i < this.personaIdArray.length; i++) {
           this.formReserva.idPersona = this.personaIdArray[i].id;
           this.formReserva.identificacionPersona =
@@ -1296,39 +1338,31 @@ if (this.personaIdArray.length != 0) {
 
     crearReserva() {
       this.totalDatosFuncion();
-      if(this.buscador.length != ""){
-      if (
-        /^[1-9]-\d{4}-\d{4}$/.test(this.formReserva.identificacionPersona) ||
-        /^[1-9]\d{9}$/.test(this.formReserva.identificacionPersona) ||
-        (/^\d{11,12}$/.test(this.formReserva.identificacionPersona) &&
-          this.formReserva.idPersona != 0)
-      ) {
-        this.reservar();
-      } else if (
-        /^[1-9]-\d{3}-\d{6}$/.test(
-          this.formReserva.identificacionOrganizacion
-        ) &&
-        this.formReserva.idOrganizacion != 0
-      ) {
-        this.reservar();
-      } else if (
-        /^[G]{1}-\d{1,4}$/.test(this.formReserva.nombreGrupo) &&
-        this.formReserva.idGrupo != 0
-      ) {
-        this.reservar();
+      if (this.buscador.length != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.formReserva.identificacionPersona) ||
+          /^[1-9]\d{9}$/.test(this.formReserva.identificacionPersona) ||
+          (/^\d{11,12}$/.test(this.formReserva.identificacionPersona) &&
+            this.formReserva.idPersona != 0)
+        ) {
+          this.reservar();
+        } else if (
+          /^[1-9]-\d{3}-\d{6}$/.test(
+            this.formReserva.identificacionOrganizacion
+          ) &&
+          this.formReserva.idOrganizacion != 0
+        ) {
+          this.reservar();
+        } else if (
+          /^[G]{1}-\d{1,4}$/.test(this.formReserva.nombreGrupo) &&
+          this.formReserva.idGrupo != 0
+        ) {
+          this.reservar();
+        } else {
+          Swal.fire("Error!", this.$t("ReservacionMensaje4"), "error");
+        }
       } else {
-        Swal.fire(
-          "Error!",
-           this.$t('ReservacionMensaje4'),
-          "error"
-        );
-      }
-      }else{
-         Swal.fire(
-          "Error!",
-           this.$t('ReservacionMensaje5'),
-          "error"
-        );
+        Swal.fire("Error!", this.$t("ReservacionMensaje5"), "error");
       }
     },
 
@@ -1378,7 +1412,7 @@ if (this.personaIdArray.length != 0) {
     this.$Progress.finish();
   },
   computed: {
-    totalDatos: function() {
+    totalDatos: function () {
       if (this.personaIdArray.length != 0) {
         for (let i = 0; i < this.personaIdArray.length; i++) {
           this.formReserva.idPersona = this.personaIdArray[i].id;
@@ -1525,6 +1559,7 @@ td {
   flex-wrap: wrap;
   margin: 5px;
   padding: 5px;
+  text-align: center;
 }
 .fas {
   font-weight: 900;
@@ -1590,15 +1625,15 @@ button {
   margin: 5px 5px 30px 5px;
 }
 .input_buscador {
-  width: 65%;
+  width: 75%;
 }
 .input_buscador input {
-  width: 80%;
+  width: 85%;
   padding: 10px 0;
   font-size: 18px;
 }
 .btn_consultar {
-  width: 35%;
+  width: 25%;
 }
 .aceptar {
   text-align: center;
@@ -1769,4 +1804,3 @@ h3 {
 }
 /***********RESPONSIVE MODE***************************/
 </style>
-

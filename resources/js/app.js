@@ -74,7 +74,7 @@ Vue.config.productionTip = false
  // Routes End
 
  router.beforeEach((to, from, next) => {
-    i18n.locale = localStorage.getItem('language') || 'es'
+ //   i18n.locale = localStorage.getItem('language') || 'es'
     return next()
     
   })

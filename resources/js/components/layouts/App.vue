@@ -12,7 +12,7 @@
         <!-- Copyright -->
         <div class="text-center p-3">
             <h5 style="padding: 10px">
-                Senderos los Matapalos - PGAI
+                {{ $t('NombreCompleto') }}
             </h5>
             <h5 style="padding: 10px">
                 <a href="https://www.facebook.com/pgaiuna/" target="_blank"><i class="fab fa-facebook white"></i></a>
@@ -20,7 +20,7 @@
                         class="fab fa-instagram white"></i></a>
             </h5>
             <h5 style="padding: 10px">
-                © 2021-2022 Todos los derechos reservados.
+                {{ $t('CopyRight') }}
             </h5>
 
         </div>

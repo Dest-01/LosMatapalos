@@ -153,7 +153,32 @@
      "ReservacionMensaje2": "We look forward to your visit soon!",
      "ReservacionMensaje3": "The reservation was not made, check the fields!",
      "ReservacionMensaje4": "Incorrect ID or group name format!",
-     "ReservacionMensaje5": "First verify that you are registered!"
+     "ReservacionMensaje5": "First verify that you are registered!",
+
+     "EscribaElIDCOnsultar":"Write the id or name to consult...",
+     "EscribaIDNacional":"Format #-####-####",
+     "EscribaResidencial":"Format of 10 digits",
+     "EscribaPasaporte":"Format of 11 a 12 digits",
+     "EscribaNombre":"Write your name...",
+     "EscribaApellido1":"Write the first name...",
+     "EscribaApellido2":"Write the second name...",
+     "EscibaNumero":"Write the cell phone number...",
+     "EscribaCorreo":"Write your email...",
+
+     "EscribaNombreG":"Format G-####",
+     "EscribaCantidadG":"Enter the number of group members...",
+     "EscribaLugarG":"Write the place of origin...",
+     "EscribaTematica":"Write the topic of interest...",
+     "EscribaConsideraciones":"Write some considerations to take into account...",
+
+     "CedulaOrga":"Format: #-###-######",
+    "NombreOrga":"Write the name of the organization...",
+    "CelularOrga":"Write the 8 digits...",
+    "CorreoOrga":"Organization email...",
+
+
+    "CopyRight":"© 2021-2022 All rights reserved.",
+    "NombreCompleto":"Los Matapalos Trail - PGAI"
 
      
 }

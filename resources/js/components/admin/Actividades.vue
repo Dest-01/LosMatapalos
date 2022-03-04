@@ -695,9 +695,18 @@ export default {
   vertical-align: baseline;
   border-top: 1px solid #dee2e6;
 }
-@media screen and (min-width: 900px) {
+@media only screen and (min-device-width: 300px) and (max-device-width:1199px) {
   .modal-content {
     width: 100%;
+  }
+  #modal-contentino{
+    width: 100%;
+  }
+  #inputsModal{
+    width: 100%;
+  }
+  .form-group img{
+    height: 250px;
   }
 }
 </style>

@@ -27,7 +27,7 @@
      "Eventos":"Eventos del sendero",
      "Matapalos":"Los Matapalos",
      "no_hay":"No hay eventos en este momento",
-     "no_hay_docs":"no hay eventos disponibles",
+     "no_hay_docs":"no hay documentos disponibles",
      "coming_soon":"próximamente",
      "Actividad":"Actividades",
      "Para":"Para:",
@@ -155,8 +155,31 @@
      "ReservacionMensaje2": "Esperamos su visita pronto!",
      "ReservacionMensaje3": "No se realizo la reservación, revise los campos!",
      "ReservacionMensaje4": "Identificación o nombre de grupo formato incorrecto!",
-     "ReservacionMensaje5": "Primero verifique que este registrado!"
+     "ReservacionMensaje5": "Primero verifique que este registrado!",
 
+     "EscribaElIDCOnsultar":"Escriba el id o nombre a consultar...",
+     "EscribaIDNacional":"Formato #-####-####",
+     "EscribaResidencial":"Formato de 10 dígitos",
+     "EscribaPasaporte":"Formato de 11 a 12 dígitos",
+     "EscribaNombre":"Escriba su nombre ...",
+     "EscribaApellido1":"Escriba el primer apellido...",
+     "EscribaApellido2":"Escriba el segundo apellido...",
+     "EscibaNumero":"Escriba el número de celular...",
+     "EscribaCorreo":"Escriba su correo...",
+
+     "EscribaNombreG":"Formato G-####",
+     "EscribaCantidadG":"Escriba la cantidad de miembros del grupo...",
+     "EscribaLugarG":"Escriba el lugar de procedencia...",
+     "EscribaTematica":"Escriba la temática de interés...",
+     "EscribaConsideraciones":"Escribar algunas consideraciones a tener en cuenta...",
+     
+    "CedulaOrga":"Formato: #-###-######",
+    "NombreOrga":"Escriba el nombre de la organización...",
+    "CelularOrga":"Escriba los 8 dígitos...",
+    "CorreoOrga":"Correo de la organización...",
+
+    "CopyRight":"© 2021-2022 Todos los derechos reservados.",
+    "NombreCompleto":"Senderos los Matapalos - PGAI"
 
     
     }
