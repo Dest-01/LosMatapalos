@@ -22,7 +22,7 @@ class CatDonativosController extends BaseController
      */
     public function index()
     {
-        $catDonativo = $this->catDonativos->latest()->paginate(10);
+        $catDonativo = $this->catDonativos->latest()->paginate(25);
 
         return $this->sendResponse($catDonativo, 'Lista de donativos necesarios!');
     }

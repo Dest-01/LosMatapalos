@@ -87,6 +87,7 @@
             <div class="card-footer">
               <pagination
                 :data="usuarios"
+                :limit="5"
                 @pagination-change-page="getResults"
               ></pagination>
             </div>
@@ -491,5 +492,14 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+}
+@media only screen and (min-device-width: 100px) and (max-device-width: 900px) {
+  .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    flex-wrap: wrap;
+  }
 }
 </style>

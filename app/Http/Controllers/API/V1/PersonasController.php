@@ -26,7 +26,7 @@ class PersonasController extends BaseController
      */
     public function index()
     {
-        $persona = $this->personas->latest()->paginate(10);
+        $persona = $this->personas->latest()->paginate(25);
 
         return $this->sendResponse($persona, 'Lista de personas');
     }

@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Personas;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
 class PersonasFactory extends Factory
 {
@@ -22,7 +24,12 @@ class PersonasFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nombre' => $this->faker->name,
+            'apellido1' => $this->faker->lastName,
+            'apellido2' => $this->faker->lastName,
+            'correo' => $this->faker->unique()->safeEmail,
+            'identificacion' => $this->faker->randomNumber(),
+            'telefono' => $this->faker->randomNumber(),
         ];
     }
 }

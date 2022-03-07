@@ -24,7 +24,7 @@ class ActividadesController extends BaseController
     }
     public function index()
     {
-        $actividad = $this->actividades->latest()->paginate(10);
+        $actividad = $this->actividades->latest()->paginate(25);
         return $this->sendResponse($actividad, 'Lista de Actividades!');
     }
     public function list()

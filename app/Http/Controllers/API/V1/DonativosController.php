@@ -30,7 +30,7 @@ class DonativosController extends BaseController
      */
     public function index()
     {
-        $donativo = $this->donativos->latest()->with('personas', 'organizaciones')->paginate(10);
+        $donativo = $this->donativos->latest()->with('personas', 'organizaciones')->paginate(25);
         //  $products = $this->product->latest()->with('category', 'tags')->paginate(10);
 
         return $this->sendResponse($donativo, 'Lista Donativos');

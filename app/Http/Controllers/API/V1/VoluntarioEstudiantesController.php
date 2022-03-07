@@ -44,7 +44,7 @@ class VoluntarioEstudiantesController extends BaseController
      */
     public function index()
     {
-        $voluntarioEst = $this->voluntarioEstudiantes->latest()->paginate(10);
+        $voluntarioEst = $this->voluntarioEstudiantes->latest()->paginate(25);
 
         return $this->sendResponse($voluntarioEst, 'Lista de estudiantes!');
     }

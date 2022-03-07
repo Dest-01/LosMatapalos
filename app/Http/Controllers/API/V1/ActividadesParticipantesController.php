@@ -35,7 +35,7 @@ class ActividadesParticipantesController extends BaseController
      */
     public function index()
     {
-        $actividadesParticipantes = $this->actividadesParticipantes->latest()->paginate(10);
+        $actividadesParticipantes = $this->actividadesParticipantes->latest()->paginate(25);
         return $this->sendResponse($actividadesParticipantes, 'Personas en actividades!');
     }
 

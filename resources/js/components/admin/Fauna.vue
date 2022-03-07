@@ -57,7 +57,7 @@
                     <th>Nombre Común</th>
                     <th>Nombre Científico</th>
                     <th>Descripción</th>
-                    <th>Tipo</th>
+                    <th>Grupo</th>
                     <th>Imagen</th>
                     <th>Familia científica</th>
                     <th>Fecha de registro</th>
@@ -110,6 +110,7 @@
             <div class="card-footer">
               <pagination
                 :data="faunas"
+                :limit="5"
                 @pagination-change-page="getResults"
               ></pagination>
             </div>
@@ -201,7 +202,7 @@
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Tipo de especie</label>
+                  <label>Grupo de especie</label>
                    <select
                     class="form-control"
                     v-model="form.tipo"
@@ -392,7 +393,7 @@
                 />
               </div>
               <div id="inputsModal" class="form-group">
-                <label>Tipo de fauna</label>
+                <label>Grupo de fauna</label>
                 <input
                   v-model="form.tipo"
                   type="text"
@@ -698,6 +699,13 @@ export default {
   }
   .form-group img{
     height: 250px;
+  }
+    .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    flex-wrap: wrap;
   }
 }
 </style>

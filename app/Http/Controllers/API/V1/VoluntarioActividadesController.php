@@ -43,7 +43,7 @@ class VoluntarioActividadesController extends BaseController
                 'actividades.id as ActId', 'actividades.nombre as ActNombre', 'voluntario_personas.identificacion as VolPerId',
                 'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',
                 'voluntario_estudiantes.identificacionPersona as volEstCedula', 'voluntario_estudiantes.identificacionPersona as volEstCedula')
-            ->paginate(10);
+            ->paginate(25);
 
         return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades');
 

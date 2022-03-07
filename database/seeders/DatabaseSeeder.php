@@ -1,22 +1,61 @@
 <?php
 
-namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        // \App\Models\User::factory(10)->create();
-        $this->call(UsersTableSeeder::class);
 
-        //duplicate product for data 
-   
-    }
+  public function run()
+  {
+      // $this->truncateTables([
+      //     'statuses',
+      //     'areas',
+      //     'users',
+      //     'roles',
+      //     'role_users',
+      //     'categories',
+      //     'subcategories',
+      //     'warehouses',
+      //     'actives',
+      //     'type_commodities',
+      //     'unit_measures',
+      //     //'quantities',
+          
+      //     'registers',
+      //     'management_centers',
+      //     'company_suppliers',
+      //     'person_suppliers',
+      //     'commodities',
+      // ]); LLAVES FORANEAS
+      
+    $this->call([
+      PersonSeeder::class,
+      // AreaSeeder::class,
+      // UserSeeder::class,
+      // RoleSeeder::class,
+      // CategorySeeder::class,
+      // SubcategorySeeder::class,
+      // WarehouseSeeder::class,
+      // ActiveSeeder::class,
+      // TypeCommoditySeeder::class,
+      // UnitMeasureSeeder::class,
+      // //QuantitySeeder::class,
+      
+      // RegisterSeeder::class,
+      // ManagementCenterSeeder::class,
+      // CompanySupplierSeeder::class,
+      // PersonSupplierSeeder::class,
+      // CommoditySeeder::class,
+    ]);
+  }
+
+  public function truncateTables(array $tables){
+      DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+      foreach($tables as $table)
+      {
+          DB::table($table)->truncate();
+      }
+      DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
+  }
 }

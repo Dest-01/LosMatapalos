@@ -2,23 +2,23 @@
   <div class="Total Fauna">
     <div class="titulo">
       <h1 style="text-align: center">
-        Galeria <span style="color: #38ab81">Fauna</span>
+        {{$t('Galeria1')}} <span style="color: #38ab81">Fauna</span>
       </h1>
     </div>
     <div class="menu">
-      <button @click="vertodo()" class="btn_menu">Todo</button>
-      <button @click="filtroDeAves()" class="btn_menu">Aves</button>
-      <button @click="filtroAnfibios()" class="btn_menu">Anfibios</button>
-      <button @click="filtroInsectos()" class="btn_menu">Insectos</button>
-      <button @click="filtroDeMamiferos()" class="btn_menu">Mamíferos</button>
-      <button @click="filtroReptiles()" class="btn_menu">Reptiles</button>
+      <button @click="vertodo()" class="btn_menu">{{$t('Todas_Tema')}}</button>
+      <button @click="filtroDeAves()" class="btn_menu">{{$t('Aves')}}</button>
+      <button @click="filtroAnfibios()" class="btn_menu">{{$t('Anfibios')}}</button>
+      <button @click="filtroInsectos()" class="btn_menu">{{$t('Insectos')}}</button>
+      <button @click="filtroDeMamiferos()" class="btn_menu">{{$t('Mamiferos')}}</button>
+      <button @click="filtroReptiles()" class="btn_menu">{{$t('Reptiles')}}</button>
     </div>
     <div v-if="faunas.data == 0" class="row">
       <div class="mensaje">
         <i class="far fa-image"></i>
         <h1>Oops!</h1>
-        <h3>No hay registros en galería de fauna</h3>
-        <h4>Muy pronto...</h4>
+        <h3>{{$t('No_hay_fauna')}}</h3>
+        <h4>{{$t('Muy_pronto')}}</h4>
       </div>
     </div>
     <div v-else class="container-all wow fadeInLeft" data-wow-duration="2s">
@@ -33,12 +33,16 @@
           data-bs-target="#exampleModal"
         />
         <div class="descripcion">
-          <span class="text">Nombre común: {{ fauna.nombreComun }}</span>
+          <span class="text">{{$t('Nombre_Comun')}}: {{ fauna.nombreComun }}</span>
           <span class="text"
-            >Nombre Científico: {{ fauna.nombreCientifico }}</span
+            >{{$t('Nombre_Cientifico')}}: {{ fauna.nombreCientifico }}</span
           >
-          <span class="text">Tipo: {{ fauna.tipo }}</span>
-          <span class="text">Familia: {{ fauna.familiaCientifca }}</span>
+          <span class="text" v-if="fauna.tipo == 'Aves'">{{$t('Tipo')}}: {{$t('Aves')}}</span>
+          <span class="text" v-if="fauna.tipo == 'Anfibios'">{{$t('Tipo')}}: {{$t('Anfibios')}}</span>
+          <span class="text" v-if="fauna.tipo == 'Insectos'">{{$t('Tipo')}}: {{$t('Insectos')}}</span>
+          <span class="text" v-if="fauna.tipo == 'Mamiferos'">{{$t('Tipo')}}: {{$t('Mamiferos')}}</span>
+          <span class="text" v-if="fauna.tipo == 'Reptiles'">{{$t('Tipo')}}: {{$t('Reptiles')}}</span>
+          <span class="text">{{$t('Familia')}}: {{ fauna.familiaCientifca }}</span>
           <button
             @click="verImagen(fauna)"
             data-mdb-toggle="modal"
@@ -47,7 +51,7 @@
             data-mdb-ripple-color="dark"
             id="btnVer"
           >
-            Ver
+            {{$t('Ver')}}
           </button>
         </div>
       </div>
@@ -55,6 +59,7 @@
     <div class="paginacion">
       <pagination
         :data="faunas"
+        :limit="5"
         @pagination-change-page="getResults"
       ></pagination>
     </div>
@@ -70,7 +75,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              Nombre común: {{ form.nombreComun }}
+              {{$t('Nombre_Comun')}}: {{ form.nombreComun }}
             </h5>
             <button
               type="button"
@@ -87,7 +92,7 @@
               height="720px"
             />
             <div>
-              <h5>Descripcion: {{ form.descripcion }}</h5>
+              <h5>{{$t('Descripcion')}}: {{ form.descripcion }}</h5>
             </div>
           </div>
           <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->

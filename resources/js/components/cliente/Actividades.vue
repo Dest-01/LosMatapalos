@@ -29,7 +29,8 @@
             </div>
             <div class="informations-container">
               <h2 class="title">{{ actividad.nombre }}</h2>
-              <p class="sub-title">{{$t('Para')}} {{ actividad.tipo }}</p>
+              <p class="sub-title" v-if="actividad.tipo == 'Voluntarios'">{{$t('Para')}} {{$t('tipoVoluntario')}}</p>
+              <p class="sub-title" v-else>{{$t('Para')}} {{$t('tipoPublico')}}</p>
               <p class="sub-title">{{$t('Hora')}} {{ actividad.hora }}</p>
               <div class="more-information">
                 <div class="info-and-date-container">
@@ -74,6 +75,7 @@
         <pagination
           style="font-family: fantasy; color: black"
           :data="actividades"
+          :limit="2"
           @pagination-change-page="getResults"
         ></pagination>
       </div>
@@ -85,6 +87,7 @@ export default {
   data() {
     return {
       actividades: {},
+      tipoTraduccion: "",
       form: new Form({
         id: "",
       }),

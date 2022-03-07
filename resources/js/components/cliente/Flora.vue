@@ -38,7 +38,8 @@
           <span class="text"
             >{{$t('Nombre_Cientifico')}}: {{ flora.nom_cientifico }}</span
           >
-          <span class="text">{{$t('Tipo')}}: {{ flora.tipo }}</span>
+          <span class="text" v-if="flora.tipo == 'Leñosas'">{{$t('Tipo')}}: {{$t('tipoLenosa')}}</span>
+          <span class="text">{{$t('Tipo')}}: {{$t('tipoHerbaceas')}}</span>
           <span class="text">{{$t('Familia')}}: {{ flora.fam_cientifica }}</span>
           <button
             @click="verImagen(flora)"
@@ -58,6 +59,7 @@
     <div class="paginacion">
       <pagination
         :data="floras"
+        :limit="2"
         @pagination-change-page="getResults"
       ></pagination>
     </div>

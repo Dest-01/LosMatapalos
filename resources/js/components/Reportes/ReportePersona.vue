@@ -1,15 +1,21 @@
 <template>
   <div>
     <div>
-    <pagination
-      :data="personas"
-      @pagination-change-page="getResults"
-    ></pagination>
+      <div>
+        <input type="button" class="btn btn-success" value="10 ultimos">
+        <input type="button" class="btn btn-success" value="25 ultimos">
+        <input type="button" class="btn btn-success" value="50 ultimos">
+        <input type="button" class="btn btn-success" value="75 ultimos">
+        <input type="button" class="btn btn-success" value="100 ultimos">
+        <input type="button" class="btn btn-success" value="Todos">
+
+      </div>
+      <pagination
+        :data="personas"
+        @pagination-change-page="getResults"
+      ></pagination>
     </div>
-    <div
-      id="page"
-      class="card-body table-responsive p-0"
-    >
+    <div id="page" class="card-body table-responsive p-0">
       <div class="Encabezado">
         <h1>Sendero los Matapalos</h1>
         <img src="/images/MarcaAgua.jpeg" width="85px" height="50px" alt="" />
@@ -80,7 +86,6 @@ export default {
     this.cargarPersona();
     this.$Progress.finish();
     window.onload = this.set;
-    
   },
   computed: {
     set: function () {
@@ -91,17 +96,17 @@ export default {
         .replace("d", today.getDate());
       this.fechaActual = strDate;
     },
-    total: function(){
+    total: function () {
       return this.personas.data.length;
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-#page{
-  width: 90%; 
-  color: black; 
+#page {
+  width: 90%;
+  color: black;
   background: white;
 }
 .card-body {
@@ -166,10 +171,10 @@ td {
   padding-left: 5px;
 }
 .pagination {
-    display: flex;
-    padding-left: 0;
-    list-style: none;
-    border-radius: 0.25rem;
-    justify-content: space-evenly;
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem;
+  justify-content: space-evenly;
 }
 </style>

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-12 wow fadeInUp" data-wow-duration="2s">
                     <div class="site-heading text-center">
-                        <h2>Nuestro <span>Equipo</span>.!</h2>
+                       <h2>{{$t('Equipo_T1')}} <span>{{$t('Equipo_T2')}}</span>{{$t('Equipo_!_Symbol')}}</h2>
                     </div>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                                 <div class="overlay">
                                     <h4 style="color:rgb(56 171 129);">Ronald Sánchez</h4>
                                     <p style="text-align:justify;">
-                                        Se enfoca en sostenibilidad, conservación de recursos biológicos y ciencias agrícolas. Subcoordinador del Programa de Gestión Ambiental (PGAI) y del Sendero Los Matapalos 
+                                        {{$t('Equipo_P1')}} 
                                     </p >
                                   
                                 </div>
@@ -27,7 +27,7 @@
                                     <a href="#"><i class="fas fa-envelope-open"></i></a>
                                 </span>
                                 <h4>Ronald Sánchez</h4>
-                                <span>Académico e investigador</span>
+                               <span>{{$t('Equipo_T3')}} </span>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                                 <div class="overlay">
                                     <h4 style="color:rgb(56 171 129);">Wagner Castro</h4>
                                     <p style="text-align:justify;">
-                                         Director Académico del Campus Liberia de la Sede Regional Chorotega de la UNA, Coordinador General del Programa de Gestión Ambiental (PGAI) y del Sendero Los Matapalos
+                                         {{$t('Equipo_P2')}} 
                                     </p>
                                   
                                 </div>
@@ -48,7 +48,7 @@
                                     <a href="#"><i class="fas fa-envelope-open"></i></a>
                                 </span>
                                 <h4>Wagner Castro</h4> 
-                                <span>Director Académico</span>
+                               <span> {{$t('Equipo_T4')}} </span>
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                                 <div class="overlay">
                                     <h4 style="color:rgb(56 171 129);"> Medardo Moscoso</h4>
                                     <p style="text-align:justify;">
-                                        Recursos Naturales y sostenibilidad en campus Liberia de la UNA, desarrollador de proyectos sostenibles con prioridad en la autosuficiencia y  seguridad alimentaria y Nutricional. Subcoordinador del Programa de Gestión Ambiental (PGAI) y del Sendero Los Matapalos 
+                                     {{$t('Equipo_P3')}} 
                                     </p>
                                    
                                 </div>
@@ -69,7 +69,7 @@
                                     <a href="#"><i class="fas fa-envelope-open"></i></a>
                                 </span>
                                 <h4>Medardo Moscoso</h4>
-                                <span>  Recursos Naturales y sostenibilidad</span>
+                                <span>   {{$t('Equipo_T5')}} </span>
                             </div>
                         </div>
                     </div>

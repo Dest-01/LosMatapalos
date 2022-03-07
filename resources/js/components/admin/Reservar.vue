@@ -130,6 +130,7 @@
             <div class="card-footer">
               <pagination
                 :data="reservas"
+                :limit="5"
                 @pagination-change-page="getResults"
               ></pagination>
             </div>
@@ -918,9 +919,42 @@ export default {
         tematica: "",
         detalles: "",
       }),
+      formCorreo: new Form({
+        cedulaReservacion: "",
+        fechaReservacion: "",
+        cantidaPersonasReservacion: "",
+        horaInicio: "",
+        horaFin: "",
+        correo: "",
+      }),
     };
   },
   methods: {
+    enviaEmail() {
+      const templateParams = {
+        cedulaReservacion: this.formCorreo.cedulaReservacion,
+        fechaReservacion: this.formCorreo.fechaReservacion,
+        cantidaPersonasReservacion: this.formCorreo.cantidaPersonasReservacion,
+        horaInicio: this.formCorreo.horaInicio,
+        horaFin: this.formCorreo.horaFin,
+        correo: this.formCorreo.correo,
+      };
+      console.log(templateParams.correo);
+      emailjs
+        .send(
+          "service_xf6d5cg",
+          "template_kgy3kx2",
+          templateParams,
+          "user_GMf53dmaF0FI8RLY0cj3V"
+        )
+
+        .then((res) => {
+          console.log(res.json());
+        })
+        .catch((err) => {
+          console.log(err.json());
+        });
+    },
     getResults(page = 1) {
       this.$Progress.start();
       axios
@@ -1162,24 +1196,24 @@ export default {
     },
 
     crearGrupo() {
-       if (this.formGrupo.nombre != "") {
-      if (/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)) {
-        this.formGrupo
-          .post("/api/reserva/guardarGrupo", {
-            params: { nombre: this.formGrupo.nombre },
-          })
-          .then((response) => {
-            if (response.data.success == false) {
-              Swal.fire("Error!", "El nombre ya existe!", "error");
-            } else {
-              Swal.fire("Registrado!", response.data.message, "success");
-              $("#modalGrupo").modal("hide");
-            }
-          })
-          .catch((error) => {
-            Swal.fire("Error!", "Complete los campos!", "error");
-          });
-      } else {
+      if (this.formGrupo.nombre != "") {
+        if (/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)) {
+          this.formGrupo
+            .post("/api/reserva/guardarGrupo", {
+              params: { nombre: this.formGrupo.nombre },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Swal.fire("Error!", "El nombre ya existe!", "error");
+              } else {
+                Swal.fire("Registrado!", response.data.message, "success");
+                $("#modalGrupo").modal("hide");
+              }
+            })
+            .catch((error) => {
+              Swal.fire("Error!", "Complete los campos!", "error");
+            });
+        } else {
           Swal.fire(
             "Error!",
             "Formato de nombre del grupo incorrecto!",
@@ -1207,12 +1241,11 @@ export default {
         .post("/api/reserva")
         .then((response) => {
           $("#addNew").modal("hide");
-
           Toast.fire({
             icon: "success",
             title: response.data.message,
           });
-
+          this.enviaEmail();
           this.$Progress.finish();
           this.cargarReservas();
         })
@@ -1223,40 +1256,47 @@ export default {
           });
         });
     },
-    crearReserva(){
-      if(this.buscador.length != ""){
-      if (
-        /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
-        /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||
-        (/^\d{11,12}$/.test(this.form.identificacionPersona) &&
-          this.form.idPersona != 0)
-      ) {
-        this.reservar();
-      } else if (
-        /^[1-9]-\d{3}-\d{6}$/.test(
-          this.form.identificacionOrganizacion
-        ) &&
-        this.form.idOrganizacion != 0
-      ) {
-        this.reservar();
-      } else if (
-        /^[G]{1}-\d{1,4}$/.test(this.form.nombreGrupo) &&
-        this.form.idGrupo != 0
-      ) {
-        this.reservar();
-      } else {
-        Swal.fire(
-          "Error!",
-          "Identificacion o nombre de grupo formato incorrecto!",
-          "error"
-        );
+    llenarFormularioPersona() {
+      for(let i = 0; i < this.personaIdArray.length; i++){
+          this.form.idPersona = this.personaIdArray[i].id;
+          this.form.identificacionPersona = this.personaIdArray[i].identificacion;
+          this.formCorreo.correo = this.personaIdArray[i].correo;
+          this.formCorreo.cedulaReservacion = this.personaIdArray[i].identificacion;
       }
-      }else{
-         Swal.fire(
-          "Error!",
-          "Primero verifique que este registrado!",
-          "error"
-        );
+       this.formCorreo.cedulaReservacion = this.form.identificacionPersona;
+      this.formCorreo.fechaReservacion = this.form.fecha;
+      this.formCorreo.horaInicio = this.form.horaInicio;
+      this.formCorreo.horaFin = this.form.horaFin;
+    },
+    crearReserva() {
+      if (this.buscador.length != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
+          /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||
+          (/^\d{11,12}$/.test(this.form.identificacionPersona) &&
+            this.form.idPersona != 0)
+        ) {
+          this.llenarFormularioPersona();
+          this.reservar();
+        } else if (
+          /^[1-9]-\d{3}-\d{6}$/.test(this.form.identificacionOrganizacion) &&
+          this.form.idOrganizacion != 0
+        ) {
+          this.reservar();
+        } else if (
+          /^[G]{1}-\d{1,4}$/.test(this.form.nombreGrupo) &&
+          this.form.idGrupo != 0
+        ) {
+          this.reservar();
+        } else {
+          Swal.fire(
+            "Error!",
+            "Identificacion o nombre de grupo formato incorrecto!",
+            "error"
+          );
+        }
+      } else {
+        Swal.fire("Error!", "Primero verifique que este registrado!", "error");
       }
     },
     actualizarReserva() {
@@ -1402,6 +1442,15 @@ export default {
 @media screen and (min-width: 900px) {
   .modal-content {
     width: 100%;
+  }
+}
+@media only screen and (min-device-width: 100px) and (max-device-width: 900px) {
+  .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    flex-wrap: wrap;
   }
 }
 </style>

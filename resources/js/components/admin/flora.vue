@@ -57,7 +57,7 @@
                     <th>Nombre común</th>
                     <th>Nombre científico</th>
                     <th>Descripción</th>
-                    <th>Tipo</th>
+                    <th>Grupo</th>
                     <th>Imagen</th>
                     <th>Familia científico</th>
                     <th>Fecha registro</th>
@@ -105,6 +105,7 @@
             <div class="card-footer">
               <pagination
                 :data="flora"
+                :limit="5"
                 @pagination-change-page="getResults"
               ></pagination>
             </div>
@@ -200,7 +201,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Tipo de flora</label>
+                  <label>Grupo de flora</label>
                   <select
                     class="form-control"
                     v-model="form.tipo"
@@ -389,7 +390,7 @@
                 />
               </div>
               <div id="inputsModal" class="form-group">
-                <label>Tipo de flora</label>
+                <label>Grupo de flora</label>
                 <input
                   v-model="form.tipo"
                   type="text"
@@ -698,6 +699,13 @@ export default {
   }
   .form-group img{
     height: 250px;
+  }
+    .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    flex-wrap: wrap;
   }
 }
 </style>

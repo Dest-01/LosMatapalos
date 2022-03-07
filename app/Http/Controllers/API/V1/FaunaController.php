@@ -20,7 +20,7 @@ class FaunaController extends BaseController
     }
     public function index()
     {
-        $fauna = $this->fauna->latest()->paginate(10);
+        $fauna = $this->fauna->latest()->paginate(25);
 
         return $this->sendResponse($fauna, 'Lista de fauna!');
     }

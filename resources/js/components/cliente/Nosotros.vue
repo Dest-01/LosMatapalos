@@ -10,7 +10,7 @@
     "
   >
     <div class="site-heading text-center">
-      <h2>Equipo de <span>Desarrollo</span></h2>
+       <h2>{{$t('Nosotros_T1')}} <span>{{$t('Nosotros_T2')}}</span></h2>
     </div>
     <div class="main-card">
       <div class="cards">
@@ -22,7 +22,7 @@
             </div>
             <div class="details">
               <div class="name">Yerry Rodriguez Barquero</div>
-              <div class="job">Desarrollador</div>
+              <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -42,7 +42,7 @@
                 Marko Guevara <br />
                 Fallas
               </div>
-              <div class="job">Desarrollador</div>
+              <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -62,7 +62,7 @@
                 Erick Valle <br />
                 Obando
               </div>
-              <div class="job">Desarrollador</div>
+             <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -79,7 +79,7 @@
             </div>
             <div class="details">
               <div class="name">Cesar Matarrita Matarrita</div>
-              <div class="job">Desarrollador</div>
+              <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -96,7 +96,7 @@
             </div>
             <div class="details">
               <div class="name">Jose Montiel Hernandez</div>
-              <div class="job">Desarrollador</div>
+              <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
               <a href="#"><i class="fab fa-facebook-f"></i></a>

@@ -34,7 +34,7 @@ class ReservaController extends BaseController
      */
     public function index()
     {
-        $reservas = $this->reserva->latest()->with('personas', 'organizaciones')->paginate(10);
+        $reservas = $this->reserva->latest()->with('personas', 'organizaciones')->paginate(25);
         //  $products = $this->product->latest()->with('category', 'tags')->paginate(10);
 
         return $this->sendResponse($reservas, 'Lista reservas!');

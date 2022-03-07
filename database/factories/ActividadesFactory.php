@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\actividades;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
 class ActividadesFactory extends Factory
 {
@@ -22,7 +24,13 @@ class ActividadesFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nombre' => $this->faker->name,
+            'fecha' => $this->faker->dateTime(),
+            'hora' => $this->faker->time(),
+            'descripcion' => $this->faker->sentence,
+            'cantParticipantes' => $this->faker->randomNumber(2),
+            'imagen' => '/images/actividad.jpg.jpg',
+            'tipo' => $this->faker->name
         ];
     }
 }

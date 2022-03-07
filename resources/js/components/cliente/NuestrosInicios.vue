@@ -22,7 +22,7 @@
         <div class="image">
           <img v-bind:src="'/images/aerea liberia.jpg'" alt="sample3" />
         </div>
-        <div class="position">Sendero los Mataplos</div>
+        <div class="position">{{$t('NombreSendero')}}</div>
       </figure>
     </section>
   </div>

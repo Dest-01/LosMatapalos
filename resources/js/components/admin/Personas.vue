@@ -91,9 +91,11 @@
             <!-- /.card-body -->
             <div class="card-footer">
               <pagination
+                :limit="5"
                 :data="personas"
                 @pagination-change-page="getResults"
-              ></pagination>
+              >
+              </pagination>
             </div>
           </div>
           <!-- /.card -->
@@ -454,9 +456,9 @@ export default {
   },
   methods: {
     filtrar() {
-      if (this.filtrarBusqueda == "") {
-        this.personas.data = this.nuevoPersonas;
-      } else if (this.filtrarBusqueda != "") {
+      if (!this.filtrarBusqueda) {
+        this.cargarPersona();
+      } else if (this.filtrarBusqueda.length  > 2) {
         this.personas.data = this.personasFiltradas;
       }
     },
@@ -486,32 +488,30 @@ export default {
 
     getResults(page = 1) {
       this.$Progress.start();
-
       axios
         .get("/api/persona?page=" + page)
         .then(({ data }) => (this.personas = data.data));
       this.$Progress.finish();
     },
     actualizarPersona() {
-
-        this.$Progress.start();
-        this.form
-          .put("/api/persona/" + this.form.id)
-          .then((response) => {
-            // success
-            $("#addNew").modal("hide");
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
-            this.$Progress.finish();
-            //  Fire.$emit('AfterCreate');
-
-            this.cargarPersona();
-          })
-          .catch(() => {
-            this.$Progress.fail();
+      this.$Progress.start();
+      this.form
+        .put("/api/persona/" + this.form.id)
+        .then((response) => {
+          // success
+          $("#addNew").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
           });
+          this.$Progress.finish();
+          //  Fire.$emit('AfterCreate');
+
+          this.cargarPersona();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
     },
     editModal(persona) {
       this.editmode = true;
@@ -553,45 +553,45 @@ export default {
       }
     },
     crearPersona() {
-      if(this.form.identificacion != ""){
-      if (
-        /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacion) ||
-        /^[1-9]\d{9}$/.test(this.form.identificacion) ||
-        /^\d{11,12}$/.test(this.form.identificacion)
-      ) {
-        this.form
-          .post("/api/persona", {
-            params: { identificacion: this.form.identificacion },
-          })
-          .then((response) => {
-            if (response.data.success == false) {
+      if (this.form.identificacion != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacion) ||
+          /^[1-9]\d{9}$/.test(this.form.identificacion) ||
+          /^\d{11,12}$/.test(this.form.identificacion)
+        ) {
+          this.form
+            .post("/api/persona", {
+              params: { identificacion: this.form.identificacion },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Toast.fire({
+                  icon: "error",
+                  title: "Cédula ya existe!",
+                });
+              } else {
+                $("#addNew").modal("hide");
+
+                Toast.fire({
+                  icon: "success",
+                  title: response.data.message,
+                });
+
+                this.$Progress.finish();
+                this.cargarPersona();
+              }
+            })
+            .catch(() => {
               Toast.fire({
                 icon: "error",
-                title: "Cédula ya existe!",
+                title: "Complete los campos!",
               });
-            } else {
-              $("#addNew").modal("hide");
-
-              Toast.fire({
-                icon: "success",
-                title: response.data.message,
-              });
-
-              this.$Progress.finish();
-              this.cargarPersona();
-            }
-          })
-          .catch(() => {
-            Toast.fire({
-              icon: "error",
-              title: "Complete los campos!",
             });
-          });
+        } else {
+          Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
+        }
       } else {
-        Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
-      }
-      }else{
-         Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
+        Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
       }
     },
 
@@ -632,6 +632,7 @@ export default {
     this.cargarPersona();
     this.$Progress.finish();
   },
+
   computed: {
     personasFiltradas: function () {
       return this.nuevoPersonas.filter((persona) => {
@@ -663,7 +664,18 @@ export default {
 
 
 <style scoped>
-
+button.page-link {
+  display: inline-block;
+}
+button.page-link {
+  font-size: 20px;
+  color: #29b3ed;
+  font-weight: 500;
+}
+.offset {
+  width: 500px !important;
+  margin: 20px auto;
+}
 #btnCancelar {
   padding: 1px 5px;
   margin: 1px 1px 1px 10px;
@@ -695,5 +707,14 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+}
+@media only screen and (min-device-width: 100px) and (max-device-width: 900px) {
+  .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    flex-wrap: wrap;
+  }
 }
 </style>

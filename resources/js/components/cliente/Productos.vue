@@ -117,6 +117,7 @@
     <div class="paginacion">
       <pagination
         :data="Productos"
+        :limit="5"
         @pagination-change-page="getResults"
       ></pagination>
     </div>

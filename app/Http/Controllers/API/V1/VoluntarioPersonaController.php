@@ -47,7 +47,7 @@ class VoluntarioPersonaController extends BaseController
      */
     public function index()
     {
-        $voluntarioPer = $this->voluntarioPersona->latest()->paginate(10);
+        $voluntarioPer = $this->voluntarioPersona->latest()->paginate(25);
 
         return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
     }

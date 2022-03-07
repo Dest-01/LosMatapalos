@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="titulo">
-      <h1>Estudiantes voluntarios <span>del Sendero los Matapalos</span></h1>
+     <h1>{{$t('Vol_T1')}} <span>{{$t('Vol_T2')}}</span></h1>
     </div>
     <div class="contenedor_voluntarios">
       <div
@@ -21,7 +21,7 @@
         <h3>{{ voluntarios.nombre }}</h3>
         <h3>{{ voluntarios.apellido1 }}</h3>
         <h3>{{ voluntarios.apellido2 }}</h3>
-        <h4>Carrera: {{ voluntarios.carrera }}</h4>
+        <h4>{{$t('Carrera')}}: {{ voluntarios.carrera }}</h4>
         </div>
       </div>
     </div>
@@ -29,6 +29,7 @@
         <pagination
           style="color: black"
           :data="voluntarioEstudiante"
+          :limit="5"
           @pagination-change-page="getResults"
         ></pagination>
       </div>

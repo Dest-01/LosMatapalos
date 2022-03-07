@@ -1309,11 +1309,9 @@ export default {
       if (this.personaIdArray.length != 0) {
         for (let i = 0; i < this.personaIdArray.length; i++) {
           this.formReserva.idPersona = this.personaIdArray[i].id;
-          this.formReserva.identificacionPersona =
-            this.personaIdArray[i].identificacion;
+          this.formReserva.identificacionPersona = this.personaIdArray[i].identificacion;
           this.formCorreo.correo = this.personaIdArray[i].correo;
-          this.formCorreo.cedulaReservacion =
-            this.personaIdArray[i].identificacion;
+          this.formCorreo.cedulaReservacion = this.personaIdArray[i].identificacion;
         }
       }
       if (this.organizacionIdArray.length != 0) {

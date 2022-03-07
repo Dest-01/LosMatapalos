@@ -2,7 +2,7 @@
   <div class="wrapper">
     <section class="hero vertical-center">
       <div class="container text-center">
-        <h1>Haz una donación.!</h1>
+        <h1>{{ $t("Donacion_T1") }}</h1>
       </div>
       <div class="optional-rainbow"></div>
     </section>
@@ -11,37 +11,40 @@
         <article>
           <div class="intro" style="text-align: center; margin-bottom: 50px">
             <span class="glad">
-              Su generosa donación y su continuo apoyo marcan una gran ayuda
-              al<span class="matapalos"> Sendero Los Matapalos</span>,<br />
-              su aporte logra una gran contribución con la mejora y el
-              mantenimiento del <span class="matapalos">sendero</span>.
+              {{ $t("Donacion_P1_s1")
+              }}<span class="matapalos"> {{ $t("Donacion_P1_t1") }}</span
+              >,<br />
+              {{ $t("Donacion_P1_s2") }}
+              <span class="matapalos">{{ $t("Donacion_Trail") }}</span
+              ><span class="matapalos">{{ $t("Donacion_Sendero") }}</span
+              >.
             </span>
           </div>
           <div class="necesarios">
-            <div class="contenedor1 card">
-              <div class="card-body">
-                <div class="site-heading text-center">
-                  <h2><span>¿</span>Cómo Aportar<span>?</span></h2>
-                </div>
-                <h5 class="site-heading" style="line-height: 32px">
-                  En la siguiente imagen puede observar algunas de las cosas que
-                  necesita el <span class="matapalos">sendero</span>, puede
-                  colaborar donando ya sea un articulo de los que se muestan o
-                  algo que usted crea que puede servir para el crecimiento del
-                  <span class="matapalos">sendero</span>.
-                </h5>
-                <br />
-                <h5 class="site-heading" style="line-height: 32px">
-                  Si desea realizar otra donación distinta a las que se
-                  necesitan, se puede poner en contacto con los administradores.
-                </h5>
-                <br />
-                <h5 class="site-heading" style="text-align: center">
-                  <span class="matapalos"> Telefono</span>: 0000-0000 -
-                  <span class="matapalos"> Email</span>: sendero@una.ac.cr
-                </h5>
+      <div class="contenedor1 card">
+        <div class="card-body">
+        <div class="site-heading text-center">
+          
+               <h2> <span>{{$t('Donacion_¿_symbol')}}</span>{{$t('Donacion_T2')}}<span>{{$t('Donacion_?_symbol')}}</span></h2>
+                
               </div>
-            </div>
+          <h5 class="site-heading" style="line-height:32px">
+          {{$t('Donacion_P2_s1')}} <span class="matapalos">{{$t('Donacion_Trail')}}</span><span class="matapalos">{{$t('Donacion_Sendero')}}</span>{{$t('Donacion_Coma')}}
+          {{$t('Donacion_P2_s2')}} <span class="matapalos">{{$t('Donacion_Sendero')}}</span><span class="matapalos">{{$t('Donacion_Trail')}}</span>{{$t('Donacion_Dot')}}
+
+          </h5>      
+          <br /> 
+          <h5 class="site-heading" style="line-height:32px">
+            {{$t('Donacion_P3')}}
+          </h5>
+          <br />  
+          <h5 class="site-heading" style="text-align: center">
+           <span class="matapalos"> {{$t('Donacion_T3')}}</span>{{$t('Donacion_T4')}}<span class="matapalos"> {{$t('Donacion_T5')}}</span>{{$t('Donacion_T6')}}      
+          </h5>
+            
+          
+        </div>
+      </div>
             <div class="contenedor2 card">
               <div class="card-body">
                 <div
@@ -60,9 +63,9 @@
                         alt=""
                       />
                       <div class="carousel-caption d-none d-md-block">
-                        <h1>¿Que se necesita?</h1>
+                       <h1>{{$t('Donacion_T7')}}</h1>
                         <p>
-                          Podés contribuir con algunas de las siguientes cosas.!
+                         {{$t('Donacion_P4')}}
                         </p>
                       </div>
                     </div>
@@ -118,7 +121,7 @@
       </div>
     </section>
     <div class="container text-center">
-      <h1>Haz una donación.!</h1>
+      <h1>{{$t('Donacion_T1')}}</h1>
     </div>
 
     <br />
@@ -465,24 +468,27 @@ article img {
     width: 100%;
     height: 400px;
   }
-  .carousel, .carousel-inner, .carousel-item, .carousel-item img {
+  .carousel,
+  .carousel-inner,
+  .carousel-item,
+  .carousel-item img {
     height: 100%;
   }
-  .wrapper{
+  .wrapper {
     margin: 10px 0 150px 0;
   }
 }
 @media only screen and (min-device-width: 913px) and (max-device-width: 1199px) {
-  .necesarios{
+  .necesarios {
     display: flex;
     gap: 35px;
     flex-direction: column;
     flex-wrap: wrap;
     align-content: center;
   }
-  .contenedor1, .contenedor2 {
+  .contenedor1,
+  .contenedor2 {
     width: 95%;
   }
-  
 }
 </style>

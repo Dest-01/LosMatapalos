@@ -19,14 +19,14 @@
                   />
                 </div>
                 <div>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="newModal"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Agregar Documento
-                </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary"
+                    @click="newModal"
+                  >
+                    <i class="fa fa-plus-square"></i>
+                    Agregar Documento
+                  </button>
                 </div>
               </div>
             </div>
@@ -50,8 +50,7 @@
                     <td>{{ repositorio.id }}</td>
                     <td>{{ repositorio.nombre }}</td>
                     <td>{{ repositorio.fecha }}</td>
-                    <td>{{ repositorio.descripcion | truncate(10, "...") }}
-                    </td>
+                    <td>{{ repositorio.descripcion | truncate(10, "...") }}</td>
                     <td>
                       <a href="#" @click="editModal(repositorio)">
                         <i id="icono" class="fa fa-edit blue"></i>
@@ -63,11 +62,8 @@
                       >
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
-                        /
-                      <a
-                        href="#"
-                        @click="detailsModal(repositorio)"
-                      >
+                      /
+                      <a href="#" @click="detailsModal(repositorio)">
                         <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
@@ -183,7 +179,6 @@
                             }"
                             id="documento"
                             name="documento"
-                            required
                           />
                           <has-error :form="form" field="documento"></has-error>
                         </label>
@@ -229,10 +224,16 @@
                     :class="{ 'is-invalid': form.errors.has('tipo') }"
                     required
                   >
-                    <option disabled value="">Seleccione el tipo de archivo</option>
-                    <option value="Prácticas Profesionales">Prácticas Profesionales</option>
+                    <option disabled value="">
+                      Seleccione el tipo de archivo
+                    </option>
+                    <option value="Prácticas Profesionales">
+                      Prácticas Profesionales
+                    </option>
                     <option value="Tesis">Tesis</option>
-                    <option value="Artículos Científicos">Artículos Científicos</option>
+                    <option value="Artículos Científicos">
+                      Artículos Científicos
+                    </option>
                     <option value="Libros">Libros</option>
                   </select>
                   <has-error :form="form" field="tipo"></has-error>
@@ -270,7 +271,7 @@
         </div>
       </div>
 
-            <!-- Modal de ver informacion -->
+      <!-- Modal de ver informacion -->
       <div
         class="modal fade"
         id="exampleModal"
@@ -314,10 +315,16 @@
               </div>
               <div class="form-group">
                 <label>Descripción</label>
-                <textarea v-model="form.descripcion"
+                <textarea
+                  v-model="form.descripcion"
                   type="text"
                   class="form-control"
-                  :disabled="verDetalles" name="" id="" cols="30" rows="10"></textarea>
+                  :disabled="verDetalles"
+                  name=""
+                  id=""
+                  cols="30"
+                  rows="10"
+                ></textarea>
               </div>
             </div>
 
@@ -358,7 +365,7 @@ export default {
     };
   },
   methods: {
-        filtrar() {
+    filtrar() {
       if (this.filtrarBusqueda == "") {
         this.repositorios.data = this.repositoriosTodos;
       } else if (this.filtrarBusqueda != "") {
@@ -379,7 +386,7 @@ export default {
     },
     limpiar() {
       this.form.nombre = "";
-      this.fomr.fecha = "";
+      this.form.fecha = "";
       this.form.descripcion = "";
       this.form.tipo = "";
       this.form.documento = "";
@@ -393,8 +400,10 @@ export default {
       this.$Progress.finish();
     },
     editModal(repositorio) {
+      repositorio.documento = null;
       this.editmode = true;
       this.form.reset();
+      $("#documento").val("");
       $("#addNew").modal("show");
       this.form.fill(repositorio);
     },
@@ -404,23 +413,20 @@ export default {
       $("#addNew").modal("show");
       this.form.errors.clear();
     },
-        detailsModal(repositorio) {
+    detailsModal(repositorio) {
       $("#exampleModal").modal("show");
       this.form.fill(repositorio);
     },
-
     cargarDocumentos() {
       if (this.$gate.isAdmin()) {
         axios
           .get(`/api/repositorio`)
           .then(({ data }) => (this.repositorios = data.data));
-           axios
-          .get(`/api/repositorio/listar`)
-          .then(({ data }) => (this.repositoriosTodos = data.data));
       }
     },
     actualizarDocumento() {
       this.$Progress.start();
+      console.log(this.form);
       this.form
         .put(`/api/repositorio/${this.form.id}`)
         .then((response) => {
@@ -431,6 +437,7 @@ export default {
           });
           this.$Progress.finish();
           this.cargarDocumentos();
+          this.limpiar();
         })
         .catch(() => {
           this.$Progress.fail();
@@ -472,9 +479,9 @@ export default {
             icon: "success",
             title: response.data.message,
           });
-
           this.$Progress.finish();
           this.cargarDocumentos();
+          this.limpiar();
         })
         .catch(() => {
           Toast.fire({
@@ -518,6 +525,7 @@ export default {
 };
 </script>
 
+
 <style lang="css" scoped>
 #icono {
   font-size: 20px;
@@ -530,4 +538,13 @@ export default {
 .card-tools div {
   padding: 10px;
 }
-</style>>
+@media only screen and (min-device-width: 100px) and (max-device-width: 900px) {
+  .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    flex-wrap: wrap;
+  }
+}
+</style>

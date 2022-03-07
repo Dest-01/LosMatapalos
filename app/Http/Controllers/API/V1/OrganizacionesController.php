@@ -24,7 +24,7 @@ class OrganizacionesController extends BaseController
      */
     public function index()
     {
-        $organizacion = $this->organizaciones->latest()->paginate(10);
+        $organizacion = $this->organizaciones->latest()->paginate(25);
 
         return $this->sendResponse($organizacion, 'Lista de organizaciones!');
     }

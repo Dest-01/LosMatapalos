@@ -79,6 +79,7 @@
     <div class="paginacion">
       <pagination
         :data="documentosRepositorio"
+        :limit="5"
         @pagination-change-page="getResults"
       ></pagination>
     </div>

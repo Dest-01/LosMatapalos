@@ -1,7 +1,7 @@
 <template>
   <div class="datos">
     <h1 style="text-align: center">
-      Acerca de <span style="color: #38ab81">nosotros</span>
+      {{$t('About_T1')}} <span style="color: #38ab81">{{$t('About_T2')}}</span>
     </h1>
     <div class="row">
       <div
@@ -15,11 +15,9 @@
         "
       >
         <div class="mision" style="margin-left: 2px">
-          <h2><i class="fas fa-crosshairs"></i>Misión</h2>
+          <h2><i class="fas fa-crosshairs"></i>{{$t('About_T3')}}</h2>
           <p>
-            “Aprender de la naturaleza todos los días para forjar valores
-            biocéntricos en todas las personas que conviven en el Campus
-            Liberia”.
+          {{$t('About_P1')}}
           </p>
         </div>
       </div>
@@ -34,10 +32,9 @@
         "
       >
         <div class="vision">
-          <h2><i class="far fa-eye"></i>Visión</h2>
+          <h2><i class="far fa-eye"></i>{{$t('About_T4')}}</h2>
           <p>
-            Colaborar para que el Campus Liberia sea el mejor en materia de
-            Sostenibilidad en Latinoamérica.
+          {{$t('About_P2')}}
           </p>
         </div>
       </div>
@@ -52,14 +49,14 @@
         "
       >
         <div class="valores" style="margin-right: 2px">
-          <h2><i class="fas fa-balance-scale"></i> Valores</h2>
-          <li>Familia</li>
-          <li>Amor</li>
-          <li>Compañerismo</li>
-          <li>Calidad</li>
-          <li>Solidaridad</li>
-          <li>Respeto</li>
-          <li>Libertad</li>
+          <h2><i class="fas fa-balance-scale"></i> {{$t('About_T5')}}</h2>
+          <li>{{$t('About_P3_t1')}}</li>
+          <li>{{$t('About_P3_t2')}}</li>
+          <li>{{$t('About_P3_t3')}}</li>
+          <li>{{$t('About_P3_t4')}}</li>
+          <li>{{$t('About_P3_t5')}}</li>
+          <li>{{$t('About_P3_t6')}}</li>
+          <li>{{$t('About_P3_t7')}}</li>
         </div>
       </div>
     </div>
