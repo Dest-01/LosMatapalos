@@ -35,16 +35,6 @@
                   Generar Reporte
                 </button>
                 <button
-                  id="btn"
-                  @click="generatePdf"
-                  type="button"
-                  class="btn btn-sm btn-success"
-                  :disabled="bloquearDescarga"
-                >
-                  <i class="fas fa-download"></i>
-                  Descargar Reporte
-                </button>
-                <button
                   @click="Cancelar()"
                   type="button"
                   class="btn btn-sm btn-danger"
@@ -478,19 +468,6 @@ export default {
     };
   },
   methods: {
-    generatePdf() {
-      let btn = document.getElementById("btn");
-      let page = document.getElementById("page");
-      btn.addEventListener("click", function () {
-        html2PDF(page, {
-          jsPDF: {
-            orientation: "portrait",
-          },
-          imageType: "image/jpeg",
-          output: `ReportePersonas.pdf`,
-        });
-      });
-    },
     generateOrgPdf() {
       let btn = document.getElementById("btnOrg");
       let page = document.getElementById("pageOrg");
@@ -834,7 +811,6 @@ export default {
       this.bloquearDescarga = true;
     },
 
-    ocultarTodo() {},
   },
   computed: {
     set: function () {

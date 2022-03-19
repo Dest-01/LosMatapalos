@@ -348,7 +348,11 @@
                   />
                   <span
                     >{{ $t("Acepta_los") }}
-                    <a href="/documentos/Terminos y Condiciones.pdf" target="_BLANK">{{ $t("Terminos") }}</a></span
+                    <a
+                      href="/documentos/Terminos y Condiciones.pdf"
+                      target="_BLANK"
+                      >{{ $t("Terminos") }}</a
+                    ></span
                   >
                 </div>
                 <!--fin del div de terminos y condicones-->
@@ -357,7 +361,7 @@
                   <button
                     type="button"
                     class="btn btn-success btn-rounded"
-                    @click="crearReserva()"
+                    @click="totalDatosFuncion(), crearReserva()"
                     :disabled="bloquearReservar"
                   >
                     {{ $t("Reservar") }}
@@ -462,7 +466,7 @@
                   :class="{
                     'is-invalid': formPersona.errors.has('identificacion'),
                   }"
-                 v-bind:placeholder="$t('EscribaResidencial')"
+                  v-bind:placeholder="$t('EscribaResidencial')"
                   onchange="validateResidencial()"
                 />
                 <has-error
@@ -527,7 +531,7 @@
                   :class="{
                     'is-invalid': formPersona.errors.has('apellido1'),
                   }"
-                 v-bind:placeholder="$t('EscribaApellido1')"
+                  v-bind:placeholder="$t('EscribaApellido1')"
                   minlength="3"
                   maxlength="20"
                   required
@@ -576,7 +580,7 @@
                   id="phone"
                   size="8"
                   min="10000000"
-                 v-bind:placeholder="$t('EscibaNumero')"
+                  v-bind:placeholder="$t('EscibaNumero')"
                   required
                 />
                 <has-error
@@ -723,7 +727,7 @@
                 :class="{
                   'is-invalid': formOrganizacion.errors.has('correo'),
                 }"
-               v-bind:placeholder="$t('CorreoOrga')"
+                v-bind:placeholder="$t('CorreoOrga')"
               />
               <has-error
                 style="top: 80px"
@@ -784,7 +788,7 @@
                 :class="{
                   'is-invalid': formGrupo.errors.has('nombre'),
                 }"
-               v-bind:placeholder="$t('EscribaNombreG')"
+                v-bind:placeholder="$t('EscribaNombreG')"
                 minlength="3"
                 maxlength="20"
                 required
@@ -1061,7 +1065,6 @@ export default {
         horaFin: this.formCorreo.horaFin,
         correo: this.formCorreo.correo,
       };
-      console.log(templateParams.correo);
       emailjs
         .send(
           "service_xf6d5cg",
@@ -1230,7 +1233,13 @@ export default {
         Swal.fire("Error!", this.$t("CampoNombreGrupo"), "error");
       }
     },
-
+    HabilitarMostrarMensaje() {
+      this.VermensajeNoExiste = false;
+      this.VermensajeSiExiste = true;
+      this.mensajeDeExistencia = this.$t("YaRegistrado");
+      this.bloquearConsulta = true;
+      this.bloquearterminos = false;
+    },
     consultarDatos() {
       if (this.buscador.length != "") {
         if (
@@ -1243,33 +1252,21 @@ export default {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.personaIdArray = data.data));
-          this.VermensajeNoExiste = false;
-          this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = this.$t("YaRegistrado");
-          this.bloquearConsulta = true;
-          this.bloquearterminos = false;
+          this.HabilitarMostrarMensaje();
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
           this.formReserva
             .get("/api/reservarCliente/verificarOrg", {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.organizacionIdArray = data.data));
-          this.VermensajeNoExiste = false;
-          this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = this.$t("YaRegistrado");
-          this.bloquearConsulta = true;
-          this.bloquearterminos = false;
+          this.HabilitarMostrarMensaje();
         } else if (/^[G]{1}-\d{1,4}$/.test(this.buscador)) {
           this.formReserva
             .get("/api/reservarCliente/verificarGrupo", {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.grupoIdArray = data.data));
-          this.VermensajeNoExiste = false;
-          this.VermensajeSiExiste = true;
-          this.mensajeDeExistencia = this.$t("YaRegistrado");
-          this.bloquearConsulta = true;
-          this.bloquearterminos = false;
+          this.HabilitarMostrarMensaje();
         } else {
           this.VermensajeNoExiste = true;
           this.VermensajeSiExiste = false;
@@ -1309,9 +1306,11 @@ export default {
       if (this.personaIdArray.length != 0) {
         for (let i = 0; i < this.personaIdArray.length; i++) {
           this.formReserva.idPersona = this.personaIdArray[i].id;
-          this.formReserva.identificacionPersona = this.personaIdArray[i].identificacion;
+          this.formReserva.identificacionPersona =
+            this.personaIdArray[i].identificacion;
           this.formCorreo.correo = this.personaIdArray[i].correo;
-          this.formCorreo.cedulaReservacion = this.personaIdArray[i].identificacion;
+          this.formCorreo.cedulaReservacion =
+            this.personaIdArray[i].identificacion;
         }
       }
       if (this.organizacionIdArray.length != 0) {
@@ -1409,38 +1408,7 @@ export default {
     this.$Progress.start();
     this.$Progress.finish();
   },
-  computed: {
-    totalDatos: function () {
-      if (this.personaIdArray.length != 0) {
-        for (let i = 0; i < this.personaIdArray.length; i++) {
-          this.formReserva.idPersona = this.personaIdArray[i].id;
-          this.formReserva.identificacionPersona =
-            this.personaIdArray[i].identificacion;
-          this.formCorreo.correo = this.personaIdArray[i].correo;
-          this.formCorreo.cedulaReservacion =
-            this.personaIdArray[i].identificacion;
-        }
-      }
-      if (this.organizacionIdArray.length != 0) {
-        for (let i = 0; i < this.organizacionIdArray.length; i++) {
-          this.formReserva.idOrganizacion = this.organizacionIdArray[i].id;
-          this.formReserva.identificacionOrganizacion =
-            this.organizacionIdArray[i].identificacion;
-          this.formCorreo.correo = this.organizacionIdArray[i].correo;
-          this.formCorreo.cedulaReservacion =
-            this.organizacionIdArray[i].identificacion;
-        }
-      }
-      if (this.grupoIdArray.length != 0) {
-        for (let i = 0; i < this.grupoIdArray.length; i++) {
-          this.formReserva.idGrupo = this.grupoIdArray[i].id;
-          this.formReserva.nombreGrupo = this.grupoIdArray[i].nombre;
-          this.formCorreo.correo = this.grupoIdArray[i].correo;
-          this.formCorreo.cedulaReservacion = this.grupoIdArray[i].nombre;
-        }
-      }
-    },
-  },
+  computed: {},
   mounted() {
     const plugin = document.createElement("script");
     plugin.setAttribute("src", "/js/validacionesReservacion.js");

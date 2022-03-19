@@ -108,6 +108,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     ]);
 });
 
+
 Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         
     Route::get('reservarCliente/verificar', 'ReservarCliController@obtenerCedula');
@@ -132,4 +133,17 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         'repositorioCliente' => 'RepositorioController',
         'voluntariosCliente' => 'VoluntarioEstudiantesController',
     ]);
+});
+//API DE REPORTES PARA CONSULTAR DATOS
+Route::namespace('App\\Http\\Controllers\\API\Reportes')->group(function () {
+
+    Route::get('ReportePersona/solo25', 'ReportePersonaController@solo25');
+    Route::get('ReportePersona/solo50', 'ReportePersonaController@solo50');
+    Route::get('ReportePersona/solo75', 'ReportePersonaController@solo75');
+    Route::get('ReportePersona/solo100', 'ReportePersonaController@solo100');
+
+    Route::apiResources([
+        'ReportePersona' => 'ReportePersonaController',
+    ]);
+
 });

@@ -25,10 +25,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+            <li class="nav-item" >
               <router-link class="nav-link" to="/inicio">{{
-                $t("Inicio")
-              }}</router-link>
+                $t("Inicio") 
+              }} </router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/reservacion">{{
@@ -130,3 +130,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+*{
+  font-family: 'Source Serif 4', sans-serif;
+}
+</style>

@@ -1,55 +1,18 @@
 <template>
   <div>
     <div>
-      <div>
-        <input type="button" class="btn btn-success" value="10 ultimos">
-        <input type="button" class="btn btn-success" value="25 ultimos">
-        <input type="button" class="btn btn-success" value="50 ultimos">
-        <input type="button" class="btn btn-success" value="75 ultimos">
-        <input type="button" class="btn btn-success" value="100 ultimos">
-        <input type="button" class="btn btn-success" value="Todos">
-
-      </div>
-      <pagination
-        :data="personas"
-        @pagination-change-page="getResults"
-      ></pagination>
-    </div>
-    <div id="page" class="card-body table-responsive p-0">
-      <div class="Encabezado">
-        <h1>Sendero los Matapalos</h1>
-        <img src="/images/MarcaAgua.jpeg" width="85px" height="50px" alt="" />
-      </div>
-      <div class="titulo">
-        <h3>Reporte de personas</h3>
-      </div>
-      <h3 style="margin: 5px; color: #354942" class="Datos">
-        Fecha: {{ fechaActual }}
-      </h3>
-      <div class="Hoja">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Cédula</th>
-              <th>Nombre</th>
-              <th>Primer Apellido</th>
-              <th>Segundo Apellido</th>
-              <th>Teléfono</th>
-              <th>Correo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="persona in personas.data" :key="persona.id">
-              <td>{{ persona.identificacion }}</td>
-              <td>{{ persona.nombre }}</td>
-              <td>{{ persona.apellido1 }}</td>
-              <td>{{ persona.apellido2 }}</td>
-              <td>{{ persona.telefono }}</td>
-              <td>{{ persona.correo }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <h2 class="total">Total: {{ total }}</h2>
+      <div class="opciones">
+        <input type="button" class="btn btn-success" value="25 últimos" />
+        <input type="button" class="btn btn-success" value="50 últimos" />
+        <input type="button" class="btn btn-success" value="75 últimos" />
+        <input type="button" class="btn btn-success" value="100 últimos" />
+        <input type="button" class="btn btn-success" value="Todos" />
+        <input
+          type="button"
+          @click="exportPDF()"
+          class="btn btn-danger"
+          value="Descargar PDF"
+        />
       </div>
     </div>
   </div>
@@ -59,28 +22,67 @@ export default {
   data() {
     return {
       personas: {},
-      contarArray: {},
       fechaActual: "",
-      contarArray: "",
     };
   },
   methods: {
-    getResults(page = 1) {
-      this.$Progress.start();
+    exportPDF() {
+      var vm = this;
+      var columns = [
+        { title: "DNI", dataKey: "identificacion" },
+        { title: "Nombre", dataKey: "nombre" },
+        { title: "Apellido 1", dataKey: "apellido1" },
+        { title: "Apellido 2", dataKey: "apellido2" },
+        { title: "Telefono", dataKey: "telefono" },
+        { title: "Correo", dataKey: "correo" },
+      ];
+      var doc = new jsPDF("p", "pt", "a4");      
+      var img = new Image(); //this mount a variable to img
+      img.src = "/images/MarcaAgua.jpeg"; //asign the src to the img variable
+      doc.addImage(img, 'png', 470, 10, 90, 60);
+      doc.text("Reporte de personas", 40, 50);
+      doc.text("Fecha:" + this.fechaActual, 40, 70);
+      doc.text("Sendero los matapalos", 40, 20, );
+      doc.autoTable(columns, vm.personas.data,  {
+        theme: 'grid',
+        tableLineColor: "#3bd99f",
+        tableLineWidth: 0.1,
+        margin: { top: 80 },
+        styles: {
+          fillStyle: "DF",
+          halign: "center",
+          valign: "middle",
+          columnWidth: "auto",
+          overflow: "linebreak",
+        },
+      });
 
-      axios
-        .get("/api/persona?page=" + page)
-        .then(({ data }) => (this.personas = data.data));
-      this.$Progress.finish();
+      doc.save("Reportepersonas.pdf");
     },
     cargarPersona() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
-          .get("/api/persona")
+          .get("/api/ReportePersona/solo100")
           .then(({ data }) => (this.personas = data.data));
       }
     },
   },
+  mounted() {
+    let pluginJSPDF = document.createElement("script");
+    pluginJSPDF.setAttribute(
+      "src",
+      "https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.min.js"
+    );
+    document.head.appendChild(pluginJSPDF);
+
+    let JSPDFLib = document.createElement("script");
+    JSPDFLib.setAttribute(
+      "src",
+      "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"
+    );
+    document.head.appendChild(JSPDFLib);
+  },
+
   created() {
     this.$Progress.start();
     this.cargarPersona();
@@ -95,9 +97,6 @@ export default {
         .replace("m", today.getMonth() + 1)
         .replace("d", today.getDate());
       this.fechaActual = strDate;
-    },
-    total: function () {
-      return this.personas.data.length;
     },
   },
 };
@@ -143,9 +142,6 @@ thead {
 }
 .table {
   border-bottom: 2px solid #f2f2f2;
-}
-.Hoja {
-  height: 980px;
 }
 
 h3 {

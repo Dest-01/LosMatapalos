@@ -192,7 +192,7 @@
                     :class="{ 'is-invalid': form.errors.has('edades') }"
                     required
                     min="5"
-                    max="150"
+                    max="109"
                     step="1"
                   />
                   <has-error :form="form" field="edades"></has-error>
@@ -401,7 +401,7 @@ export default {
       VerOtraTematica: false,
       form: new Form({
         id: "",
-        nombre: "",
+        nombre: "G-",
         cantidad: "",
         correo: "",
         edades: "",

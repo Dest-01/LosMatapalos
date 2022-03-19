@@ -170,7 +170,9 @@
             <!-- <form @submit.prevent="createUser"> -->
 
             <form
-              @submit.prevent="editmode ? actualizarReserva() : crearReserva()"
+              @submit.prevent="
+                editmode ? actualizarReserva() : llenarforms(), crearReserva()
+              "
             >
               <div class="modal-body">
                 <div v-show="verCamposdeConsulta" class="form-group">
@@ -200,7 +202,7 @@
                   <button
                     type="button"
                     class="btn btn-success my-4"
-                    @click="ConsultaCedula()"
+                    @click="ConsultaCedula(), llenarforms()"
                   >
                     Consultar
                   </button>
@@ -854,6 +856,8 @@
 </template>
 
 <script>
+import emailjs from "@emailjs/browser";
+
 export default {
   data() {
     return {
@@ -930,47 +934,6 @@ export default {
     };
   },
   methods: {
-    enviaEmail() {
-      const templateParams = {
-        cedulaReservacion: this.formCorreo.cedulaReservacion,
-        fechaReservacion: this.formCorreo.fechaReservacion,
-        cantidaPersonasReservacion: this.formCorreo.cantidaPersonasReservacion,
-        horaInicio: this.formCorreo.horaInicio,
-        horaFin: this.formCorreo.horaFin,
-        correo: this.formCorreo.correo,
-      };
-      console.log(templateParams.correo);
-      emailjs
-        .send(
-          "service_xf6d5cg",
-          "template_kgy3kx2",
-          templateParams,
-          "user_GMf53dmaF0FI8RLY0cj3V"
-        )
-
-        .then((res) => {
-          console.log(res.json());
-        })
-        .catch((err) => {
-          console.log(err.json());
-        });
-    },
-    getResults(page = 1) {
-      this.$Progress.start();
-      axios
-        .get("/api/reserva?page=" + page)
-        .then(({ data }) => (this.reservas = data.data));
-      this.$Progress.finish();
-    },
-
-    filtrar() {
-      if (this.filtrarBusqueda == "") {
-        this.reservas.data = this.nuevoReservaciones;
-      } else if (this.filtrarBusqueda != "") {
-        this.reservas.data = this.reservasFiltros;
-      }
-    },
-
     /*////////////////////////////////////////////////////////////*/
     tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
@@ -992,17 +955,6 @@ export default {
       }
     },
     /*////////////////////////////////////////////////////////////*/
-
-    cancelarbusqueda() {
-      //vamos a cancelar la busqueda bloqueando los input de reservacion
-      this.bloquearCampoConsulta = false;
-      this.bloquearCamposReservacion = true;
-      (this.form.identificacionPersona = ""),
-        (this.form.identificacionOrganizacion = ""),
-        (this.VermensajeSiExiste = false);
-      this.VermensajeNoExiste = false;
-      this.mensajeDeExistencia = "";
-    },
     ConsultaCedula() {
       if (this.buscador.length != 0) {
         if (
@@ -1015,53 +967,21 @@ export default {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.personaIdArray = data.data));
-          for (let i = 0; i < this.personaIdArray.length; i++) {
-            if (this.personaIdArray[i].identificacion == this.buscador) {
-              this.VermensajeSiExiste = true;
-              this.VermensajeNoExiste = false;
-              this.mensajeDeExistencia = "Si existe!";
-              this.form.identificacionPersona =
-                this.personaIdArray[i].identificacion;
-              this.form.idPersona = this.personaIdArray[i].id;
-              this.bloquearCampoConsulta = true;
-              this.bloquearCamposReservacion = false;
-            }
-          }
+          this.HabilitarMostrarMensaje();
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
           this.form
             .get("/api/reserva/verificarOrg", {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.organizacionIdArray = data.data));
-          for (let i = 0; i < this.organizacionIdArray.length; i++) {
-            if (this.organizacionIdArray[i].identificacion == this.buscador) {
-              this.VermensajeSiExiste = true;
-              this.VermensajeNoExiste = false;
-              this.mensajeDeExistencia = "Si existe!";
-              this.form.identificacionOrganizacion =
-                this.organizacionIdArray[i].identificacion;
-              this.form.idOrganizacion = this.organizacionIdArray[i].id;
-              this.bloquearCampoConsulta = true;
-              this.bloquearCamposReservacion = false;
-            }
-          }
+          this.HabilitarMostrarMensaje();
         } else if (/^[G]{1}-\d{1,4}$/.test(this.buscador)) {
           this.form
             .get("/api/reserva/verificarGrupo", {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.grupoIdArray = data.data));
-          for (let i = 0; i < this.grupoIdArray.length; i++) {
-            if (this.grupoIdArray[i].nombre == this.buscador) {
-              this.VermensajeSiExiste = true;
-              this.VermensajeNoExiste = false;
-              this.mensajeDeExistencia = "Si existe!";
-              this.form.nombreGrupo = this.grupoIdArray[i].nombre;
-              this.form.idGrupo = this.grupoIdArray[i].id;
-              this.bloquearCampoConsulta = true;
-              this.bloquearCamposReservacion = false;
-            }
-          }
+          this.HabilitarMostrarMensaje();
         } else {
           this.VermensajeSiExiste = false;
           this.VermensajeNoExiste = true;
@@ -1074,7 +994,201 @@ export default {
           "Campo vacío, por favor digite una identificación";
       }
     },
+    cancelarbusqueda() {
+      //vamos a cancelar la busqueda bloqueando los input de reservacion
+      this.bloquearCampoConsulta = false;
+      this.bloquearCamposReservacion = true;
+      (this.form.identificacionPersona = ""),
+        (this.form.identificacionOrganizacion = ""),
+        (this.VermensajeSiExiste = false);
+      this.VermensajeNoExiste = false;
+      this.mensajeDeExistencia = "";
+    },
+    llenarforms() {
+      if (this.personaIdArray.length != 0) {
+        for (let i = 0; i < this.personaIdArray.length; i++) {
+          this.form.idPersona = this.personaIdArray[i].id;
+          this.form.identificacionPersona =
+            this.personaIdArray[i].identificacion;
+          this.formCorreo.cedulaReservacion =
+            this.personaIdArray[i].identificacion;
+          this.formCorreo.correo = this.personaIdArray[i].correo;
+        }
+      } else if (this.organizacionIdArray.length != 0) {
+        for (let i = 0; i < this.organizacionIdArray.length; i++) {
+          this.form.idOrganizacion = this.organizacionIdArray[i].id;
+          this.form.identificacionOrganizacion =
+            this.organizacionIdArray[i].identificacion;
+          this.formCorreo.cedulaReservacion =
+            this.organizacionIdArray[i].identificacion;
+          this.formCorreo.correo = this.organizacionIdArray[i].correo;
+        }
+      } else if (this.grupoIdArray.length != 0) {
+        for (let i = 0; i < this.grupoIdArray.length; i++) {
+          this.form.idGrupo = this.grupoIdArray[i].id;
+          this.form.nombreGrupo = this.personaIdArray[i].nombre;
+          this.formCorreo.cedulaReservacion = this.grupoIdArray[i].nombre;
+          this.formCorreo.correo = this.grupoIdArray[i].correo;
+        }
+      }
+    },
+    enviaEmail() {
+      this.formCorreo.horaFin = this.form.horaFin;
+      this.formCorreo.horaInicio = this.form.horaInicio;
+      this.formCorreo.cantidaPersonasReservacion = this.form.cantidad;
+      this.formCorreo.fechaReservacion = this.form.fecha;
 
+      const templateParams = {
+        cedulaReservacion: this.formCorreo.cedulaReservacion,
+        fechaReservacion: this.formCorreo.fechaReservacion,
+        cantidaPersonasReservacion: this.formCorreo.cantidaPersonasReservacion,
+        horaInicio: this.formCorreo.horaInicio,
+        horaFin: this.formCorreo.horaFin,
+        correo: this.formCorreo.correo,
+      };
+      console.log(templateParams.correo);
+      emailjs
+        .send(
+          "service_xf6d5cg",
+          "template_kgy3kx2",
+          templateParams,
+          "user_GMf53dmaF0FI8RLY0cj3V"
+        )
+        .then((res) => {
+          console.log(res.json());
+        })
+        .catch((err) => {
+          console.log(err.json());
+        });
+    },
+    HabilitarMostrarMensaje() {
+      this.VermensajeSiExiste = true;
+      this.VermensajeNoExiste = false;
+      this.mensajeDeExistencia = "Si existe!";
+      this.bloquearCampoConsulta = true;
+      this.bloquearCamposReservacion = false;
+    },
+
+    crearReserva() {
+      if (this.buscador.length != "") {
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
+          /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||
+          (/^\d{11,12}$/.test(this.form.identificacionPersona) &&
+            this.form.idPersona != 0)
+        ) {
+          this.reservar();
+        } else if (
+          /^[1-9]-\d{3}-\d{6}$/.test(this.form.identificacionOrganizacion) &&
+          this.form.idOrganizacion != 0
+        ) {
+          this.reservar();
+        } else if (
+          /^[G]{1}-\d{1,4}$/.test(this.form.nombreGrupo) &&
+          this.form.idGrupo != 0
+        ) {
+          this.reservar();
+        } else {
+          Swal.fire(
+            "Error!",
+            "Identificación o nombre de grupo esta en formato incorrecto!",
+            "error"
+          );
+        }
+      } else {
+        Swal.fire("Error!", "Primero verifique que este registrado!", "error");
+      }
+    },
+    reservar() {
+      this.$Progress.start();
+      this.form
+        .post("/api/reserva")
+        .then((response) => {
+          $("#addNew").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+
+          this.$Progress.finish();
+          this.cargarReservas();
+          this.enviaEmail();
+        })
+        .catch(() => {
+          Toast.fire({
+            icon: "error",
+            title: "Ocurrio un error!",
+          });
+        });
+    },
+
+    cargarReservas() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios
+          .get("/api/reserva")
+          .then(({ data }) => (this.reservas = data.data));
+        axios
+          .get("/api/reserva/listar")
+          .then(({ data }) => (this.nuevoReservaciones = data.data));
+      }
+    },
+
+    getResults(page = 1) {
+      this.$Progress.start();
+      axios
+        .get("/api/reserva?page=" + page)
+        .then(({ data }) => (this.reservas = data.data));
+      this.$Progress.finish();
+    },
+
+    actualizarReserva() {
+      this.$Progress.start();
+      this.form
+        .put("/api/reserva/" + this.form.id)
+        .then((response) => {
+          // success
+          $("#addNew").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$Progress.finish();
+          //  Fire.$emit('AfterCreate');
+
+          this.cargarReservas();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
+    },
+    eliminarReserva(id) {
+      Swal.fire({
+        title: "Seguro que lo desea eliminar?",
+        text: "Esta acción no puede revertirse!",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Si, Eliminar!",
+      }).then((result) => {
+        // Send request to the server
+        if (result.value) {
+          this.form
+            .delete("/api/reserva/" + id)
+            .then(() => {
+              Swal.fire(
+                "Eliminado!",
+                "Se ha eliminado la información.",
+                "success"
+              );
+              // Fire.$emit('AfterCreate');
+              this.cargarReservas();
+            })
+            .catch((data) => {
+              Swal.fire("Fallo!", data.message, "warning");
+            });
+        }
+      });
+    },
     modalPersona() {
       $("#modalPersona").modal("show");
       this.formPer.reset();
@@ -1090,7 +1204,6 @@ export default {
       this.formGrupo.reset();
       this.formGrupo.errors.clear();
     },
-
     editModal(reserva) {
       this.editmode = true;
       (this.verCamposdeConsulta = false),
@@ -1113,7 +1226,6 @@ export default {
       $("#ModalVer").modal("show");
       this.form.fill(reserva);
     },
-
     crearPersona() {
       if (this.formPer.identificacion != "") {
         if (
@@ -1194,7 +1306,6 @@ export default {
         Swal.fire("Error!", "Campo de cédula juridica esta vacio!", "error");
       }
     },
-
     crearGrupo() {
       if (this.formGrupo.nombre != "") {
         if (/^[G]{1}-\d{1,4}$/.test(this.formGrupo.nombre)) {
@@ -1224,128 +1335,12 @@ export default {
         Swal.fire("Error!", "Campo de nombre del grupo vacio!", "error");
       }
     },
-
-    cargarReservas() {
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/reserva")
-          .then(({ data }) => (this.reservas = data.data));
-        axios
-          .get("/api/reserva/listar")
-          .then(({ data }) => (this.nuevoReservaciones = data.data));
+    filtrar() {
+      if (this.filtrarBusqueda == "") {
+        this.reservas.data = this.nuevoReservaciones;
+      } else if (this.filtrarBusqueda != "") {
+        this.reservas.data = this.reservasFiltros;
       }
-    },
-    reservar() {
-      this.$Progress.start();
-      this.form
-        .post("/api/reserva")
-        .then((response) => {
-          $("#addNew").modal("hide");
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.enviaEmail();
-          this.$Progress.finish();
-          this.cargarReservas();
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Ocurrio un error!",
-          });
-        });
-    },
-    llenarFormularioPersona() {
-      for(let i = 0; i < this.personaIdArray.length; i++){
-          this.form.idPersona = this.personaIdArray[i].id;
-          this.form.identificacionPersona = this.personaIdArray[i].identificacion;
-          this.formCorreo.correo = this.personaIdArray[i].correo;
-          this.formCorreo.cedulaReservacion = this.personaIdArray[i].identificacion;
-      }
-       this.formCorreo.cedulaReservacion = this.form.identificacionPersona;
-      this.formCorreo.fechaReservacion = this.form.fecha;
-      this.formCorreo.horaInicio = this.form.horaInicio;
-      this.formCorreo.horaFin = this.form.horaFin;
-    },
-    crearReserva() {
-      if (this.buscador.length != "") {
-        if (
-          /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
-          /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||
-          (/^\d{11,12}$/.test(this.form.identificacionPersona) &&
-            this.form.idPersona != 0)
-        ) {
-          this.llenarFormularioPersona();
-          this.reservar();
-        } else if (
-          /^[1-9]-\d{3}-\d{6}$/.test(this.form.identificacionOrganizacion) &&
-          this.form.idOrganizacion != 0
-        ) {
-          this.reservar();
-        } else if (
-          /^[G]{1}-\d{1,4}$/.test(this.form.nombreGrupo) &&
-          this.form.idGrupo != 0
-        ) {
-          this.reservar();
-        } else {
-          Swal.fire(
-            "Error!",
-            "Identificacion o nombre de grupo formato incorrecto!",
-            "error"
-          );
-        }
-      } else {
-        Swal.fire("Error!", "Primero verifique que este registrado!", "error");
-      }
-    },
-    actualizarReserva() {
-      this.$Progress.start();
-      this.form
-        .put("/api/reserva/" + this.form.id)
-        .then((response) => {
-          // success
-          $("#addNew").modal("hide");
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.$Progress.finish();
-          //  Fire.$emit('AfterCreate');
-
-          this.cargarReservas();
-        })
-        .catch(() => {
-          this.$Progress.fail();
-        });
-    },
-    eliminarReserva(id) {
-      Swal.fire({
-        title: "Seguro que lo desea eliminar?",
-        text: "Esta acción no puede revertirse!",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Si, Eliminar!",
-      }).then((result) => {
-        // Send request to the server
-        if (result.value) {
-          this.form
-            .delete("/api/reserva/" + id)
-            .then(() => {
-              Swal.fire(
-                "Eliminado!",
-                "Se ha eliminado la información.",
-                "success"
-              );
-              // Fire.$emit('AfterCreate');
-              this.cargarReservas();
-            })
-            .catch((data) => {
-              Swal.fire("Fallo!", data.message, "warning");
-            });
-        }
-      });
     },
   },
   mounted() {
