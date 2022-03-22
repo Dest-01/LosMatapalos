@@ -24,11 +24,17 @@ class ReportePersonaController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function solo10()
+    {
+        $persona = $this->personas->latest()->paginate(10);
+
+        return $this->sendResponse($persona, 'Últimos 10');
+    }
+    public function todo()
     {
         $persona = $this->personas->get();
 
-        return $this->sendResponse($persona, 'Lista de todos');
+        return $this->sendResponse($persona, 'Lista de todas las personas');
     }
     public function solo25()
     {

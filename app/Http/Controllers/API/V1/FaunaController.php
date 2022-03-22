@@ -13,11 +13,13 @@ class FaunaController extends BaseController
      * @return \Illuminate\Http\Response
      */
     protected $fauna = '';
+
     public function __construct(Fauna $fauna)
     {
         $this->middleware('auth:api');
         $this->fauna = $fauna;
     }
+    
     public function index()
     {
         $fauna = $this->fauna->latest()->paginate(25);

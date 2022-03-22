@@ -314,6 +314,8 @@ export default {
 }
 .container > .descripcion:hover {
   opacity: 1;
+  background: rgba(0, 0, 0, 0.685);
+  border-radius: 15px;
 }
 
 button span {

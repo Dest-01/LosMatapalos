@@ -73,6 +73,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('dashboard/ultimasActividades', 'DashboardController@ultimasActividades');
     ///////////////////////////////------RUSTAS LISTAR PARA IFLTRAR ----------------////////////////////
     Route::get('organizacion/listar', 'OrganizacionesController@list');
+    Route::get('personas/mostrar', 'PersonasController@mostrar');
     Route::get('personas/listar', 'PersonasController@list');
     Route::get('grupo/listar', 'GruposController@list');
     Route::get('catDonativo/listar', 'CatDonativosController@list');
@@ -137,10 +138,104 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
 //API DE REPORTES PARA CONSULTAR DATOS
 Route::namespace('App\\Http\\Controllers\\API\Reportes')->group(function () {
 
+    Route::get('ReportePersona/solo10', 'ReportePersonaController@solo10');
     Route::get('ReportePersona/solo25', 'ReportePersonaController@solo25');
     Route::get('ReportePersona/solo50', 'ReportePersonaController@solo50');
     Route::get('ReportePersona/solo75', 'ReportePersonaController@solo75');
     Route::get('ReportePersona/solo100', 'ReportePersonaController@solo100');
+    Route::get('ReportePersona/todo', 'ReportePersonaController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+   
+    Route::get('ReporteOrganizacion/solo10', 'ReporteOrganizacionController@solo10');
+    Route::get('ReporteOrganizacion/solo25', 'ReporteOrganizacionController@solo25');
+    Route::get('ReporteOrganizacion/solo50', 'ReporteOrganizacionController@solo50');
+    Route::get('ReporteOrganizacion/solo75', 'ReporteOrganizacionController@solo75');
+    Route::get('ReporteOrganizacion/solo100', 'ReporteOrganizacionController@solo100');
+    Route::get('ReporteOrganizacion/todo', 'ReporteOrganizacionController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+    
+    Route::get('ReporteGrupo/solo10', 'ReporteGrupoController@solo10');
+    Route::get('ReporteGrupo/solo25', 'ReporteGrupoController@solo25');
+    Route::get('ReporteGrupo/solo50', 'ReporteGrupoController@solo50');
+    Route::get('ReporteGrupo/solo75', 'ReporteGrupoController@solo75');
+    Route::get('ReporteGrupo/solo100', 'ReporteGrupoController@solo100');
+    Route::get('ReporteGrupo/todo', 'ReporteGrupoController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+    
+    Route::get('ReportesDonativos/solo10', 'ReportesDonativosController@solo10');
+    Route::get('ReportesDonativos/solo25', 'ReportesDonativosController@solo25');
+    Route::get('ReportesDonativos/solo50', 'ReportesDonativosController@solo50');
+    Route::get('ReportesDonativos/solo75', 'ReportesDonativosController@solo75');
+    Route::get('ReportesDonativos/solo100', 'ReportesDonativosController@solo100');
+    Route::get('ReportesDonativos/todo', 'ReportesDonativosController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+
+    Route::get('ReporteVoluntariosParti/solo10', 'ReporteVoluntariosPartiController@solo10');
+    Route::get('ReporteVoluntariosParti/solo25', 'ReporteVoluntariosPartiController@solo25');
+    Route::get('ReporteVoluntariosParti/solo50', 'ReporteVoluntariosPartiController@solo50');
+    Route::get('ReporteVoluntariosParti/solo75', 'ReporteVoluntariosPartiController@solo75');
+    Route::get('ReporteVoluntariosParti/solo100', 'ReporteVoluntariosPartiController@solo100');
+    Route::get('ReporteVoluntariosParti/todo', 'ReporteVoluntariosPartiController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+
+    Route::get('ReporteVoluntariosEstudiante/solo10', 'ReporteVoluntariosEstudianteController@solo10');
+    Route::get('ReporteVoluntariosEstudiante/solo25', 'ReporteVoluntariosEstudianteController@solo25');
+    Route::get('ReporteVoluntariosEstudiante/solo50', 'ReporteVoluntariosEstudianteController@solo50');
+    Route::get('ReporteVoluntariosEstudiante/solo75', 'ReporteVoluntariosEstudianteController@solo75');
+    Route::get('ReporteVoluntariosEstudiante/solo100', 'ReporteVoluntariosEstudianteController@solo100');
+    Route::get('ReporteVoluntariosEstudiante/todo', 'ReporteVoluntariosEstudianteController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+
+    Route::get('ReporteActividades/solo10', 'ReporteActividadesController@solo10');
+    Route::get('ReporteActividades/solo25', 'ReporteActividadesController@solo25');
+    Route::get('ReporteActividades/solo50', 'ReporteActividadesController@solo50');
+    Route::get('ReporteActividades/solo75', 'ReporteActividadesController@solo75');
+    Route::get('ReporteActividades/solo100', 'ReporteActividadesController@solo100');
+    Route::get('ReporteActividades/todo', 'ReporteActividadesController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+
+    Route::get('ReporteVoluntarioActividad/solo10', 'ReporteVoluntarioActividadController@solo10');
+    Route::get('ReporteVoluntarioActividad/solo25', 'ReporteVoluntarioActividadController@solo25');
+    Route::get('ReporteVoluntarioActividad/solo50', 'ReporteVoluntarioActividadController@solo50');
+    Route::get('ReporteVoluntarioActividad/solo75', 'ReporteVoluntarioActividadController@solo75');
+    Route::get('ReporteVoluntarioActividad/solo100', 'ReporteVoluntarioActividadController@solo100');
+    Route::get('ReporteVoluntarioActividad/todo', 'ReporteVoluntarioActividadController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+
+    Route::get('ReporteReservas/solo10', 'ReporteReservasController@solo10');
+    Route::get('ReporteReservas/solo25', 'ReporteReservasController@solo25');
+    Route::get('ReporteReservas/solo50', 'ReporteReservasController@solo50');
+    Route::get('ReporteReservas/solo75', 'ReporteReservasController@solo75');
+    Route::get('ReporteReservas/solo100', 'ReporteReservasController@solo100');
+    Route::get('ReporteReservas/todo', 'ReporteReservasController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+
+    Route::get('ReporteFauna/solo10', 'ReporteFaunaController@solo10');
+    Route::get('ReporteFauna/solo25', 'ReporteFaunaController@solo25');
+    Route::get('ReporteFauna/solo50', 'ReporteFaunaController@solo50');
+    Route::get('ReporteFauna/solo75', 'ReporteFaunaController@solo75');
+    Route::get('ReporteFauna/solo100', 'ReporteFaunaController@solo100');
+    Route::get('ReporteFauna/todo', 'ReporteFaunaController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
+
+    Route::get('ReporteFlora/solo10', 'ReporteFloraController@solo10');
+    Route::get('ReporteFlora/solo25', 'ReporteFloraController@solo25');
+    Route::get('ReporteFlora/solo50', 'ReporteFloraController@solo50');
+    Route::get('ReporteFlora/solo75', 'ReporteFloraController@solo75');
+    Route::get('ReporteFlora/solo100', 'ReporteFloraController@solo100');
+    Route::get('ReporteFlora/todo', 'ReporteFloraController@todo');
+
+    ////////////////////////////////////////////////////////////////////////
 
     Route::apiResources([
         'ReportePersona' => 'ReportePersonaController',

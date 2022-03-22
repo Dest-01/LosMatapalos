@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class VoluntarioActividadesController extends BaseController
-{protected $voluntarioPersona = '';
+{
+    protected $voluntarioPersona = '';
     protected $voluntarioActividades = '';
     protected $voluntarioEstudiantes = '';
     protected $actividades = '';

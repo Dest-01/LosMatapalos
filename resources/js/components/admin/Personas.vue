@@ -27,6 +27,16 @@
 
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                  </select>
+                </div>
+                <div>
                   <input
                     v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
@@ -428,7 +438,7 @@ export default {
       CedulaResidencial: false,
       CedulaNacional: false,
       Pasaporte: false,
-
+      valorMostrar: "10",
       BloquearIdentificacion: true, //Bloquea el input de identificacion al editar
       verIdentificacion: true,
       verIdentificacionedit: false,
@@ -458,8 +468,17 @@ export default {
     filtrar() {
       if (!this.filtrarBusqueda) {
         this.cargarPersona();
-      } else if (this.filtrarBusqueda.length  > 2) {
+      } else if (this.filtrarBusqueda.length > 2) {
         this.personas.data = this.personasFiltradas;
+      }
+    },
+    mostrar() {
+      console.log("metodo llamado");
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+            .get("/api/personas/mostrar/", {
+              params: { valor: this.valorMostrar },
+            }).then(({ data }) => (this.personas = data.data));
       }
     },
     /*////////////////////////////////////////////////////////////*/

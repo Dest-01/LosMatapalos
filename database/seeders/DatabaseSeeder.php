@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\UsersTableSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +33,7 @@ class DatabaseSeeder extends Seeder
     $this->call([
       PersonSeeder::class,
       // AreaSeeder::class,
-      // UserSeeder::class,
+      UsersTableSeeder::class,
       // RoleSeeder::class,
       // CategorySeeder::class,
       // SubcategorySeeder::class,

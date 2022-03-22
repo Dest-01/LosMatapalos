@@ -1,86 +1,146 @@
 <template>
   <div>
-    <pagination
-      :data="faunas"
-      @pagination-change-page="getResults"
-    ></pagination>
-    <div
-      id="pageFauna"
-      class="card-body table-responsive p-0"
-      style="width: 1000px; color: black; background: white"
-    >
-      <div class="Encabezado">
-        <h1>Sendero los Matapalos</h1>
-        <img src="/images/MarcaAgua.jpeg" width="85px" height="50px" alt="" />
-      </div>
-      <div class="titulo">
-        <h3>Reporte de l Fauna del sendero</h3>
-      </div>
-      <h3 style="margin: 5px; color: #354942" class="Datos">
-        Fecha: {{ fechaActual }}
-      </h3>
-      <div class="Hoja">
-        <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Id Fauna</th>
-                    <th>Nombre Común</th>
-                    <th>Nombre Científico</th>
-                    <th>Descripción</th>
-                    <th>Tipo</th>
-                    <th>Familia científica</th>
-                    <th>Fecha de registro</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="fauna in faunas.data" :key="fauna.id">
-                    <td>{{ fauna.id }}</td>
-                    <td>{{ fauna.nombreComun }}</td>
-                    <td>
-                      {{ fauna.nombreCientifico }}
-                    </td>
-                    <td>{{fauna.descripcion}}</td>
-                    <td>{{ fauna.tipo }}</td>
-                    <td>{{ fauna.familiaCientifca }} </td>
-                    <td> {{ fauna.fechaRegistro }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-        <!-- <h2 class="total">Total: {{ organizaciones.data.length }}</h2> -->
+    <div>
+      <div class="opciones">
+        <input type="button" class="btn btn-success" @click="cargar25()" value="25 últimos" />
+        <input type="button" class="btn btn-success" @click="cargar50()" value="50 últimos" />
+        <input type="button" class="btn btn-success" @click="cargar75()" value="75 últimos" />
+        <input type="button" class="btn btn-success" @click="cargar100()" value="100 últimos" />
+        <input type="button" class="btn btn-success" @click="cargarTodos()" value="Todos" />
       </div>
     </div>
   </div>
 </template>
 <script>
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+
 export default {
   data() {
     return {
-     faunas:{},
+      filtroArray: {},
+      todosArray: {},
       fechaActual: "",
-      contarArray: "",
     };
   },
   methods: {
-    getResults(page = 1) {
-      this.$Progress.start();
+    exportPDF() {
+      var vm = this;
 
-      axios
-        .get("/api/fauna?page=" + page)
-        .then(({ data }) => (this.faunas = data.data));
+      var columns = [
+        { title: "Nombre Común", dataKey: "nombreComun" },
+        { title: "Nombre Científico", dataKey: "nombreCientifico" },
+        { title: "Descripción", dataKey: "descripcion" },
+        { title: "Tipo Fauna", dataKey: "tipo" },
+        { title: "Familia Cientifica", dataKey: "familiaCientifca" },
+        { title: "Fecha Registro", dataKey: "fechaRegistro" },
+      ];
+      var doc = new jsPDF("p", "pt", "a4");
 
-      this.$Progress.finish();
+      var img = new Image(); //this mount a variable to img
+      img.src = "/images/MarcaAgua.jpeg"; //asign the src to the img variable
+      //estilo para el nombre sendero los matapalos
+      doc.setDrawColor("#d9d9da");
+      doc.setFillColor("#d9d9da");
+      doc.rect(40, 5, 520, 43, "FD"); //Fill and Border
+      doc.text("Sendero los matapalos", 42, 30);
+      doc.setFontSize(15);
+      //Estilo para el titulo del reporte
+      doc.setFillColor("#3bd99f");
+      doc.setDrawColor("#3bd99f");
+      doc.setTextColor("#354942");
+      doc.rect(45, 52, 430, 25, "FD"); //Fill and Border rect(posicion x, posicion y, tamaño x, tamaño y)
+      doc.text(" Reporte de fauna", 50, 68);
+      //Estilo para la fecha
+      doc.setFillColor("#d9d9da");
+      doc.setDrawColor("#d9d9da");
+       doc.setTextColor("#354942");
+      doc.rect(430, 52, 120, 25, "FD"); //Fill and Border
+      doc.text("Fecha:" + this.fechaActual, 432, 68);
+      doc.addImage(img, "png", 470, 10, 74, 35);
+      doc.autoTable(columns, vm.filtroArray.data, {
+        theme: "grid",
+        tableLineColor: "#3bd99f",
+        tableLineWidth: 0.1,
+        margin: { top: 80 },
+         styles: {
+          fillStyle: "DF",
+          halign: "center",
+          valign: "middle",
+          columnWidth: "auto",
+          overflow: "linebreak",
+        },
+        headerStyles: {
+          fillColor: "#3bd99f",
+          fontSize: 12,
+        },
+        bodyStyles: {
+          fillColor: [216, 216, 216],
+          textColor: 50,
+        },
+        alternateRowStyles: {
+          fillColor: [250, 250, 250],
+        },
+      });
+      doc.save("Reporte Fauna.pdf");
     },
-
-   cargarFauna() {
+    cargar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios.get("/api/fauna").then(({ data }) => (this.faunas = data.data));
+        axios
+          .get("/api/ReporteFauna/todo")
+          .then(({ data }) => (this.todosArray = data.data));
       }
     },
+    cargarTodos(){
+        this.filtroArray.data = this.todosArray;
+         this.exportPDF();
+    },
+    cargar10(){
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios
+          .get("/api/ReporteFauna/solo10")
+          .then(({ data }) => (this.filtroArray = data.data));
+      }
+
+    },
+    cargar25(){
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios
+          .get("/api/ReporteFauna/solo25")
+          .then(({ data }) => (this.filtroArray = data.data));
+          this.exportPDF();
+      }
+    },
+    cargar50(){
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios
+          .get("/api/ReporteFauna/solo50")
+          .then(({ data }) => (this.filtroArray = data.data));
+           this.exportPDF();
+      }
+    },
+    cargar75(){
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios
+          .get("/api/ReporteFauna/solo75")
+          .then(({ data }) => (this.filtroArray = data.data));
+           this.exportPDF();
+      }
+    },
+    cargar100(){
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        axios
+          .get("/api/ReporteFauna/solo100")
+          .then(({ data }) => (this.filtroArray = data.data));
+           this.exportPDF();
+      }
+    }
   },
+
   created() {
     this.$Progress.start();
-    this.cargarFauna();
+    this.cargar();
+    this.cargar10();
     this.$Progress.finish();
     window.onload = this.set;
   },
@@ -91,70 +151,16 @@ export default {
         .replace("Y", today.getFullYear())
         .replace("m", today.getMonth() + 1)
         .replace("d", today.getDate());
-        this.fechaActual = strDate;
+      this.fechaActual = strDate;
     },
   },
 };
 </script>
 
 <style scoped>
-.card-body {
-  font-size: 1.2rem;
-  margin: 5px 5px 5px 45px;
-  font-family: system-ui;
-  margin-left: 18%;
-}
-
-.btn {
+.opciones{
   margin: 5px;
-}
-.Encabezado {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-around;
   padding: 5px;
-  border-bottom: 1px solid #14c514;
-  background: #bababb8c;
-}
-h1,
-.h1 {
-  width: 90%;
-  font-size: 2.25rem;
-}
-thead {
-  background: #3bd99f;
-  color: #343434de;
-}
-.titulo {
   text-align: center;
-  margin: 15px;
-  background: #3bd99f;
-  color: #354942;
-}
-.table {
-  border-bottom: 2px solid #f2f2f2;
-}
-.Hoja {
-  height: 980px;
-}
-
-h3 {
-  padding: 10px;
-}
-.total {
-  text-align: end;
-  margin: 5px;
-  font-size: 1.2rem;
-  background: #f2f2f2;
-  padding: 10px;
-  color: #354942;
-}
-.Pie-Datos {
-  text-align: start;
-  margin: 5px;
-  font-size: 1.2rem;
-  padding: 10px;
-  color: #354942;
 }
 </style>

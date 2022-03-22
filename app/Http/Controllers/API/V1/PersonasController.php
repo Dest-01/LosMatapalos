@@ -30,6 +30,14 @@ class PersonasController extends BaseController
 
         return $this->sendResponse($persona, 'Lista de personas');
     }
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $persona = $this->personas->latest()->paginate($filtro);
+
+        return $this->sendResponse($persona, 'Lista de personas');
+    }
     public function list()
     {
         $persona = $this->personas->get();
