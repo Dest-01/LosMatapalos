@@ -3,6 +3,9 @@ export default class Gate{
     constructor(user){
         this.user = user;
     }
+    nameUser(){
+        return this.user.name;
+    }
 
     isAdmin(){
         return this.user.type === 'admin';

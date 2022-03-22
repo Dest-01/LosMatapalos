@@ -106,6 +106,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'articulos'=>'ArticuloController',
         'dashboard' => 'DashboardController',
         'repositorio' => 'RepositorioDocumentosController',
+        'triggerUser' => 'TriggerUsuariosController',
     ]);
 });
 

@@ -164,4 +164,15 @@ export default {
   padding: 5px;
   text-align: center;
 }
+@media only screen and (min-width: 192px) and (max-width: 1192px) {
+  .opciones{
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+  }
+}
 </style>

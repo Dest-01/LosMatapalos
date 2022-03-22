@@ -60,9 +60,21 @@ class UserController extends BaseController
     public function store(UserRequest $request)
     {
         $this->authorize('isAdmin');
+
+
+        if ($request->image) {
+            $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos ($request->image, ';')))[1])[1];
+            (!file_exists(public_path().'/images/usuarios/')) ? mkdir(public_path().'/images/usuarios/',0777,true) : null;
+
+            \Image::make($request->image)->save(public_path('images/usuarios/') . $name);
+            $request->merge(['image' => $name]);
+
+        }
+
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
+            'image' => $request['image'],
             'password' => Hash::make($request['password']),
             'type' => $request['type'],
         ]);

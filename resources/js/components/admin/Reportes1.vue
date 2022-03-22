@@ -426,4 +426,19 @@ export default {
 h3 {
   font-weight: 600;
 }
+.btn-primary{
+  background: linear-gradient(359deg, #3490dc, #3490dc70);
+}
+.btn-danger {
+  background: linear-gradient(359deg, #e73838, #c70d0d8f);
+}
+
+@media only screen and (min-width: 192px) and (max-width: 1192px) {
+  .card-tools button{
+    margin: 5px 0;
+
+  }
+  
+}
+
 </style>

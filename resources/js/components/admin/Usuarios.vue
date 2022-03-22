@@ -56,6 +56,7 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Correo</th>
+                    <th>Imagen</th>
                     <th>Rol</th>
                     <th>Funciones</th>
                   </tr>
@@ -65,13 +66,20 @@
                     <td>{{ usuario.id }}</td>
                     <td>{{ usuario.name }}</td>
                     <td>{{ usuario.email }}</td>
+                    <td>
+                      <img
+                        v-bind:src="'/images/usuarios/' + usuario.image"
+                        width="50px"
+                        height="50px"
+                      />
+                    </td>
                     <td>{{ usuario.type }}</td>
                     <td>
                       <a href="#" @click="editModal(usuario)">
                         <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
-                      <a href="#" @click="eliminarUsuario(usuario.id)">
+                      <a href="#" @click="eliminarUsuario(usuario.id, usuario.name)">
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
                       /
@@ -158,6 +166,56 @@
                     maxlength="30"
                   />
                   <has-error :form="form" field="email"></has-error>
+                </div>
+                <div class="form-group">
+                  <div>
+                    <div class="row">
+                      <div class="col-8">
+                        <label class="btn btn-default p-0">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            ref="file"
+                            name="imagen"
+                            @change="updatePhoto"
+                            :class="{ 'is-invalid': form.errors.has('imagen') }"
+                            id="SubirImagen"
+                          />
+                          <has-error :form="form" field="imagen"></has-error>
+                        </label>
+                      </div>
+                      <div class="col-4"></div>
+                    </div>
+                    <div v-if="currentImage" class="progress">
+                      <div
+                        class="progress-bar progress-bar-info"
+                        role="progressbar"
+                        :aria-valuenow="progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        :style="{ width: progress + '%' }"
+                      >
+                        {{ progress }}%
+                      </div>
+                    </div>
+                    <div v-if="previewImage">
+                      <div>
+                        <img
+                          class="preview my-3"
+                          :src="previewImage"
+                          alt=""
+                          width="100%"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      v-if="message"
+                      class="alert alert-secondary"
+                      role="alert"
+                    >
+                      {{ message }}
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>Contraseña</label>
@@ -285,6 +343,11 @@
 export default {
   data() {
     return {
+      currentImage: undefined,
+      previewImage: undefined,
+      progress: 0,
+      message: "",
+      imageInfos: [],
       /*Funcionan con el selec para ocultar y mostrar los campos*/
       editmode: false,
       usuarios: {},
@@ -294,14 +357,42 @@ export default {
       form: new Form({
         id: "",
         type: "",
+        image: "",
         name: "",
         email: "",
         password: "",
         email_verified_at: "",
       }),
+      formTrigger: new Form({
+        usuarioActivo: this.$gate.nameUser(),
+        usuarioModificado: "",
+        accion: "",
+        fecha: "",
+        hora: "",
+      }),
     };
   },
   methods: {
+    updatePhoto(e) {
+      let file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.currentImage = file;
+      let reader = new FileReader();
+
+      if (file["size"] < 9111775) {
+        reader.onloadend = (file) => {
+          //console.log('RESULT', reader.result)
+          this.form.image = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        swal({
+          type: "error",
+          title: "ops...",
+          text: "archivo muy grande",
+        });
+      }
+    },
     filtrar() {
       if (this.filtrarBusqueda == "") {
         this.usuarios.data = this.todoUsuarios;
@@ -397,7 +488,21 @@ export default {
         });
     },
 
-    eliminarUsuario(id) {
+    triggerHistorial() {
+      this.formTrigger
+        .post("/api/triggerUser")
+        .then(() => {
+          this.$Progress.finish();
+        })
+        .catch(() => {
+          this.$Progress.finish();
+        });
+    },
+
+    eliminarUsuario(id, usuario) {
+      this.formTrigger.accion = "Eliminar";
+      this.formTrigger.usuarioModificado = usuario;
+
       Swal.fire({
         title: "Seguro que lo desea eliminar?",
         text: "Esta acción no puede revertirse!",
@@ -416,7 +521,7 @@ export default {
                 "Se ha eliminado la información.",
                 "success"
               );
-              // Fire.$emit('AfterCreate');
+              this.triggerHistorial();
               this.cargarUsuarios();
             })
             .catch((data) => {
@@ -433,6 +538,7 @@ export default {
     this.$Progress.start();
     this.cargarUsuarios();
     this.$Progress.finish();
+    window.onload = this.getNow;
   },
   filters: {
     truncate: function (text, length, suffix) {
@@ -448,9 +554,23 @@ export default {
             .includes(this.filtrarBusqueda.toLowerCase()) ||
           usuario.correo
             .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) 
+            .includes(this.filtrarBusqueda.toLowerCase())
         );
       });
+    },
+    getNow: function () {
+      const today = new Date();
+      const date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      const time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const dateTime = date + " " + time;
+      this.formTrigger.hora = time;
+      this.formTrigger.fecha = date;
     },
   },
 };

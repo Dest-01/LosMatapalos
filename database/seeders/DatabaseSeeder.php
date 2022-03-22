@@ -1,6 +1,7 @@
 <?php
 
 use Database\Seeders\UsersTableSeeder;
+use Database\Seeders\PersonSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
