@@ -16,7 +16,10 @@ class CreateTriggerUsuariosTable extends Migration
         Schema::create('trigger_usuarios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('usuarioActivo');
-            $table->string('usuarioModificado');
+            $table->string('usuarioAgregado')->nullable();
+            $table->string('usuarioModificadoAntes')->nullable();
+            $table->string('usuarioModificadoNuevo')->nullable();
+            $table->string('usuarioEliminado')->nullable();
             $table->string('accion');
             $table->date('fecha')->format('d/m/Y');
             $table->time('hora');

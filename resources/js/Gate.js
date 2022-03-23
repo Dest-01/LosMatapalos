@@ -7,6 +7,10 @@ export default class Gate{
         return this.user.name;
     }
 
+    getIdUser(){
+        return this.user.id;
+    }
+
     isAdmin(){
         return this.user.type === 'admin';
     }

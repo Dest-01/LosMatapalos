@@ -30,4 +30,13 @@ class ChangePasswordRequest extends FormRequest
             'confirm_password' => 'required|same:new_password',
         ];
     }
+
+    public function messages(){
+        return [
+            'current_password.*' => 'La contraseña tiene quue coincidir con la anterior',
+            'new_password.min' => 'Se requiere contraseña minimo de 6 caracteres',
+            'new_password.*' => 'Se requiere contraseña',
+            'confirm_password.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
+        ];
+    }
 }

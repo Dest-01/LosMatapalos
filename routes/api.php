@@ -27,9 +27,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //////////Grupo de rutas para los controladores en la carpeta API V1
 Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
-    Route::get('profile', 'ProfileController@profile');
-    Route::put('profile', 'ProfileController@updateProfile');
-    Route::post('change-password', 'ProfileController@changePassword');
+
+    Route::get('perfil', 'PerfilController@perfil');
+    Route::put('perfil/actualizar', 'PerfilController@actualizarPerfil');
+    Route::post('perfil/cambiar', 'PerfilController@cambiarPassword');
 
     ///////Rutas Personalizadas o especificas a un metodo
     Route::get('donativo/verificar', 'DonativosController@obtenerCedula');
@@ -84,6 +85,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('repositorio/listar', 'RepositorioDocumentosController@list');
     Route::get('articulos/listar', 'ArticuloController@list');
     Route::get('usuarios/listar', 'UserController@list');
+    Route::get('historial/listar', 'TriggerUsuariosController@listar');
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
@@ -106,7 +108,8 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'articulos'=>'ArticuloController',
         'dashboard' => 'DashboardController',
         'repositorio' => 'RepositorioDocumentosController',
-        'triggerUser' => 'TriggerUsuariosController',
+        'historial' => 'TriggerUsuariosController',
+        'perfil' => 'PerfilController',
     ]);
 });
 

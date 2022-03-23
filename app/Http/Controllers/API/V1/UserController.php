@@ -6,6 +6,8 @@ use App\Http\Requests\Users\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\Users\ChangePasswordRequest;
+use App\Http\Requests\Users\ProfileUpdateRequest;
 
 
 class UserController extends BaseController
@@ -97,6 +99,21 @@ class UserController extends BaseController
 
         $user = User::findOrFail($id);
 
+
+        $currentPhoto = $user->image;
+
+        if ($request->image != $currentPhoto) {
+            $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+
+            \Image::make($request->image)->save(public_path('images/usuarios/') . $name);
+            $request->merge(['image' => $name]);
+
+            $userPhoto = public_path('images/usuarios/') . $currentPhoto;
+            if (file_exists($userPhoto)) {
+                @unlink($userPhoto);
+            }
+        }
+
         if (!empty($request->password)) {
             $request->merge(['password' => Hash::make($request['password'])]);
         }
@@ -104,6 +121,22 @@ class UserController extends BaseController
         $user->update($request->all());
 
         return $this->sendResponse($user, 'Se actualizo el usuario!');
+    }
+
+    public function actualizarPerfil(ProfileUpdateRequest $request, $id)
+    {
+        $user = auth('api')->user();
+
+        $user = User::findOrFail($id);
+
+        $user->update($request->all());
+
+        $response = [
+            'success' => true,
+            'data'    => $user,
+            'message' => 'Perfil actualizado',
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -117,8 +150,14 @@ class UserController extends BaseController
 
         $this->authorize('isAdmin');
 
+        
+
         $user = User::findOrFail($id);
         // delete the user
+
+        if (file_exists('images/usuarios/' . $user->image) and !empty($user->image)) {
+            unlink('images/usuarios/' . $user->image);
+        }
 
         $user->delete();
 

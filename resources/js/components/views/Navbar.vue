@@ -25,10 +25,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-            <li class="nav-item" >
-              <router-link class="nav-link" to="/inicio">{{
-                $t("Inicio") 
-              }} </router-link>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/inicio"
+                >{{ $t("Inicio") }}
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/reservacion">{{
@@ -40,7 +40,6 @@
                 $t("Donacion")
               }}</router-link>
             </li>
-            <li></li>
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -70,9 +69,19 @@
                 <li>
                   <hr class="dropdown-divider" />
                 </li>
-                <router-link class="dropdown-item" to="/fauna">{{
-                  $t("Fauna")
-                }}</router-link>
+                <li>
+                  <router-link class="dropdown-item" to="/fauna">{{
+                    $t("Fauna")
+                  }}</router-link>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <router-link class="dropdown-item" to="/#">{{
+                    $t("Actividad")
+                  }}</router-link>
+                </li>
               </ul>
             </li>
             <li class="nav-item">
@@ -91,7 +100,9 @@
               }}</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click="changeLang()" href="#">{{IdiomaSeleccionado}}</a>
+              <a class="nav-link" @click="changeLang()" href="#">{{
+                IdiomaSeleccionado
+              }}</a>
             </li>
           </ul>
         </div>
@@ -104,9 +115,9 @@
 export default {
   name: "locale-changer",
   data() {
-    return { 
+    return {
       IdiomaSeleccionado: "",
-      langs: ["es", "en"] 
+      langs: ["es", "en"],
     };
   },
   methods: {
@@ -127,12 +138,12 @@ export default {
   },
   created() {
     this.changeLang();
-  }
+  },
 };
 </script>
 
 <style scoped>
-*{
-  font-family: 'Source Serif 4', sans-serif;
+* {
+  font-family: "Source Serif 4", sans-serif;
 }
 </style>

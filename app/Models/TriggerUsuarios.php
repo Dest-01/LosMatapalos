@@ -9,5 +9,5 @@ class TriggerUsuarios extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','usuarioActivo','usuarioModificado','accion','fecha','hora'];
+    protected $fillable = ['id','usuarioActivo','usuarioAgregado', 'usuarioModificadoAntes', 'usuarioModificadoNuevo', 'usuarioEliminado', 'accion','fecha','hora'];
 }

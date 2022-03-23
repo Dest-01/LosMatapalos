@@ -28,4 +28,11 @@ class ProfileUpdateRequest extends FormRequest
             'email' => 'required|string|email|max:191|unique:users,email,' . $this->user()->id
         ];
     }
+
+    public function messages(){
+        return [
+            'name.*' => 'Se requiere un nombre de usuario',
+            'email.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
+        ];
+    }
 }

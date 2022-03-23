@@ -184,7 +184,6 @@ export default {
   margin: 10px auto;
   padding: 5px;
   justify-content: center;
-  animation-delay: 1s;
   animation-fill-mode: forwards;
   animation-duration: 3s;
   transition: opacity 3s;
@@ -224,7 +223,6 @@ export default {
 .titulo {
   opacity: 0;
   animation-name: aparecerTitulo;
-  animation-delay: 1s;
   animation-fill-mode: forwards;
   animation-duration: 3s;
   transition: opacity 3s;

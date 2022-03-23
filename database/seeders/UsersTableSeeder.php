@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'usuario@gmail.com',
             'image' => 'profile.png',
             'password' => bcrypt('123456'),
-            'type' => 'usuario',
+            'type' => 'user',
         ]);
     }
 }

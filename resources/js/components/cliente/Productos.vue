@@ -179,7 +179,6 @@ export default {
 .site-heading {
   animation-name: desplazar;
   animation-duration: 2s;
-  animation-delay: 1s;
   opacity: 0;
   animation-fill-mode: forwards;
 }

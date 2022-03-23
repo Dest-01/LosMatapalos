@@ -73,13 +73,17 @@
                         height="50px"
                       />
                     </td>
-                    <td>{{ usuario.type }}</td>
+                    <td v-if="usuario.type == 'user'">usuario</td>
+                    <td v-else>{{ usuario.type }}</td>
                     <td>
-                      <a href="#" @click="editModal(usuario)">
+                      <a href="#" @click="editModal(usuario), usuarioAnterior(usuario.name)">
                         <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
-                      <a href="#" @click="eliminarUsuario(usuario.id, usuario.name)">
+                      <a
+                        href="#"
+                        @click="eliminarUsuario(usuario.id, usuario.name)"
+                      >
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
                       /
@@ -226,7 +230,6 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('password') }"
                     autocomplete="false"
-                    required
                     placeholder="Escriba la contraseña"
                   />
                   <has-error :form="form" field="password"></has-error>
@@ -243,7 +246,7 @@
                   >
                     <option value="">Seleccione el rol del usuario</option>
                     <option value="admin">Admin</option>
-                    <option value="usuario">Usuario</option>
+                    <option value="user">Usuario</option>
                   </select>
                   <has-error :form="form" field="type"></has-error>
                 </div>
@@ -318,10 +321,26 @@
               <div class="form-group">
                 <label>Rol del usuario</label>
                 <input
+                v-if="form.type == 'user'"
+                  v-model="usuarioNormal"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                />
+                <input
+                v-else
                   v-model="form.type"
                   type="text"
                   class="form-control"
                   :disabled="verDetalles"
+                />
+              </div>
+              <div class="form-group">
+                <label>Imagen Perfil</label>
+                <img
+                  v-bind:src="'/images/usuarios/' + form.image"
+                  width="100%"
+                  height="100%"
                 />
               </div>
             </div>
@@ -353,6 +372,7 @@ export default {
       usuarios: {},
       todoUsuarios: {},
       verDetalles: true,
+      usuarioNormal: "usuario",
       filtrarBusqueda: "",
       form: new Form({
         id: "",
@@ -365,7 +385,10 @@ export default {
       }),
       formTrigger: new Form({
         usuarioActivo: this.$gate.nameUser(),
-        usuarioModificado: "",
+        usuarioAgregado: "",
+        usuarioModificadoAntes: "",
+        usuarioModificadoNuevo: "",
+        usuarioEliminado: "",
         accion: "",
         fecha: "",
         hora: "",
@@ -404,12 +427,16 @@ export default {
       this.editmode = true;
       this.form.reset();
       $("#addNew").modal("show");
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       this.form.fill(usuario);
       this.form.errors.clear();
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
+      $("#SubirImagen").val("");
+      this.previewImage = "";
       $("#addNew").modal("show");
       this.form.errors.clear();
     },
@@ -438,6 +465,8 @@ export default {
       }
     },
     crearUsuario() {
+      this.formTrigger.usuarioAgregado = this.form.name;
+      this.formTrigger.accion = "Agregar";
       if (this.$gate.isAdmin()) {
         this.form
           .post("/api/usuarios")
@@ -450,6 +479,7 @@ export default {
             });
 
             this.$Progress.finish();
+            this.triggerHistorial();
             this.cargarUsuarios();
           })
           .catch(() => {
@@ -468,6 +498,8 @@ export default {
     /*////////////////////////////////////////////////////////////*/
 
     actualizarUsuario() {
+      this.formTrigger.accion = "Modificar";
+      this.formTrigger.usuarioModificadoNuevo = this.form.name;
       this.$Progress.start();
       this.form
         .put("/api/usuarios/" + this.form.id)
@@ -479,8 +511,7 @@ export default {
             title: response.data.message,
           });
           this.$Progress.finish();
-          //  Fire.$emit('AfterCreate');
-
+          this.triggerHistorial();
           this.cargarUsuarios();
         })
         .catch(() => {
@@ -490,7 +521,7 @@ export default {
 
     triggerHistorial() {
       this.formTrigger
-        .post("/api/triggerUser")
+        .post("/api/historial")
         .then(() => {
           this.$Progress.finish();
         })
@@ -498,10 +529,13 @@ export default {
           this.$Progress.finish();
         });
     },
+    usuarioAnterior(usuarioAnterior){
+      this.formTrigger.usuarioModificadoAntes = usuarioAnterior;
+    },
 
     eliminarUsuario(id, usuario) {
       this.formTrigger.accion = "Eliminar";
-      this.formTrigger.usuarioModificado = usuario;
+      this.formTrigger.usuarioEliminado = usuario;
 
       Swal.fire({
         title: "Seguro que lo desea eliminar?",

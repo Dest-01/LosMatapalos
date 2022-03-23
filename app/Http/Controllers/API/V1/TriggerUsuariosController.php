@@ -4,8 +4,9 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Models\TriggerUsuarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class TriggerUsuariosController extends Controller
+class TriggerUsuariosController extends BaseController
 {
 
     protected $triggerUsuarios = '';
@@ -22,9 +23,9 @@ class TriggerUsuariosController extends Controller
      */
     public function index()
     {
-        $triggerUsuario = $this->triggerUsuarios->latest()->paginate(25);
+        $triggerUsuarios = TriggerUsuarios::latest()->paginate(25);
 
-        return $this->sendResponse($triggerUsuario, 'Historia');
+        return $this->sendResponse($triggerUsuarios, 'Historial');
     }
 
     /**
@@ -37,7 +38,10 @@ class TriggerUsuariosController extends Controller
     {
         $tag = $this->triggerUsuarios->create([
             'usuarioActivo' => $request->get('usuarioActivo'),
-            'usuarioModificado' => $request->get('usuarioModificado'),
+            'usuarioAgregado' => $request->get('usuarioAgregado'),
+            'usuarioModificadoAntes' => $request->get('usuarioModificadoAntes'),
+            'usuarioModificadoNuevo' => $request->get('usuarioModificadoNuevo'),
+            'usuarioEliminado' => $request->get('usuarioEliminado'),
             'accion' => $request->get('accion'),
             'fecha' => $request->get('fecha'),
             'hora' => $request->get('hora'),
