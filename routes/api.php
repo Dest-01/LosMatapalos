@@ -30,6 +30,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
 
     Route::get('perfil', 'PerfilController@perfil');
     Route::put('perfil/actualizar', 'PerfilController@actualizarPerfil');
+    Route::put('perfil/actualizarFoto', 'PerfilController@actualizarFoto');
     Route::post('perfil/cambiar', 'PerfilController@cambiarPassword');
 
     ///////Rutas Personalizadas o especificas a un metodo

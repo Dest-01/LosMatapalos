@@ -8,6 +8,7 @@ use App\Http\Requests\Users\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+
 class PerfilController extends Controller
 {
     /**
@@ -54,6 +55,34 @@ class PerfilController extends Controller
             'success' => true,
             'data'    => $user,
             'message' => 'Perfil actualizado!',
+        ];
+        return response()->json($response, 200);
+    }
+
+
+    public function actualizarFoto(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $currentPhoto = $user->image;
+
+        if ($request->image != $currentPhoto) {
+            $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+
+            \Image::make($request->image)->save(public_path('images/usuarios/') . $name);
+            $request->merge(['image' => $name]);
+
+            $userPhoto = public_path('images/usuarios/') . $currentPhoto;
+            if (file_exists($userPhoto)) {
+                @unlink($userPhoto);
+            }
+        }
+
+        $user->update($request->all());
+
+        $response = [
+            'success' => true,
+            'data'    => $user,
+            'message' => 'Foto actualizada!',
         ];
         return response()->json($response, 200);
     }

@@ -76,7 +76,12 @@
                     <td v-if="usuario.type == 'user'">usuario</td>
                     <td v-else>{{ usuario.type }}</td>
                     <td>
-                      <a href="#" @click="editModal(usuario), usuarioAnterior(usuario.name)">
+                      <a
+                        href="#"
+                        @click="
+                          editModal(usuario), usuarioAnterior(usuario.name)
+                        "
+                      >
                         <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
@@ -321,14 +326,14 @@
               <div class="form-group">
                 <label>Rol del usuario</label>
                 <input
-                v-if="form.type == 'user'"
+                  v-if="form.type == 'user'"
                   v-model="usuarioNormal"
                   type="text"
                   class="form-control"
                   :disabled="verDetalles"
                 />
                 <input
-                v-else
+                  v-else
                   v-model="form.type"
                   type="text"
                   class="form-control"
@@ -529,7 +534,7 @@ export default {
           this.$Progress.finish();
         });
     },
-    usuarioAnterior(usuarioAnterior){
+    usuarioAnterior(usuarioAnterior) {
       this.formTrigger.usuarioModificadoAntes = usuarioAnterior;
     },
 

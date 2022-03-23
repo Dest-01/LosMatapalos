@@ -6,7 +6,7 @@ export default class Gate{
     nameUser(){
         return this.user.name;
     }
-
+    
     getIdUser(){
         return this.user.id;
     }
