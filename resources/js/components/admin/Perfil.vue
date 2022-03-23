@@ -409,13 +409,19 @@ export default {
         });
     },
     actualizarFoto() {
+      this.form.name = this.$gate.nameUser();
+      this.form.email = this.$gate.getEmailUser();
+
       this.$Progress.start();
-        this.form
-            .put("/api/perfil/actualizarFoto", {
-              params: { id: this.$gate.getIdUser() },
-            })
+      if (this.form.password == "") {
+        this.form.password = undefined;
+      }
+      this.form
+        .put("/api/perfil/actualizarFoto")
         .then((data) => {
           this.$Progress.finish();
+          $("#SubirImagen").val("");
+      this.previewImage = "";
           Toast.fire({
             icon: "success",
             title: data.data.message,

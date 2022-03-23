@@ -6,6 +6,9 @@ export default class Gate{
     nameUser(){
         return this.user.name;
     }
+    getEmailUser(){
+        return this.user.email;
+    }
     
     getIdUser(){
         return this.user.id;

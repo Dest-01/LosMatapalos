@@ -7,6 +7,7 @@ use App\Http\Requests\Users\ChangePasswordRequest;
 use App\Http\Requests\Users\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 
 class PerfilController extends Controller
@@ -60,9 +61,9 @@ class PerfilController extends Controller
     }
 
 
-    public function actualizarFoto(Request $request, $id)
+    public function actualizarFoto(Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = User::find(auth('api')->user()->id);
         $currentPhoto = $user->image;
 
         if ($request->image != $currentPhoto) {
