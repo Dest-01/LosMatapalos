@@ -126,6 +126,9 @@ Route::get('/admin/fauna', function(){
 Route::get('/admin/flora', function () {
     return view('admin');
 })->where('admin/flora', '[\/\w\.-]*')->middleware('auth');
+Route::get('/admin/eventos', function(){
+    return view('admin');
+})->where('admin/eventos', '[\/\w\.-]*')->middleware('auth');
 ///////////////////////////////----FIN--BIODIVERSIDAD--///////////////////////
 Route::get('/admin/repositorio', function () {
     return view('admin');

@@ -20,6 +20,7 @@ import RepositorioAdmin from './components/admin/RepositorioDocumental.vue'
 import Dashboard from './components/admin/Dashboard.vue'
 import Perfil from './components/admin/Perfil.vue'
 import Usuarios from './components/admin/Usuarios.vue'
+import EventosAdmin from './components/admin/Eventos.vue'
 
 /*IMPORTAN LOS DE CLIENTE*/
 import App from './components/layouts/App.vue'
@@ -33,6 +34,7 @@ import Flora from './components/cliente/Flora.vue'
 import Repositorio from './components/cliente/Repositorio.vue'
 import Marca from './components/cliente/Productos.vue'
 import AcercaDe from './components/cliente/AboutUs.vue'
+import Eventos from './components/cliente/Eventos.vue'
 
 
 
@@ -129,6 +131,10 @@ export default [
         path: '/admin/usuarios',
         component: Usuarios
     },
+    {
+        path: '/admin/eventos',
+        component: EventosAdmin
+    },
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //------------------=-------------------------------RUTAS CLIENTE-------------------------------------------------
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,6 +176,10 @@ export default [
             {
                 path: '/repositorio',
                 component: Repositorio,
+            },
+            {
+                path: '/eventos',
+                component: Eventos,
             },
             {
                 path: '*',

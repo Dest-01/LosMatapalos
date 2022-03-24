@@ -229,12 +229,20 @@
             </li>
             <li class="nav-item">
               <router-link to="/admin/articulos" class="nav-link">
-                  <i class="nav-icon fas fa-file-word gray"></i>
+                  <i class="nav-icon fab fa-medium gray"></i>
                   <p>
-                     Marca
+                     Productos Marca
                   </p>
               </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/admin/eventos" class="nav-link">
+                <i class="nav-icon fas fa-images gray"></i>
+                <p>
+                   Galeria Eventos
+                </p>
+            </router-link>
+        </li>
         <li class="nav-item">
             <a href="#" class="nav-link" onclick="event.preventDefault();
           document.getElementById('logout-form').submit();">

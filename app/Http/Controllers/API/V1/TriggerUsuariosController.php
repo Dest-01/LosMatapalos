@@ -23,7 +23,7 @@ class TriggerUsuariosController extends BaseController
      */
     public function index()
     {
-        $triggerUsuarios = TriggerUsuarios::latest()->paginate(25);
+        $triggerUsuarios = TriggerUsuarios::latest()->paginate(15);
 
         return $this->sendResponse($triggerUsuarios, 'Historial');
     }

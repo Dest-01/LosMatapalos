@@ -78,7 +78,7 @@
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <router-link class="dropdown-item" to="/#">{{
+                  <router-link class="dropdown-item" to="/eventos">{{
                     $t("Actividad")
                   }}</router-link>
                 </li>

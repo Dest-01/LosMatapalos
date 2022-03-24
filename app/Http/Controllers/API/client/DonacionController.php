@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API\client;
 
-use App\Models\Personas;
-use App\Models\Organizaciones;
 use App\Models\CatDonativos;
 use App\Models\Donativos;
+use App\Models\Organizaciones;
+use App\Models\Personas;
 use Illuminate\Support\Facades\DB;
 
 class DonacionController extends BaseController
@@ -31,18 +31,24 @@ class DonacionController extends BaseController
      */
     public function index()
     {
-        $donativo = $this->donativos->latest()->paginate(8);
-
-        return $this->sendResponse($donativo, 'Lista Donativos');
-
         $donativo = DB::table('donativos')
-        ->join('personas', 'donativos.idPersona', '=', 'personas.id')
-        ->join('organizaciones', 'donativos.idOrganizacion ', '=', 'organizaciones.id')
-        ->select('personas.*', 'donativos.*', 'organizaciones.*')
-        ->paginate(8);
+            ->join('personas', 'donativos.idPersona', '=', 'personas.id')
+            ->select('personas.*', 'donativos.*')
+            ->paginate(5);
 
-    return $this->sendResponse($donativo, 'Lista de estudiantes voluntariados!');
+        return $this->sendResponse($donativo, 'Lista de ultimos donativos!');
     }
+
+    public function ShowOrg()
+    {
+        $donativo = DB::table('donativos')
+            ->join('organizaciones', 'donativos.idOrganizacion', '=', 'organizaciones.id')
+            ->select('organizaciones.*', 'donativos.*')
+            ->paginate(5);
+
+        return $this->sendResponse($donativo, 'Lista de ultimos donativos!');
+    }
+
     public function cargarCategoriaDonativos()
     {
         $catDonativos = $this->catDonativos->latest()->paginate(3);

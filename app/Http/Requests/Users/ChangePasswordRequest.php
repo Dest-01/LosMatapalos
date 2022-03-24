@@ -36,7 +36,8 @@ class ChangePasswordRequest extends FormRequest
             'current_password.*' => 'La contraseña tiene quue coincidir con la anterior',
             'new_password.min' => 'Se requiere contraseña minimo de 6 caracteres',
             'new_password.*' => 'Se requiere contraseña',
-            'confirm_password.*' => 'Correo se requiere, ejemplo: ejemplo@gmail.com',
+            'confirm_password.same' => 'La contraseña no coincide',
+            'confirm_password.*' => 'La contraseña se requiere',
         ];
     }
 }

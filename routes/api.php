@@ -73,7 +73,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('dashboard/ultimasReservaciones', 'DashboardController@ultimasReservaciones');
     Route::get('dashboard/ultimasDonaciones', 'DashboardController@ultimasDonaciones');
     Route::get('dashboard/ultimasActividades', 'DashboardController@ultimasActividades');
-    ///////////////////////////////------RUSTAS LISTAR PARA IFLTRAR ----------------////////////////////
+    ///////////////////////////////------RUSTAS LISTAR PARA FILTRAR ----------------////////////////////
     Route::get('organizacion/listar', 'OrganizacionesController@list');
     Route::get('personas/mostrar', 'PersonasController@mostrar');
     Route::get('personas/listar', 'PersonasController@list');
@@ -87,6 +87,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('articulos/listar', 'ArticuloController@list');
     Route::get('usuarios/listar', 'UserController@list');
     Route::get('historial/listar', 'TriggerUsuariosController@listar');
+    Route::get('actividadesPasadas/listar', 'actividadesPasadasController@list');
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([
@@ -111,6 +112,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'repositorio' => 'RepositorioDocumentosController',
         'historial' => 'TriggerUsuariosController',
         'perfil' => 'PerfilController',
+        'actividadesPasadas' => 'actividadesPasadasController',
     ]);
 });
 
@@ -124,10 +126,12 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
     Route::post('reservarCliente/organizacion', 'ReservarCliController@GuardarOrganizacion');
     Route::post('reservarCliente/grupo', 'ReservarCliController@GuardarGrupo');
     Route::get('donacionesCliente/donacionesNecesarias', 'DonacionController@cargarCategoriaDonativos');
+    Route::get('donacionesCliente/organizaciones', 'DonacionController@ShowOrg');
     Route::get('donacionesCliente/Donadores', 'DonacionController@Donadores');
     Route::get('floraCliente/List', 'FloraController@list');
     Route::get('faunaCliente/List', 'FaunaController@list');
     Route::get('repositorioCliente/List', 'RepositorioController@list');
+    Route::get('actividadesPasadasCliente/List', 'actividadesPasadasController@list');
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',
@@ -138,6 +142,7 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         'articulosCliente' => 'ArticuloController',
         'repositorioCliente' => 'RepositorioController',
         'voluntariosCliente' => 'VoluntarioEstudiantesController',
+        'actividadesPasadasCliente' => 'actividadesPasadasController',
     ]);
 });
 //API DE REPORTES PARA CONSULTAR DATOS

@@ -14,6 +14,10 @@ export default class Gate{
         return this.user.id;
     }
 
+    getImageUser(){
+        return this.user.image;
+    }
+
     isAdmin(){
         return this.user.type === 'admin';
     }

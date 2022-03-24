@@ -21,30 +21,37 @@
             </span>
           </div>
           <div class="necesarios">
-      <div class="contenedor1 card">
-        <div class="card-body">
-        <div class="site-heading text-center">
-          
-               <h2> <span>{{$t('Donacion_¿_symbol')}}</span>{{$t('Donacion_T2')}}<span>{{$t('Donacion_?_symbol')}}</span></h2>
-                
+            <div class="contenedor1 card">
+              <div class="card-body">
+                <div class="site-heading text-center">
+                  <h2>
+                    <span>{{ $t("Donacion_¿_symbol") }}</span
+                    >{{ $t("Donacion_T2")
+                    }}<span>{{ $t("Donacion_?_symbol") }}</span>
+                  </h2>
+                </div>
+                <h5 class="site-heading" style="line-height: 32px">
+                  {{ $t("Donacion_P2_s1") }}
+                  <span class="matapalos">{{ $t("Donacion_Trail") }}</span
+                  ><span class="matapalos">{{ $t("Donacion_Sendero") }}</span
+                  >{{ $t("Donacion_Coma") }} {{ $t("Donacion_P2_s2") }}
+                  <span class="matapalos">{{ $t("Donacion_Sendero") }}</span
+                  ><span class="matapalos">{{ $t("Donacion_Trail") }}</span
+                  >{{ $t("Donacion_Dot") }}
+                </h5>
+                <br />
+                <h5 class="site-heading" style="line-height: 32px">
+                  {{ $t("Donacion_P3") }}
+                </h5>
+                <br />
+                <h5 class="site-heading" style="text-align: center">
+                  <span class="matapalos"> {{ $t("Donacion_T3") }}</span
+                  >{{ $t("Donacion_T4")
+                  }}<span class="matapalos"> {{ $t("Donacion_T5") }}</span
+                  >{{ $t("Donacion_T6") }}
+                </h5>
               </div>
-          <h5 class="site-heading" style="line-height:32px">
-          {{$t('Donacion_P2_s1')}} <span class="matapalos">{{$t('Donacion_Trail')}}</span><span class="matapalos">{{$t('Donacion_Sendero')}}</span>{{$t('Donacion_Coma')}}
-          {{$t('Donacion_P2_s2')}} <span class="matapalos">{{$t('Donacion_Sendero')}}</span><span class="matapalos">{{$t('Donacion_Trail')}}</span>{{$t('Donacion_Dot')}}
-
-          </h5>      
-          <br /> 
-          <h5 class="site-heading" style="line-height:32px">
-            {{$t('Donacion_P3')}}
-          </h5>
-          <br />  
-          <h5 class="site-heading" style="text-align: center">
-           <span class="matapalos"> {{$t('Donacion_T3')}}</span>{{$t('Donacion_T4')}}<span class="matapalos"> {{$t('Donacion_T5')}}</span>{{$t('Donacion_T6')}}      
-          </h5>
-            
-          
-        </div>
-      </div>
+            </div>
             <div class="contenedor2 card">
               <div class="card-body">
                 <div
@@ -63,9 +70,9 @@
                         alt=""
                       />
                       <div class="carousel-caption d-none d-md-block">
-                       <h1>{{$t('Donacion_T7')}}</h1>
+                        <h1>{{ $t("Donacion_T7") }}</h1>
                         <p>
-                         {{$t('Donacion_P4')}}
+                          {{ $t("Donacion_P4") }}
                         </p>
                       </div>
                     </div>
@@ -121,28 +128,71 @@
       </div>
     </section>
     <div class="container text-center">
-      <h1>{{$t('Donacion_T1')}}</h1>
+      <h1 style="color: #38ab81">{{ $t("Donacion_T1") }}</h1>
     </div>
 
     <br />
-    <div class="contt">
-      <div class="carda" v-for="donativo in donativos.data" :key="donativo.id">
-        <div class="content">
-          <div class="img">
-            <img
-              v-bind:src="'/images/donativos/' + donativo.photo"
-              class=""
-              object-fit="cover"
-              width="100%"
-              height="100%"
-              alt=""
-            />
-          </div>
-          <div class="details">
-            <div class="job">{{ donativo.detalle }}</div>
-          </div>
+    <div>
+      <h2 class="subtitulo">{{$t("PersonasDonadoras")}}</h2>
+    </div>
+    <div class="contenedor_donantes">
+    <div
+      v-for="donativo in donativos.data"
+      :key="donativo.id"
+      class="containerqw"
+    >
+      <img
+        v-bind:src="'/images/donativos/' + donativo.photo"
+        width="100%"
+        height="100%"
+        alt=""
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      />
+
+      <div class="descripcion">
+        <span class="text" style="font-size: 25px">
+          detalle: <br />{{ donativo.detalle }}</span
+        >
+
+        <div class="donante" style="font-size: 25px">
+          donante:<br />
+          {{ donativo.nombre }}
         </div>
       </div>
+    </div>
+    </div>
+    <div>
+      <h2 class="subtitulo">{{$t("OrganizacionesDonadoras")}}</h2>
+    </div>
+   <div class="contenedor_donantes">
+
+    
+    <div
+      v-for="donativoOrg in donativosOrg.data"
+      :key="donativoOrg.id"
+      class="containerqw"
+    >
+      <img
+        v-bind:src="'/images/donativos/' + donativoOrg.photo"
+        width="100%"
+        height="100%"
+        alt=""
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      />
+
+      <div class="descripcion">
+        <span class="text" style="font-size: 25px">
+          detalle: <br />{{ donativoOrg.detalle }}</span
+        >
+
+        <div class="donante" style="font-size: 25px">
+          donante:<br />
+          {{ donativoOrg.nombre }}
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -157,6 +207,7 @@ export default {
       portada: "../images/PortadaDonaciones.jpg",
       text: "Portada",
       donativos: {},
+      donativosOrg: {},
       donativosNecesarios: {},
       modDonativos: {},
     };
@@ -179,9 +230,15 @@ export default {
         .get("/api/donacionesCliente/donacionesNecesarias")
         .then(({ data }) => (this.donativosNecesarios = data.data));
     },
+    cargarDonativosOrg() {
+      axios
+        .get("/api/donacionesCliente/organizaciones")
+        .then(({ data }) => (this.donativosOrg = data.data));
+    },
   },
   created() {
     this.$Progress.start();
+    this.cargarDonativosOrg();
     this.cargarDonativos();
     this.$Progress.finish();
   },
@@ -234,9 +291,6 @@ export default {
   width: 100%;
   z-index: 5;
   content: "";
-  background: -webkit-linear-gradient(#fc5e9d, #352ce6, #30f89c);
-  background: -moz-linear-gradient(left, #fc5e9d, #352ce6, #30f89c);
-  background: linear-gradient(#fc5e9d, #352ce6, #30f89c);
   opacity: 0.4;
 }
 .hero:after {
@@ -247,9 +301,7 @@ export default {
   content: "";
   width: 100%;
   height: 3px;
-  background: -webkit-linear-gradient(to left, #fc5e9d, #352ce6, #30f89c);
-  background: -moz-linear-gradient(to left, #fc5e9d, #352ce6, #30f89c);
-  background: linear-gradient(to left, #fc5e9d, #352ce6, #30f89c);
+  background: #38ab81;
 }
 .hero .optional-rainbow {
   display: none;
@@ -455,6 +507,69 @@ article img {
 .job {
   text-align: center;
 }
+
+.containerqw {
+  width: 300px;
+  height: 250px;
+  box-sizing: content-box;
+  font-size: 25px;
+  text-align: center;
+  margin: 15px;
+  padding: 0;
+  border-radius: 15px;
+  box-shadow: 1px 1px 10px 0 black;
+  transition: transform 0.6s;
+  margin-bottom: 50px;
+  margin-left: 50px;
+}
+.containerqw:hover {
+  transform: scale(1.1);
+}
+
+.containerqw img {
+  object-fit: cover;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #38ab81b0;
+  border-radius: 15px;
+  padding: 0;
+}
+
+.descripcion {
+  color: #fff;
+  font-size: 1em;
+  font-weight: 700;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  top: -100%;
+  opacity: 0;
+  transition: all 0.8s;
+  width: 100%;
+  height: 100%;
+}
+
+.containerqw > .descripcion:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+}
+
+.subtitulo {
+  text-align: center;
+}
+
+.contenedor_donantes{
+  display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
 @media only screen and (min-device-width: 280px) and (max-device-width: 912px) {
   .necesarios {
     display: flex;

@@ -57,8 +57,8 @@
                           <td>{{ historiales.usuarioActivo }}</td>
                           <td>{{ historiales.usuarioAgregado }}</td>
                           <td>
-                            {{ historiales.usuarioModificadoAntes }} -
-                            {{ historiales.usuarioModificadoNuevo }}
+                           <b>Anterior:</b> <span id="anterior">{{ historiales.usuarioModificadoAntes }}</span> -
+                          <b>Modificado:</b> <span id="modificado">{{ historiales.usuarioModificadoNuevo }}</span>
                           </td>
                           <td>{{ historiales.usuarioEliminado }}</td>
                           <td>{{ historiales.accion }}</td>
@@ -102,8 +102,8 @@
                           <td>{{ historiales.usuarioActivo }}</td>
                           <td>{{ historiales.usuarioAgregado }}</td>
                           <td>
-                            {{ historiales.usuarioModificadoAntes }} -
-                            {{ historiales.usuarioModificadoNuevo }}
+                           Anterior: {{ historiales.usuarioModificadoAntes }} -
+                           Modificado: {{ historiales.usuarioModificadoNuevo }}
                           </td>
                           <td>{{ historiales.usuarioEliminado }}</td>
                           <td>{{ historiales.accion }}</td>
@@ -384,6 +384,12 @@ export default {
       }
     },
     actualizarPerfil() {
+        this.form.image = this.$gate.getImageUser();
+        if(this.form.name == ""){
+            this.form.name = this.$gate.nameUser();
+        }else if(this.form.email == ""){
+            this.form.email = this.$gate.getEmailUser();
+        }
       this.$Progress.start();
       if (this.form.password == "") {
         this.form.password = undefined;
@@ -398,6 +404,7 @@ export default {
             icon: "success",
             title: data.data.message,
           });
+          window.location.reload();
         })
         .catch((data) => {
           this.$Progress.fail();
@@ -421,11 +428,12 @@ export default {
         .then((data) => {
           this.$Progress.finish();
           $("#SubirImagen").val("");
-      this.previewImage = "";
+          this.previewImage = "";
           Toast.fire({
             icon: "success",
             title: data.data.message,
           });
+          window.location.reload();
         })
         .catch((data) => {
           this.$Progress.fail();
@@ -476,6 +484,14 @@ export default {
 }
 .imagen_previa img {
   width: 300px;
+}
+
+#modificado{
+ color: green;
+}
+
+#anterior{
+ color: red;
 }
 
 @media only screen and (min-width: 100px) and (max-width: 1192px) {
