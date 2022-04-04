@@ -52,6 +52,15 @@ class VoluntarioPersonaController extends BaseController
         return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
     }
 
+    public function mostrar()
+    {
+        $filtro = $request->valor;
+
+        $voluntarioPer = $this->voluntarioPersona->latest()->paginate($filtro);
+
+        return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
+    }
+
     public function list()
     {
         $voluntarioPer = $this->voluntarioPersona->get();

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="voluntarioEstudiante.data != 0" class="container">
     <div class="titulo">
      <h1>{{$t('Vol_T1')}} <span>{{$t('Vol_T2')}}</span></h1>
     </div>

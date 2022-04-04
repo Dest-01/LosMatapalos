@@ -27,6 +27,17 @@
 
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
                   <input
                     v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
@@ -158,6 +169,8 @@
                     type="text"
                     name="name"
                     class="form-control"
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]{0,15}"
+                    required
                   />
                   <has-error :form="form" field="name"></has-error>
                 </div>
@@ -173,6 +186,8 @@
                     required
                     minlength="3"
                     maxlength="30"
+                    pattern="[a-zA-Z0-9_]([\.]?+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{1,30}([\.][a-zA-Z])?"
+                    title="Digita un correo válido."
                   />
                   <has-error :form="form" field="email"></has-error>
                 </div>
@@ -236,6 +251,8 @@
                     :class="{ 'is-invalid': form.errors.has('password') }"
                     autocomplete="false"
                     placeholder="Escriba la contraseña"
+                    pattern="[a-zA-Z0-9_]([\.]?+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{1,30}([\.][a-zA-Z])?"
+                    required
                   />
                   <has-error :form="form" field="password"></has-error>
                 </div>
@@ -367,6 +384,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       currentImage: undefined,
       previewImage: undefined,
       progress: 0,
@@ -449,12 +467,22 @@ export default {
       $("#exampleModal").modal("show");
       this.form.fill(usuario);
     },
-
+    mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/usuarios/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.personas = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/usuarios?page=" + page)
+        .get("/api/usuarios/mostrar?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.usuarios = data.data));
       this.$Progress.finish();
     },

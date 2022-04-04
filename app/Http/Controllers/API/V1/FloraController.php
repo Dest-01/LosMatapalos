@@ -18,18 +18,28 @@ class FloraController extends BaseController
         $this->middleware('auth:api');
         $this->flora = $flora;
     }
+
     public function index()
     {
-        $flora = $this->flora->latest()->paginate(25);
+        $flora = $this->flora->latest()->paginate(10);
 
-        return $this->sendResponse($flora, 'Lista flora');
+        return $this->sendResponse($flora, 'Lista flora!');
+    }
+
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $flora = $this->flora->latest()->paginate($filtro);
+
+        return $this->sendResponse($flora, 'Lista de flora!');
     }
 
     public function list()
     {
         $flora = $this->flora->get();
 
-        return $this->sendResponse($flora, 'Lista flora');
+        return $this->sendResponse($flora, 'Lista flora!');
     }
 
     /**

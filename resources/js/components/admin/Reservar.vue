@@ -27,6 +27,17 @@
 
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
                   <input
                     v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
@@ -141,7 +152,7 @@
       <div v-if="!$gate.isAdmin() && !$gate.isUser()">
         <not-found></not-found>
       </div>
-
+      <!-- MODAL DE RESERVAS-->
       <div
         class="modal fade"
         id="addNew"
@@ -244,7 +255,7 @@
                     :class="{ 'is-invalid': form.errors.has('cantidad') }"
                     :disabled="bloquearCamposReservacion"
                     min="1"
-                    max="30"
+                    max="80"
                     placeholder="0"
                     required
                   />
@@ -260,6 +271,7 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fecha') }"
                     :disabled="bloquearCamposReservacion"
+                    min="2022-01-01"
                     required
                   />
                   <has-error :form="form" field="fecha"></has-error>
@@ -523,9 +535,9 @@
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
                   placeholder="Escriba el nombre del donante"
-                  minlength="3"
-                  maxlength="20"
                   required
+                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,50}"
+                  title="Digita un nombre válido, no puedes digitar números o caracteres especiales en este campo"
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -541,6 +553,9 @@
                   placeholder="Primer apellido del donante"
                   minlength="3"
                   maxlength="20"
+                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,50}"
+                  title="Digita un apellido válido, no puedes digitar números o caracteres especiales en este campo"
+                  required
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -556,6 +571,8 @@
                   placeholder="Segundo apellido del donante"
                   minlength="3"
                   maxlength="20"
+                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,50}"
+                  title="Digita un apellido válido, no puedes digitar números o caracteres especiales en este campo"
                   required
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
@@ -662,6 +679,8 @@
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('nombre') }"
                   placeholder="Nombre de organización"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,20}"
+                  title="Digita un nombre de Organización válido, no se acepta caracteres especiales en este campo"
                   required
                 />
                 <has-error :form="formOrg" field="nombre"></has-error>
@@ -676,6 +695,8 @@
                   class="form-control"
                   :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
                   placeholder="#### ####"
+                  pattern="[0-9]{8}"
+                  required
                 />
                 <has-error :form="formOrg" field="telefono"></has-error>
               </div>
@@ -688,6 +709,11 @@
                   class="form-control"
                   :class="{ 'is-invalid': formOrg.errors.has('correo') }"
                   placeholder="ejemplo@gmail.com"
+                  size="32"
+                  minlength="3"
+                  maxlength="64"
+                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                  required
                 />
 
                 <has-error :form="formOrg" field="correo"></has-error>
@@ -747,6 +773,7 @@
                   }"
                   placeholder="Nombre del grupo, G-####"
                   required
+                   title="Registra un nombre de grupo válido, no se acepta caracteres especiales"
                 />
                 <has-error :form="formGrupo" field="nombre"></has-error>
               </div>
@@ -760,6 +787,10 @@
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('correo') }"
                   placeholder="Escriba el correo del grupo"
+                  size="32"
+                  minlength="3"
+                  maxlength="64"
+                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   required
                 />
                 <has-error :form="formGrupo" field="correo"></has-error>
@@ -774,6 +805,9 @@
                   class="form-control"
                   :class="{ 'is-invalid': formGrupo.errors.has('cantidad') }"
                   placeholder="####"
+                  min="1"
+                  max="100"
+                  required
                 />
                 <has-error :form="formGrupo" field="cantidad"></has-error>
               </div>
@@ -786,7 +820,7 @@
                   class="form-control"
                   :class="{ 'is-invalid': formGrupo.errors.has('edades') }"
                   min="5"
-                  max="150"
+                  max="109"
                 />
                 <label for="">Rango: {{ formGrupo.edades }}</label>
                 <has-error :form="formGrupo" field="edades"></has-error>
@@ -861,6 +895,7 @@ import emailjs from "@emailjs/browser";
 export default {
   data() {
     return {
+      valorMostrar: "10",
       buscador: "", //v-model de buscar en el input de consulta
       reservas: {}, //Se llena con ultimos 10 donativos
       personaIdArray: {}, //Array para guardar la identificacion encontrada en persona
@@ -1132,11 +1167,21 @@ export default {
           .then(({ data }) => (this.nuevoReservaciones = data.data));
       }
     },
-
+    mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/reserva/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.reservas = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
       axios
-        .get("/api/reserva?page=" + page)
+        .get("/api/reserva?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.reservas = data.data));
       this.$Progress.finish();
     },
@@ -1268,7 +1313,7 @@ export default {
     },
     crearOrganizacion() {
       if (this.formOrg.identificacion != "") {
-        if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
+        if (/^[1-9]-\d{3}-\d{6}$/.test(this.formOrg.identificacion)) {
           this.formOrg
             .post("/api/reserva/guardarOrganizacion", {
               params: { identificacion: this.formOrg.identificacion },

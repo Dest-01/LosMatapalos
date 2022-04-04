@@ -27,8 +27,19 @@
 
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
                   <input
-                  v-on:keyup="filtrar()"
+                    v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
                     class="form-control"
                     type="text"
@@ -176,7 +187,7 @@
                     required
                     minlength="3"
                     maxlength="60"
-
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,20}"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -190,8 +201,8 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     placeholder="#### ####"
+                    pattern="[0-9]{8}"
                     required
-                    pattern="[2-9]\d{3}\d{4}"
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -204,10 +215,11 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
                     placeholder="ejemplo@gmail.com"
+                    size="32"
                     minlength="3"
                     maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                     required
-                    
                   />
 
                   <has-error :form="form" field="correo"></has-error>
@@ -247,7 +259,7 @@
         role="dialog"
         aria-labelledby="exampleModal"
         aria-hidden="true"
-        >
+      >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -318,6 +330,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       CedulaBloqueo: false,
       editmode: false,
       verDetalles: true,
@@ -342,15 +355,28 @@ export default {
         this.organizaciones.data = this.organizacionesFiltradas;
       }
     },
+    mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+            .get("/api/organizacion/mostrar/", {
+              params: { valor: this.valorMostrar },
+            }).then(({ data }) => (this.organizaciones = data.data));
+      }
+    },
+
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/organizacion?page=" + page)
+        .get("/api/organizacion/mostrar?page=" + page,{
+              params: { valor: this.valorMostrar },
+            })
         .then(({ data }) => (this.organizaciones = data.data));
 
       this.$Progress.finish();
     },
+
+
     actualizarOrganizacion() {
       this.$Progress.start();
       this.form
@@ -411,45 +437,45 @@ export default {
     },
 
     crearOrganizacion() {
-      if(this.form.identificacion !=""){
-        if(/^[1-9]-\d{3}-\d{6}$/.test(this.form.identificacion)){
-      this.form
-        .post("/api/organizacion", {
-          params: { id: this.form.id },
-        })
-        .then((response) => {
-          if (response.data.success == false) {
-            Toast.fire({
-              icon: "error",
-              title: "Cedula ya existe!",
-            });
-          } else {
-            $("#addNew").modal("hide");
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
+      if (this.form.identificacion != "") {
+        if (/^[1-9]-\d{3}-\d{6}$/.test(this.form.identificacion)) {
+          this.form
+            .post("/api/organizacion", {
+              params: { id: this.form.id },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Toast.fire({
+                  icon: "error",
+                  title: "Cedula ya existe!",
+                });
+              } else {
+                $("#addNew").modal("hide");
+                Toast.fire({
+                  icon: "success",
+                  title: response.data.message,
+                });
 
-            this.$Progress.finish();
-            this.cargarOrganizacion();
-          }
-        })
-        .catch((error) => {
-          Toast.fire({
-            icon: "error",
-            title: "Complete los campos!",
-          });
-          console.log(error.message);
-        });
-        }else{
-           Swal.fire(
+                this.$Progress.finish();
+                this.cargarOrganizacion();
+              }
+            })
+            .catch((error) => {
+              Toast.fire({
+                icon: "error",
+                title: "Complete los campos!",
+              });
+              console.log(error.message);
+            });
+        } else {
+          Swal.fire(
             "Error!",
             "Formato de cédula juridica incorrecto!",
             "error"
           );
         }
-      }else{
-         Swal.fire("Error!", "Campo de cédula juridica esta vacio!", "error");
+      } else {
+        Swal.fire("Error!", "Campo de cédula juridica esta vacio!", "error");
       }
     },
 

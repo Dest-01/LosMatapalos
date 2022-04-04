@@ -22,7 +22,16 @@ class FaunaController extends BaseController
     
     public function index()
     {
-        $fauna = $this->fauna->latest()->paginate(25);
+        $fauna = $this->fauna->latest()->paginate(10);
+
+        return $this->sendResponse($fauna, 'Lista de fauna!');
+    }
+
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $fauna = $this->fauna->latest()->paginate($filtro);
 
         return $this->sendResponse($fauna, 'Lista de fauna!');
     }

@@ -27,6 +27,17 @@
 
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
                   <input
                     v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
@@ -390,7 +401,7 @@
 export default {
   data() {
     return {
-      /*Funcionan con el selec para ocultar y mostrar los campos*/
+      valorMostrar: "10",
       editmode: false,
       bloquearNombre: false,
       errors: {},
@@ -422,7 +433,7 @@ export default {
     verInputOtraTematica() {
       if (this.form.tematica == "Otros") {
         this.VerOtraTematica = true;
-        this.form.tematica = "Escriba la tematica..."
+        this.form.tematica = "Escriba la tematica...";
       } else {
         this.VerOtraTematica = false;
       }
@@ -446,12 +457,21 @@ export default {
       $("#exampleModal").modal("show");
       this.form.fill(grupo);
     },
-
+    mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+            .get("/api/grupo/mostrar/", {
+              params: { valor: this.valorMostrar },
+            }).then(({ data }) => (this.grupos = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/grupo?page=" + page)
+        .get("/api/grupo/mostrar?page=" + page,{
+              params: { valor: this.valorMostrar },
+            })
         .then(({ data }) => (this.grupos = data.data));
       this.$Progress.finish();
     },
@@ -607,7 +627,7 @@ export default {
 
 
 <style scoped>
-#inputOtros{
+#inputOtros {
   margin-top: 10px;
 }
 #btnCancelar {

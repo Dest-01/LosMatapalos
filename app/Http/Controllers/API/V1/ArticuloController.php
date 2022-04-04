@@ -25,9 +25,19 @@ class ArticuloController extends BaseController
      */
     public function index()
     {
-        $Articulos = $this->articulo->latest()->paginate(25);
+        $Articulos = $this->articulo->latest()->paginate(10);
         return $this->sendResponse($Articulos, 'Lista artículos!');
     }
+
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $Articulos = $this->articulo->latest()->paginate($filtro);
+
+        return $this->sendResponse($Articulos, 'Lista de artículos!');
+    }
+
     public function list()
     {
         $Articulos = $this->articulo->get();

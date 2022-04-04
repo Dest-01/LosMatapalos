@@ -30,17 +30,26 @@ class DonativosController extends BaseController
      */
     public function index()
     {
-        $donativo = $this->donativos->latest()->with('personas', 'organizaciones')->paginate(25);
+        $donativo = $this->donativos->latest()->with('personas', 'organizaciones')->paginate(10);
         //  $products = $this->product->latest()->with('category', 'tags')->paginate(10);
 
-        return $this->sendResponse($donativo, 'Lista Donativos');
+        return $this->sendResponse($donativo, 'Lista Donativos!');
+    }
+
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $donativo = $this->donativos->latest()->paginate($filtro);
+
+        return $this->sendResponse($donativo, 'Lista de Donativos!');
     }
 
     function list() {
         $donativo = $this->donativos->get();
         //  $products = $this->product->latest()->with('category', 'tags')->paginate(10);
 
-        return $this->sendResponse($donativo, 'Lista Donativos');
+        return $this->sendResponse($donativo, 'Lista Donativos!');
     }
 
     public function obtenerCedula(Request $request)

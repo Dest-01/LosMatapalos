@@ -29,6 +29,16 @@ class VoluntarioController extends BaseController
         return $this->sendResponse($voluntarios, 'Lista de voluntariado!');
     }
 
+    public function mostrar()
+    {
+
+        $filtro = $request->valor;
+
+        $voluntarios = $this->voluntario->latest()->paginate($filtro);
+
+        return $this->sendResponse($voluntarios, 'Lista de voluntariado!');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

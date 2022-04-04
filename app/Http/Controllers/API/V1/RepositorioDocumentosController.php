@@ -22,14 +22,23 @@ class RepositorioDocumentosController extends BaseController
 
 	public function index()
 	{
-		$repositorioDocumentos = $this->repositorioDocumentos->latest()->paginate(25);
-		return $this->sendResponse($repositorioDocumentos, "Lista de Repositorios");
+		$repositorioDocumentos = $this->repositorioDocumentos->latest()->paginate(10);
+		return $this->sendResponse($repositorioDocumentos, "Lista de Repositorios!");
 	}
+
+	public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $repositorioDocumentos = $this->repositorioDocumentos->latest()->paginate($filtro);
+
+        return $this->sendResponse($repositorioDocumentos, 'Lista de Repositorios!');
+    }
 
 	public function list()
 	{
 		$repositorioDocumentos = $this->repositorioDocumentos->get();
-		return $this->sendResponse($repositorioDocumentos, "Lista de Repositorios");
+		return $this->sendResponse($repositorioDocumentos, "Lista de Repositorios!");
 	}
 
 	/**
@@ -114,7 +123,7 @@ class RepositorioDocumentosController extends BaseController
 				);
 			endif;
 			$repositorioDocumentos->update($repositorioDocumentosUpdate);
-			return $this->sendResponse($repositorioDocumentos, 'Ha sido Actualizado');
+			return $this->sendResponse($repositorioDocumentos, 'El documento ha sido actualizado!');
 		} catch (\Exception $e) {
 			return response()->json([
 				'message' => $e->getMessage()

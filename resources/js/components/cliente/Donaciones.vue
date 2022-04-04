@@ -127,72 +127,74 @@
         </article>
       </div>
     </section>
-    <div class="container text-center">
-      <h1 style="color: #38ab81">{{ $t("Donacion_T1") }}</h1>
-    </div>
-
-    <br />
-    <div>
-      <h2 class="subtitulo">{{$t("PersonasDonadoras")}}</h2>
-    </div>
-    <div class="contenedor_donantes">
-    <div
-      v-for="donativo in donativos.data"
-      :key="donativo.id"
-      class="containerqw"
-    >
-      <img
-        v-bind:src="'/images/donativos/' + donativo.photo"
-        width="100%"
-        height="100%"
-        alt=""
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      />
-
-      <div class="descripcion">
-        <span class="text" style="font-size: 25px">
-          detalle: <br />{{ donativo.detalle }}</span
+    <div v-if="donativos.data != 0 || donativosOrg.data != 0">
+      <div class="container text-center">
+        <h1 style="color: #38ab81">{{ $t("Ultimos_Donadores") }}</h1>
+      </div>
+      <div v-if="donativos.data != 0">
+      <div>
+        <h2 class="subtitulo">{{ $t("PersonasDonadoras") }}</h2>
+      </div>
+      <div class="contenedor_donantes">
+        <div
+          v-for="donativo in donativos.data"
+          :key="donativo.id"
+          class="containerqw"
         >
+          <img
+            v-bind:src="'/images/donativos/' + donativo.photo"
+            width="100%"
+            height="100%"
+            alt=""
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          />
 
-        <div class="donante" style="font-size: 25px">
-          donante:<br />
-          {{ donativo.nombre }}
+          <div class="descripcion">
+            <span class="text" style="font-size: 25px">
+              detalle: <br />{{ donativo.detalle }}</span
+            >
+
+            <div class="donante" style="font-size: 25px">
+              donante:<br />
+              {{ donativo.nombre }}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
-    <div>
-      <h2 class="subtitulo">{{$t("OrganizacionesDonadoras")}}</h2>
-    </div>
-   <div class="contenedor_donantes">
-
-    
-    <div
-      v-for="donativoOrg in donativosOrg.data"
-      :key="donativoOrg.id"
-      class="containerqw"
-    >
-      <img
-        v-bind:src="'/images/donativos/' + donativoOrg.photo"
-        width="100%"
-        height="100%"
-        alt=""
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      />
-
-      <div class="descripcion">
-        <span class="text" style="font-size: 25px">
-          detalle: <br />{{ donativoOrg.detalle }}</span
-        >
-
-        <div class="donante" style="font-size: 25px">
-          donante:<br />
-          {{ donativoOrg.nombre }}
-        </div>
+</div>
+<div v-if="donativosOrg.data != 0">
+      <div>
+        <h2 class="subtitulo">{{ $t("OrganizacionesDonadoras") }}</h2>
       </div>
-    </div>
+      <div class="contenedor_donantes">
+        <div
+          v-for="donativoOrg in donativosOrg.data"
+          :key="donativoOrg.id"
+          class="containerqw"
+        >
+          <img
+            v-bind:src="'/images/donativos/' + donativoOrg.photo"
+            width="100%"
+            height="100%"
+            alt=""
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          />
+
+          <div class="descripcion">
+            <span class="text" style="font-size: 25px">
+              detalle: <br />{{ donativoOrg.detalle }}</span
+            >
+
+            <div class="donante" style="font-size: 25px">
+              donante:<br />
+              {{ donativoOrg.nombre }}
+            </div>
+          </div>
+        </div>
+      </div>\
+      </div>
     </div>
   </div>
 </template>
@@ -563,11 +565,11 @@ article img {
   text-align: center;
 }
 
-.contenedor_donantes{
+.contenedor_donantes {
   display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 @media only screen and (min-device-width: 280px) and (max-device-width: 912px) {

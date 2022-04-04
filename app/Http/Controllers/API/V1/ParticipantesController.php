@@ -22,7 +22,16 @@ class ParticipantesController extends BaseController
      */
     public function index()
     {
-        $participante = $this->participantes->latest()->paginate(25);
+        $participante = $this->participantes->latest()->paginate(10);
+
+        return $this->sendResponse($participante, 'Lista de participantes!');
+    }
+
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $participante = $this->participantes->latest()->paginate($filtro);
 
         return $this->sendResponse($participante, 'Lista de participantes!');
     }

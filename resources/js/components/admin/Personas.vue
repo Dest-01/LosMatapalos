@@ -34,6 +34,7 @@
                   >
                     <option value="10">Mostrar 10</option>
                     <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
                   </select>
                 </div>
                 <div>
@@ -244,8 +245,8 @@
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
                     placeholder="Escriba el nombre"
                     required
-                    minlength="3"
-                    maxlength="30"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                    title="Escriba su nombre."
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -259,9 +260,9 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido1') }"
                     placeholder="Escriba el primer apellido"
-                    minlength="3"
-                    maxlength="20"
                     required
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                    title="Digite el primer apellido."
                   />
                   <has-error :form="form" field="apellido1"></has-error>
                 </div>
@@ -275,9 +276,9 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('apellido2') }"
                     placeholder="Escriba el segundo apellido"
-                    minlength="3"
-                    maxlength="20"
                     required
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                    title="Digite el segundo apellido."
                   />
                   <has-error :form="form" field="apellido2"></has-error>
                 </div>
@@ -290,10 +291,11 @@
                     name="telefono"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
-                    id="phone"
                     min="1"
                     placeholder="Formato: #### ####"
                     required
+                    pattern="[0-9]{8}"
+                    title="Digite un numero de teléfono"
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -307,6 +309,9 @@
                     :class="{ 'is-invalid': form.errors.has('correo') }"
                     placeholder="ejemplo@gmail.com"
                     required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    title="Digite un correo electrónico válido"
+                    size="32"
                   />
                   <has-error :form="form" field="correo"></has-error>
                 </div>
@@ -473,7 +478,6 @@ export default {
       }
     },
     mostrar() {
-      console.log("metodo llamado");
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         this.form
             .get("/api/personas/mostrar/", {
@@ -508,7 +512,9 @@ export default {
     getResults(page = 1) {
       this.$Progress.start();
       axios
-        .get("/api/persona?page=" + page)
+        .get("/api/personas/mostrar?page=" + page,{
+              params: { valor: this.valorMostrar },
+            })
         .then(({ data }) => (this.personas = data.data));
       this.$Progress.finish();
     },

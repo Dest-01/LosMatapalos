@@ -39,17 +39,20 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::post('donativo/guardarPersona', 'DonativosController@guardarPersona');
     Route::post('donativo/guardarOrganizacion', 'DonativosController@guardarOrganizacion');
     Route::get('donativo/listar', 'DonativosController@list');
+    Route::get('donativo/mostrar', 'DonativosController@mostrar');
       /////////////////////////---VOLUNTARIO--ESTUDIANTE---//////////////////////////////////////////////////////////////////
     Route::get('voluntarioEstudiante/obtenerCedula', 'VoluntarioEstudiantesController@obtenerCedula');
     Route::get('voluntarioEstudiante/obtenerCantidad', 'VoluntarioEstudiantesController@obtenerCantidad');
     Route::post('voluntarioEstudiante/guardarPersona', 'VoluntarioEstudiantesController@guardarPersona');
     Route::get('voluntarioEstudiante/listar', 'VoluntarioEstudiantesController@list');
+    Route::get('voluntarioEstudiante/mostrar', 'VoluntarioEstudiantesController@mostrar');
     /////////////////////////---VOLUNTARIO--PERSONA---//////////////////////////////////////////////////////////////////
     Route::get('voluntarioPersona/obtenerCedula', 'VoluntarioPersonaController@obtenerCedula');
     Route::get('voluntarioPersona/obtenerCantidad', 'VoluntarioPersonaController@obtenerCantidad');
     Route::get('voluntarioPersona/cargarVoluntarios', 'VoluntarioPersonaController@cargarVoluntarios');
     Route::post('voluntarioPersona/guardarPersona', 'VoluntarioPersonaController@guardarPersona');
     Route::get('voluntarioPersona/listar', 'VoluntarioPersonaController@list');
+    Route::get('voluntarioPersona/mostrar', 'VoluntarioPersonaController@mostrar');
 
     Route::get('GetVoluntarios', 'ActividadesParticipantesController@GetVoluntarios');
    /////////////////////////---RESERVAS---//////////////////////////////////////////////////////////////////
@@ -60,6 +63,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::post('reserva/guardarOrganizacion', 'ReservaController@guardarOrganizacion');
     Route::post('reserva/guardarGrupo', 'ReservaController@GuardarGrupo');
     Route::get('reserva/listar', 'ReservaController@list');
+    Route::get('reserva/mostrar', 'ReservaController@mostrar');
 /////////////////////////---VOLUNTARIO ACTIVIDAD---//////////////////////////////////////////////////////////////////
     Route::get('voluntarioActividad/GetActividades', 'VoluntarioActividadesController@GetActividades');
     Route::get('voluntarioActividad/GetVoluntarioEstudiantes', 'VoluntarioActividadesController@GetVoluntarioEstudiantes');
@@ -75,19 +79,30 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('dashboard/ultimasActividades', 'DashboardController@ultimasActividades');
     ///////////////////////////////------RUSTAS LISTAR PARA FILTRAR ----------------////////////////////
     Route::get('organizacion/listar', 'OrganizacionesController@list');
+    Route::get('organizacion/mostrar', 'OrganizacionesController@mostrar');
     Route::get('personas/mostrar', 'PersonasController@mostrar');
     Route::get('personas/listar', 'PersonasController@list');
     Route::get('grupo/listar', 'GruposController@list');
+    Route::get('grupo/mostrar', 'GruposController@mostrar');
     Route::get('catDonativo/listar', 'CatDonativosController@list');
+    Route::get('catDonativo/mostrar', 'CatDonativosController@mostrar');
     Route::get('flora/listar', 'FloraController@list');
+    Route::get('flora/mostrar', 'FloraController@mostrar');
     Route::get('fauna/listar', 'FaunaController@list');
+    Route::get('fauna/mostrar', 'FaunaController@mostrar');
     Route::get('actividad/listar', 'ActividadesController@list');
+    Route::get('actividad/mostrar', 'ActividadesController@mostrar');
     Route::get('participantes/listar', 'ParticipantesController@list');
+    Route::get('participantes/mostrar', 'ParticipantesController@mostrar');
     Route::get('repositorio/listar', 'RepositorioDocumentosController@list');
+    Route::get('repositorio/mostrar', 'RepositorioDocumentosController@mostrar');
     Route::get('articulos/listar', 'ArticuloController@list');
+    Route::get('articulos/mostrar', 'ArticuloController@mostrar');
     Route::get('usuarios/listar', 'UserController@list');
+    Route::get('usuarios/mostrar', 'UserController@mostrar');
     Route::get('historial/listar', 'TriggerUsuariosController@listar');
     Route::get('actividadesPasadas/listar', 'actividadesPasadasController@list');
+    Route::get('actividadesPasadas/mostrar', 'actividadesPasadasController@mostrar');
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([

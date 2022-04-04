@@ -48,6 +48,16 @@ class VoluntarioEstudiantesController extends BaseController
 
         return $this->sendResponse($voluntarioEst, 'Lista de estudiantes!');
     }
+
+    public function mostrar()
+    {
+        $filtro = $request->valor;
+
+        $voluntarioEst = $this->voluntarioEstudiantes->latest()->paginate($filtro);
+
+        return $this->sendResponse($voluntarioEst, 'Lista de estudiantes!');
+    }
+
     public function list()
     {
         $voluntarioEst = $this->voluntarioEstudiantes->get();

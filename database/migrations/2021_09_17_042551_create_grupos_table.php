@@ -21,7 +21,7 @@ class CreateGruposTable extends Migration
             $table->string('edades');
             $table->string('lugar');
             $table->string('tematica');
-            $table->string('detalles');
+            $table->string('detalles')->nullable();
             $table->timestamps();
         });
     }

@@ -27,6 +27,27 @@
 
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
+                  <input
+                    v-on:keyup="filtrar()"
+                    v-model="filtrarBusqueda"
+                    class="form-control"
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar..."
+                  />
+                </div>
+                <div>
                   <button
                     type="button"
                     class="btn btn-sm btn-primary"
@@ -308,6 +329,8 @@
 export default {
   data() {
     return {
+      filtrarBusqueda: "",
+      valorMostrar: "10",
       editmode: false,
       currentImage: undefined,
       previewImage: undefined, //Imagen Previa al cargar
@@ -316,7 +339,6 @@ export default {
       imageInfos: [],
       mostrarEstado: true,
       estado: "No es necesario",
-      filtrarBusqueda: "",
       verDetalles: true,
       catDonativos: {},
       nuevoCatDonativos: {},
@@ -330,13 +352,12 @@ export default {
   },
   methods: {
     filtrar() {
-      if (this.filtrarBusqueda == "") {
+      if (!this.filtrarBusqueda) {
+        this.cargarCatDonativos();
+      } else if (this.filtrarBusqueda.length > 2) {
         this.catDonativos.data = this.nuevoCatDonativos;
-      } else if (this.filtrarBusqueda != "") {
-        this.catDonativos.data = this.catDonativosFiltrados;
       }
     },
-
     updatePhoto(e) {
       let file = e.target.files[0];
       this.previewImage = URL.createObjectURL(file);
@@ -365,12 +386,22 @@ export default {
         this.estado = "Necesario";
       }
     },
-
+    mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/catDonativo/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.catDonativos = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/catDonativo?page=" + page)
+        .get("/api/catDonativo/mostrar?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.catDonativos = data.data));
 
       this.$Progress.finish();
@@ -422,6 +453,9 @@ export default {
         axios
           .get("/api/catDonativo")
           .then(({ data }) => (this.catDonativos = data.data));
+        axios
+          .get("/api/catDonativo/listar")
+          .then(({ data }) => (this.nuevoCatDonativos = data.data));
       }
     },
 
@@ -491,7 +525,17 @@ export default {
       return text.substring(0, length) + suffix;
     },
   },
-  computed: {},
+  computed: {
+    catDonativosFiltrados: function () {
+      return this.nuevoCatDonativos.filter((catDonativo) => {
+        return (
+          catDonativo.nombre
+            .toLowerCase()
+            .includes(this.filtrarBusqueda.toLowerCase())
+        );
+      });
+    },
+  },
 };
 </script>
 
@@ -533,27 +577,27 @@ export default {
   vertical-align: baseline;
   border-top: 1px solid #dee2e6;
 }
-@media only screen and (min-device-width: 300px) and (max-device-width:1199px) {
+@media only screen and (min-device-width: 300px) and (max-device-width: 1199px) {
   .modal-content {
     width: 100%;
   }
-  #modal-contentino{
+  #modal-contentino {
     width: 100%;
   }
-  #inputsModal{
+  #inputsModal {
     width: 100%;
   }
-  .form-group img{
+  .form-group img {
     height: 250px;
   }
   @media only screen and (min-device-width: 100px) and (max-device-width: 900px) {
-  .pagination {
-    display: flex;
-    padding-left: 0;
-    list-style: none;
-    border-radius: 0.25rem;
-    flex-wrap: wrap;
+    .pagination {
+      display: flex;
+      padding-left: 0;
+      list-style: none;
+      border-radius: 0.25rem;
+      flex-wrap: wrap;
+    }
   }
-}
 }
 </style>

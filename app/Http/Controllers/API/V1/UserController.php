@@ -30,21 +30,25 @@ class UserController extends BaseController
      */
     public function index()
     {
-       /* if (!Gate::allows('isAdmin')) {
-            return $this->unauthorizedResponse();
-        }*/
-        // $this->authorize('isAdmin');
-
         $users = User::latest()->paginate(10);
 
-        return $this->sendResponse($users, 'Users list');
+        return $this->sendResponse($users, 'Lista de usuarios!');
+    }
+
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $users = User::latest()->paginate($filtro);
+
+        return $this->sendResponse($users, 'Lista de usuarios!');
     }
 
     public function list()
     {
         $users = User::get();
 
-        return $this->sendResponse($users, 'Users list');
+        return $this->sendResponse($users, 'Lista de usuarios!');
     }
 
 

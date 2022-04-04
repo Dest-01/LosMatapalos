@@ -2,7 +2,7 @@
   <div>
     <div class="col-md-12">
       <div class="site-heading text-center">
-        <h2>
+        <h2 class="titulo">
           {{ $t("Nuestros") }} <span>{{ $t("Proyectos") }}</span>
         </h2>
       </div>
@@ -16,7 +16,7 @@
             <div class="content-txt">
               <h1>{{ $t("Vivero") }}</h1>
               <h2>
-              {{ $t("Vivero_definicion") }}  
+                {{ $t("Vivero_definicion") }}
               </h2>
             </div>
           </div>
@@ -30,7 +30,7 @@
             <div class="content-txt">
               <h1>Arboretum</h1>
               <h2>
-                {{ $t("Arboretum_definicion") }} 
+                {{ $t("Arboretum_definicion") }}
               </h2>
             </div>
           </div>
@@ -44,7 +44,7 @@
             <div class="content-txt">
               <h1>{{ $t("Melipo") }}</h1>
               <h2>
-               {{ $t("Melipo_definicion") }}
+                {{ $t("Melipo_definicion") }}
               </h2>
             </div>
           </div>
@@ -58,7 +58,7 @@
             <div class="content-txt">
               <h1>{{ $t("Reservorio") }}</h1>
               <h2>
-              {{ $t("Reservorio_definicion") }}
+                {{ $t("Reservorio_definicion") }}
               </h2>
             </div>
           </div>
@@ -82,8 +82,13 @@
 </template>
 
 <style scoped>
-.site-heading h2 span {
-  color: #00a01d;
+.titulo{
+  font-weight: 700;
+  font-size: 2rem;
+ 
+}
+.titulo span{
+   color: #38ab81;
 }
 #slider {
   width: 85%;
@@ -91,6 +96,7 @@
   position: relative;
   overflow: hidden;
   margin: auto;
+  z-index: 50;
 }
 @keyframes load {
   from {
@@ -108,6 +114,7 @@
   -moz-animation: slide 30s infinite;
   animation: slide 30s infinite;
   border-radius: 30px;
+  overflow: hidden;
 }
 .slider {
   width: 25%;
@@ -145,6 +152,7 @@
   border-bottom: 0;
   position: absolute;
   bottom: 0;
+  
 }
 
 /* Contents */

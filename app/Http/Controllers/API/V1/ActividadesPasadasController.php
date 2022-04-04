@@ -21,8 +21,17 @@ class ActividadesPasadasController extends BaseController
      */
     public function index()
     {
-        $actividadesPasadas = $this->actividadesPasadas->latest()->paginate(25);
-        return $this->sendResponse($actividadesPasadas, 'Lista imagenes de actividades pasadas');
+        $actividadesPasadas = $this->actividadesPasadas->latest()->paginate(10);
+        return $this->sendResponse($actividadesPasadas, 'Lista imagenes de actividades pasadas!');
+    }
+
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $actividadesPasadas = $this->actividadesPasadas->latest()->paginate($filtro);
+
+        return $this->sendResponse($actividadesPasadas, 'Lista imagenes de actividades pasadas!');
     }
 
     public function list()

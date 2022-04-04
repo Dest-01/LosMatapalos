@@ -27,6 +27,17 @@
 
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
                   <input
                     v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
@@ -255,6 +266,11 @@
                     :disabled="bloquearCamposDonativo"
                     :class="{ 'is-invalid': form.errors.has('detalle') }"
                     placeholder="Breve detalle acerca del donativo"
+                    required
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{5,255}"
+                    title="Digite descripción de la donación."
+                    minlength="5"
+                    maxlength="255"
                   >
                   </textarea>
                   <has-error :form="form" field="detalle"></has-error>
@@ -323,6 +339,7 @@
                     v-model="form.estado"
                     :disabled="bloquearCamposDonativo"
                     :class="{ 'is-invalid': form.errors.has('estado') }"
+                    required
                   >
                     <div class="form-group"></div>
                     <option disabled value="">Seleccione un elemento</option>
@@ -558,6 +575,8 @@
                   placeholder="Escriba el nombre del donante"
                   minlength="3"
                   maxlength="20"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,20}"
+                  title="Nombre valido de la persona."
                   required
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
@@ -573,7 +592,10 @@
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
                   placeholder="Primer apellido del donante"
                   minlength="3"
-                  maxlength="20"
+                  maxlength="30"
+                  required
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                  title="Digite el primer apellido."
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -588,7 +610,9 @@
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
                   placeholder="Segundo apellido del donante"
                   minlength="3"
-                  maxlength="20"
+                  maxlength="30"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                  title="Digite el segundo apellido."
                   required
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
@@ -602,9 +626,11 @@
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('telefono') }"
-                  id="phone"
-                  min="0"
+                  size="20"
+                  min="10000000"
                   placeholder="#### ####"
+                  pattern="[0-9]{8}"
+                  title="Digite un número de teléfono válido."
                   required
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
@@ -617,10 +643,12 @@
                   name="correo"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                  size="32"
                   placeholder="ejemplo@gmail.com"
                   minlength="3"
-                  maxlength="100"
+                  maxlength="64"
                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                  title="Digite email con formato correcto."
                   required
                 />
                 <has-error :form="formPer" field="correo"></has-error>
@@ -680,7 +708,6 @@
                   }"
                   placeholder="Formato: #-###-######"
                   required
-                  pattern="[1-9]{1}-[1-9]{3}-[1-9]{6}"
                 />
                 <has-error :form="formOrg" field="identificacion"></has-error>
               </div>
@@ -695,10 +722,9 @@
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('nombre') }"
                   placeholder="Nombre de organización"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,20}"
+                  title="Escriba un nombre válido de la organización."
                   required
-                  minlength="3"
-                  maxlength="60"
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ-0-9'-'\s]*"
                 />
                 <has-error :form="formOrg" field="nombre"></has-error>
               </div>
@@ -711,9 +737,12 @@
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
+                  size="20"
+                  min="10000000"
                   placeholder="#### ####"
+                  pattern="[0-9]{8}"
+                  title="Digite número de teléfono válido."
                   required
-                  pattern="[1-9]{4}[0-9]{4}"
                 />
                 <has-error :form="formOrg" field="telefono"></has-error>
               </div>
@@ -729,7 +758,9 @@
                   placeholder="ejemplo@gmail.com"
                   minlength="3"
                   maxlength="64"
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                  title="Digite un email con el formato correcto."
+                  required
                 />
 
                 <has-error :form="formOrg" field="correo"></has-error>
@@ -762,6 +793,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       currentImage: undefined,
       previewImage: undefined, //Imagen Previa al cargar
       editmode: false,
@@ -924,6 +956,13 @@ export default {
       $("#ModalVer").modal("show");
       this.form.fill(donativo);
     },
+    mostrarMensajeConsulta() {
+      this.VermensajeSiExiste = true;
+      this.VermensajeNoExiste = false;
+      this.mensajeDeExistencia = "Si existe!";
+      this.bloquearCampoConsulta = true;
+      this.bloquearCamposDonativo = false;
+    },
     ConsultaCedula() {
       if (this.buscador.length != 0) {
         if (
@@ -938,16 +977,12 @@ export default {
             .then(({ data }) => (this.personaIdArray = data.data));
           for (let i = 0; i < this.personaIdArray.length; i++) {
             if (this.personaIdArray[i].identificacion == this.buscador) {
-              this.VermensajeSiExiste = true;
-              this.VermensajeNoExiste = false;
-              this.mensajeDeExistencia = "Si existe!";
               this.form.identificacionPersona =
                 this.personaIdArray[i].identificacion;
               this.form.idPersona = this.personaIdArray[i].id;
-              this.bloquearCampoConsulta = true;
-              this.bloquearCamposDonativo = false;
             }
           }
+          this.mostrarMensajeConsulta();
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
           this.form
             .get("/api/donativo/verificarOrg", {
@@ -956,16 +991,12 @@ export default {
             .then(({ data }) => (this.organizacionIdArray = data.data));
           for (let i = 0; i < this.organizacionIdArray.length; i++) {
             if (this.organizacionIdArray[i].identificacion == this.buscador) {
-              this.VermensajeSiExiste = true;
-              this.VermensajeNoExiste = false;
-              this.mensajeDeExistencia = "Si existe!";
               this.form.identificacionOrganizacion =
                 this.organizacionIdArray[i].identificacion;
               this.form.idOrganizacion = this.organizacionIdArray[i].id;
-              this.bloquearCampoConsulta = true;
-              this.bloquearCamposDonativo = false;
             }
           }
+          this.mostrarMensajeConsulta();
         } else {
           this.VermensajeSiExiste = false;
           this.VermensajeNoExiste = true;
@@ -978,11 +1009,22 @@ export default {
           "Campo vacío, por favor digite una identificación";
       }
     },
+    mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/donativo/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.donativos = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/donativo?page=" + page)
+        .get("/api/donativo?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.donativos = data.data));
 
       this.$Progress.finish();

@@ -24,7 +24,16 @@ class GruposController extends BaseController
      */
     public function index()
     {
-        $grupo = $this->grupos->latest()->paginate(25);
+        $grupo = $this->grupos->latest()->paginate(10);
+
+        return $this->sendResponse($grupo, 'Lista de grupos!');
+    }
+
+    public function mostrar(Request $request)
+    {
+        $filtro = $request->valor;
+
+        $grupo = $this->grupos->latest()->paginate($filtro);
 
         return $this->sendResponse($grupo, 'Lista de grupos!');
     }

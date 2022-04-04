@@ -26,9 +26,9 @@ class PersonasController extends BaseController
      */
     public function index()
     {
-        $persona = $this->personas->latest()->paginate(25);
+        $persona = $this->personas->latest()->paginate(10);
 
-        return $this->sendResponse($persona, 'Lista de personas');
+        return $this->sendResponse($persona, 'Lista de personas!');
     }
     public function mostrar(Request $request)
     {
@@ -36,13 +36,13 @@ class PersonasController extends BaseController
 
         $persona = $this->personas->latest()->paginate($filtro);
 
-        return $this->sendResponse($persona, 'Lista de personas');
+        return $this->sendResponse($persona, 'Lista de personas!');
     }
     public function list()
     {
         $persona = $this->personas->get();
 
-        return $this->sendResponse($persona, 'Lista de todas las personas');
+        return $this->sendResponse($persona, 'Lista de todas las personas!');
     }
 
     public function obtenerCedula(Request $request)
