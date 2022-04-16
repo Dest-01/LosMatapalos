@@ -27,7 +27,7 @@
       </li>
     </ul>
 
-    <!-- SEARCH FORM -->
+    <!-- SEARCH FORM 
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Buscar.." aria-label="Search">
@@ -38,7 +38,7 @@
         </div>
       </div>
     </form>
-
+-->
   </nav>
   <!-- /.navbar -->
 

@@ -23,41 +23,19 @@ class ReportesDonativosController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function solo10()
+    public function filtro(Request $request)
     {
-        $donativos = $this->donativos->latest()->paginate(10);
+        $filtro = $request->valor;
 
-        return $this->sendResponse($donativos, 'Últimos 10');
+        $donativos = $this->donativos->latest()->paginate($filtro);
+
+        return $this->sendResponse($donativos, 'Registro Filtrado');
     }
     public function todo()
     {
         $donativos = $this->donativos->get();
 
-        return $this->sendResponse($donativos, 'Lista de todas las personas');
-    }
-    public function solo25()
-    {
-        $donativos = $this->donativos->latest()->paginate(25);
-
-        return $this->sendResponse($donativos, 'Últimos 25');
-    }
-    public function solo50()
-    {
-        $donativos = $this->donativos->latest()->paginate(50);
-
-        return $this->sendResponse($donativos, 'Últimos 50');
-    }
-    public function solo75()
-    {
-        $donativos = $this->donativos->latest()->paginate(75);
-
-        return $this->sendResponse($donativos, 'Últimos 75');
-    }
-    public function solo100()
-    {
-        $donativos = $this->donativos->latest()->paginate(100);
-
-        return $this->sendResponse($donativos, 'Últimos 100');
+        return $this->sendResponse($donativos, 'Todo Registro');
     }
 
 }

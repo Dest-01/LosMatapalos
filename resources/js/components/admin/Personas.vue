@@ -9,7 +9,7 @@
                 <h4 class="page-title">Personas</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -159,11 +159,12 @@
                     v-model="tipoIndenteficacion"
                     :class="{ 'is-invalid': form.errors.has('identificacion') }"
                     @change="tiposDeIndentificacon()"
+                    
                   >
                     <option disabled value="">Seleccione un tipo</option>
                     <option value="Cedula Nacional">Cédula Nacional</option>
                     <option value="Cedula Residencial">
-                      Cedula Residencial
+                      Cédula Residencial
                     </option>
                     <option value="Pasaporte">Pasaporte</option>
                   </select>
@@ -174,7 +175,7 @@
                 <div v-show="verIdentificacion" class="form-group">
                   <div v-show="CedulaNacional" class="form-group identitad">
                     <input
-                      v-model="form.identificacion"
+                      v-model="DNINacional"
                       :disabled="bloquearInputId"
                       type="text"
                       name="identificacion"
@@ -185,13 +186,14 @@
                       placeholder="Formato #-####-####"
                       id="nacional"
                       onchange="validarCedulaN()"
+                      v-mask="[/[1-9]/, '-####-####']"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
                   </div>
 
                   <div v-show="CedulaResidencial" class="form-group identitad">
                     <input
-                      v-model="form.identificacion"
+                      v-model="DNIResidencial"
                       id="residencial"
                       :disabled="bloquearInputIdR"
                       type="text"
@@ -202,6 +204,8 @@
                       }"
                       placeholder="Formato de 10 dígitos"
                       onchange="validateResidencial()"
+                      pattern="[0-9]{10}"
+                      v-mask="'##########'"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
                   </div>
@@ -209,7 +213,7 @@
                   <div v-show="Pasaporte" class="form-group identitad">
                     <input
                       id="pasaporte"
-                      v-model="form.identificacion"
+                      v-model="DNIPasaporte"
                       :disabled="bloquearInputIdP"
                       type="text"
                       name="identificacion"
@@ -219,6 +223,8 @@
                       }"
                       placeholder="Formato de 11 a 12 dígitos"
                       onchange="validatePasaporte()"
+                      pattern="[0-9]{11,12}"
+                      v-mask="'############'"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
                   </div>
@@ -295,7 +301,8 @@
                     placeholder="Formato: #### ####"
                     required
                     pattern="[0-9]{8}"
-                    title="Digite un numero de teléfono"
+                    title="Digite un número de teléfono"
+                    v-mask="[/[2-9]/, '#######']"
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
@@ -308,10 +315,10 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
                     placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                     required
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                    title="Digite un correo electrónico válido"
-                    size="32"
                   />
                   <has-error :form="form" field="correo"></has-error>
                 </div>
@@ -458,6 +465,9 @@ export default {
       nuevoPersonas: {},
       verDetalles: true,
       filtrarBusqueda: "",
+      DNINacional: "",
+      DNIResidencial: "",
+      DNIPasaporte: "",
       form: new Form({
         id: "",
         identificacion: "",
@@ -480,9 +490,10 @@ export default {
     mostrar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         this.form
-            .get("/api/personas/mostrar/", {
-              params: { valor: this.valorMostrar },
-            }).then(({ data }) => (this.personas = data.data));
+          .get("/api/personas/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.personas = data.data));
       }
     },
     /*////////////////////////////////////////////////////////////*/
@@ -494,17 +505,25 @@ export default {
         this.Pasaporte = false;
         this.CedulaResidencial = false;
         this.form.identificacion = "";
-      }
-      if (this.tipoIndenteficacion == "Cedula Residencial") {
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
+      } else if (this.tipoIndenteficacion == "Cedula Residencial") {
         this.CedulaNacional = false;
         this.Pasaporte = false;
         this.CedulaResidencial = true;
         this.form.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       } else if (this.tipoIndenteficacion == "Pasaporte") {
         this.CedulaNacional = false;
         this.Pasaporte = true;
         this.CedulaResidencial = false;
         this.form.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
     },
     /*////////////////////////////////////////////////////////////*/
@@ -512,9 +531,9 @@ export default {
     getResults(page = 1) {
       this.$Progress.start();
       axios
-        .get("/api/personas/mostrar?page=" + page,{
-              params: { valor: this.valorMostrar },
-            })
+        .get("/api/personas/mostrar?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.personas = data.data));
       this.$Progress.finish();
     },
@@ -577,8 +596,23 @@ export default {
           .then(({ data }) => (this.nuevoPersonas = data.data));
       }
     },
-    crearPersona() {
-      if (this.form.identificacion != "") {
+    asignarDNI() {
+      if (this.DNINacional != "") {
+        this.form.identificacion = this.DNINacional;
+      } else if (this.DNIResidencial != "") {
+        this.form.identificacion = this.DNIResidencial;
+      } else if (this.DNIPasaporte) {
+        this.form.identificacion = this.DNIPasaporte;
+      }
+    },
+
+    async crearPersona() {
+      if (
+        this.DNINacional != "" ||
+        this.DNIResidencial != "" ||
+        this.DNIPasaporte != ""
+      ) {
+        this.asignarDNI();
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacion) ||
           /^[1-9]\d{9}$/.test(this.form.identificacion) ||
@@ -682,6 +716,26 @@ export default {
             .includes(this.filtrarBusqueda.toLowerCase())
         );
       });
+    },
+    NombreMayuscula: function () {
+      if (!this.form.nombre) return "";
+      return (
+        this.form.nombre.charAt(0).toUpperCase() + this.form.nombre.slice(1)
+      );
+    },
+    primerApellidoMayuscula: function () {
+      if (!this.form.apellido1) return "";
+      return (
+        this.form.apellido1.charAt(0).toUpperCase() +
+        this.form.apellido1.slice(1)
+      );
+    },
+    SegundoApellidoMayuscula: function () {
+      if (!this.form.apellido2) return "";
+      return (
+        this.form.apellido2.charAt(0).toUpperCase() +
+        this.form.apellido2.slice(1)
+      );
     },
   },
 };

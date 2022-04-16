@@ -27,6 +27,17 @@
 
               <div class="card-tools">
                  <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                 <div>
                   <input
                     @blur="filtrar()"
                     v-model="filtrarBusqueda"
@@ -165,6 +176,8 @@
                     required
                     minlength="3"
                     maxlength="30"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                    title="Nombre común valido de especie, no incluya numeros."
                   />
                   <has-error :form="form" field="nombreComun"></has-error>
                 </div>
@@ -182,6 +195,8 @@
                     required
                     minlength="3"
                     maxlength="30"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                    title="Nombre cientifico valido de especie, no incluya numeros."
                   />
                   <has-error :form="form" field="nombreCientifico"></has-error>
                 </div>
@@ -196,6 +211,8 @@
                     required
                     minlength="3"
                     maxlength="60"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{1,60}"
+                    title="Nombre cientifico valido de especie, no incluya numeros."
                     id=""
                     rows="3"
                   ></textarea>
@@ -231,6 +248,7 @@
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('imagen') }"
                             id="SubirImagen"
+                            required
                           />
                           <has-error :form="form" field="imagen"></has-error>
                         </label>
@@ -433,6 +451,7 @@ export default {
       currentImage: undefined,
       previewImage: undefined,
       progress: 0,
+      valorMostrar: "10",
       message: "",
       imageInfos: [],
       faunas: {},
@@ -479,7 +498,15 @@ export default {
         });
       }
     },
-
+ mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/fauna/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.faunas = data.data));
+      }
+    },
 
     limpiar() {
       this.form.errors.clear();
@@ -507,7 +534,9 @@ export default {
       this.$Progress.start();
 
       axios
-        .get("/api/fauna?page=" + page)
+        .get("/api/fauna?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.faunas = data.data));
 
       this.$Progress.finish();

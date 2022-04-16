@@ -26,7 +26,18 @@
               <h3 class="card-title">Lista de articulos</h3>
 
               <div class="card-tools">
-                 <div>
+                <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
                   <input
                     v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
@@ -37,14 +48,14 @@
                   />
                 </div>
                 <div>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click="newModal"
-                >
-                  <i class="fa fa-plus-square"></i>
-                  Agregar Artículo
-                </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary"
+                    @click="newModal"
+                  >
+                    <i class="fa fa-plus-square"></i>
+                    Agregar Artículo
+                  </button>
                 </div>
               </div>
             </div>
@@ -83,10 +94,7 @@
                         <i id="icono" class="fa fa-trash red"></i>
                       </a>
                       /
-                      <a
-                        href="#"
-                        @click="detailsModal(articulo)"
-                      >
+                      <a href="#" @click="detailsModal(articulo)">
                         <i id="icono" class="fa fa-eye green"></i>
                       </a>
                     </td>
@@ -193,7 +201,7 @@
                   <has-error :form="form" field="Descripcion"></has-error>
                 </div>
                 <div class="form-group">
-                   <label>Imagen</label>
+                  <label>Imagen</label>
                   <div>
                     <div class="row">
                       <div class="col-8">
@@ -309,7 +317,7 @@
                   :disabled="verDetalles"
                 />
               </div>
-              
+
               <div class="form-group">
                 <label>Foto del articulo</label>
                 <img
@@ -320,11 +328,12 @@
               </div>
               <div id="inputsModal" class="form-group">
                 <label>Descripción</label>
-                <textarea v-model="form.Descripcion"
+                <textarea
+                  v-model="form.Descripcion"
                   type="text"
                   class="form-control"
-                  :disabled="verDetalles">
-                  
+                  :disabled="verDetalles"
+                >
                 </textarea>
               </div>
             </div>
@@ -346,6 +355,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       editmode: false,
       currentImage: undefined,
       previewImage: undefined,
@@ -366,7 +376,7 @@ export default {
     };
   },
   methods: {
-       filtrar() {
+    filtrar() {
       if (this.filtrarBusqueda == "") {
         this.Articulos.data = this.ArticulosTodos;
       } else if (this.filtrarBusqueda != "") {
@@ -394,12 +404,22 @@ export default {
         });
       }
     },
-
+ mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/articulos/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.Articulos = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/articulos?page=" + page)
+        .get("/api/articulos?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.Articulos = data.data));
 
       this.$Progress.finish();
@@ -441,7 +461,7 @@ export default {
       this.previewImage = "";
       $("#addNew").modal("show");
     },
-     detailsModal(articulo) {
+    detailsModal(articulo) {
       $("#ModalVer").modal("show");
       this.form.fill(articulo);
     },
@@ -451,7 +471,7 @@ export default {
         axios
           .get("/api/articulos")
           .then(({ data }) => (this.Articulos = data.data));
-           axios
+        axios
           .get("/api/articulos/listar")
           .then(({ data }) => (this.ArticulosTodos = data.data));
       }
@@ -526,18 +546,18 @@ export default {
     articuloFiltros: function () {
       return this.ArticulosTodos.filter((articulo) => {
         return (
-          articulo.Nombre
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) ||
-          articulo.Tipo
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) ||
-          articulo.Descripcion
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) 
+          articulo.Nombre.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          ) ||
+          articulo.Tipo.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          ) ||
+          articulo.Descripcion.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          )
         );
       });
-    }
+    },
   },
 };
 </script>
@@ -601,27 +621,27 @@ export default {
   vertical-align: baseline;
   border-top: 1px solid #dee2e6;
 }
-@media only screen and (min-device-width: 300px) and (max-device-width:1199px) {
+@media only screen and (min-device-width: 300px) and (max-device-width: 1199px) {
   .modal-content {
     width: 100%;
   }
-  #modal-contentino{
+  #modal-contentino {
     width: 100%;
   }
-  #inputsModal{
+  #inputsModal {
     width: 100%;
   }
-  .form-group img{
+  .form-group img {
     height: 250px;
   }
   @media only screen and (min-device-width: 100px) and (max-device-width: 900px) {
-  .pagination {
-    display: flex;
-    padding-left: 0;
-    list-style: none;
-    border-radius: 0.25rem;
-    flex-wrap: wrap;
+    .pagination {
+      display: flex;
+      padding-left: 0;
+      list-style: none;
+      border-radius: 0.25rem;
+      flex-wrap: wrap;
+    }
   }
-}
 }
 </style>

@@ -23,41 +23,23 @@ class ReporteActividadesController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function solo10()
+    public function filtro(Request $request)
     {
-        $actividad = $this->actividades->latest()->paginate(10);
+        $filtro = $request->valor;
 
-        return $this->sendResponse($actividad, 'Últimos 10');
+        $actividad = $this->actividades->latest()->paginate($filtro);
+
+        return $this->sendResponse($actividad, 'Registro Filtrado');
     }
     public function todo()
     {
         $actividad = $this->actividades->get();
 
-        return $this->sendResponse($actividad, 'Lista de todas las personas');
+        return $this->sendResponse($actividad, 'Todo Registro');
     }
-    public function solo25()
-    {
-        $actividad = $this->actividades->latest()->paginate(25);
 
-        return $this->sendResponse($actividad, 'Últimos 25');
-    }
-    public function solo50()
-    {
-        $actividad = $this->actividades->latest()->paginate(50);
 
-        return $this->sendResponse($actividad, 'Últimos 50');
-    }
-    public function solo75()
-    {
-        $actividad = $this->actividades->latest()->paginate(75);
 
-        return $this->sendResponse($actividad, 'Últimos 75');
-    }
-    public function solo100()
-    {
-        $actividad = $this->actividades->latest()->paginate(100);
 
-        return $this->sendResponse($actividad, 'Últimos 100');
-    }
 
 }

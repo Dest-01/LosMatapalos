@@ -162,6 +162,11 @@ export default {
     plugin.setAttribute("src", "/js/FuncionesHome.js");
     plugin.async = true;
     document.head.appendChild(plugin);
+
+    const plugin2 = document.createElement("script");
+    plugin2.setAttribute("src", "/js/validacionesContacto.js");
+    plugin2.async = true;
+    document.head.appendChild(plugin2);
   },
 };
 </script>

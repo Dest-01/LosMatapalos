@@ -2,18 +2,43 @@
   <div>
     <div>
       <div class="opciones">
-        <input type="button" class="btn btn-success" @click="cargar25()" value="25 últimos" />
-        <input type="button" class="btn btn-success" @click="cargar50()" value="50 últimos" />
-        <input type="button" class="btn btn-success" @click="cargar75()" value="75 últimos" />
-        <input type="button" class="btn btn-success" @click="cargar100()" value="100 últimos" />
-        <input type="button" class="btn btn-success" @click="cargarTodos()" value="Todos" />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarFiltro(25)"
+          value="25 últimos"
+        />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarFiltro(50)"
+          value="50 últimos"
+        />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarFiltro(75)"
+          value="75 últimos"
+        />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarFiltro(100)"
+          value="100 últimos"
+        />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarTodos()"
+          value="Todos"
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export default {
   data() {
@@ -54,7 +79,7 @@ export default {
       //Estilo para la fecha
       doc.setFillColor("#d9d9da");
       doc.setDrawColor("#d9d9da");
-       doc.setTextColor("#354942");
+      doc.setTextColor("#354942");
       doc.rect(430, 52, 120, 25, "FD"); //Fill and Border
       doc.text("Fecha:" + this.fechaActual, 432, 68);
       doc.addImage(img, "png", 470, 10, 74, 35);
@@ -63,7 +88,7 @@ export default {
         tableLineColor: "#3bd99f",
         tableLineWidth: 0.1,
         margin: { top: 80 },
-         styles: {
+        styles: {
           fillStyle: "DF",
           halign: "center",
           valign: "middle",
@@ -84,63 +109,32 @@ export default {
       });
       doc.save("Reporte grupos.pdf");
     },
-    cargar() {
+   async cargar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+     await axios
           .get("/api/ReporteGrupo/todo")
           .then(({ data }) => (this.todosArray = data.data));
       }
     },
-    cargarTodos(){
-        this.filtroArray.data = this.todosArray;
-         this.exportPDF();
+    cargarTodos() {
+      this.filtroArray.data = this.todosArray;
+      this.exportPDF();
     },
-    cargar10(){
+    async cargarFiltro(valorFiltro) {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteGrupo/solo10")
+        await axios
+          .get("/api/ReporteGrupo/filtro", {
+            params: { valor: valorFiltro },
+          })
           .then(({ data }) => (this.filtroArray = data.data));
-      }
-
-    },
-    cargar25(){
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteGrupo/solo25")
-          .then(({ data }) => (this.filtroArray = data.data));
-          this.exportPDF();
+        this.exportPDF();
       }
     },
-    cargar50(){
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteGrupo/solo50")
-          .then(({ data }) => (this.filtroArray = data.data));
-           this.exportPDF();
-      }
-    },
-    cargar75(){
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteGrupo/solo75")
-          .then(({ data }) => (this.filtroArray = data.data));
-           this.exportPDF();
-      }
-    },
-    cargar100(){
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteGrupo/solo100")
-          .then(({ data }) => (this.filtroArray = data.data));
-           this.exportPDF();
-      }
-    }
   },
 
   created() {
     this.$Progress.start();
     this.cargar();
-    this.cargar10();
     this.$Progress.finish();
     window.onload = this.set;
   },
@@ -158,13 +152,13 @@ export default {
 </script>
 
 <style scoped>
-.opciones{
+.opciones {
   margin: 5px;
   padding: 5px;
   text-align: center;
 }
 @media only screen and (min-width: 192px) and (max-width: 1192px) {
-  .opciones{
+  .opciones {
     margin: 5px;
     padding: 5px;
     text-align: center;

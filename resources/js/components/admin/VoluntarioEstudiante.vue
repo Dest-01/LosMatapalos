@@ -26,6 +26,17 @@
               <h3 class="card-title">Listado de estudiantes voluntarios</h3>
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
                   <input
                     v-on:keyup="filtrar()"
                     v-model="filtrarBusqueda"
@@ -632,6 +643,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       currentImage: undefined,
       previewImage: undefined,
       message: "",
@@ -774,11 +786,21 @@ export default {
       this.formPer.reset();
       this.formPer.errors.clear();
     },
-
+ mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/voluntarioEstudiante/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.voluntarioEst = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
       axios
-        .get("/api/voluntarioEstudiante?page=" + page)
+        .get("/api/voluntarioEstudiante?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.voluntarioEst = data.data));
       this.$Progress.finish();
     },

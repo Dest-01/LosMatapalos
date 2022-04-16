@@ -9,7 +9,7 @@
                 <h4 class="page-title">Grupos</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -158,6 +158,8 @@
                     class="form-control"
                     :disabled="bloquearNombre"
                     placeholder="Escriba el nombre del grupo G-####"
+                    v-mask="[/[G]/, '-####']"
+                    required
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -172,7 +174,8 @@
                     placeholder="Escriba el correo"
                     required
                     minlength="3"
-                    maxlength="30"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   />
                   <has-error :form="form" field="correo"></has-error>
                 </div>
@@ -185,10 +188,12 @@
                     name="cantidad"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('cantidad') }"
-                    placeholder="Escriba la cantidad del grupo"
-                    minlength="3"
-                    maxlength="20"
+                    placeholder="Escriba la cantidad de integrantes del grupo"
+                    min="1"
+                    max="100"
                     required
+                    pattern="[1-9]{1,100}"
+                    v-mask="'###'"
                   />
                   <has-error :form="form" field="cantidad"></has-error>
                 </div>
@@ -205,6 +210,7 @@
                     min="5"
                     max="109"
                     step="1"
+                    v-mask="'###'"
                   />
                   <has-error :form="form" field="edades"></has-error>
                   <label for="">Promedio: {{ form.edades }}</label>
@@ -262,6 +268,7 @@
                     :class="{ 'is-invalid': form.errors.has('detalles') }"
                     cols="5"
                     rows="5"
+                    placeholder="Algunas notas a considerar, por ejemplos alergias..."
                   ></textarea>
                   <has-error :form="form" field="detalles"></has-error>
                 </div>
@@ -424,10 +431,10 @@ export default {
   },
   methods: {
     filtrar() {
-      if (this.filtrarBusqueda == "") {
-        this.grupos.data = this.nuevoGrupos;
-      } else if (this.filtrarBusqueda != "") {
-        this.grupos.data = this.gruposFiltradas;
+      if (!this.filtrarBusqueda) {
+        this.cargarGrupos();
+      } else if (this.filtrarBusqueda.length > 2) {
+        this.grupos.data = this.grupoFiltradas;
       }
     },
     verInputOtraTematica() {
@@ -460,26 +467,29 @@ export default {
     mostrar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         this.form
-            .get("/api/grupo/mostrar/", {
-              params: { valor: this.valorMostrar },
-            }).then(({ data }) => (this.grupos = data.data));
+          .get("/api/grupo/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.grupos = data.data));
       }
     },
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/grupo/mostrar?page=" + page,{
-              params: { valor: this.valorMostrar },
-            })
+        .get("/api/grupo/mostrar?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.grupos = data.data));
       this.$Progress.finish();
     },
 
-    cargarGrupos() {
+    async cargarGrupos() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios.get("/api/grupo").then(({ data }) => (this.grupos = data.data));
-        axios
+        await axios
+          .get("/api/grupo")
+          .then(({ data }) => (this.grupos = data.data));
+        await axios
           .get("/api/grupo/listar")
           .then(({ data }) => (this.nuevoGrupos = data.data));
       }
@@ -610,9 +620,6 @@ export default {
             .toLowerCase()
             .includes(this.filtrarBusqueda.toLowerCase()) ||
           grupo.tematica
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) ||
-          grupo.cantidad
             .toLowerCase()
             .includes(this.filtrarBusqueda.toLowerCase()) ||
           grupo.detalles

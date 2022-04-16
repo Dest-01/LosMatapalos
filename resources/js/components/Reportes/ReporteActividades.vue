@@ -2,10 +2,10 @@
   <div>
     <div>
       <div class="opciones">
-        <input type="button" class="btn btn-success" @click="cargar25()" value="25 últimos" />
-        <input type="button" class="btn btn-success" @click="cargar50()" value="50 últimos" />
-        <input type="button" class="btn btn-success" @click="cargar75()" value="75 últimos" />
-        <input type="button" class="btn btn-success" @click="cargar100()" value="100 últimos" />
+        <input type="button" class="btn btn-success" @click="cargarFiltro(25)" value="25 últimos" />
+        <input type="button" class="btn btn-success" @click="cargarFiltro(50)" value="50 últimos" />
+        <input type="button" class="btn btn-success" @click="cargarFiltro(75)" value="75 últimos" />
+        <input type="button" class="btn btn-success" @click="cargarFiltro(100)" value="100 últimos" />
         <input type="button" class="btn btn-success" @click="cargarTodos()" value="Todos" />
       </div>
     </div>
@@ -95,52 +95,22 @@ export default {
         this.filtroArray.data = this.todosArray;
          this.exportPDF();
     },
-    cargar10(){
+        async cargarFiltro(valorFiltro) {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteActividades/solo10")
+        await axios
+          .get("/api/ReporteActividades/filtro", {
+            params: { valor: valorFiltro },
+          })
           .then(({ data }) => (this.filtroArray = data.data));
+        this.exportPDF();
       }
+    },
 
-    },
-    cargar25(){
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteActividades/solo25")
-          .then(({ data }) => (this.filtroArray = data.data));
-          this.exportPDF();
-      }
-    },
-    cargar50(){
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteActividades/solo50")
-          .then(({ data }) => (this.filtroArray = data.data));
-           this.exportPDF();
-      }
-    },
-    cargar75(){
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteActividades/solo75")
-          .then(({ data }) => (this.filtroArray = data.data));
-           this.exportPDF();
-      }
-    },
-    cargar100(){
-      if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
-          .get("/api/ReporteActividades/solo100")
-          .then(({ data }) => (this.filtroArray = data.data));
-           this.exportPDF();
-      }
-    }
   },
 
   created() {
     this.$Progress.start();
     this.cargar();
-    this.cargar10();
     this.$Progress.finish();
     window.onload = this.set;
   },

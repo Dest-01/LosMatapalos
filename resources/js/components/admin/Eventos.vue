@@ -27,6 +27,17 @@
 
               <div class="card-tools">
                 <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
+                <div>
                   <input
                     @blur="filtrar()"
                     v-model="filtrarBusqueda"
@@ -349,6 +360,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       editmode: false,
       currentImage: undefined,
       previewImage: undefined,
@@ -419,11 +431,22 @@ export default {
       $("#ModalVer").modal("show");
       this.form.fill(evento);
     },
+     mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/actividadesPasadas/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.eventos = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/actividadesPasadas?page=" + page)
+        .get("/api/actividadesPasadas?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.eventos = data.data));
 
       this.$Progress.finish();

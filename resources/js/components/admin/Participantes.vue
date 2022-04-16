@@ -9,7 +9,7 @@
                 <h4 class="page-title">Participantes</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -26,6 +26,17 @@
               <h3 class="card-title">Listado de los participantes</h3>
 
               <div class="card-tools">
+                <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
                 <div>
                   <input
                     v-on:keyup="filtrar()"
@@ -394,6 +405,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       /*Funcionan con el selec para ocultar y mostrar los campos*/
       tipoIndenteficacion: "",
       CedulaResidencial: false,
@@ -450,12 +462,22 @@ export default {
       }
     },
     /*////////////////////////////////////////////////////////////*/
-
+ mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/participantes/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.personas = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
 
       axios
-        .get("/api/participantes?page=" + page)
+        .get("/api/participantes?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.personas = data.data));
       this.$Progress.finish();
     },

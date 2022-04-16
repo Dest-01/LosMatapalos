@@ -39,10 +39,10 @@ class GrupoRequest extends FormRequest
         return [
             'nombre' => 'required|regex:/^[G]{1}-\d{1,4}$/',
             'cantidad' => 'required|integer|min:1|max:100',
-            'edades' => 'required|integer|min:5|max:150',
-            'lugar' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'tematica' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'detalles' => 'string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'edades' => 'required|integer|min:5|max:109',
+            'lugar' => 'required|string|min:3|max:150|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'tematica' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'detalles' => 'string|max:250|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',
 
         ];
@@ -58,17 +58,17 @@ class GrupoRequest extends FormRequest
         return [
             'nombre' => 'required|regex:/^[G]{1}-\d{1,4}$/',
             'cantidad' => 'required|integer|min:1|max:100',
-            'edades' => 'required|integer|min:5|max:150',
-            'lugar' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'tematica' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'detalles' => 'string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'edades' => 'required|integer|min:5|max:109',
+            'lugar' => 'required|string|min:3|max:150|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'tematica' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'detalles' => 'string|max:250|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',
         ];
     }
 
     public function messages(){
         return [
-            'nombre.regex' => "El formato tiene que ser G-0 a G-9999",
+            'nombre.regex' => "El formato tiene que ser G-1 a G-9999",
             'nombre.*' => "Se requiere un nombre del grupo",
             'cantidad.*' => "Se requiere un cantidad",
             'edades.*' => "Se requiere un rango de edad",

@@ -1,6 +1,24 @@
 <template>
   <section class="content">
     <div class="container-fluid">
+            <div class="block-header" v-if="$gate.isAdmin() || $gate.isUser()">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Repositorio</h4>
+              </li>
+              <li class="breadcrumb-item bcrumb-1">
+                <a href="/admin/dashboard">
+                  <i class="fas fa-home"></i>
+                  Inicio
+                </a>
+              </li>
+              <li class="breadcrumb-item active">Repositorio</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
           <div class="card" v-if="$gate.isAdmin()">
@@ -9,15 +27,26 @@
 
               <div class="card-tools">
                 <div>
-                  <input
-                    v-on:keyup="filtrar()"
-                    v-model="filtrarBusqueda"
+                  <select
                     class="form-control"
-                    type="text"
-                    name="buscar"
-                    placeholder="Buscar..."
-                  />
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
                 </div>
+                <div>
+                <input
+                  v-on:keyup="filtrar()"
+                  v-model="filtrarBusqueda"
+                  class="form-control"
+                  type="text"
+                  name="buscar"
+                  placeholder="Buscar..."
+                />
+</div>
                 <div>
                   <button
                     type="button"
@@ -344,6 +373,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       editmode: false,
       currentImage: undefined,
       previewImage: undefined,
@@ -392,10 +422,21 @@ export default {
       this.form.documento = "";
       this.form.errors.clear();
     },
+    mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/repositorio/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.repositorios = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
       axios
-        .get(`/api/repositorio?page=` + page)
+        .get(`/api/repositorio?page=` + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.repositorios = data.data));
       this.$Progress.finish();
     },
@@ -527,6 +568,18 @@ export default {
 
 
 <style lang="css" scoped>
+.card-tools {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.card-tools div {
+  padding: 10px;
+}
+.card-tools div button {
+  height: 36px;
+  font-size: 15px;
+}
 #icono {
   font-size: 20px;
 }

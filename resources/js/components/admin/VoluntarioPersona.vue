@@ -9,7 +9,7 @@
                 <h4 class="page-title">Voluntario Personas</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -25,6 +25,17 @@
             <div class="card-header">
               <h3 class="card-title">Listado de personas voluntariadas</h3>
               <div class="card-tools">
+                <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
                 <div>
                   <input
                     v-on:keyup="filtrar()"
@@ -564,6 +575,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       find: undefined,
       editmode: false,
       personaIdArray: {},
@@ -643,10 +655,21 @@ export default {
         this.voluntarioPer.data = this.voluntarioPerFiltrado;
       }
     },
+     mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/voluntarioPersona/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.voluntarioPer = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
       axios
-        .get("/api/voluntarioPersona?page=" + page)
+        .get("/api/voluntarioPersona?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.voluntarioPer = data.data));
 
       this.$Progress.finish();

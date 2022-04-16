@@ -9,7 +9,7 @@
                 <h4 class="page-title">Actividades</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -26,6 +26,17 @@
               <h3 class="card-title">Lista de actividades</h3>
 
               <div class="card-tools">
+                <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
                    <div>
                   <input
                     v-on:keyup="filtrar()"
@@ -433,6 +444,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       editmode: false,
       currentImage: undefined,
       previewImage: undefined,
@@ -487,11 +499,22 @@ export default {
     limpiar() {
       this.form.errors.clear();
     },
+     mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/actividad/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.Actividades = data.data));
+      }
+    },
 
     getResults(page = 1) {
       this.$Progress.start();
       axios
-        .get("/api/actividad?page=" + page)
+        .get("/api/actividad?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.Actividades = data.data));
       this.$Progress.finish();
     },

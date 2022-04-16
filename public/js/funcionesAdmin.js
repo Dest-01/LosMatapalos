@@ -48,9 +48,9 @@ function limpiarCampo() {
     var pasaporteIdent2 = document.getElementById("pasaporte");
     var residencialIdent2 = document.getElementById("residencial");
     var cedulaNacional2 = document.getElementById("nacional");
-    pasaporteIdent2.style.borderBottom = "#ced4da solid 1px";
-    residencialIdent2.style.borderBottom = "#ced4da solid 1px";
-    cedulaNacional2.style.borderBottom = "#ced4da solid 1px";
+    pasaporteIdent2.style.border = "#ced4da solid 2px";
+    residencialIdent2.style.border = "#ced4da solid 2px";
+    cedulaNacional2.style.border = "#ced4da solid 2px";
 }
 
 function quitarAlerta() {

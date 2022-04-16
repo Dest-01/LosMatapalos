@@ -14,13 +14,14 @@ class ReporteVoluntariosEstudianteController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function solo10()
+    public function filtro(Request $request)
     {
+        $filtro = $request->valor;
         $voluntarioActi = DB::table('voluntario_estudiantes')
         ->join('voluntarios', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntarios.id')
-        ->select('voluntarios.*', 'voluntario_estudiantes.*')->paginate(10);
+        ->select('voluntarios.*', 'voluntario_estudiantes.*')->paginate($filtro);
 
-        return $this->sendResponse($voluntarioActi, 'Últimos 10');
+        return $this->sendResponse($voluntarioActi, 'Registro Filtrado');
     }
     
     public function todo()
@@ -29,39 +30,8 @@ class ReporteVoluntariosEstudianteController extends BaseController
         ->join('voluntarios', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntarios.id')
         ->select('voluntarios.*', 'voluntario_estudiantes.*')->get();
 
-        return $this->sendResponse($voluntarioActi, 'Lista de todos');
+        return $this->sendResponse($voluntarioActi, 'Todo Registro');
     }
-    public function solo25()
-    {
-        $voluntarioActi = DB::table('voluntario_estudiantes')
-        ->join('voluntarios', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntarios.id')
-        ->select('voluntarios.*', 'voluntario_estudiantes.*')->paginate(25);
-
-        return $this->sendResponse($voluntarioActi, 'Últimos 25');
-    }
-    public function solo50()
-    {
-        $voluntarioActi = DB::table('voluntario_estudiantes')
-        ->join('voluntarios', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntarios.id')
-        ->select('voluntarios.*', 'voluntario_estudiantes.*')->paginate(50);
-
-        return $this->sendResponse($voluntarioActi, 'Últimos 50');
-    }
-    public function solo75()
-    {
-        $voluntarioActi = DB::table('voluntario_estudiantes')
-        ->join('voluntarios', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntarios.id')
-        ->select('voluntarios.*', 'voluntario_estudiantes.*')->paginate(75);
-
-        return $this->sendResponse($voluntarioActi, 'Últimos 75');
-    }
-    public function solo100()
-    {
-        $voluntarioActi = DB::table('voluntario_estudiantes')
-        ->join('voluntarios', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntarios.id')
-        ->select('voluntarios.*', 'voluntario_estudiantes.*')->paginate(100);
-
-        return $this->sendResponse($voluntarioActi, 'Últimos 100');
-    }
+ 
 
 }

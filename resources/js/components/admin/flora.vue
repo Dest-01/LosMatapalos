@@ -26,6 +26,17 @@
               <h3 class="card-title">Lista de flora</h3>
 
               <div class="card-tools">
+                <div>
+                  <select
+                    class="form-control"
+                    v-model="valorMostrar"
+                    @change="mostrar()"
+                  >
+                    <option value="10">Mostrar 10</option>
+                    <option value="25">Mostrar 25</option>
+                    <option value="50">Mostrar 50</option>
+                  </select>
+                </div>
                  <div>
                   <input
                     @blur="filtrar()"
@@ -161,6 +172,8 @@
                     required
                     minlength="3"
                     maxlength="30"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                    title="Nombre común valido de flora, no incluya números."
                   />
                   <has-error :form="form" field="nom_comun"></has-error>
                 </div>
@@ -177,6 +190,8 @@
                      required
                     minlength="3"
                     maxlength="30"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                    title="Nombre común valido de flora, no incluya números."
                     
                   />
                   <has-error :form="form" field="nom_cientifico"></has-error>
@@ -195,7 +210,7 @@
                     maxlength="250"
                     id=""
                     rows="3"
-                    
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{1,60}"
                   ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
@@ -229,6 +244,7 @@
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
                             id="SubirImagen"
+                            required
                           />
                           <has-error :form="form" field="photo"></has-error>
                         </label>
@@ -279,6 +295,7 @@
                      required
                     minlength="3"
                     maxlength="30"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
                   />
                   <has-error :form="form" field="fam_cientifica"></has-error>
                 </div>
@@ -292,6 +309,7 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fecha_registro') }"
                     required
+                     min="2021-01-01"
                   />
                   <has-error :form="form" field="fecha_registro"></has-error>
                 </div>
@@ -426,6 +444,7 @@
 export default {
   data() {
     return {
+      valorMostrar: "10",
       editmode: false,
       currentImage: undefined,
       previewImage: undefined,
@@ -479,7 +498,15 @@ export default {
     limpiar() {
       this.form.errors.clear();
     },
-
+     mostrar() {
+      if (this.$gate.isAdmin() || this.$gate.isUser()) {
+        this.form
+          .get("/api/flora/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.flora = data.data));
+      }
+    },
     getResults(page = 1) {
       this.$Progress.start();
       axios

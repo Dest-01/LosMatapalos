@@ -23,41 +23,18 @@ class ReporteReservasController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function solo10()
+    public function filtro(Request $request)
     {
-        $reservas = $this->reserva->latest()->paginate(10);
+        $filtro = $request->valor;
 
-        return $this->sendResponse($reservas, 'Últimos 10');
+        $reservas = $this->reserva->latest()->paginate($filtro);
+
+        return $this->sendResponse($reservas, 'Registro Filtrado');
     }
     public function todo()
     {
         $reservas = $this->reserva->get();
 
-        return $this->sendResponse($reservas, 'Lista de todas las personas');
+        return $this->sendResponse($reservas, 'Todo Registro');
     }
-    public function solo25()
-    {
-        $reservas = $this->reserva->latest()->paginate(25);
-
-        return $this->sendResponse($reservas, 'Últimos 25');
-    }
-    public function solo50()
-    {
-        $reservas = $this->reserva->latest()->paginate(50);
-
-        return $this->sendResponse($reservas, 'Últimos 50');
-    }
-    public function solo75()
-    {
-        $reservas = $this->reserva->latest()->paginate(75);
-
-        return $this->sendResponse($reservas, 'Últimos 75');
-    }
-    public function solo100()
-    {
-        $reservas = $this->reserva->latest()->paginate(100);
-
-        return $this->sendResponse($reservas, 'Últimos 100');
-    }
-
 }

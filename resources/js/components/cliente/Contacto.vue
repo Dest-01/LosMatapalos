@@ -19,6 +19,7 @@
                 v-model="form.nombreCompleto"
                 name="nombre"
                 id="nombre"
+                onkeypress="validarNombre()"
               />
             </p>
             <p>
@@ -90,7 +91,14 @@
       <div class="contenedor_mapa">
         <div class="map-cont">
           <div class="map-box">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1185.9005890353978!2d-85.45202258885914!3d10.617110488200765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f757d3b9e5cff01%3A0x4139935881accb02!2sUniversidad%20Nacional!5e1!3m2!1ses!2scr!4v1645770888267!5m2!1ses!2scr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1185.9005890353978!2d-85.45202258885914!3d10.617110488200765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f757d3b9e5cff01%3A0x4139935881accb02!2sUniversidad%20Nacional!5e1!3m2!1ses!2scr!4v1645770888267!5m2!1ses!2scr"
+              width="600"
+              height="450"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+            ></iframe>
           </div>
         </div>
       </div>
@@ -107,7 +115,7 @@ export default {
       numero: "",
       asunto: "",
       mensaje: "",
-      
+
       form: new Form({
         nombreCompleto: "",
         correo: "",
@@ -122,42 +130,50 @@ export default {
       this.form.reset();
     },
     enviaEmail() {
-      if(this.form.nombreCompleto != "" && this.form.correo != "" && this.form.numero != "" && this.form.asunto != "" && this.form.mensaje != ""){
       if (
-        /^([A-Z]{1}[a-zñáéíóú]+[\s]*)+$/.test(this.form.nombreCompleto) &&
-        /[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/.test(this.form.correo) &&
-        /^[2-9]\d{3}\d{4}$/.test(this.form.numero) &&
-        /^.{3,}$/.test(this.form.asunto) &&
-        /^.{5,}$/.test(this.form.mensaje)
+        this.form.nombreCompleto != "" &&
+        this.form.correo != "" &&
+        this.form.numero != "" &&
+        this.form.asunto != "" &&
+        this.form.mensaje != ""
       ) {
-        const templateParams = {
-          nombreCompleto: this.form.nombreCompleto,
-          correo: this.form.correo,
-          numero: this.form.numero,
-          asunto: this.form.asunto,
-          mensaje: this.form.mensaje,
-        };
-        console.log(templateParams.correo);
-        emailjs
-          .send(
+        if (
+          /^([A-Z]{1}[a-zñáéíóú]+[\s]*)+$/.test(this.form.nombreCompleto) &&
+          /[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/.test(this.form.correo) &&
+          /^[2-9]\d{3}\d{4}$/.test(this.form.numero) &&
+          /^.{3,}$/.test(this.form.asunto) &&
+          /^.{5,}$/.test(this.form.mensaje)
+        ) {
+          const templateParams = {
+            nombreCompleto: this.form.nombreCompleto,
+            correo: this.form.correo,
+            numero: this.form.numero,
+            asunto: this.form.asunto,
+            mensaje: this.form.mensaje,
+          };
+          console.log(templateParams.correo);
+          emailjs.send(
             "service_xf6d5cg",
             "template_oqin6bo",
             templateParams,
             "user_GMf53dmaF0FI8RLY0cj3V"
-          )
-          Swal.fire("Listo!", this.$t('MensajeEnviado'), "success");
+          );
+          Swal.fire("Listo!", this.$t("MensajeEnviado"), "success");
           this.limpiar();
+        } else {
+          Swal.fire("Error!", this.$t("FormatoIncorrecto"), "error");
+        }
       } else {
-        Swal.fire("Error!", this.$t('FormatoIncorrecto'), "error");
+        Swal.fire("Error!", this.$t("CamposVacios"), "error");
       }
-    }else{
-      Swal.fire("Error!", this.$t('CamposVacios'), "error");
-    }
-    }
+    },
   },
   mounted() {
     const plugin = document.createElement("script");
-    plugin.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyAf2BTaIHXz95AJVwvHuoFd2CkF8gTcuvM");
+    plugin.setAttribute(
+      "src",
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyAf2BTaIHXz95AJVwvHuoFd2CkF8gTcuvM"
+    );
     plugin.async = true;
     document.head.appendChild(plugin);
   },

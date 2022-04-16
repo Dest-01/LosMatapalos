@@ -9,7 +9,7 @@
                 <h4 class="page-title">Organizaciones</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -171,6 +171,7 @@
                     placeholder="Formato: #-###-######"
                     required
                     pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
+                    v-mask="'#-###-######'"
                   />
                   <has-error :form="form" field="identificacion"></has-error>
                 </div>
@@ -186,8 +187,8 @@
                     placeholder="Nombre de organización"
                     required
                     minlength="3"
-                    maxlength="60"
-                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,20}"
+                    maxlength="50"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,50}"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -201,7 +202,7 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
                     placeholder="#### ####"
-                    pattern="[0-9]{8}"
+                    v-mask="[/[2-9]/, '#######']"
                     required
                   />
                   <has-error :form="form" field="telefono"></has-error>
@@ -215,7 +216,6 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
                     placeholder="ejemplo@gmail.com"
-                    size="32"
                     minlength="3"
                     maxlength="64"
                     pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
@@ -338,6 +338,7 @@ export default {
       errores: {},
       organizaciones: {},
       nuevoOrganaciones: {},
+      nuevoNombre: "",
       form: new Form({
         id: "",
         identificacion: "",
@@ -348,19 +349,20 @@ export default {
     };
   },
   methods: {
-    filtrar() {
-      if (this.filtrarBusqueda == "") {
-        this.organizaciones.data = this.nuevoOrganaciones;
-      } else if (this.filtrarBusqueda != "") {
+        filtrar() {
+      if (!this.filtrarBusqueda) {
+        this.cargarOrganizacion();
+      } else if (this.filtrarBusqueda.length > 2) {
         this.organizaciones.data = this.organizacionesFiltradas;
       }
     },
     mostrar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         this.form
-            .get("/api/organizacion/mostrar/", {
-              params: { valor: this.valorMostrar },
-            }).then(({ data }) => (this.organizaciones = data.data));
+          .get("/api/organizacion/mostrar/", {
+            params: { valor: this.valorMostrar },
+          })
+          .then(({ data }) => (this.organizaciones = data.data));
       }
     },
 
@@ -368,14 +370,13 @@ export default {
       this.$Progress.start();
 
       axios
-        .get("/api/organizacion/mostrar?page=" + page,{
-              params: { valor: this.valorMostrar },
-            })
+        .get("/api/organizacion/mostrar?page=" + page, {
+          params: { valor: this.valorMostrar },
+        })
         .then(({ data }) => (this.organizaciones = data.data));
 
       this.$Progress.finish();
     },
-
 
     actualizarOrganizacion() {
       this.$Progress.start();
@@ -425,12 +426,12 @@ export default {
       this.form.errors.clear();
     },
 
-    cargarOrganizacion() {
+    async cargarOrganizacion() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+        await axios
           .get("/api/organizacion")
           .then(({ data }) => (this.organizaciones = data.data));
-        axios
+        await axios
           .get("/api/organizacion/listar")
           .then(({ data }) => (this.nuevoOrganaciones = data.data));
       }
@@ -509,7 +510,7 @@ export default {
     },
   },
   mounted() {
-    console.log("Component mounted.");
+    console.log("Componente Organización Montado.");
   },
 
   created() {
@@ -536,6 +537,17 @@ export default {
         );
       });
     },
+      nombreMayuscula: function () {
+      if (!this.form.nombre) return "";
+      return (
+        this.form.nombre.charAt(0).toUpperCase() + this.form.nombre.slice(1)
+        
+      );
+    },
+  },
+
+  filters: {
+
   },
 };
 </script>

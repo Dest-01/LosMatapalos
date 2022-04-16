@@ -23,41 +23,19 @@ class ReporteGrupoController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function solo10()
+    public function filtro(Request $request)
     {
-        $grupos = $this->grupos->latest()->paginate(10);
+        $filtro = $request->valor;
 
-        return $this->sendResponse($grupos, 'Últimos 10');
+        $grupos = $this->grupos->latest()->paginate($filtro);
+
+        return $this->sendResponse($grupos, 'Registro Filtrado');
     }
     public function todo()
     {
         $grupos = $this->grupos->get();
 
-        return $this->sendResponse($grupos, 'Lista de todas las personas');
-    }
-    public function solo25()
-    {
-        $grupos = $this->grupos->latest()->paginate(25);
-
-        return $this->sendResponse($grupos, 'Últimos 25');
-    }
-    public function solo50()
-    {
-        $grupos = $this->grupos->latest()->paginate(50);
-
-        return $this->sendResponse($grupos, 'Últimos 50');
-    }
-    public function solo75()
-    {
-        $grupos = $this->grupos->latest()->paginate(75);
-
-        return $this->sendResponse($grupos, 'Últimos 75');
-    }
-    public function solo100()
-    {
-        $grupos = $this->grupos->latest()->paginate(100);
-
-        return $this->sendResponse($grupos, 'Últimos 100');
+        return $this->sendResponse($grupos, 'Todo Registro');
     }
 
 }

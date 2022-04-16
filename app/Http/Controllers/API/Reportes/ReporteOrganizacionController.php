@@ -23,41 +23,21 @@ class ReporteOrganizacionController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function solo10()
+    public function filtro(Request $request)
     {
-        $organizacion = $this->organizaciones->latest()->paginate(10);
+        $filtro = $request->valor;
 
-        return $this->sendResponse($organizacion, 'Últimos 10');
+        $organizacion = $this->organizaciones->latest()->paginate($filtro);
+
+        return $this->sendResponse($organizacion, 'Registro Filtrado');
     }
     public function todo()
     {
         $organizacion = $this->organizaciones->get();
 
-        return $this->sendResponse($organizacion, 'Lista de todas las personas');
+        return $this->sendResponse($organizacion, 'Todo Registro');
     }
-    public function solo25()
-    {
-        $organizaciones = $this->organizaciones->latest()->paginate(25);
 
-        return $this->sendResponse($organizaciones, 'Últimos 25');
-    }
-    public function solo50()
-    {
-        $organizaciones = $this->organizaciones->latest()->paginate(50);
 
-        return $this->sendResponse($organizaciones, 'Últimos 50');
-    }
-    public function solo75()
-    {
-        $organizaciones = $this->organizaciones->latest()->paginate(75);
-
-        return $this->sendResponse($organizaciones, 'Últimos 75');
-    }
-    public function solo100()
-    {
-        $organizaciones = $this->organizaciones->latest()->paginate(100);
-
-        return $this->sendResponse($organizaciones, 'Últimos 100');
-    }
 
 }

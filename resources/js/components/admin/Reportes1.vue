@@ -211,6 +211,21 @@
             </div>
             <ReporteFlora v-show="verFlora"></ReporteFlora>
             <!---------------------------------------------------------------------------------------------------->
+            <div class="card-header">
+              <h3 class="card-title">Reportes de los participantes</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-sm btn-primary" @click="verParticipante()">
+                  <i class="far fa-file-pdf"></i>
+                  Generar Reporte
+                </button>
+                <button type="button" class="btn btn-sm btn-danger" @click="cancerlar()">
+                  <i class="fas fa-window-close"></i>
+                  Cancelar
+                </button>
+              </div>
+            </div>
+            <ReporteParticipantes  v-show="verParticipantes"></ReporteParticipantes>
+            <!---------------------------------------------------------------------------------------------------->
           </div>
           <!-- /.card -->
         </div>
@@ -231,6 +246,7 @@ import ReporteReservas from "../Reportes/ReporteReservas.vue";
 import ReporteFauna from "../Reportes/ReporteFauna.vue";
 import ReporteFlora from "../Reportes/ReporteFlora.vue";
 import ReporteDonativo from "../Reportes/ReporteDonativo.vue";
+import ReporteParticipantes from "../Reportes/ReporteParticipantes.vue";
 
 export default {
   components: {
@@ -245,6 +261,7 @@ export default {
     ReporteReservas: ReporteReservas,
     ReporteFauna: ReporteFauna,
     ReporteFlora: ReporteFlora,
+    ReporteParticipantes: ReporteParticipantes,
   },
   data() {
     return {
@@ -259,6 +276,7 @@ export default {
       verReservar: false,
       verFauna: false,
       verFlora: false,
+      verParticipantes: false,
     };
   },
   methods: {
@@ -274,6 +292,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verReporteOrganizacion() {
       this.verPersonas = false;
@@ -287,6 +306,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verGrupo() {
       this.verPersonas = false;
@@ -300,6 +320,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verDonativo() {
       this.verPersonas = false;
@@ -313,6 +334,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verVoluntarioParticular() {
       this.verPersonas = false;
@@ -326,6 +348,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verVoluntarioEstudiantes() {
       this.verPersonas = false;
@@ -339,6 +362,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verActividad() {
       this.verPersonas = false;
@@ -352,6 +376,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verVoluntarioActividades() {
       this.verPersonas = false;
@@ -365,6 +390,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verReservas() {
       this.verPersonas = false;
@@ -378,6 +404,7 @@ export default {
       this.verReservar = true;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verFaunas() {
       this.verPersonas = false;
@@ -391,6 +418,7 @@ export default {
       this.verReservar = false;
       this.verFauna = true;
       this.verFlora = false;
+      this.verParticipantes = false;
     },
     verFloras() {
       this.verPersonas = false;
@@ -404,6 +432,21 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = true;
+      this.verParticipantes = false;
+    },
+        verParticipante() {
+      this.verPersonas = false;
+      this.verOrganizaciones = false;
+      this.verGrupos = false;
+      this.verDonativos = false;
+      this.verVoluntarioParticulares = false;
+      this.verVoluntarioEstudiante = false;
+      this.verActividades = false;
+      this.verVoluntarioActividad = false;
+      this.verReservar = false;
+      this.verFauna = false;
+      this.verFlora = false;
+      this.verParticipantes = true;
     },
     cancerlar(){
       this.verPersonas = false;
@@ -417,6 +460,7 @@ export default {
       this.verReservar = false;
       this.verFauna = false;
       this.verFlora = false;
+      this.verParticipantes = false;
     }
   },
 

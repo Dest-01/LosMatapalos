@@ -19,7 +19,7 @@
             <li class="nav-item">
                 <router-link to="/admin/personas" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
-                    <p>Registro Cliente</p>
+                    <p>Registro Persona</p>
                 </router-link>
             </li>
             <li class="nav-item">

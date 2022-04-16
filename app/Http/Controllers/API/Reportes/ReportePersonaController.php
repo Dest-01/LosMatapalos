@@ -24,41 +24,19 @@ class ReportePersonaController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function solo10()
+    public function filtro(Request $request)
     {
-        $persona = $this->personas->latest()->paginate(10);
+        $filtro = $request->valor;
 
-        return $this->sendResponse($persona, 'Últimos 10');
+        $persona = $this->personas->latest()->paginate($filtro);
+
+        return $this->sendResponse($persona, 'Registro Filtrado');
     }
     public function todo()
     {
         $persona = $this->personas->get();
 
-        return $this->sendResponse($persona, 'Lista de todas las personas');
-    }
-    public function solo25()
-    {
-        $persona = $this->personas->latest()->paginate(25);
-
-        return $this->sendResponse($persona, 'Últimos 25');
-    }
-    public function solo50()
-    {
-        $persona = $this->personas->latest()->paginate(50);
-
-        return $this->sendResponse($persona, 'Últimos 50');
-    }
-    public function solo75()
-    {
-        $persona = $this->personas->latest()->paginate(75);
-
-        return $this->sendResponse($persona, 'Últimos 75');
-    }
-    public function solo100()
-    {
-        $persona = $this->personas->latest()->paginate(100);
-
-        return $this->sendResponse($persona, 'Últimos 100');
+        return $this->sendResponse($persona, 'Todo Registro');
     }
 
 }

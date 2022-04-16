@@ -23,41 +23,19 @@ class ReporteFloraController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function solo10()
+    public function filtro(Request $request)
     {
-        $flora = $this->flora->latest()->paginate(10);
+        $filtro = $request->valor;
 
-        return $this->sendResponse($flora, 'Últimos 10');
+        $flora = $this->flora->latest()->paginate($filtro);
+
+        return $this->sendResponse($flora, 'Registro Filtrado');
     }
     public function todo()
     {
         $flora = $this->flora->get();
 
-        return $this->sendResponse($flora, 'Lista de todas las personas');
-    }
-    public function solo25()
-    {
-        $flora = $this->flora->latest()->paginate(25);
-
-        return $this->sendResponse($flora, 'Últimos 25');
-    }
-    public function solo50()
-    {
-        $flora = $this->flora->latest()->paginate(50);
-
-        return $this->sendResponse($flora, 'Últimos 50');
-    }
-    public function solo75()
-    {
-        $flora = $this->flora->latest()->paginate(75);
-
-        return $this->sendResponse($flora, 'Últimos 75');
-    }
-    public function solo100()
-    {
-        $flora = $this->flora->latest()->paginate(100);
-
-        return $this->sendResponse($flora, 'Últimos 100');
+        return $this->sendResponse($flora, 'Todo Registro');
     }
 
 }

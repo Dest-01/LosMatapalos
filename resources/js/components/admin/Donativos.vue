@@ -171,9 +171,6 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-
-            <!-- <form @submit.prevent="createUser"> -->
-
             <form
               @submit.prevent="
                 editmode ? actualizarDonativo() : crearDonativo()
@@ -269,7 +266,7 @@
                     required
                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{5,255}"
                     title="Digite descripción de la donación."
-                    minlength="5"
+                    minlength="2"
                     maxlength="255"
                   >
                   </textarea>
@@ -963,6 +960,25 @@ export default {
       this.bloquearCampoConsulta = true;
       this.bloquearCamposDonativo = false;
     },
+    LlenarDonativoPersona() {
+      for (let i = 0; i < this.personaIdArray.length; i++) {
+        if (this.personaIdArray[i].identificacion == this.buscador) {
+          this.form.identificacionPersona =
+            this.personaIdArray[i].identificacion;
+          this.form.idPersona = this.personaIdArray[i].id;
+        }
+      }
+    },
+    LlenarDonativoOganizacion() {
+      for (let i = 0; i < this.organizacionIdArray.length; i++) {
+        if (this.organizacionIdArray[i].identificacion == this.buscador) {
+          this.form.identificacionOrganizacion =
+            this.organizacionIdArray[i].identificacion;
+          this.form.idOrganizacion = this.organizacionIdArray[i].id;
+        }
+      }
+    },
+
     ConsultaCedula() {
       if (this.buscador.length != 0) {
         if (
@@ -975,13 +991,6 @@ export default {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.personaIdArray = data.data));
-          for (let i = 0; i < this.personaIdArray.length; i++) {
-            if (this.personaIdArray[i].identificacion == this.buscador) {
-              this.form.identificacionPersona =
-                this.personaIdArray[i].identificacion;
-              this.form.idPersona = this.personaIdArray[i].id;
-            }
-          }
           this.mostrarMensajeConsulta();
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
           this.form
@@ -989,13 +998,6 @@ export default {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.organizacionIdArray = data.data));
-          for (let i = 0; i < this.organizacionIdArray.length; i++) {
-            if (this.organizacionIdArray[i].identificacion == this.buscador) {
-              this.form.identificacionOrganizacion =
-                this.organizacionIdArray[i].identificacion;
-              this.form.idOrganizacion = this.organizacionIdArray[i].id;
-            }
-          }
           this.mostrarMensajeConsulta();
         } else {
           this.VermensajeSiExiste = false;
@@ -1064,6 +1066,13 @@ export default {
 
     crearDonativo() {
       if (this.buscador.length != "") {
+        if (this.personaIdArray.length != 0) {
+          console.log("Array pesonas");
+          this.LlenarDonativoPersona();
+        }if (this.organizacionIdArray.length != 0) {
+          console.log("Array organizacion");
+          this.LlenarDonativoOganizacion();
+        }
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
           /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||

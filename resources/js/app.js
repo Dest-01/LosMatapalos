@@ -48,9 +48,15 @@ Vue.config.productionTip = false
  Vue.component(AlertError.name, AlertError)
  
  
+ /*
+ import v-mask for inputs
+ */
+ import VueMask from 'v-mask'
+ Vue.use(VueMask)
  /**
   * Routes imports and assigning
   */
+
   import VueI18n from 'vue-i18n'
   import messages from '../lang'
 
