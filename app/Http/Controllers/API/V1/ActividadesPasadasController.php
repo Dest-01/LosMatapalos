@@ -115,7 +115,6 @@ class ActividadesPasadasController extends BaseController
             'nombre' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'fecha' => 'required|date|after:2020-01-01',
             'descripcion' => 'required|string|max:255|min:5',
-            'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
 
         ];
     
@@ -126,7 +125,6 @@ class ActividadesPasadasController extends BaseController
             'descripcion.min' =>'Mínimo 5 caracteres',
             'descripcion.*' => 'Breve descripción de actividad realizada, debe tener al menos 3 caracteres y máximo 255',
             'fecha.*' => 'requiere una fecha mayor al 2020-01-01',
-            'imagen.*' => 'Cargue una foto',
             ];
 
 

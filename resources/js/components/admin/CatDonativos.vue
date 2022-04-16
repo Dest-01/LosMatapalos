@@ -9,7 +9,7 @@
                 <h4 class="page-title">Donativos Necesarios</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -355,7 +355,7 @@ export default {
       if (!this.filtrarBusqueda) {
         this.cargarCatDonativos();
       } else if (this.filtrarBusqueda.length > 2) {
-        this.catDonativos.data = this.nuevoCatDonativos;
+        this.catDonativos.data = this.catDonativosFiltrados;
       }
     },
     updatePhoto(e) {
@@ -448,12 +448,12 @@ export default {
       $("#exampleModal").modal("show");
       this.form.fill(catdonativo);
     },
-    cargarCatDonativos() {
+   async cargarCatDonativos() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+      await axios
           .get("/api/catDonativo")
           .then(({ data }) => (this.catDonativos = data.data));
-        axios
+      await axios
           .get("/api/catDonativo/listar")
           .then(({ data }) => (this.nuevoCatDonativos = data.data));
       }
@@ -511,9 +511,8 @@ export default {
     },
   },
   mounted() {
-    console.log("Component mounted.");
+    console.log("Componente Donativos Necesarios Montado.");
   },
-  eliminarCatDonativo(id) {},
 
   created() {
     this.$Progress.start();

@@ -150,7 +150,7 @@
             >
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Nombre Documento</label>
+                  <label>Nombre del documento</label>
                   <input
                     v-model="form.nombre"
                     type="text"
@@ -159,6 +159,9 @@
                     placeholder="Nombre del documento"
                     required
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,30}"
+                     minlength="1"
+                     maxlength="30"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -187,6 +190,7 @@
                     required
                     minlength="3"
                     maxlength="255"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,255}"
                     id=""
                     rows="3"
                   ></textarea>
@@ -572,6 +576,13 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.card-title {
+  margin: 1px;
+  line-height: inherit;
+  float: left;
+  font-size: 1.8rem;
+  font-weight: 400;
 }
 .card-tools div {
   padding: 10px;

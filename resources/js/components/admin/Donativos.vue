@@ -9,7 +9,7 @@
                 <h4 class="page-title">Donativos</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -62,6 +62,7 @@
                     type="button"
                     class="btn btn-sm btn-primary"
                     @click="modalPersona()"
+                    onclick="limpiarCampo()"
                   >
                     <i class="fa fa-plus-square"></i>
 
@@ -513,7 +514,7 @@
               <div class="form-group">
                 <div v-show="CedulaNacional" class="form-group identitad">
                   <input
-                    v-model="formPer.identificacion"
+                    v-model="DNINacional"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -523,6 +524,7 @@
                     placeholder="Formato #-####-####"
                     id="nacional"
                     onchange="validarCedulaN()"
+                    v-mask="[/[1-9]/, '-####-####']"
                   />
 
                   <has-error :form="formPer" field="identificacion"></has-error>
@@ -530,7 +532,7 @@
 
                 <div v-show="CedulaResidencial" class="form-group">
                   <input
-                    v-model="formPer.identificacion"
+                    v-model="DNIResidencial"
                     id="residencial"
                     type="text"
                     name="identificacion"
@@ -540,6 +542,8 @@
                     }"
                     placeholder="Formato de 10 dígitos"
                     onchange="validateResidencial()"
+                    pattern="[0-9]{10}"
+                    v-mask="'##########'"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
@@ -547,7 +551,7 @@
                 <div v-show="Pasaporte" class="form-group identitad">
                   <input
                     id="pasaporte"
-                    v-model="formPer.identificacion"
+                    v-model="DNIPasaporte"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -556,6 +560,8 @@
                     }"
                     placeholder="Formato de 11 a 12 dígitos"
                     onchange="validatePasaporte()"
+                    pattern="[0-9]{11,12}"
+                    v-mask="'############'"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
@@ -570,11 +576,11 @@
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
                   placeholder="Escriba el nombre del donante"
-                  minlength="3"
-                  maxlength="20"
-                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,20}"
-                  title="Nombre valido de la persona."
                   required
+                  minlength="2"
+                  maxlength="30"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                  title="Escriba su nombre."
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -623,12 +629,12 @@
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('telefono') }"
-                  size="20"
-                  min="10000000"
-                  placeholder="#### ####"
-                  pattern="[0-9]{8}"
-                  title="Digite un número de teléfono válido."
+                  min="1"
+                  placeholder="Formato: #### ####"
                   required
+                  pattern="[0-9]{8}"
+                  title="Digite un número de teléfono"
+                  v-mask="[/[2-9]/, '#######']"
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
               </div>
@@ -640,12 +646,10 @@
                   name="correo"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('correo') }"
-                  size="32"
                   placeholder="ejemplo@gmail.com"
                   minlength="3"
                   maxlength="64"
                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                  title="Digite email con formato correcto."
                   required
                 />
                 <has-error :form="formPer" field="correo"></has-error>
@@ -705,6 +709,8 @@
                   }"
                   placeholder="Formato: #-###-######"
                   required
+                  pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
+                  v-mask="'#-###-######'"
                 />
                 <has-error :form="formOrg" field="identificacion"></has-error>
               </div>
@@ -712,16 +718,16 @@
               <div class="form-group">
                 <label>Nombre organización</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formOrg.nombre"
                   type="text"
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('nombre') }"
                   placeholder="Nombre de organización"
-                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,20}"
-                  title="Escriba un nombre válido de la organización."
                   required
+                  minlength="3"
+                  maxlength="50"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,50}"
                 />
                 <has-error :form="formOrg" field="nombre"></has-error>
               </div>
@@ -734,11 +740,8 @@
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
-                  size="20"
-                  min="10000000"
                   placeholder="#### ####"
-                  pattern="[0-9]{8}"
-                  title="Digite número de teléfono válido."
+                  v-mask="[/[2-9]/, '#######']"
                   required
                 />
                 <has-error :form="formOrg" field="telefono"></has-error>
@@ -751,13 +754,11 @@
                   name="correo"
                   class="form-control"
                   :class="{ 'is-invalid': formOrg.errors.has('correo') }"
-                  size="32"
-                  placeholder="ejemplo@gmail.com"
-                  minlength="3"
-                  maxlength="64"
-                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                  title="Digite un email con el formato correcto."
-                  required
+                 placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                    required
                 />
 
                 <has-error :form="formOrg" field="correo"></has-error>
@@ -815,6 +816,9 @@ export default {
       CedulaNacional: false,
       Pasaporte: false,
       verDetalles: true,
+      DNINacional: "",
+      DNIResidencial: "",
+      DNIPasaporte: "",
       form: new Form({
         id: "",
         persona: "",
@@ -885,17 +889,26 @@ export default {
         this.Pasaporte = false;
         this.CedulaResidencial = false;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
       if (this.tipoIndenteficacion == "Cedula Residencial") {
         this.CedulaNacional = false;
         this.Pasaporte = false;
         this.CedulaResidencial = true;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       } else if (this.tipoIndenteficacion == "Pasaporte") {
         this.CedulaNacional = false;
         this.Pasaporte = true;
         this.CedulaResidencial = false;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
     },
     /*////////////////////////////////////////////////////////////*/
@@ -904,9 +917,7 @@ export default {
       //vamos a cancelar la busqueda bloqueando los input de reservacion
       this.bloquearCampoConsulta = false;
       this.bloquearCamposDonativo = true;
-      (this.form.identificacionPersona = ""),
-        (this.form.identificacionOrganizacion = ""),
-        (this.VermensajeSiExiste = false);
+      this.VermensajeSiExiste = false;
       this.VermensajeNoExiste = false;
       this.mensajeDeExistencia = "";
     },
@@ -1069,7 +1080,8 @@ export default {
         if (this.personaIdArray.length != 0) {
           console.log("Array pesonas");
           this.LlenarDonativoPersona();
-        }if (this.organizacionIdArray.length != 0) {
+        }
+        if (this.organizacionIdArray.length != 0) {
           console.log("Array organizacion");
           this.LlenarDonativoOganizacion();
         }
@@ -1092,8 +1104,22 @@ export default {
         Swal.fire("Error!", "Primero verifique que existe!", "error");
       }
     },
+    asignarDNI() {
+      if (this.DNINacional != "") {
+        this.formPer.identificacion = this.DNINacional;
+      } else if (this.DNIResidencial != "") {
+        this.formPer.identificacion = this.DNIResidencial;
+      } else if (this.DNIPasaporte) {
+        this.formPer.identificacion = this.DNIPasaporte;
+      }
+    },
     crearPersona() {
-      if (this.formPer.identificacion != "") {
+      if (
+        this.DNINacional != "" ||
+        this.DNIResidencial != "" ||
+        this.DNIPasaporte != ""
+      ) {
+        this.asignarDNI();
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
           /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||

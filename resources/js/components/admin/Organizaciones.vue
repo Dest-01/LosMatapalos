@@ -77,7 +77,7 @@
                     :key="organizacion.id"
                   >
                     <td>{{ organizacion.identificacion }}</td>
-                    <td class="text-capitalize">{{ organizacion.nombre }}</td>
+                    <td>{{ organizacion.nombre }}</td>
                     <td>{{ organizacion.telefono }}</td>
                     <td>{{ organizacion.correo }}</td>
                     <td>

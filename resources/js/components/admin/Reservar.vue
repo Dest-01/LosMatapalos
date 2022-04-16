@@ -9,7 +9,7 @@
                 <h4 class="page-title">Reservas</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -95,7 +95,7 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>ID</th>
+
                     <th>Identificación</th>
                     <th>Cédula jurídica</th>
                     <th>Nombre Grupo</th>
@@ -108,7 +108,6 @@
                 </thead>
                 <tbody>
                   <tr v-for="reserva in reservas.data" :key="reserva.id">
-                    <td>{{ reserva.id }}</td>
                     <td>{{ reserva.identificacionPersona }}</td>
                     <td>{{ reserva.identificacionOrganizacion }}</td>
                     <td>{{ reserva.nombreGrupo }}</td>
@@ -181,9 +180,7 @@
             <!-- <form @submit.prevent="createUser"> -->
 
             <form
-              @submit.prevent="
-                editmode ? actualizarReserva() : llenarforms(), crearReserva()
-              "
+              @submit.prevent="editmode ? actualizarReserva() : crearReserva()"
             >
               <div class="modal-body">
                 <div v-show="verCamposdeConsulta" class="form-group">
@@ -213,7 +210,7 @@
                   <button
                     type="button"
                     class="btn btn-success my-4"
-                    @click="ConsultaCedula(), llenarforms()"
+                    @click="ConsultaCedula()"
                   >
                     Consultar
                   </button>
@@ -255,9 +252,10 @@
                     :class="{ 'is-invalid': form.errors.has('cantidad') }"
                     :disabled="bloquearCamposReservacion"
                     min="1"
-                    max="80"
-                    placeholder="0"
+                    max="100"
+                    placeholder="Cantidad de visitantes que asistirán"
                     required
+                    v-mask="'###'"
                   />
                   <has-error :form="form" field="cantidad"></has-error>
                 </div>
@@ -434,7 +432,7 @@
           </div>
         </div>
       </div>
-      <!-- MODAL DE ORGANIZACIONES Y PERSONAS-->
+      <!-- MODAL DE Personas-->
       <div
         class="modal fade"
         id="modalPersona"
@@ -463,7 +461,7 @@
                   class="form-control"
                   v-model="tipoIndenteficacion"
                   :class="{ 'is-invalid': form.errors.has('identificacion') }"
-                  @change="tiposDeIndentificacon(), cambioSelect()"
+                  @change="tiposDeIndentificacon()"
                   required
                 >
                   <option disabled value="">Seleccione un tipo</option>
@@ -478,7 +476,7 @@
               <div class="form-group">
                 <div v-show="CedulaNacional" class="form-group identitad">
                   <input
-                    v-model="formPer.identificacion"
+                    v-model="DNINacional"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -488,6 +486,7 @@
                     placeholder="Formato #-####-####"
                     id="nacional"
                     onchange="validarCedulaN()"
+                    v-mask="[/[1-9]/, '-####-####']"
                   />
 
                   <has-error :form="formPer" field="identificacion"></has-error>
@@ -495,7 +494,7 @@
 
                 <div v-show="CedulaResidencial" class="form-group">
                   <input
-                    v-model="formPer.identificacion"
+                    v-model="DNIResidencial"
                     id="residencial"
                     type="text"
                     name="identificacion"
@@ -505,6 +504,8 @@
                     }"
                     placeholder="Formato de 10 dígitos"
                     onchange="validateResidencial()"
+                    pattern="[0-9]{10}"
+                    v-mask="'##########'"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
@@ -512,7 +513,7 @@
                 <div v-show="Pasaporte" class="form-group identitad">
                   <input
                     id="pasaporte"
-                    v-model="formPer.identificacion"
+                    v-model="DNIPasaporte"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -521,6 +522,8 @@
                     }"
                     placeholder="Formato de 11 a 12 dígitos"
                     onchange="validatePasaporte()"
+                    pattern="[0-9]{11,12}"
+                    v-mask="'############'"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
@@ -536,8 +539,10 @@
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
                   placeholder="Escriba el nombre del donante"
                   required
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,50}"
-                  title="Digita un nombre válido, no puedes digitar números o caracteres especiales en este campo"
+                  minlength="2"
+                  maxlength="30"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                  title="Escriba su nombre."
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -552,10 +557,10 @@
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
                   placeholder="Primer apellido del donante"
                   minlength="3"
-                  maxlength="20"
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,50}"
-                  title="Digita un apellido válido, no puedes digitar números o caracteres especiales en este campo"
+                  maxlength="30"
                   required
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                  title="Digite el primer apellido."
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -570,9 +575,9 @@
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
                   placeholder="Segundo apellido del donante"
                   minlength="3"
-                  maxlength="20"
-                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,50}"
-                  title="Digita un apellido válido, no puedes digitar números o caracteres especiales en este campo"
+                  maxlength="30"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                  title="Digite el segundo apellido."
                   required
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
@@ -586,10 +591,12 @@
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('telefono') }"
-                  id="phone"
-                  min="0"
-                  placeholder="#### ####"
+                  min="1"
+                  placeholder="Formato: #### ####"
                   required
+                  pattern="[0-9]{8}"
+                  title="Digite un número de teléfono"
+                  v-mask="[/[2-9]/, '#######']"
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
               </div>
@@ -603,7 +610,7 @@
                   :class="{ 'is-invalid': formPer.errors.has('correo') }"
                   placeholder="ejemplo@gmail.com"
                   minlength="3"
-                  maxlength="100"
+                  maxlength="64"
                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   required
                 />
@@ -664,7 +671,8 @@
                   }"
                   placeholder="Formato: #-###-######"
                   required
-                  pattern="[1-9]{1}-[1-9]{3}-[1-9]{6}"
+                  pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
+                  v-mask="'#-###-######'"
                 />
                 <has-error :form="formOrg" field="identificacion"></has-error>
               </div>
@@ -672,16 +680,16 @@
               <div class="form-group">
                 <label>Nombre organización</label>
                 <input
-                  style="text-transform: capitalize"
                   v-model="formOrg.nombre"
                   type="text"
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('nombre') }"
                   placeholder="Nombre de organización"
-                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,20}"
-                  title="Digita un nombre de Organización válido, no se acepta caracteres especiales en este campo"
                   required
+                  minlength="3"
+                  maxlength="50"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,50}"
                 />
                 <has-error :form="formOrg" field="nombre"></has-error>
               </div>
@@ -695,7 +703,7 @@
                   class="form-control"
                   :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
                   placeholder="#### ####"
-                  pattern="[0-9]{8}"
+                  v-mask="[/[2-9]/, '#######']"
                   required
                 />
                 <has-error :form="formOrg" field="telefono"></has-error>
@@ -709,7 +717,6 @@
                   class="form-control"
                   :class="{ 'is-invalid': formOrg.errors.has('correo') }"
                   placeholder="ejemplo@gmail.com"
-                  size="32"
                   minlength="3"
                   maxlength="64"
                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
@@ -773,7 +780,8 @@
                   }"
                   placeholder="Nombre del grupo, G-####"
                   required
-                   title="Registra un nombre de grupo válido, no se acepta caracteres especiales"
+                  v-mask="[/[G]/, '-####']"
+                  title="Registra un nombre de grupo válido, no se acepta caracteres especiales"
                 />
                 <has-error :form="formGrupo" field="nombre"></has-error>
               </div>
@@ -787,7 +795,6 @@
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('correo') }"
                   placeholder="Escriba el correo del grupo"
-                  size="32"
                   minlength="3"
                   maxlength="64"
                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
@@ -808,6 +815,8 @@
                   min="1"
                   max="100"
                   required
+                  pattern="[1-9]{1,100}"
+                  v-mask="'###'"
                 />
                 <has-error :form="formGrupo" field="cantidad"></has-error>
               </div>
@@ -819,8 +828,11 @@
                   name="edades"
                   class="form-control"
                   :class="{ 'is-invalid': formGrupo.errors.has('edades') }"
+                  required
                   min="5"
                   max="109"
+                  step="1"
+                  v-mask="'###'"
                 />
                 <label for="">Rango: {{ formGrupo.edades }}</label>
                 <has-error :form="formGrupo" field="edades"></has-error>
@@ -841,17 +853,36 @@
                 <has-error :form="formGrupo" field="lugar"></has-error>
               </div>
               <div class="form-group">
-                <label>Tematica</label>
-                <input
-                  v-model="formGrupo.tematica"
-                  type="text"
-                  name="tematica"
-                  class="form-control"
-                  :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
-                  placeholder="Que tematica le gustaria tratar"
-                  required
-                />
-                <has-error :form="formGrupo" field="tematica"></has-error>
+                <div style="margin-bottom: 10px">
+                  <label>Tematica</label>
+                  <select
+                    class="form-control"
+                    v-model="formGrupo.tematica"
+                    :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
+                    required
+                    @change="verInputOtraTematica()"
+                  >
+                    <option disabled value="">Seleccione una tematica</option>
+                    <option value="Todas las tematicas">
+                      Todas las tematicas
+                    </option>
+                    <option value="Biodiversidad">Biodiversidad</option>
+                    <option value="Cultura">Cultura</option>
+                    <option value="Otros">Otros</option>
+                  </select>
+                </div>
+                <div id="inputOtros" v-show="VerOtraTematica">
+                  <input
+                    type="text"
+                    v-model="formGrupo.tematica"
+                    name="lugar"
+                    class="form-control"
+                    :class="{ 'is-invalid': formGrupo.errors.has('tematica') }"
+                    placeholder="Escriba la otra tematica de interes..."
+                    required
+                  />
+                </div>
+                <has-error :form="form" field="tematica"></has-error>
               </div>
               <div class="form-group">
                 <label>Detalles a considerar</label>
@@ -862,6 +893,7 @@
                   :class="{ 'is-invalid': formGrupo.errors.has('detalles') }"
                   cols="5"
                   rows="5"
+                  placeholder="Algunas notas a considerar, por ejemplos alergias..."
                 ></textarea>
                 <has-error :form="formGrupo" field="detalles"></has-error>
               </div>
@@ -919,6 +951,11 @@ export default {
       Pasaporte: false,
       verDetalles: true,
       editmode: false,
+      DNINacional: "",
+      DNIResidencial: "",
+      DNIPasaporte: "",
+      VerOtraTematica: false,
+      valorParallenar: 0,
       form: new Form({
         id: "",
         idPersona: "",
@@ -969,6 +1006,14 @@ export default {
     };
   },
   methods: {
+    verInputOtraTematica() {
+      if (this.formGrupo.tematica == "Otros") {
+        this.VerOtraTematica = true;
+        this.formGrupo.tematica = "Escriba la tematica...";
+      } else {
+        this.VerOtraTematica = false;
+      }
+    },
     /*////////////////////////////////////////////////////////////*/
     tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
@@ -976,17 +1021,26 @@ export default {
         this.Pasaporte = false;
         this.CedulaResidencial = false;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
       if (this.tipoIndenteficacion == "Cedula Residencial") {
         this.CedulaNacional = false;
         this.Pasaporte = false;
         this.CedulaResidencial = true;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       } else if (this.tipoIndenteficacion == "Pasaporte") {
         this.CedulaNacional = false;
         this.Pasaporte = true;
         this.CedulaResidencial = false;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
     },
     /*////////////////////////////////////////////////////////////*/
@@ -1001,7 +1055,8 @@ export default {
             .get("/api/reserva/verificar", {
               params: { buscador: this.buscador },
             })
-            .then(({ data }) => (this.personaIdArray = data.data));
+            .then(({ data }) => (this.personaIdArray = data.data)),
+            (this.valorParallenar = 1);
           this.HabilitarMostrarMensaje();
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
           this.form
@@ -1009,6 +1064,7 @@ export default {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.organizacionIdArray = data.data));
+          this.valorParallenar = 2;
           this.HabilitarMostrarMensaje();
         } else if (/^[G]{1}-\d{1,4}$/.test(this.buscador)) {
           this.form
@@ -1016,6 +1072,7 @@ export default {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.grupoIdArray = data.data));
+          this.valorParallenar = 3;
           this.HabilitarMostrarMensaje();
         } else {
           this.VermensajeSiExiste = false;
@@ -1033,39 +1090,34 @@ export default {
       //vamos a cancelar la busqueda bloqueando los input de reservacion
       this.bloquearCampoConsulta = false;
       this.bloquearCamposReservacion = true;
-      (this.form.identificacionPersona = ""),
-        (this.form.identificacionOrganizacion = ""),
-        (this.VermensajeSiExiste = false);
+      this.VermensajeSiExiste = false;
       this.VermensajeNoExiste = false;
       this.mensajeDeExistencia = "";
+      this.valorParallenar = 0;
     },
-    llenarforms() {
-      if (this.personaIdArray.length != 0) {
-        for (let i = 0; i < this.personaIdArray.length; i++) {
-          this.form.idPersona = this.personaIdArray[i].id;
-          this.form.identificacionPersona =
-            this.personaIdArray[i].identificacion;
-          this.formCorreo.cedulaReservacion =
-            this.personaIdArray[i].identificacion;
-          this.formCorreo.correo = this.personaIdArray[i].correo;
-        }
-      } else if (this.organizacionIdArray.length != 0) {
-        for (let i = 0; i < this.organizacionIdArray.length; i++) {
-          this.form.idOrganizacion = this.organizacionIdArray[i].id;
-          this.form.identificacionOrganizacion =
-            this.organizacionIdArray[i].identificacion;
-          this.formCorreo.cedulaReservacion =
-            this.organizacionIdArray[i].identificacion;
-          this.formCorreo.correo = this.organizacionIdArray[i].correo;
-        }
-      } else if (this.grupoIdArray.length != 0) {
-        for (let i = 0; i < this.grupoIdArray.length; i++) {
-          this.form.idGrupo = this.grupoIdArray[i].id;
-          this.form.nombreGrupo = this.personaIdArray[i].nombre;
-          this.formCorreo.cedulaReservacion = this.grupoIdArray[i].nombre;
-          this.formCorreo.correo = this.grupoIdArray[i].correo;
-        }
-      }
+    llenarPersonaForm() {
+      this.personaIdArray.forEach((element) => {
+        this.form.idPersona = element.id;
+        this.form.identificacionPersona = element.identificacion;
+        this.formCorreo.cedulaReservacion = element.identificacion;
+        this.formCorreo.correo = element.correo;
+      });
+    },
+    llenarOrgaForm() {
+      this.organizacionIdArray.forEach((element) => {
+        this.form.idOrganizacion = element.id;
+        this.form.identificacionOrganizacion = element.identificacion;
+        this.formCorreo.cedulaReservacion = element.identificacion;
+        this.formCorreo.correo = element.correo;
+      });
+    },
+    llenarGrupoForm() {
+      this.grupoIdArray.forEach((element) => {
+        this.form.idGrupo = element.id;
+        this.form.nombreGrupo = element.nombre;
+        this.formCorreo.cedulaReservacion = element.nombre;
+        this.formCorreo.correo = element.correo;
+      });
     },
     enviaEmail() {
       this.formCorreo.horaFin = this.form.horaFin;
@@ -1081,7 +1133,6 @@ export default {
         horaFin: this.formCorreo.horaFin,
         correo: this.formCorreo.correo,
       };
-      console.log(templateParams.correo);
       emailjs
         .send(
           "service_xf6d5cg",
@@ -1106,6 +1157,15 @@ export default {
 
     crearReserva() {
       if (this.buscador.length != "") {
+        if(this.valorParallenar == 1){
+          this.llenarPersonaForm();
+        }
+        if(this.valorParallenar == 2){
+          this.llenarOrgaForm();
+        }
+        if(this.valorParallenar == 3){
+          this.llenarGrupoForm();
+        }
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
           /^[1-9]\d{9}$/.test(this.form.identificacionPersona) ||
@@ -1144,7 +1204,7 @@ export default {
             icon: "success",
             title: response.data.message,
           });
-
+          this.valorParallenar = 0;
           this.$Progress.finish();
           this.cargarReservas();
           this.enviaEmail();
@@ -1157,12 +1217,12 @@ export default {
         });
     },
 
-    cargarReservas() {
+    async cargarReservas() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+        await axios
           .get("/api/reserva")
           .then(({ data }) => (this.reservas = data.data));
-        axios
+        await axios
           .get("/api/reserva/listar")
           .then(({ data }) => (this.nuevoReservaciones = data.data));
       }
@@ -1271,8 +1331,22 @@ export default {
       $("#ModalVer").modal("show");
       this.form.fill(reserva);
     },
+    asignarDNI() {
+      if (this.DNINacional != "") {
+        this.formPer.identificacion = this.DNINacional;
+      } else if (this.DNIResidencial != "") {
+        this.formPer.identificacion = this.DNIResidencial;
+      } else if (this.DNIPasaporte) {
+        this.formPer.identificacion = this.DNIPasaporte;
+      }
+    },
     crearPersona() {
-      if (this.formPer.identificacion != "") {
+      if (
+        this.DNINacional != "" ||
+        this.DNIResidencial != "" ||
+        this.DNIPasaporte != ""
+      ) {
+        this.asignarDNI();
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
           /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||

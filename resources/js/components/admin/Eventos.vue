@@ -9,7 +9,7 @@
                 <h4 class="page-title">Imagenes eventos pasados</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -169,6 +169,7 @@
                     required
                     minlength="3"
                     maxlength="30"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -183,9 +184,10 @@
                     placeholder="Breve descripción"
                     required
                     minlength="3"
-                    maxlength="60"
+                    maxlength="250"
                     id=""
                     rows="3"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{1,60}"
                   ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
@@ -314,16 +316,7 @@
                 />
               </div>
 
-              <div id="inputsModal" class="form-group">
-                <label>Descripción</label>
-                <textarea
-                  v-model="form.descripcion"
-                  type="text"
-                  class="form-control"
-                  :disabled="verDetalles"
-                >
-                </textarea>
-              </div>
+             
               <div id="inputsModal" class="form-group">
                 <label>Fecha</label>
                 <input
@@ -340,6 +333,16 @@
                   width="100%"
                   height="350px"
                 />
+              </div>
+               <div id="inputsModal" class="form-group">
+                <label>Descripción</label>
+                <textarea
+                  v-model="form.descripcion"
+                  type="text"
+                  class="form-control"
+                  :disabled="verDetalles"
+                >
+                </textarea>
               </div>
             </div>
 
@@ -520,7 +523,7 @@ export default {
                 "Se ha eliminado la información.",
                 "success"
               );
-              this.cargarFauna();
+              this.cargarEvento();
             })
             .catch((data) => {
               Swal.fire("Fallo!", "Acción no autorizada", "warning");

@@ -9,7 +9,7 @@
                 <h4 class="page-title">Fauna</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>

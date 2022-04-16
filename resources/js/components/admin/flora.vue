@@ -9,7 +9,7 @@
                 <h4 class="page-title">Flora</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -168,7 +168,7 @@
                     name="nom_comun"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nom_comun') }"
-                    placeholder="Nombre común de la especie"
+                    placeholder="Nombre común de la fauna"
                     required
                     minlength="3"
                     maxlength="30"
@@ -186,7 +186,7 @@
                     name="nom_cientifico"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nom_cientifico') }"
-                    placeholder="Nombre científico de la especie"
+                    placeholder="Nombre científico de la fauna"
                      required
                     minlength="3"
                     maxlength="30"

@@ -9,7 +9,7 @@
                 <h4 class="page-title">Marca</h4>
               </li>
               <li class="breadcrumb-item bcrumb-1">
-                <a href="/dashboard">
+                <a href="/admin/dashboard">
                   <i class="fas fa-home"></i>
                   Inicio
                 </a>
@@ -163,8 +163,9 @@
                     :class="{ 'is-invalid': form.errors.has('Nombre') }"
                     required
                     minlength="3"
-                    maxlength="20"
+                    maxlength="30"
                     placeholder="Nombre del artículo"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,30}"
                   />
                   <has-error :form="form" field="Name"></has-error>
                 </div>
@@ -181,6 +182,7 @@
                     minlength="3"
                     maxlength="20"
                     placeholder="Tipo de artículo"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,30}"
                   />
                   <has-error :form="form" field="Tipo"></has-error>
                 </div>
@@ -195,6 +197,7 @@
                     required
                     minlength="3"
                     maxlength="60"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,30}"
                     id=""
                     rows="3"
                   ></textarea>
@@ -404,7 +407,7 @@ export default {
         });
       }
     },
- mostrar() {
+    mostrar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         this.form
           .get("/api/articulos/mostrar/", {
@@ -569,6 +572,7 @@ export default {
   opacity: 1;
   background: rgba(121, 120, 120, 0.623);
 }
+
 #btnCancelar {
   padding: 1px 5px;
   margin: 1px 1px 1px 10px;

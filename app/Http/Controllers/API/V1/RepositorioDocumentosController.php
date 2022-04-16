@@ -59,8 +59,8 @@ class RepositorioDocumentosController extends BaseController
 			'nombre.*' => "Se requiere un nombre",
 			'descripcion.min' => "Mínimo 3 caracteres",
 			'descripcion.max' => "Máximo 255 caracteres",
-			'descripcion.*' => 'Breve descripción del donativo',
-			'fecha.*' => 'Seleccione fecha de donativo',
+			'descripcion.*' => 'Breve descripción del documento',
+			'fecha.*' => 'Seleccione fecha del documento',
 		];
 		try {
 			$repositorioDocumentos = $request->all();

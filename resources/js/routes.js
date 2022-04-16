@@ -8,7 +8,6 @@ import Voluntario from './components/admin/Voluntario.vue'
 import VoluntarioPersona from './components/admin/VoluntarioPersona.vue'
 import VoluntarioEstudiante from './components/admin/VoluntarioEstudiante.vue'
 import ActividadesAdmin from './components/admin/Actividades.vue'
-import ActividadesParticipantes from './components/admin/ActividadesParticipantes.vue'
 import Participantes from './components/admin/Participantes.vue'
 import ReservacionAdmin from './components/admin/Reservar.vue'
 import VoluntarioActividad from './components/admin/VoluntarioActividad'
@@ -78,10 +77,6 @@ export default [
     {
         path: '/admin/actividad',
         component: ActividadesAdmin
-    },
-    {
-        path: '/admin/actividadParticipantes',
-        component: ActividadesParticipantes
     },
     {
         path: '/admin/participantes',

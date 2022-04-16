@@ -57,21 +57,21 @@ class ReservaController extends BaseController
     public function obtenerCedula(Request $request)
     {
         $filtro = $request->buscador;
-        $persona = Personas::where('identificacion', $filtro)->get();
+        $persona = Personas::where('identificacion', $filtro)->select('id','identificacion','correo')->get();
         return $this->sendResponse($persona, 'Identifación si existe!');
 
     }
     public function obtenerCedulaOrg(Request $request)
     {
         $filtro = $request->buscador;
-        $organizacion = Organizaciones::where('identificacion', $filtro)->get();
+        $organizacion = Organizaciones::where('identificacion', $filtro)->select('id','identificacion','correo')->get();
         return $this->sendResponse($organizacion, 'Cédula jurídica si existe!');
     }
 
     public function obtenerNombreGrupo(Request $request)
     {
         $filtro = $request->buscador;
-        $grupo = Grupo::where('nombre', $filtro)->get();
+        $grupo = Grupo::where('nombre', $filtro)->select('id','nombre','correo')->get();
         return $this->sendResponse($grupo, 'Grupo si existe!');
 
     }

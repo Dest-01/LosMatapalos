@@ -2,24 +2,48 @@
   <div>
     <div>
       <div class="opciones">
-        <input type="button" class="btn btn-success" @click="cargarFiltro(25)" value="25 últimos" />
-        <input type="button" class="btn btn-success" @click="cargarFiltro(50)" value="50 últimos" />
-        <input type="button" class="btn btn-success" @click="cargarFiltro(75)" value="75 últimos" />
-        <input type="button" class="btn btn-success" @click="cargarFiltro(100)" value="100 últimos" />
-        <input type="button" class="btn btn-success" @click="cargarTodos()" value="Todos" />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarFiltro(25)"
+          value="25 últimos"
+        />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarFiltro(50)"
+          value="50 últimos"
+        />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarFiltro(75)"
+          value="75 últimos"
+        />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargarFiltro(100)"
+          value="100 últimos"
+        />
+        <input
+          type="button"
+          class="btn btn-success"
+          @click="cargar()"
+          value="Todos"
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export default {
   data() {
     return {
       filtroArray: {},
-      todosArray: {},
       fechaActual: "",
     };
   },
@@ -54,7 +78,7 @@ export default {
       //Estilo para la fecha
       doc.setFillColor("#d9d9da");
       doc.setDrawColor("#d9d9da");
-       doc.setTextColor("#354942");
+      doc.setTextColor("#354942");
       doc.rect(430, 52, 120, 25, "FD"); //Fill and Border
       doc.text("Fecha:" + this.fechaActual, 432, 68);
       doc.addImage(img, "png", 470, 10, 74, 35);
@@ -63,7 +87,7 @@ export default {
         tableLineColor: "#3bd99f",
         tableLineWidth: 0.1,
         margin: { top: 80 },
-         styles: {
+        styles: {
           fillStyle: "DF",
           halign: "center",
           valign: "middle",
@@ -84,18 +108,15 @@ export default {
       });
       doc.save("Reporte actividades.pdf");
     },
-    cargar() {
+    async cargar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+        await axios
           .get("/api/ReporteActividades/todo")
-          .then(({ data }) => (this.todosArray = data.data));
+          .then(({ data }) => (this.filtroArray = data.data));
+        this.exportPDF();
       }
     },
-    cargarTodos(){
-        this.filtroArray.data = this.todosArray;
-         this.exportPDF();
-    },
-        async cargarFiltro(valorFiltro) {
+    async cargarFiltro(valorFiltro) {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         await axios
           .get("/api/ReporteActividades/filtro", {
@@ -105,12 +126,10 @@ export default {
         this.exportPDF();
       }
     },
-
   },
 
   created() {
     this.$Progress.start();
-    this.cargar();
     this.$Progress.finish();
     window.onload = this.set;
   },
@@ -128,13 +147,13 @@ export default {
 </script>
 
 <style scoped>
-.opciones{
+.opciones {
   margin: 5px;
   padding: 5px;
   text-align: center;
 }
 @media only screen and (min-width: 192px) and (max-width: 1192px) {
-  .opciones{
+  .opciones {
     margin: 5px;
     padding: 5px;
     text-align: center;
