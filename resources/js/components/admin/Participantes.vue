@@ -172,7 +172,6 @@
                   <div v-show="CedulaNacional" class="form-group identitad">
                     <input
                       v-model="DNINacional"
-                      :disabled="bloquearInputId"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -191,7 +190,6 @@
                     <input
                       v-model="DNIResidencial"
                       id="residencial"
-                      :disabled="bloquearInputIdR"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -210,7 +208,6 @@
                     <input
                       id="pasaporte"
                       v-model="DNIPasaporte"
-                      :disabled="bloquearInputIdP"
                       type="text"
                       name="identificacion"
                       class="form-control"

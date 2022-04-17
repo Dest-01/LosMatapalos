@@ -219,7 +219,7 @@
                     class="form-control"
                     name="descripcion"
                     :class="{ 'is-invalid': form.errors.has('descripcion') }"
-                    placeholder="Breve descripción"
+                    placeholder="Breve descripción de la actividad"
                     minlength="3"
                     maxlength="255"
                     id=""

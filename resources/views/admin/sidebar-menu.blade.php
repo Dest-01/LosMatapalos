@@ -1,7 +1,7 @@
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-            <router-link to="/admin/dashboard" class="nav-link">
+            <router-link to="/admin/dashboard" data-widget="pushmenu" class="nav-link">
                 <i class="nav-icon fas fa-home blue"></i>
                 <p>
                     Inicio
@@ -11,26 +11,26 @@
 
 
             <li class="nav-item">
-                <router-link to="/admin/organizaciones" class="nav-link">
+                <router-link to="/admin/organizaciones" data-widget="pushmenu" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
                     <p>Registro Organización</p>
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/admin/personas" class="nav-link">
+                <router-link to="/admin/personas" data-widget="pushmenu" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
                     <p>Registro Persona</p>
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/admin/grupos" class="nav-link">
+                <router-link to="/admin/grupos" data-widget="pushmenu" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
                     <p>Registro Grupo</p>
                 </router-link>
             </li>
         @can('isAdmin')
             <li class="nav-item">
-                <router-link to="/admin/usuarios" class="nav-link">
+                <router-link to="/admin/usuarios" data-widget="pushmenu" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
                     <p>Usuarios</p>
                 </router-link>
@@ -59,7 +59,7 @@
 
 
                     <li class="nav-item">
-                        <router-link to="/admin/donativos" class="nav-link">
+                        <router-link to="/admin/donativos" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-boxes green"></i>
                             <p>
                                 Registrar donativos
@@ -68,7 +68,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <router-link to="/admin/Catdonativos" class="nav-link">
+                        <router-link to="/admin/Catdonativos" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-thumbtack green"></i>
                             <p>
                                 Donativos necesarios
@@ -87,7 +87,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <router-link to="/admin/reservar" class="nav-link">
+                        <router-link to="/admin/reservar" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-file-alt green"></i>
                             <p>
                                 Reservas
@@ -107,7 +107,7 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item">
-                        <router-link to="/admin/flora" class="nav-link">
+                        <router-link to="/admin/flora" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-seedling green"></i>
                             <p>
                                 Flora
@@ -115,7 +115,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/fauna" class="nav-link">
+                        <router-link to="/admin/fauna" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-dove green"></i>
                             <p>
                                 Fauna
@@ -136,7 +136,7 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item">
-                        <router-link to="/admin/voluntarioPersona" class="nav-link">
+                        <router-link to="/admin/voluntarioPersona" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-fist-raised orange"></i>
                             <p>
                                 Voluntario Persona
@@ -144,7 +144,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/voluntarioEstudiante" class="nav-link">
+                        <router-link to="/admin/voluntarioEstudiante" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-handshake orange"></i>
                             <p>
                                 Voluntariado Estudiante
@@ -152,24 +152,16 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/participantes" class="nav-link">
+                        <router-link to="/admin/participantes" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-handshake orange"></i>
                             <p>
                                 Participantes
                             </p>
                         </router-link>
                     </li>
-                    <!--
-              <li class="nav-item">
-                <router-link to="/admin/voluntario" class="nav-link">
-                  <i class="nav-icon fas fa-fist-raised orange"></i>
-                  <p>
-                    Voluntariado
-                  </p>
-                </router-link>
-              </li> -->
+
                     <li class="nav-item">
-                        <router-link to="/admin/actividad" class="nav-link">
+                        <router-link to="/admin/actividad" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-calendar-check orange"></i>
                             <p>
                                 Actividades
@@ -177,7 +169,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/voluntarioActividad" class="nav-link">
+                        <router-link to="/admin/voluntarioActividad" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-calendar-check orange"></i>
                             <p>
                                 Voluntario actividad
@@ -197,7 +189,7 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item">
-                        <router-link to="/admin/repositorio" class="nav-link">
+                        <router-link to="/admin/repositorio" data-widget="pushmenu" class="nav-link">
                             <i class="nav-icon fas fa-file-pdf gray"></i>
                             <p>
                                 PDF
@@ -206,29 +198,8 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-clipboard white"></i>
-                    <p>
-                        Reportes
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-
-                    <li class="nav-item">
-                        <router-link to="/admin/reportes" class="nav-link">
-                            <i class="nav-icon fas fa-print white"></i>
-                            <p>
-                                Consultar Reporte
-                            </p>
-                        </router-link>
-                    </li>
-
-                </ul>
-            </li>
             <li class="nav-item">
-              <router-link to="/admin/articulos" class="nav-link">
+              <router-link to="/admin/articulos" data-widget="pushmenu" class="nav-link">
                   <i class="nav-icon fab fa-medium gray"></i>
                   <p>
                      Productos Marca
@@ -236,10 +207,18 @@
               </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/admin/eventos" class="nav-link">
+            <router-link to="/admin/eventos" data-widget="pushmenu" class="nav-link">
                 <i class="nav-icon fas fa-images gray"></i>
                 <p>
                    Galeria Eventos
+                </p>
+            </router-link>
+        </li>
+        <li class="nav-item">
+            <router-link to="/admin/reportes" data-widget="pushmenu" class="nav-link">
+                <i class="nav-icon fas fa-print white"></i>
+                <p>
+                   Generar Reportes
                 </p>
             </router-link>
         </li>

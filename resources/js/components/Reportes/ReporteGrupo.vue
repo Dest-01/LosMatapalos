@@ -29,7 +29,7 @@
         <input
           type="button"
           class="btn btn-success"
-          @click="cargarTodos()"
+          @click="cargar()"
           value="Todos"
         />
       </div>
@@ -114,6 +114,7 @@ export default {
      await axios
           .get("/api/ReporteGrupo/todo")
           .then(({ data }) => (this.todosArray = data.data));
+          this.cargarTodos();
       }
     },
     cargarTodos() {
@@ -134,7 +135,6 @@ export default {
 
   created() {
     this.$Progress.start();
-    this.cargar();
     this.$Progress.finish();
     window.onload = this.set;
   },

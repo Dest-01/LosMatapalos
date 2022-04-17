@@ -6,7 +6,7 @@
         <input type="button" class="btn btn-success" @click="cargarFiltro(50)" value="50 últimos" />
         <input type="button" class="btn btn-success" @click="cargarFiltro(75)" value="75 últimos" />
         <input type="button" class="btn btn-success" @click="cargarFiltro(100)" value="100 últimos" />
-        <input type="button" class="btn btn-success" @click="cargarTodos()" value="Todos" />
+        <input type="button" class="btn btn-success" @click="cargar()" value="Todos" />
       </div>
     </div>
   </div>
@@ -81,11 +81,12 @@ export default {
       });
       doc.save("Reporte Voluntario Actividades.pdf");
     },
-    cargar() {
+   async cargar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+        await axios
           .get("/api/ReporteVoluntarioActividad/todo")
           .then(({ data }) => (this.todosArray = data.data));
+          this.cargarTodos();
       }
     },
     cargarTodos(){
@@ -107,7 +108,6 @@ export default {
 
   created() {
     this.$Progress.start();
-    this.cargar();
     this.$Progress.finish();
     window.onload = this.set;
   },

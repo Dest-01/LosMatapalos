@@ -494,184 +494,190 @@
               </button>
             </div>
             <form @submit.prevent="crearPersona()">
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Tipo de identificación</label>
-                <select
-                  class="form-control"
-                  v-model="tipoIndenteficacion"
-                  :class="{ 'is-invalid': form.errors.has('identificacion') }"
-                  @change="tiposDeIndentificacon()"
-                  required
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Tipo de identificación</label>
+                  <select
+                    class="form-control"
+                    v-model="tipoIndenteficacion"
+                    :class="{ 'is-invalid': form.errors.has('identificacion') }"
+                    @change="tiposDeIndentificacon()"
+                    required
+                  >
+                    <option disabled value="">Seleccione un tipo</option>
+                    <option value="Cedula Nacional">Cédula Nacional</option>
+                    <option value="Cedula Residencial">
+                      Cedula Residencial
+                    </option>
+                    <option value="Pasaporte">Pasaporte</option>
+                  </select>
+                </div>
+                <!---------------------------------------------------------->
+                <!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
+                <!---------------------------------------------------------->
+                <div class="form-group">
+                  <div v-show="CedulaNacional" class="form-group identitad">
+                    <input
+                      v-model="DNINacional"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato #-####-####"
+                      id="nacional"
+                      onchange="validarCedulaN()"
+                      v-mask="[/[1-9]/, '-####-####']"
+                    />
+
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="CedulaResidencial" class="form-group">
+                    <input
+                      v-model="DNIResidencial"
+                      id="residencial"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 10 dígitos"
+                      onchange="validateResidencial()"
+                      pattern="[0-9]{10}"
+                      v-mask="'##########'"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+
+                  <div v-show="Pasaporte" class="form-group identitad">
+                    <input
+                      id="pasaporte"
+                      v-model="DNIPasaporte"
+                      type="text"
+                      name="identificacion"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': formPer.errors.has('identificacion'),
+                      }"
+                      placeholder="Formato de 11 a 12 dígitos"
+                      onchange="validatePasaporte()"
+                      pattern="[0-9]{11,12}"
+                      v-mask="'############'"
+                    />
+                    <has-error
+                      :form="formPer"
+                      field="identificacion"
+                    ></has-error>
+                  </div>
+                </div>
+                <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input
+                    v-model="formPer.nombre"
+                    type="text"
+                    name="nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('nombre') }"
+                    placeholder="Escriba el nombre del donante"
+                    required
+                    minlength="2"
+                    maxlength="30"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                    title="Escriba su nombre."
+                  />
+                  <has-error :form="formPer" field="nombre"></has-error>
+                </div>
+
+                <div class="form-group">
+                  <label>Primer Apellido</label>
+                  <input
+                    v-model="formPer.apellido1"
+                    type="text"
+                    name="apellido1"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
+                    placeholder="Primer apellido del donante"
+                    minlength="3"
+                    maxlength="30"
+                    required
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                    title="Digite el primer apellido."
+                  />
+                  <has-error :form="formPer" field="apellido1"></has-error>
+                </div>
+
+                <div class="form-group">
+                  <label>Segundo Apellido</label>
+                  <input
+                    v-model="formPer.apellido2"
+                    type="text"
+                    name="apellido2"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
+                    placeholder="Segundo apellido del donante"
+                    minlength="3"
+                    maxlength="30"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                    title="Digite el segundo apellido."
+                    required
+                  />
+                  <has-error :form="formPer" field="apellido2"></has-error>
+                </div>
+
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input
+                    v-model="formPer.telefono"
+                    type="number"
+                    name="telefono"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('telefono') }"
+                    min="1"
+                    placeholder="Formato: #### ####"
+                    required
+                    pattern="[0-9]{8}"
+                    title="Digite un número de teléfono"
+                    v-mask="[/[2-9]/, '#######']"
+                  />
+                  <has-error :form="formPer" field="telefono"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Correo</label>
+                  <input
+                    v-model="formPer.correo"
+                    type="email"
+                    name="correo"
+                    class="form-control"
+                    :class="{ 'is-invalid': formPer.errors.has('correo') }"
+                    placeholder="ejemplo@gmail.com"
+                    minlength="3"
+                    maxlength="64"
+                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                    required
+                  />
+                  <has-error :form="formPer" field="correo"></has-error>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
                 >
-                  <option disabled value="">Seleccione un tipo</option>
-                  <option value="Cedula Nacional">Cédula Nacional</option>
-                  <option value="Cedula Residencial">Cedula Residencial</option>
-                  <option value="Pasaporte">Pasaporte</option>
-                </select>
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">Registrar</button>
               </div>
-              <!---------------------------------------------------------->
-              <!-------------INPUTS DE IDENTIFICACION----------------------------------------------->
-              <!---------------------------------------------------------->
-              <div class="form-group">
-                <div v-show="CedulaNacional" class="form-group identitad">
-                  <input
-                    v-model="DNINacional"
-                    type="text"
-                    name="identificacion"
-                    class="form-control"
-                    :class="{
-                      'is-invalid': formPer.errors.has('identificacion'),
-                    }"
-                    placeholder="Formato #-####-####"
-                    id="nacional"
-                    onchange="validarCedulaN()"
-                    v-mask="[/[1-9]/, '-####-####']"
-                  />
-
-                  <has-error :form="formPer" field="identificacion"></has-error>
-                </div>
-
-                <div v-show="CedulaResidencial" class="form-group">
-                  <input
-                    v-model="DNIResidencial"
-                    id="residencial"
-                    type="text"
-                    name="identificacion"
-                    class="form-control"
-                    :class="{
-                      'is-invalid': formPer.errors.has('identificacion'),
-                    }"
-                    placeholder="Formato de 10 dígitos"
-                    onchange="validateResidencial()"
-                    pattern="[0-9]{10}"
-                    v-mask="'##########'"
-                  />
-                  <has-error :form="formPer" field="identificacion"></has-error>
-                </div>
-
-                <div v-show="Pasaporte" class="form-group identitad">
-                  <input
-                    id="pasaporte"
-                    v-model="DNIPasaporte"
-                    type="text"
-                    name="identificacion"
-                    class="form-control"
-                    :class="{
-                      'is-invalid': formPer.errors.has('identificacion'),
-                    }"
-                    placeholder="Formato de 11 a 12 dígitos"
-                    onchange="validatePasaporte()"
-                    pattern="[0-9]{11,12}"
-                    v-mask="'############'"
-                  />
-                  <has-error :form="formPer" field="identificacion"></has-error>
-                </div>
-              </div>
-              <!-------FIN DE LOS INPUTS DE IDENTIFICACION-------->
-              <div class="form-group">
-                <label>Nombre</label>
-                <input
-                  v-model="formPer.nombre"
-                  type="text"
-                  name="nombre"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                  placeholder="Escriba el nombre del donante"
-                  required
-                  minlength="2"
-                  maxlength="30"
-                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
-                  title="Escriba su nombre."
-                />
-                <has-error :form="formPer" field="nombre"></has-error>
-              </div>
-
-              <div class="form-group">
-                <label>Primer Apellido</label>
-                <input
-                  v-model="formPer.apellido1"
-                  type="text"
-                  name="apellido1"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                  placeholder="Primer apellido del donante"
-                  minlength="3"
-                  maxlength="30"
-                  required
-                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
-                  title="Digite el primer apellido."
-                />
-                <has-error :form="formPer" field="apellido1"></has-error>
-              </div>
-
-              <div class="form-group">
-                <label>Segundo Apellido</label>
-                <input
-                  v-model="formPer.apellido2"
-                  type="text"
-                  name="apellido2"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                  placeholder="Segundo apellido del donante"
-                  minlength="3"
-                  maxlength="30"
-                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
-                  title="Digite el segundo apellido."
-                  required
-                />
-                <has-error :form="formPer" field="apellido2"></has-error>
-              </div>
-
-              <div class="form-group">
-                <label>Teléfono</label>
-                <input
-                  v-model="formPer.telefono"
-                  type="number"
-                  name="telefono"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('telefono') }"
-                  min="1"
-                  placeholder="Formato: #### ####"
-                  required
-                  pattern="[0-9]{8}"
-                  title="Digite un número de teléfono"
-                  v-mask="[/[2-9]/, '#######']"
-                />
-                <has-error :form="formPer" field="telefono"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Correo</label>
-                <input
-                  v-model="formPer.correo"
-                  type="email"
-                  name="correo"
-                  class="form-control"
-                  :class="{ 'is-invalid': formPer.errors.has('correo') }"
-                  placeholder="ejemplo@gmail.com"
-                  minlength="3"
-                  maxlength="64"
-                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                  required
-                />
-                <has-error :form="formPer" field="correo"></has-error>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                class="btn btn-primary"
-              >
-                Registrar
-              </button>
-            </div>
             </form>
           </div>
         </div>
@@ -699,89 +705,84 @@
               </button>
             </div>
             <form @submit.prevent="crearOrganizacion()">
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Cedula Jurídica</label>
-                <input
-                  v-model="formOrg.identificacion"
-                  type="text"
-                  name="identificacion"
-                  class="form-control"
-                  :class="{
-                    'is-invalid': formOrg.errors.has('identificacion'),
-                  }"
-                  placeholder="Formato: #-###-######"
-                  required
-                  pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
-                  v-mask="'#-###-######'"
-                />
-                <has-error :form="formOrg" field="identificacion"></has-error>
-              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Cedula Jurídica</label>
+                  <input
+                    v-model="formOrg.identificacion"
+                    type="text"
+                    name="identificacion"
+                    class="form-control"
+                    :class="{
+                      'is-invalid': formOrg.errors.has('identificacion'),
+                    }"
+                    placeholder="Formato: #-###-######"
+                    required
+                    pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
+                    v-mask="'#-###-######'"
+                  />
+                  <has-error :form="formOrg" field="identificacion"></has-error>
+                </div>
 
-              <div class="form-group">
-                <label>Nombre organización</label>
-                <input
-                  v-model="formOrg.nombre"
-                  type="text"
-                  name="nombre"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('nombre') }"
-                  placeholder="Nombre de organización"
-                  required
-                  minlength="3"
-                  maxlength="50"
-                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,50}"
-                />
-                <has-error :form="formOrg" field="nombre"></has-error>
-              </div>
+                <div class="form-group">
+                  <label>Nombre organización</label>
+                  <input
+                    v-model="formOrg.nombre"
+                    type="text"
+                    name="nombre"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('nombre') }"
+                    placeholder="Nombre de organización"
+                    required
+                    minlength="3"
+                    maxlength="50"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,50}"
+                  />
+                  <has-error :form="formOrg" field="nombre"></has-error>
+                </div>
 
-              <div class="form-group">
-                <label>Teléfono organización</label>
-                <input
-                  v-model="formOrg.telefono"
-                  type="number"
-                  name="telefono"
-                  class="form-control"
-                  :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
-                  placeholder="#### ####"
-                  v-mask="[/[2-9]/, '#######']"
-                  required
-                />
-                <has-error :form="formOrg" field="telefono"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Correo organización</label>
-                <input
-                  v-model="formOrg.correo"
-                  type="email"
-                  name="correo"
-                  class="form-control"
-                  :class="{ 'is-invalid': formOrg.errors.has('correo') }"
-                 placeholder="ejemplo@gmail.com"
+                <div class="form-group">
+                  <label>Teléfono organización</label>
+                  <input
+                    v-model="formOrg.telefono"
+                    type="number"
+                    name="telefono"
+                    class="form-control"
+                    :class="{ 'is-invalid': formOrg.errors.has('telefono') }"
+                    placeholder="#### ####"
+                    v-mask="[/[2-9]/, '#######']"
+                    required
+                  />
+                  <has-error :form="formOrg" field="telefono"></has-error>
+                </div>
+                <div class="form-group">
+                  <label>Correo organización</label>
+                  <input
+                    v-model="formOrg.correo"
+                    type="email"
+                    name="correo"
+                    class="form-control"
+                    :class="{ 'is-invalid': formOrg.errors.has('correo') }"
+                    placeholder="ejemplo@gmail.com"
                     minlength="3"
                     maxlength="64"
                     pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                     required
-                />
+                  />
 
-                <has-error :form="formOrg" field="correo"></has-error>
+                  <has-error :form="formOrg" field="correo"></has-error>
+                </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                class="btn btn-primary"
-              >
-                Registrar
-              </button>
-            </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+              </div>
             </form>
           </div>
         </div>
@@ -1354,5 +1355,12 @@ export default {
     border-radius: 0.25rem;
     flex-wrap: wrap;
   }
+  #modal-contentino {
+    width: 100%;
+  }
+  #inputsModal {
+  width: 90%;
+  margin: 10px 15px;
+}
 }
 </style>

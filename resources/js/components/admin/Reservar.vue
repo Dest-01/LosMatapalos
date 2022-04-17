@@ -1519,6 +1519,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .card-tools div {
   padding: 10px;

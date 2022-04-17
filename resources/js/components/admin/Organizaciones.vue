@@ -150,9 +150,6 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-
-            <!-- <form @submit.prevent="createUser"> -->
-
             <form
               @submit.prevent="
                 editmode ? actualizarOrganizacion() : crearOrganizacion()
@@ -168,7 +165,7 @@
                     class="form-control"
                     :disabled="CedulaBloqueo"
                     :class="{ 'is-invalid': form.errors.has('identificacion') }"
-                    placeholder="Formato: #-###-######"
+                    placeholder="Formato de cédula jurídica: #-###-######"
                     required
                     pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
                     v-mask="'#-###-######'"
@@ -177,14 +174,14 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Nombre organización</label>
+                  <label>Nombre de la organización</label>
                   <input
                     v-model="form.nombre"
                     type="text"
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
-                    placeholder="Nombre de organización"
+                    placeholder="Nombre de la organización"
                     required
                     minlength="3"
                     maxlength="50"
@@ -194,28 +191,28 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Teléfono organización</label>
+                  <label>Teléfono de la organización</label>
                   <input
                     v-model="form.telefono"
                     type="number"
                     name="telefono"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('telefono') }"
-                    placeholder="#### ####"
+                    placeholder="Teléfono en formato: ########"
                     v-mask="[/[2-9]/, '#######']"
                     required
                   />
                   <has-error :form="form" field="telefono"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Correo organización</label>
+                  <label>Correo de la organización</label>
                   <input
                     v-model="form.correo"
                     type="email"
                     name="correo"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('correo') }"
-                    placeholder="ejemplo@gmail.com"
+                    placeholder="Correo de la organización, ejemplo@gmail.com"
                     minlength="3"
                     maxlength="64"
                     pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
@@ -349,7 +346,7 @@ export default {
     };
   },
   methods: {
-        filtrar() {
+    filtrar() {
       if (!this.filtrarBusqueda) {
         this.cargarOrganizacion();
       } else if (this.filtrarBusqueda.length > 2) {
@@ -537,18 +534,15 @@ export default {
         );
       });
     },
-      nombreMayuscula: function () {
+    nombreMayuscula: function () {
       if (!this.form.nombre) return "";
       return (
         this.form.nombre.charAt(0).toUpperCase() + this.form.nombre.slice(1)
-        
       );
     },
   },
 
-  filters: {
-
-  },
+  filters: {},
 };
 </script>
 

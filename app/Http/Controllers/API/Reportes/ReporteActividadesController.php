@@ -33,7 +33,7 @@ class ReporteActividadesController extends BaseController
     }
     public function todo()
     {
-        $actividad = $this->actividades->get();
+        $actividad = $this->actividades->latest()->paginate();
 
         return $this->sendResponse($actividad, 'Todo Registro');
     }

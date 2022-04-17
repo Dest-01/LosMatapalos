@@ -313,31 +313,31 @@ export default {
     };
   },
   methods: {
-     TotalDatos() {
+    async TotalDatos() {
      if (this.$gate.isAdmin() || (this.$gate.isUser())) {
-         axios
+        await axios
           .get("/api/dashboard/TotalPersonas")
           .then(({ data }) => (this.totalPersonas = data.data));
-         axios
+        await axios
           .get("/api/dashboard/TotalActividades")
           .then(({ data }) => (this.totalActividades = data.data));
-         axios
+        await axios
           .get("/api/dashboard/TotalDonaciones")
           .then(({ data }) => (this.totalDonaciones = data.data));
-         axios
+        await axios
           .get("/api/dashboard/TotalReservaciones")
           .then(({ data }) => (this.totalReservaciones = data.data));
       }
     },
-    cargarReservas() {
+   async cargarReservas() {
       if (this.$gate.isAdmin() || (this.$gate.isUser())) {
-        axios
+        await axios
           .get("/api/dashboard/ultimasReservaciones")
           .then(({ data }) => (this.reservaciones = data.data));
-        axios
+        await axios
           .get("/api/dashboard/ultimasDonaciones")
           .then(({ data }) => (this.donaciones = data.data));
-        axios
+        await axios
           .get("/api/dashboard/ultimasActividades")
           .then(({ data }) => (this.actividades = data.data));
       }

@@ -80,7 +80,7 @@
                     <td>{{ catDonativo.nombre }}</td>
                     <td v-if="catDonativo.estado == 0">No es necesario</td>
                     <td v-else>Es necesario</td>
-                    <td>
+                    <td class="imagen_previa">
                       <img
                         v-bind:src="'/images/CatDonativos/' + catDonativo.photo"
                         width="30%"
@@ -596,6 +596,10 @@ export default {
       list-style: none;
       border-radius: 0.25rem;
       flex-wrap: wrap;
+    }
+    .imagen_previa img{
+      width: 100%;
+      height: 60px;
     }
   }
 }

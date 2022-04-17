@@ -26,17 +26,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link class="nav-link" to="/inicio"
+              <router-link class="nav-link" to="/inicio" onclick="cerrarNavbar()"
                 >{{ $t("Inicio") }}
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/reservacion">{{
-                $t("Reservacion")
-              }}</router-link>
+              <router-link
+                class="nav-link"
+                to="/reservacion"
+                onclick="cerrarNavbar()"
+                >{{ $t("Reservacion") }}</router-link
+              >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/donaciones">{{
+              <router-link class="nav-link" to="/donaciones" onclick="cerrarNavbar()">{{
                 $t("Donacion")
               }}</router-link>
             </li>
@@ -61,7 +64,7 @@
                 "
               >
                 <li>
-                  <router-link class="dropdown-item" to="/flora">{{
+                  <router-link class="dropdown-item" to="/flora" onclick="cerrarNavbar()">{{
                     $t("Flora")
                   }}</router-link>
                 </li>
@@ -70,7 +73,7 @@
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <router-link class="dropdown-item" to="/fauna">{{
+                  <router-link class="dropdown-item" to="/fauna" onclick="cerrarNavbar()">{{
                     $t("Fauna")
                   }}</router-link>
                 </li>
@@ -78,29 +81,29 @@
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <router-link class="dropdown-item" to="/eventos">{{
+                  <router-link class="dropdown-item" to="/eventos" onclick="cerrarNavbar()">{{
                     $t("Actividad")
                   }}</router-link>
                 </li>
               </ul>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/repositorio">{{
+              <router-link class="nav-link" to="/repositorio" onclick="cerrarNavbar()">{{
                 $t("Repositorio")
               }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/marca">{{
+              <router-link class="nav-link" to="/marca" onclick="cerrarNavbar()">{{
                 $t("Marca")
               }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/AcercaDe">{{
+              <router-link class="nav-link" to="/AcercaDe" onclick="cerrarNavbar()">{{
                 $t("Quienes")
               }}</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click="changeLang()" href="#">{{
+              <a class="nav-link" @click="changeLang()" href="#" >{{
                 IdiomaSeleccionado
               }}</a>
             </li>
@@ -136,6 +139,12 @@ export default {
       localStorage.setItem("locale", this.lang);
     },
   },
+    mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute("src", "/js/navbarFunciones.js");
+    plugin.async = true;
+    document.head.appendChild(plugin);
+  },
   created() {
     this.changeLang();
   },
@@ -145,5 +154,8 @@ export default {
 <style scoped>
 * {
   font-family: "Source Serif 4", sans-serif;
+}
+.collapse, .navbar-collapse{
+  transition: height 500ms;
 }
 </style>

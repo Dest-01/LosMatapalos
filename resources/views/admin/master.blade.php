@@ -60,10 +60,9 @@
                 <img src="{{ asset('/images/usuarios/' . Auth::user()->image) }}" class="img-circle elevation-2" alt="User Image">
               </div>
               <div class="info">
-
-                  {{ Auth::user()->name }}
+                   {{ Auth::user()->name }}
                   <span class="d-block text-muted">
-                    {{ Ucfirst(Auth::user()->type) }}
+                   {{ Ucfirst(Auth::user()->type) }}
                   </span>
               </div>
           </div>
