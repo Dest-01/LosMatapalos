@@ -179,7 +179,7 @@
                     placeholder="Nombre de la actividad"
                     required
                     minlength="3"
-                    maxlength="20"
+                    maxlength="30"
                     pattern="[a-zA-Z'-'\s]*"
                   />
                   <has-error :form="form" field="nombre"></has-error>
@@ -194,6 +194,7 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('fecha') }"
                     required
+                    title="Seleccione 2 fechas adelante, después de la de hoy"
                     placeholder="Fecha de actividad"
                   />
                   <has-error :form="form" field="fecha"></has-error>
@@ -224,6 +225,7 @@
                     id=""
                     rows="3"
                     required
+                    title="Breve descripción de la actividad."
                   ></textarea>
                   <has-error :form="form" field="descripcion"></has-error>
                 </div>
@@ -240,6 +242,7 @@
                     }"
                     min="1"
                     max="30"
+                    v-mask="'##'"
                     required
                     placeholder="Cantidad de participantes"
                   />

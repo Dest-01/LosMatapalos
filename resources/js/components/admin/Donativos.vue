@@ -471,6 +471,7 @@
         </div>
       </div>
       <!-- MODAL DE ORGANIZACIONES Y PERSONAS-->
+      <!-- Modal DE Personas-->
       <div
         class="modal fade"
         id="modalPersona"
@@ -492,6 +493,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form @submit.prevent="crearPersona()">
             <div class="modal-body">
               <div class="form-group">
                 <label>Tipo de identificación</label>
@@ -499,7 +501,7 @@
                   class="form-control"
                   v-model="tipoIndenteficacion"
                   :class="{ 'is-invalid': form.errors.has('identificacion') }"
-                  @change="tiposDeIndentificacon(), cambioSelect()"
+                  @change="tiposDeIndentificacon()"
                   required
                 >
                   <option disabled value="">Seleccione un tipo</option>
@@ -666,11 +668,11 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click="crearPersona()"
               >
                 Registrar
               </button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -696,6 +698,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form @submit.prevent="crearOrganizacion()">
             <div class="modal-body">
               <div class="form-group">
                 <label>Cedula Jurídica</label>
@@ -775,11 +778,11 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click="crearOrganizacion()"
               >
                 Registrar
               </button>
             </div>
+            </form>
           </div>
         </div>
       </div>

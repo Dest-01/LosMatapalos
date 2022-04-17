@@ -103,19 +103,19 @@ class VoluntarioEstudiantesController extends BaseController
             
             'carrera' => 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:50|min:3',
             'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
-            'idVoluntario' => 'required|integer|min:1',
+            'idVoluntario' => 'required|integer|min:1|max:9999',
             'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
         ];
 
         $messages = [
             'carrera.*' => 'Se requiere la carrera del estudiante',
             'carrera.min' => 'Mínimo 3 caracteres',
-            'carrera.max' => 'Maximo 50 caracteres',
+            'carrera.max' => 'Máximo 50 caracteres',
             'imagen.*' => 'Se requiere la foto del estudiante',
             'idVoluntario' => 'Mínimo 1 Id de voluntario',
             'idVoluntario.*' => 'Se requiere un Id de voluntario',
             'cantidad.min' => 'Mínimo 1 actividad',
-            'cantidad.max' => 'Maximo 30 actividades',
+            'cantidad.max' => 'Máximo 30 actividades',
             'cantidad.*' => 'Se requiere una cantidad de actividades',
         ];
         $this->validate($request, $rules, $messages);

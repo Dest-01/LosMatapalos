@@ -61,6 +61,7 @@
                     type="button"
                     class="btn btn-sm btn-primary"
                     @click="modalPersona()"
+                    onclick="limpiarCampo()"
                   >
                     <i class="fa fa-plus-square"></i>
                     Registrar persona
@@ -214,9 +215,7 @@
                   <button
                     type="button"
                     class="btn btn-success my-4"
-                    @click="
-                      ConsultaCedula(), comprobarExistenciaIdentificacion()
-                    "
+                    @click="ConsultaCedula()"
                   >
                     Consultar
                   </button>
@@ -251,7 +250,10 @@
                     :disabled="bloquearCamposVoIdluntario"
                     placeholder="Escriba un Id..."
                     required
-                    minlength="1"
+                    min="1"
+                    max="9999"
+                    v-mask="'####'"
+                    title="Escriba un id de voluntariado, Rango de 1 - 9999"
                   />
                   <has-error :form="form" field="idVoluntario"></has-error>
                 </div>
@@ -284,8 +286,9 @@
                     }"
                     :disabled="bloquearCamposVoluntario"
                     required
-                    minlength="1"
-                    maxlength="30"
+                    min="1"
+                    max="30"
+                    v-mask="'###'"
                     placeholder="Escriba la cantidad de actividades realizadas..."
                   />
                   <has-error :form="form" field="cantidad"></has-error>
@@ -385,7 +388,7 @@
           </div>
         </div>
       </div>
-
+      <!--Modal de Persona-->
       <div
         class="modal fade"
         id="modalPersona"
@@ -407,6 +410,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form @submit.prevent="crearPersona()">
             <div class="modal-body">
               <div class="form-group">
                 <label>Tipo de identificación</label>
@@ -415,6 +419,8 @@
                   v-model="tipoIndenteficacion"
                   :class="{ 'is-invalid': form.errors.has('identificacion') }"
                   @change="tiposDeIndentificacon()"
+                  required
+                  
                 >
                   <option disabled value="">Seleccione un tipo</option>
                   <option value="Cedula Nacional">Cédula Nacional</option>
@@ -428,7 +434,7 @@
               <div class="form-group">
                 <div v-show="CedulaNacional" class="form-group identitad">
                   <input
-                    v-model="formPer.identificacion"
+                    v-model="DNINacional"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -438,13 +444,15 @@
                     placeholder="Formato #-####-####"
                     id="nacional"
                     onchange="validarCedulaN()"
+                    v-mask="[/[1-9]/, '-####-####']"
                   />
+
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
 
-                <div v-show="CedulaResidencial" class="form-group identitad">
+                <div v-show="CedulaResidencial" class="form-group">
                   <input
-                    v-model="formPer.identificacion"
+                    v-model="DNIResidencial"
                     id="residencial"
                     type="text"
                     name="identificacion"
@@ -454,6 +462,8 @@
                     }"
                     placeholder="Formato de 10 dígitos"
                     onchange="validateResidencial()"
+                    pattern="[0-9]{10}"
+                    v-mask="'##########'"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
@@ -461,7 +471,7 @@
                 <div v-show="Pasaporte" class="form-group identitad">
                   <input
                     id="pasaporte"
-                    v-model="formPer.identificacion"
+                    v-model="DNIPasaporte"
                     type="text"
                     name="identificacion"
                     class="form-control"
@@ -470,6 +480,8 @@
                     }"
                     placeholder="Formato de 11 a 12 dígitos"
                     onchange="validatePasaporte()"
+                    pattern="[0-9]{11,12}"
+                    v-mask="'############'"
                   />
                   <has-error :form="formPer" field="identificacion"></has-error>
                 </div>
@@ -483,8 +495,12 @@
                   name="nombre"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                  placeholder="Escriba el nombre"
+                  placeholder="Escriba el nombre del donante"
                   required
+                  minlength="2"
+                  maxlength="30"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
+                  title="Escriba su nombre."
                 />
                 <has-error :form="formPer" field="nombre"></has-error>
               </div>
@@ -497,8 +513,12 @@
                   name="apellido1"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                  placeholder="Escriba el primer apellido"
+                  placeholder="Primer apellido del donante"
+                  minlength="3"
+                  maxlength="30"
                   required
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                  title="Digite el primer apellido."
                 />
                 <has-error :form="formPer" field="apellido1"></has-error>
               </div>
@@ -511,7 +531,11 @@
                   name="apellido2"
                   class="form-control"
                   :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                  placeholder="Escriba el segundo apellido"
+                  placeholder="Segundo apellido del donante"
+                  minlength="3"
+                  maxlength="30"
+                  pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
+                  title="Digite el segundo apellido."
                   required
                 />
                 <has-error :form="formPer" field="apellido2"></has-error>
@@ -521,14 +545,16 @@
                 <label>Teléfono</label>
                 <input
                   v-model="formPer.telefono"
-                  type="tel"
+                  type="number"
                   name="telefono"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('telefono') }"
-                  id="phone"
-                  min="10000000"
-                  placeholder="#### ####"
+                  min="1"
+                  placeholder="Formato: #### ####"
                   required
+                  pattern="[0-9]{8}"
+                  title="Digite un número de teléfono"
+                  v-mask="[/[2-9]/, '#######']"
                 />
                 <has-error :form="formPer" field="telefono"></has-error>
               </div>
@@ -542,7 +568,7 @@
                   :class="{ 'is-invalid': formPer.errors.has('correo') }"
                   placeholder="ejemplo@gmail.com"
                   minlength="3"
-                  maxlength="100"
+                  maxlength="64"
                   pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                   required
                 />
@@ -560,11 +586,12 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click="crearPersona()"
+               
               >
                 Registrar
               </button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -601,6 +628,10 @@ export default {
       CedulaResidencial: false,
       CedulaNacional: false,
       Pasaporte: false,
+      DNINacional: "",
+      DNIResidencial: "",
+      DNIPasaporte: "",
+      valorDNI: 0,
       form: new Form({
         id: "",
         idVoluntario: "",
@@ -634,17 +665,26 @@ export default {
         this.Pasaporte = false;
         this.CedulaResidencial = false;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
       if (this.tipoIndenteficacion == "Cedula Residencial") {
         this.CedulaNacional = false;
         this.Pasaporte = false;
         this.CedulaResidencial = true;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       } else if (this.tipoIndenteficacion == "Pasaporte") {
         this.CedulaNacional = false;
         this.Pasaporte = true;
         this.CedulaResidencial = false;
         this.formPer.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
     },
     /*////////////////////////////////////////////////////////////*/
@@ -655,7 +695,7 @@ export default {
         this.voluntarioPer.data = this.voluntarioPerFiltrado;
       }
     },
-     mostrar() {
+    mostrar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         this.form
           .get("/api/voluntarioPersona/mostrar/", {
@@ -713,35 +753,31 @@ export default {
         this.form.cantidad = this.CantidadActividades[i].cantidad;
       }
     },
-    comprobarExistenciaIdentificacion() {
-      if (this.personaIdArray.length != 0) {
-        for (let i = 0; i < this.personaIdArray.length; i++) {
-          if (this.personaIdArray[i].identificacion == this.buscador) {
-            this.VermensajeSiExiste = true;
-            this.VermensajeNoExiste = false;
-            this.mensajeDeExistencia = "Si existe!";
-            this.form.identificacionPersona =
-              this.personaIdArray[i].identificacion;
-            this.form.identificacion = this.personaIdArray[i].id;
-            this.bloquearCampoConsulta = true;
-            this.bloquearCamposVoluntario = false;
-            this.bloquearCamposVoIdluntario = false;
-          }
-        }
-      } else {
-        this.VermensajeSiExiste = false;
-        this.VermensajeNoExiste = true;
-        this.mensajeDeExistencia = "No existe!";
-      }
+//Mostrar mensaje de existencia 
+    mostrarmensajeDeExistencia() {
+      this.VermensajeSiExiste = true;
+      this.VermensajeNoExiste = false;
+      this.mensajeDeExistencia = "Si existe!";
+      this.bloquearCampoConsulta = true;
+      this.bloquearCamposVoluntario = false;
+      this.bloquearCamposVoIdluntario = false;
+    },
+    //Realizamos un recorrido for each para llenar el form de voluntariado de persona
+    llenarFormVoluntarioPersona() {
+      this.personaIdArray.forEach((element) => {
+        this.form.identificacionPersona = element.identificacion;
+        this.form.identificacion = element.id;
+      });
     },
     cancelarbusqueda() {
-      //vamos a cancelar la busqueda bloqueando los input de reservacion
+      //vamos a cancelar la busqueda bloqueando los input de voluntariado persona
       this.bloquearCampoConsulta = false;
       this.bloquearCamposVoluntario = true;
       this.bloquearCamposVoIdluntario = true;
       (this.form.identificacionPersona = ""), (this.VermensajeSiExiste = false);
       this.VermensajeNoExiste = false;
       this.mensajeDeExistencia = "";
+      this.valorDNI = 0;
     },
     ConsultaCedula() {
       if (this.buscador.length != 0) {
@@ -755,11 +791,12 @@ export default {
               params: { buscador: this.buscador },
             })
             .then(({ data }) => (this.personaIdArray = data.data));
+          this.valorDNI = 1;
+          this.mostrarmensajeDeExistencia();
         } else {
           this.VermensajeSiExiste = false;
-        this.VermensajeNoExiste = true;
-        this.mensajeDeExistencia =
-          "Formato incorrecto";
+          this.VermensajeNoExiste = true;
+          this.mensajeDeExistencia = "No existe!";
         }
       } else {
         this.VermensajeSiExiste = false;
@@ -768,40 +805,54 @@ export default {
           "Campo vacío, por favor digite una identificación";
       }
     },
+    asignarDNI() {
+      if (this.DNINacional != "") {
+        this.formPer.identificacion = this.DNINacional;
+      } else if (this.DNIResidencial != "") {
+        this.formPer.identificacion = this.DNIResidencial;
+      } else if (this.DNIPasaporte) {
+        this.formPer.identificacion = this.DNIPasaporte;
+      }
+    },
     crearPersona() {
-       if (this.formPer.identificacion != "") {
       if (
-        /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
-        /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
-        /^\d{11,12}$/.test(this.formPer.identificacion)
+        this.DNINacional != "" ||
+        this.DNIResidencial != "" ||
+        this.DNIPasaporte != ""
       ) {
-        this.formPer
-          .post("/api/voluntarioPersona/guardarPersona", {
-            params: { identificacion: this.formPer.identificacion },
-          })
-          .then((response) => {
-            if (response.data.success == false) {
+        this.asignarDNI();
+        if (
+          /^[1-9]-\d{4}-\d{4}$/.test(this.formPer.identificacion) ||
+          /^[1-9]\d{9}$/.test(this.formPer.identificacion) ||
+          /^\d{11,12}$/.test(this.formPer.identificacion)
+        ) {
+          this.formPer
+            .post("/api/voluntarioPersona/guardarPersona", {
+              params: { identificacion: this.formPer.identificacion },
+            })
+            .then((response) => {
+              if (response.data.success == false) {
+                Toast.fire({
+                  icon: "error",
+                  title: "Cedula ya existe!",
+                });
+              } else {
+                $("#modalPersona").modal("hide");
+
+                Toast.fire({
+                  icon: "success",
+                  title: response.data.message,
+                });
+                this.$Progress.finish();
+              }
+            })
+            .catch(() => {
               Toast.fire({
                 icon: "error",
-                title: "Cedula ya existe!",
+                title: "Campos vacios!",
               });
-            } else {
-              $("#modalPersona").modal("hide");
-
-              Toast.fire({
-                icon: "success",
-                title: response.data.message,
-              });
-              this.$Progress.finish();
-            }
-          })
-          .catch(() => {
-            Toast.fire({
-              icon: "error",
-              title: "Campos vacios!",
             });
-          });
-      } else {
+        } else {
           Swal.fire("Error!", "Formato de identificación incorrecto!", "error");
         }
       } else {
@@ -869,7 +920,10 @@ export default {
           });
         });
     },
-    crearVoluntarioPer(){
+    crearVoluntarioPer() {
+      if(this.valorDNI == 1){
+        this.llenarFormVoluntarioPersona();
+      }
       if (this.form.identificacionPersona.length != "") {
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacionPersona) ||
@@ -878,12 +932,14 @@ export default {
             this.form.idPersona != 0)
         ) {
           this.voluntariosPer();
+          this.valorDNI = 0;
         } else {
           Swal.fire("Error!", "Identificacion formato incorrecto!", "error");
         }
       } else {
         Swal.fire("Error!", "Primero verifique que existe!", "error");
       }
+
     },
 
     actualizarVoluntarioPer() {

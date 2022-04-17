@@ -62,6 +62,7 @@
                     type="button"
                     class="btn btn-sm btn-primary"
                     @click="modalPersona()"
+                    onclick="limpiarCampo()"
                   >
                     <i class="fa fa-plus-square"></i>
 
@@ -432,7 +433,7 @@
           </div>
         </div>
       </div>
-      <!-- MODAL DE Personas-->
+      <!-- Modal DE Personas-->
       <div
         class="modal fade"
         id="modalPersona"
@@ -454,6 +455,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form @submit.prevent="crearPersona()">
             <div class="modal-body">
               <div class="form-group">
                 <label>Tipo de identificación</label>
@@ -628,11 +630,11 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click="crearPersona()"
               >
                 Registrar
               </button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -658,6 +660,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form @submit.prevent="crearOrganizacion()">
             <div class="modal-body">
               <div class="form-group">
                 <label>Cedula Jurídica</label>
@@ -737,11 +740,11 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click="crearOrganizacion()"
               >
                 Registrar
               </button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -767,6 +770,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form @submit.prevent="crearGrupo()">
             <div class="modal-body">
               <div class="form-group">
                 <label>Nombre del grupo</label>
@@ -909,11 +913,11 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click="crearGrupo()"
               >
                 Registrar
               </button>
             </div>
+            </form>
           </div>
         </div>
       </div>

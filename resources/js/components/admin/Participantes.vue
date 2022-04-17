@@ -171,7 +171,8 @@
                 <div v-show="verIdentificacion" class="form-group">
                   <div v-show="CedulaNacional" class="form-group identitad">
                     <input
-                      v-model="form.identificacion"
+                      v-model="DNINacional"
+                      :disabled="bloquearInputId"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -181,14 +182,16 @@
                       placeholder="Formato #-####-####"
                       id="nacional"
                       onchange="validarCedulaN()"
+                      v-mask="[/[1-9]/, '-####-####']"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
                   </div>
 
                   <div v-show="CedulaResidencial" class="form-group identitad">
                     <input
-                      v-model="form.identificacion"
+                      v-model="DNIResidencial"
                       id="residencial"
+                      :disabled="bloquearInputIdR"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -197,6 +200,8 @@
                       }"
                       placeholder="Formato de 10 dígitos"
                       onchange="validateResidencial()"
+                      pattern="[0-9]{10}"
+                      v-mask="'##########'"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
                   </div>
@@ -204,7 +209,8 @@
                   <div v-show="Pasaporte" class="form-group identitad">
                     <input
                       id="pasaporte"
-                      v-model="form.identificacion"
+                      v-model="DNIPasaporte"
+                      :disabled="bloquearInputIdP"
                       type="text"
                       name="identificacion"
                       class="form-control"
@@ -213,6 +219,8 @@
                       }"
                       placeholder="Formato de 11 a 12 dígitos"
                       onchange="validatePasaporte()"
+                      pattern="[0-9]{11,12}"
+                      v-mask="'############'"
                     />
                     <has-error :form="form" field="identificacion"></has-error>
                   </div>
@@ -421,6 +429,9 @@ export default {
       nuevoPersonas: {},
       verDetalles: true,
       filtrarBusqueda: "",
+      DNINacional: "",
+      DNIResidencial: "",
+      DNIPasaporte: "",
       form: new Form({
         id: "",
         identificacion: "",
@@ -441,24 +452,31 @@ export default {
     },
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
-
     tiposDeIndentificacon() {
       if (this.tipoIndenteficacion == "Cedula Nacional") {
         this.CedulaNacional = true;
         this.Pasaporte = false;
         this.CedulaResidencial = false;
         this.form.identificacion = "";
-      }
-      if (this.tipoIndenteficacion == "Cedula Residencial") {
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
+      } else if (this.tipoIndenteficacion == "Cedula Residencial") {
         this.CedulaNacional = false;
         this.Pasaporte = false;
         this.CedulaResidencial = true;
         this.form.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       } else if (this.tipoIndenteficacion == "Pasaporte") {
         this.CedulaNacional = false;
         this.Pasaporte = true;
         this.CedulaResidencial = false;
         this.form.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
     },
     /*////////////////////////////////////////////////////////////*/
@@ -530,18 +548,32 @@ export default {
       this.form.correo = "";
       this.form.errors.clear();
     },
-    cargarPersona() {
+    async cargarPersona() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+        await axios
           .get("/api/participantes")
           .then(({ data }) => (this.personas = data.data));
-        axios
+        await axios
           .get("/api/participantes/listar")
           .then(({ data }) => (this.nuevoPersonas = data.data));
       }
     },
+        asignarDNI() {
+      if (this.DNINacional != "") {
+        this.form.identificacion = this.DNINacional;
+      } else if (this.DNIResidencial != "") {
+        this.form.identificacion = this.DNIResidencial;
+      } else if (this.DNIPasaporte) {
+        this.form.identificacion = this.DNIPasaporte;
+      }
+    },
     crearPersona() {
-      if (this.form.identificacion != "") {
+      if (
+        this.DNINacional != "" ||
+        this.DNIResidencial != "" ||
+        this.DNIPasaporte != ""
+      ) {
+        this.asignarDNI();
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.form.identificacion) ||
           /^[1-9]\d{9}$/.test(this.form.identificacion) ||
@@ -613,7 +645,7 @@ Swal.fire("Error!", "Campo de identificación esta vacio!", "error");
     },
   },
   mounted() {
-    console.log("Component mounted.");
+    console.log("Componente Participantes Montado.");
   },
   created() {
     this.$Progress.start();
