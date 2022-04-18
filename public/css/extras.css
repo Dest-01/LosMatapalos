@@ -24,13 +24,13 @@
     content: "";
     margin: 0;
   }
-  .breadcrumb li {
-    display: inline-block;
+  .breadcrumb li, .breadcrumb span {
+    display: inline-block ;
   }
-  .breadcrumb li a {
+  .breadcrumb li a, .breadcrumb span a {
   color: #00bcd4 !important;
   }
-  .breadcrumb li a .fa-home {
+  .breadcrumb li a .fa-home, .breadcrumb span a .fa-home {
     font-size: 17px;
     position: relative;
     top: 0;
@@ -38,7 +38,7 @@
     padding-left: 10px;
     color: #444444;
   }
-  .breadcrumb li .material-icons {
+  .breadcrumb li .material-icons, .breadcrumb span .material-icons {
     font-size: 18px;
     position: relative;
     top: 4px;
@@ -52,6 +52,13 @@
     color: #444444;
     padding-left: 5px;
   }
+
+  .breadcrumb > span + span:before {
+    content: "/" !important;
+    color: #444444;
+    padding-left: 5px;
+  }
+
   .breadcrumb .page-title {
     border-right: 1px solid #c5c5c5;
     padding-right: 10px;

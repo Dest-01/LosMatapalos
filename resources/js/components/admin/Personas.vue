@@ -586,14 +586,16 @@ export default {
       this.form.correo = "";
       this.form.errors.clear();
     },
-    cargarPersona() {
+    async cargarPersona() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+        await axios
           .get("/api/persona")
           .then(({ data }) => (this.personas = data.data));
-        axios
+        await axios
           .get("/api/personas/listar")
           .then(({ data }) => (this.nuevoPersonas = data.data));
+      }else{
+       window.alert("Acceso no permitido");
       }
     },
     asignarDNI() {

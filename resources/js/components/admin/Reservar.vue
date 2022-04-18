@@ -336,7 +336,7 @@
           </div>
         </div>
       </div>
-
+ <!-- Modal DE Ver detalles-->
       <div
         class="modal fade"
         id="ModalVer"

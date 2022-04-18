@@ -77,3 +77,9 @@ function validarHora() {
         button.disabled = false;
     }
 }
+
+function ocultarSideBar(){
+    if (screen.width <= 991){
+        $('[data-widget="pushmenu"]').PushMenu("collapse");
+    }
+}

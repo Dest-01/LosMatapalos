@@ -68,6 +68,8 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('voluntarioActividad/GetActividades', 'VoluntarioActividadesController@GetActividades');
     Route::get('voluntarioActividad/GetVoluntarioEstudiantes', 'VoluntarioActividadesController@GetVoluntarioEstudiantes');
     Route::get('voluntarioActividad/GetVoluntarioPersona', 'VoluntarioActividadesController@GetVoluntarioPersona');
+    Route::get('voluntarioActividad/listar', 'VoluntarioActividadesController@list');
+    Route::get('voluntarioActividad/mostrar', 'VoluntarioActividadesController@mostrar');
     
     /////////////////////////---RUTAS DASHBOARD---//////////////////////////////////////////////////////////////////
     Route::get('dashboard/TotalPersonas', 'DashboardController@TotalPersonas');
@@ -103,6 +105,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('historial/listar', 'TriggerUsuariosController@listar');
     Route::get('actividadesPasadas/listar', 'actividadesPasadasController@list');
     Route::get('actividadesPasadas/mostrar', 'actividadesPasadasController@mostrar');
+    
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
     Route::apiResources([

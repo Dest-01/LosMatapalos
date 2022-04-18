@@ -32,12 +32,13 @@ class VoluntarioActividadesController extends BaseController
     public function index()
     {
         $voluntarioActi = DB::table('voluntario_actividades')
-            ->join('actividades', 'voluntario_actividades.idActividad', '=', 'actividades.id')
-            ->join('voluntario_personas', 'voluntario_actividades.idVoluntario_Persona', '=', 'voluntario_personas.id')
-            ->join('personas as per', 'voluntario_personas.identificacion', '=', 'per.id')
-            ->join('voluntario_estudiantes', 'voluntario_actividades.idVoluntario_Estudiante', '=', 'voluntario_estudiantes.id')
-            ->join('personas', 'voluntario_estudiantes.identificacion', '=', 'personas.id')
-            ->select('voluntario_actividades.*', 'personas.nombre as NombrePersona', 'per.nombre as NombreEstudiante', 'personas.apellido1 as PrimerApePersona',
+            ->join('actividades', 'voluntario_actividades.idActividad', '=', 'actividades.id')// relacionamos el id de actividades con voluntariado actividades
+            ->join('voluntario_personas', 'voluntario_actividades.idVoluntario_Persona', '=', 'voluntario_personas.id')//Voluntario Persona con Voluntario Actividad
+            ->join('personas as perVoluntarias', 'voluntario_personas.identificacion', '=', 'perVoluntarias.id')//Personas con VOluntario Personas
+            ->join('voluntario_estudiantes', 'voluntario_actividades.idVoluntario_Estudiante', '=', 'voluntario_estudiantes.id')//Estudiantes con Voluntario Actividades
+            ->join('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id')//Persona con Estudiante
+            ->select('voluntario_actividades.*', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
+                'perEstudiante.nombre as NombreEstudiante', 'perEstudiante.apellido1 as ApellidoEstudiante',
                 'actividades.id as ActId', 'actividades.nombre as ActNombre', 'voluntario_personas.identificacion as VolPerId',
                 'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',
                 'voluntario_estudiantes.identificacionPersona as volEstCedula', 'voluntario_estudiantes.identificacionPersona as volEstCedula')
@@ -46,23 +47,42 @@ class VoluntarioActividadesController extends BaseController
         return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades!');
     }
 
-    public function mostrar()
+    public function mostrar(Request $request)
     {
         $filtro = $request->valor;
 
         $voluntarioActi = DB::table('voluntario_actividades')
-            ->join('actividades', 'voluntario_actividades.idActividad', '=', 'actividades.id')
-            ->join('voluntario_personas', 'voluntario_actividades.idVoluntario_Persona', '=', 'voluntario_personas.id')
-            ->join('personas as per', 'voluntario_personas.identificacion', '=', 'per.id')
-            ->join('voluntario_estudiantes', 'voluntario_actividades.idVoluntario_Estudiante', '=', 'voluntario_estudiantes.id')
-            ->join('personas', 'voluntario_estudiantes.identificacion', '=', 'personas.id')
-            ->select('voluntario_actividades.*', 'personas.nombre as NombrePersona', 'per.nombre as NombreEstudiante', 'personas.apellido1 as PrimerApePersona',
+            ->join('actividades', 'voluntario_actividades.idActividad', '=', 'actividades.id')// relacionamos el id de actividades con voluntariado actividades
+            ->join('voluntario_personas', 'voluntario_actividades.idVoluntario_Persona', '=', 'voluntario_personas.id')//Voluntario Persona con Voluntario Actividad
+            ->join('personas as perVoluntarias', 'voluntario_personas.identificacion', '=', 'perVoluntarias.id')//Personas con VOluntario Personas
+            ->join('voluntario_estudiantes', 'voluntario_actividades.idVoluntario_Estudiante', '=', 'voluntario_estudiantes.id')//Estudiantes con Voluntario Actividades
+            ->join('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id')//Persona con Estudiante
+            ->select('voluntario_actividades.*', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
+                'perEstudiante.nombre as NombreEstudiante', 'perEstudiante.apellido1 as ApellidoEstudiante',
                 'actividades.id as ActId', 'actividades.nombre as ActNombre', 'voluntario_personas.identificacion as VolPerId',
                 'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',
                 'voluntario_estudiantes.identificacionPersona as volEstCedula', 'voluntario_estudiantes.identificacionPersona as volEstCedula')
             ->paginate($filtro);
 
         return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades!');
+    }
+
+    public function list()
+    {
+        $voluntarioActi = DB::table('voluntario_actividades')
+        ->join('actividades', 'voluntario_actividades.idActividad', '=', 'actividades.id')// relacionamos el id de actividades con voluntariado actividades
+        ->join('voluntario_personas', 'voluntario_actividades.idVoluntario_Persona', '=', 'voluntario_personas.id')//Voluntario Persona con Voluntario Actividad
+        ->join('personas as perVoluntarias', 'voluntario_personas.identificacion', '=', 'perVoluntarias.id')//Personas con VOluntario Personas
+        ->join('voluntario_estudiantes', 'voluntario_actividades.idVoluntario_Estudiante', '=', 'voluntario_estudiantes.id')//Estudiantes con Voluntario Actividades
+        ->join('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id')//Persona con Estudiante
+        ->select('voluntario_actividades.*', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
+            'perEstudiante.nombre as NombreEstudiante', 'perEstudiante.apellido1 as ApellidoEstudiante',
+            'actividades.id as ActId', 'actividades.nombre as ActNombre', 'voluntario_personas.identificacion as VolPerId',
+            'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',
+            'voluntario_estudiantes.identificacionPersona as volEstCedula', 'voluntario_estudiantes.identificacionPersona as volEstCedula')
+        ->get();
+
+    return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Actividades!');
     }
 
 

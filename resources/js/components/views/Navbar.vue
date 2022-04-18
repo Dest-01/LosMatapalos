@@ -30,7 +30,7 @@
                 >{{ $t("Inicio") }}
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" >
               <router-link
                 class="nav-link"
                 to="/reservacion"
@@ -64,7 +64,7 @@
                 "
               >
                 <li>
-                  <router-link class="dropdown-item" to="/flora" onclick="cerrarNavbar()">{{
+                  <router-link class="dropdown-item" to="/flora"  onclick="cerrarNavbar()">{{
                     $t("Flora")
                   }}</router-link>
                 </li>
@@ -73,7 +73,7 @@
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <router-link class="dropdown-item" to="/fauna" onclick="cerrarNavbar()">{{
+                  <router-link class="dropdown-item" to="/fauna"  onclick="cerrarNavbar()">{{
                     $t("Fauna")
                   }}</router-link>
                 </li>
@@ -155,7 +155,12 @@ export default {
 * {
   font-family: "Source Serif 4", sans-serif;
 }
-.collapse, .navbar-collapse{
-  transition: height 500ms;
+.collapsing {
+  transition: all 500ms;
 }
+.collapse {
+  transition: all 500ms;
+}
+
+
 </style>
