@@ -349,7 +349,7 @@ export default {
 
     crearActividadVoluntariado() {
       this.Llenarforms();
-      this.restarActividad();
+
       this.$Progress.start();
       this.formActividad.put(
         "/calculoActividad/restar/" + this.formActividad.id
