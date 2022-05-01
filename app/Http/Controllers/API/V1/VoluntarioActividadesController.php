@@ -91,7 +91,8 @@ class VoluntarioActividadesController extends BaseController
     {
         $voluntarioActi = DB::table('voluntario_estudiantes')
             ->join('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id')//Persona con Estudiante
-            ->select('perEstudiante.*', 'voluntario_estudiantes.id as VolEstID')
+            ->join('voluntarios', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntarios.id')//Voluntario con Estudiante
+            ->select('perEstudiante.*', 'voluntario_estudiantes.id as VolEstID', 'voluntario_estudiantes.voluntariado_id as voluntariadoID','voluntarios.cantidad as cantidadActividad')
             ->get();
         return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Estudiantes!');
     }
@@ -100,11 +101,47 @@ class VoluntarioActividadesController extends BaseController
     {
         $voluntarioActi = DB::table('voluntario_personas')
             ->join('personas as perVoluntariados', 'voluntario_personas.identificacion', '=', 'perVoluntariados.id')//Persona con Voluntariado
-            ->select('perVoluntariados.*','voluntario_personas.id as VolPerID')
+            ->join('voluntarios', 'voluntario_personas.voluntariado_id', '=', 'voluntarios.id')//Voluntario con Persona
+            ->select('perVoluntariados.*','voluntario_personas.id as VolPerID', 'voluntario_personas.voluntariado_id as voluntariadoID','voluntarios.cantidad as cantidadActividad')
             ->get();
         return $this->sendResponse($voluntarioActi, 'Lista de Personas Voluntariadas!');
     }
 
+    public function valorCupos(Request $request)
+    {
+        $filtro = $request->idAct;
+        $CuposNuevo = $request->Cupos;
+            $voluntarioActi = DB::table('actividades')
+            ->where('id', $filtro)
+            ->update(['cantParticipantes' => $CuposNuevo]);
+
+        return $this->sendResponse($voluntarioActi, 'Resta realizada!');
+    }
+
+    public function valorPerVolunt(Request $request)
+    {
+        $filtro = $request->idVoluntarioPer;
+        $cantidadPer = $request->CantidadPer;
+
+            $voluntarioActi = DB::table('voluntarios')
+            ->where('id', $filtro)
+            ->update(['cantidad' => $cantidadPer]);
+
+        return $this->sendResponse($voluntarioActi, 'Suma realizada!');
+    }
+
+    public function valorEstVolunt(Request $request)
+    {
+        $filtro = $request->idVoluntarioEst;
+        $cantidadEst = $request->CantidadEst;
+
+            $voluntarioActi = DB::table('voluntarios')
+            ->where('id', $filtro)
+            ->update(['cantidad' => $cantidadEst]);
+
+        return $this->sendResponse($voluntarioActi, 'Suma realizada!');
+
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -133,7 +170,6 @@ class VoluntarioActividadesController extends BaseController
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -160,19 +196,5 @@ class VoluntarioActividadesController extends BaseController
         $voluntarioActividades->delete();
         return $this->sendResponse($voluntarioActividades, 'Activiadades voluntario Eliminado!');
     }
-    public function GetActividades()
-    {
-        $data = actividades::get();
-        return response()->json($data);
-    }
-    public function GetVoluntarioPersona()
-    {
-        $data = VoluntarioPersona::get();
-        return response()->json($data);
-    }
-    public function GetVoluntarioEstudiantes()
-    {
-        $data = VoluntarioEstudiantes::get();
-        return response()->json($data);
-    }
+
 }

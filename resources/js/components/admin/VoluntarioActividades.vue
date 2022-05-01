@@ -335,25 +335,27 @@ export default {
       this.form.idVoluntario_Persona = this.PersonaItem.VolPerID;
       this.form.idVoluntario_Estudiante = this.estudianteItem.VolEstID;
     },
-    restarActividad() {
-      (this.formActividad.id = this.actividadItem.id),
-        (this.formActividad.nombre = this.actividadItem.nombre),
-        (this.formActividad.fecha = this.actividadItem.fecha),
-        (this.formActividad.hora = this.actividadItem.hora),
-        (this.formActividad.descripcion = this.actividadItem.descripcion),
-        (this.formActividad.imagen = this.actividadItem.imagen),
-        (this.formActividad.tipo = this.actividadItem.tipo),
-        (this.formActividad.cantParticipantes =
-          parseInt(element.cantParticipantes) - 1);
-    },
-
     crearActividadVoluntariado() {
       this.Llenarforms();
-
       this.$Progress.start();
-      this.formActividad.put(
-        "/calculoActividad/restar/" + this.formActividad.id
-      )
+      axios.get("/api/voluntarioActividad/ValorCupos/", {
+        params: {
+          idAct: this.actividadItem.id,
+          Cupos: this.actividadItem.cantParticipantes-1,
+        },
+      });
+      axios.get("/api/voluntarioActividad/ValorEst/", {
+        params: {
+          idVoluntarioEst: this.estudianteItem.voluntariadoID,
+          CantidadEst: this.estudianteItem.cantidadActividad+1,
+        },
+      });
+      axios.get("/api/voluntarioActividad/ValorPer/", {
+        params: {
+          idVoluntarioPer: this.PersonaItem.voluntariadoID,
+          CantidadPer: this.PersonaItem.cantidadActividad+1,
+        },
+      });
       this.form
         .post(`/api/voluntarioActividad`)
         .then((response) => {
@@ -363,7 +365,6 @@ export default {
             icon: "success",
             title: response.data.message,
           });
-          this.restarActividad();
           this.$Progress.finish();
           this.cargarActividadVoluntariado();
         })

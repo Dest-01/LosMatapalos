@@ -69,6 +69,9 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('voluntarioActividad/mostrar', 'VoluntarioActividadesController@mostrar');
     Route::get('voluntarioActividad/voluntarioEst', 'VoluntarioActividadesController@listarVoluntarioEstudiantes');
     Route::get('voluntarioActividad/voluntarioPer', 'VoluntarioActividadesController@listarVoluntarioPersonas');
+    Route::get('voluntarioActividad/ValorCupos', 'VoluntarioActividadesController@valorCupos');
+    Route::get('voluntarioActividad/ValorEst', 'VoluntarioActividadesController@valorEstVolunt');
+    Route::get('voluntarioActividad/ValorPer', 'VoluntarioActividadesController@valorPerVolunt');
     
     /////////////////////////---RUTAS DASHBOARD---//////////////////////////////////////////////////////////////////
     Route::get('dashboard/TotalPersonas', 'DashboardController@TotalPersonas');
@@ -104,7 +107,6 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('historial/listar', 'TriggerUsuariosController@listar');
     Route::get('actividadesPasadas/listar', 'actividadesPasadasController@list');
     Route::get('actividadesPasadas/mostrar', 'actividadesPasadasController@mostrar');
-    Route::put('calculoActividad/restar', 'CalculosController@actualizarparticipantes');
     
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
@@ -131,6 +133,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'historial' => 'TriggerUsuariosController',
         'perfil' => 'PerfilController',
         'actividadesPasadas' => 'actividadesPasadasController',
+        'calculoActividad' => 'CalculosController',
     ]);
 });
 
