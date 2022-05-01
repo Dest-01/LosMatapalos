@@ -53,13 +53,16 @@ Vue.config.productionTip = false
  */
  import VueMask from 'v-mask'
  Vue.use(VueMask)
+
  /**
   * Routes imports and assigning
   */
+  import DynamicSelect from 'vue-dynamic-select'
+ 
+  Vue.use(DynamicSelect)
 
   import VueI18n from 'vue-i18n'
   import messages from '../lang'
-
   Vue.use(VueI18n)
 
   export const i18n = new VueI18n({

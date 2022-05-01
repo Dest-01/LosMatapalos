@@ -79,7 +79,7 @@
                   <tr v-for="Flora in flora.data" :key="Flora.id">
                     <td>{{ Flora.id }}</td>
                     <td>{{ Flora.nom_comun }}</td>
-                    <td>{{ Flora.nom_cientifico }}</td>
+                    <td><i>{{ Flora.nom_cientifico }}</i></td>
                     <td>{{ Flora.descripcion | truncate(10, "...") }}</td>
                     <td>{{ Flora.tipo }}</td>
                     <td>

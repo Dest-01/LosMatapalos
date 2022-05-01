@@ -40,9 +40,9 @@ class GrupoRequest extends FormRequest
             'nombre' => 'required|regex:/^[G]{1}-\d{1,4}$/',
             'cantidad' => 'required|integer|min:1|max:100',
             'edades' => 'required|integer|min:5|max:109',
-            'lugar' => 'required|string|min:3|max:150|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'lugar' => 'required|string|min:3|max:150|regex:/^([a-zA-Z0-9ñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'tematica' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'detalles' => 'string|max:250|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'detalles' => 'string|max:250|regex:/^([a-zA-Z0-9ñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',
 
         ];
@@ -59,10 +59,11 @@ class GrupoRequest extends FormRequest
             'nombre' => 'required|regex:/^[G]{1}-\d{1,4}$/',
             'cantidad' => 'required|integer|min:1|max:100',
             'edades' => 'required|integer|min:5|max:109',
-            'lugar' => 'required|string|min:3|max:150|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'lugar' => 'required|string|min:3|max:150|regex:/^([a-zA-Z0-9ñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'tematica' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
-            'detalles' => 'string|max:250|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'detalles' => 'string|max:250|regex:/^([a-zA-Z0-9ñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',
+
         ];
     }
 
@@ -73,7 +74,7 @@ class GrupoRequest extends FormRequest
             'cantidad.*' => "Se requiere un cantidad",
             'edades.*' => "Se requiere un rango de edad",
             'lugar.*' => "Se requiere un lugar de procedencia",
-            'tematica.*' => "Se requiere una tematica de interes",
+            'tematica.*' => "Se requiere una temática de interes",
             'detalles.*' => "Notas a considerar",
             'correo.*' => "Se requiere un nombre correo, ejemplo@gmail.com",
             

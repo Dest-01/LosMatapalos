@@ -75,7 +75,7 @@
           <div class="informacion">
             <h4>{{ $t("Mas_informacion") }}</h4>
             <ul>
-              <li><i class="fas fa-phone"></i> (506) 0000-0000</li>
+              <li><i class="fas fa-phone"></i> (506) 2562-6253</li>
               <li>
                 <i class="fas fa-envelope-open-text"></i> sendero.una.ac.cr
               </li>

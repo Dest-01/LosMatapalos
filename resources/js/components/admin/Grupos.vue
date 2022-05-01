@@ -226,11 +226,13 @@
                     :class="{ 'is-invalid': form.errors.has('lugar') }"
                     placeholder="Escriba el lugar de procedencia"
                     required
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{3,255}"
+                    title="Digita un lugar de procedencia valido, no se aceptan caracteres especiales en este campo."
                   />
                   <has-error :form="form" field="lugar"></has-error>
                 </div>
                 <div class="form-group">
-                  <label>Tematica</label>
+                  <label>Temática</label>
                   <select
                     class="form-control"
                     v-model="form.tematica"
@@ -269,6 +271,7 @@
                     cols="5"
                     rows="5"
                     placeholder="Algunas notas a considerar, por ejemplos alergias..."
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ[0-9]\s]{3,255}"
                   ></textarea>
                   <has-error :form="form" field="detalles"></has-error>
                 </div>

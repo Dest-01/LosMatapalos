@@ -80,7 +80,7 @@
                     <td>{{ fauna.id }}</td>
                     <td>{{ fauna.nombreComun }}</td>
                     <td>
-                      {{ fauna.nombreCientifico }}
+                    <i>{{ fauna.nombreCientifico }}</i>
                     </td>
                     <td>{{ fauna.descripcion | truncate(10, "...") }}</td>
                     <td>{{ fauna.tipo }}</td>

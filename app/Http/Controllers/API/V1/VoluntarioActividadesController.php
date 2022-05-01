@@ -29,6 +29,7 @@ class VoluntarioActividadesController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $voluntarioActi = DB::table('voluntario_actividades')

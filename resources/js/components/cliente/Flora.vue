@@ -36,7 +36,7 @@
         <div class="descripcion">
           <span class="text">{{$t('Nombre_Comun')}}: {{ flora.nom_comun }}</span>
           <span class="text"
-            >{{$t('Nombre_Cientifico')}}: {{ flora.nom_cientifico }}</span
+            >{{$t('Nombre_Cientifico')}}: <i>{{ flora.nom_cientifico }}</i></span
           >
           <span class="text" v-if="flora.tipo == 'Leñosas'">{{$t('Tipo')}}: {{$t('tipoLenosa')}}</span>
           <span class="text">{{$t('Tipo')}}: {{$t('tipoHerbaceas')}}</span>

@@ -38,12 +38,12 @@ class ActividadRequest extends FormRequest
     {
         return [
             
-            'nombre' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
+            'nombre' => 'required|regex:/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ]+$/u|string|max:20|min:3',
             'fecha' => 'required|date|',
             'hora' => 'required|time|',
             'descripcion' => 'required|string|max:250',
-            'cantParticipantes' => 'required|integer|',
-            'imagen' => 'required',
+            'cantParticipantes' => 'required|integer|min:1|max:30',
+            'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
             'tipo' => 'required',
         ];
     }
@@ -62,7 +62,7 @@ class ActividadRequest extends FormRequest
             'hora' => 'required|time|',
             'descripcion' => 'required|string|max:250',
             'cantParticipantes' => 'required|integer|',
-            'imagen' => 'required',
+            'imagen' => '|sometimes|base64image:png,jpeg,jpg',
             'tipo' => 'required',
         ];
     }

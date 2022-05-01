@@ -35,12 +35,12 @@
         <div class="descripcion">
           <span class="text">{{$t('Nombre_Comun')}}: {{ fauna.nombreComun }}</span>
           <span class="text"
-            >{{$t('Nombre_Cientifico')}}: {{ fauna.nombreCientifico }}</span
+            >{{$t('Nombre_Cientifico')}}: <i>{{ fauna.nombreCientifico }}</i></span
           >
           <span class="text" v-if="fauna.tipo == 'Aves'">{{$t('Tipo')}}: {{$t('Aves')}}</span>
           <span class="text" v-if="fauna.tipo == 'Anfibios'">{{$t('Tipo')}}: {{$t('Anfibios')}}</span>
           <span class="text" v-if="fauna.tipo == 'Insectos'">{{$t('Tipo')}}: {{$t('Insectos')}}</span>
-          <span class="text" v-if="fauna.tipo == 'Mamiferos'">{{$t('Tipo')}}: {{$t('Mamiferos')}}</span>
+          <span class="text" v-if="fauna.tipo == 'Mamíferos'">{{$t('Tipo')}}: {{$t('Mamiferos')}}</span>
           <span class="text" v-if="fauna.tipo == 'Reptiles'">{{$t('Tipo')}}: {{$t('Reptiles')}}</span>
           <span class="text">{{$t('Familia')}}: {{ fauna.familiaCientifca }}</span>
           <button
@@ -113,7 +113,7 @@ export default {
       filtrarAnfibios: "Anfibios",
       filtrarInsectos: "Insectos",
       filtrarReptiles: "Reptiles",
-      filtrarMamiferos: "Mamiferos",
+      filtrarMamiferos: "Mamíferos",
       form: new Form({
         id: "",
         nombreComun: "",

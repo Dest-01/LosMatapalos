@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Requests\Admin\GrupoRequest;
 use App\Models\Grupo;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\GrupoRequest;
-use DB;
 
 class GruposController extends BaseController
 {
@@ -38,8 +37,7 @@ class GruposController extends BaseController
         return $this->sendResponse($grupo, 'Lista de grupos!');
     }
 
-    public function list()
-    {
+    function list() {
         $grupo = $this->grupos->get();
 
         return $this->sendResponse($grupo, 'Lista de todos los grupos!');
@@ -59,20 +57,20 @@ class GruposController extends BaseController
             if ($existencia === null) {
                 $tag = $this->grupos->create([
                     'nombre' => $request->get('nombre'),
-            'correo' => $request->get('correo'),
-            'cantidad' => $request->get('cantidad'),
-            'edades' => $request->get('edades'),
-            'lugar' => $request->get('lugar'),
-            'tematica' => $request->get('tematica'),
-            'detalles' => $request->get('detalles'),
+                    'correo' => $request->get('correo'),
+                    'cantidad' => $request->get('cantidad'),
+                    'edades' => $request->get('edades'),
+                    'lugar' => $request->get('lugar'),
+                    'tematica' => $request->get('tematica'),
+                    'detalles' => $request->get('detalles'),
                 ]);
 
                 return $this->sendResponse($tag, 'Grupo registrado!');
-            }else{
+            } else {
                 return response()->json(['success' => false, 'message' => 'Nombre ya existe!']);
             }
 
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             return $e->getMessage();
         }
     }
@@ -102,7 +100,7 @@ class GruposController extends BaseController
         $tag->update($request->all());
 
         return $this->sendResponse($tag, 'Grupo actualizado!');
-        
+
     }
 
     /**
@@ -113,7 +111,7 @@ class GruposController extends BaseController
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin'); 
+        $this->authorize('isAdmin');
 
         $grupos = $this->grupos->findOrFail($id);
 

@@ -105,6 +105,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('historial/listar', 'TriggerUsuariosController@listar');
     Route::get('actividadesPasadas/listar', 'actividadesPasadasController@list');
     Route::get('actividadesPasadas/mostrar', 'actividadesPasadasController@mostrar');
+    Route::put('calculoActividad/restar', 'CalculosController@actualizarparticipantes');
     
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE

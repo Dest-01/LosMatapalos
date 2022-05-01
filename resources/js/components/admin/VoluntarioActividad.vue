@@ -127,6 +127,8 @@
       <div v-if="!$gate.isAdmin()">
         <not-found></not-found>
       </div>
+
+
       <div
         class="modal fade"
         id="addNew"
@@ -134,7 +136,7 @@
         role="dialog"
         aria-labelledby="addNew"
         aria-hidden="true"
-      >
+        >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -196,7 +198,10 @@
                       <div class="options_uno">
                         <ul>
                           <li
-                            @click="seleccionarAActividad(actividad)"
+                            @click="
+                              seleccionarAActividad(actividad),
+                                restarActividad()
+                            "
                             v-for="actividad in filtrarActividades"
                             name="idActividad"
                             :key="actividad.id"
@@ -490,10 +495,20 @@ export default {
         idActividad: "",
         ActNombre: "",
       }),
+      formActividad: new Form({
+        id: "",
+        nombre: "",
+        fecha: "",
+        hora: "",
+        descripcion: "",
+        cantParticipantes: "",
+        imagen: "",
+        tipo: "",
+      }),
     };
   },
   methods: {
-        filtrar() {
+    filtrar() {
       if (!this.filtrarBusqueda) {
         this.cargarActividadVoluntariado();
       } else if (this.filtrarBusqueda.length > 2) {
@@ -556,6 +571,27 @@ export default {
       this.form.idVoluntario_Estudiante = voluntarioEstudiante.id;
       this.esVisibleEstudiante = false;
     },
+
+    restarActividad() {
+      this.actividades.forEach((element) => {
+        (this.formActividad.id = element.id),
+          (this.formActividad.cantParticipantes =
+            parseInt(element.cantParticipantes) - 1),
+          (this.formActividad.nombre = element.nombre),
+          (this.formActividad.fecha = element.fecha),
+          (this.formActividad.hora = element.hora),
+          (this.formActividad.descripcion = element.descripcion),
+          (this.formActividad.imagen = element.imagen),
+          (this.formActividad.tipo = element.tipo);
+      });
+    },
+
+    actualizarParticipantes() {
+      this.formActividad.put(
+        `/api/calculoActividad/restar/${this.formActividad.id}`
+      );
+    },
+
     cargarVoluntarioPersona() {
       axios
         .get(`/api/voluntarioActividad/GetVoluntarioPersona`)
@@ -631,10 +667,10 @@ export default {
 
     async cargarActividadVoluntariado() {
       if (this.$gate.isAdmin()) {
-      await axios
+        await axios
           .get(`/api/voluntarioActividad`)
           .then(({ data }) => (this.actividadVoluntarios = data.data));
-          axios
+        axios
           .get(`/api/voluntarioActividad/listar`)
           .then(({ data }) => (this.nuevoactividadVoluntarios = data.data));
       }
@@ -721,30 +757,30 @@ export default {
     },
   },
   computed: {
-      voluntarioActividadesFiltros: function () {
+    voluntarioActividadesFiltros: function () {
       return this.nuevoactividadVoluntarios.filter((activVoluntario) => {
         return (
-          activVoluntario.ActNombre
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) ||
-          activVoluntario.VolPerCedula
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) ||
-          activVoluntario.NombrePersona
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) ||
-            activVoluntario.ApellidoPersona
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) ||
+          activVoluntario.ActNombre.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          ) ||
+          activVoluntario.VolPerCedula.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          ) ||
+          activVoluntario.NombrePersona.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          ) ||
+          activVoluntario.ApellidoPersona.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          ) ||
           activVoluntario.volEstCedula
             .toLowerCase()
             .includes(this.filtrarBusqueda.toLowerCase()) ||
-          activVoluntario.NombreEstudiante
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) ||
-            activVoluntario.ApellidoEstudiante
-            .toLowerCase()
-            .includes(this.filtrarBusqueda.toLowerCase()) 
+          activVoluntario.NombreEstudiante.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          ) ||
+          activVoluntario.ApellidoEstudiante.toLowerCase().includes(
+            this.filtrarBusqueda.toLowerCase()
+          )
         );
       });
     },
@@ -790,6 +826,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .card-tools {
   display: flex;
