@@ -98,7 +98,15 @@
                       <a
                         href="#"
                         @click="
-                          eliminarActividadVoluntario(actividadVoluntario.id)
+                          eliminarActividadVoluntario(actividadVoluntario.id),
+                            reiniciar(
+                              actividadVoluntario.idActividad,
+                              actividadVoluntario.ActCupos,
+                              actividadVoluntario.idVoluntario_Estudiante,
+                              actividadVoluntario.VoluntarioEstCantidad,
+                              actividadVoluntario.idVoluntario_Persona,
+                              actividadVoluntario.VoluntarioPerCantidad 
+                            )
                         "
                       >
                         <i id="icono" class="fa fa-trash red"></i>
@@ -336,46 +344,72 @@ export default {
       this.form.idVoluntario_Estudiante = this.estudianteItem.VolEstID;
     },
     crearActividadVoluntariado() {
-      this.Llenarforms();
-      this.$Progress.start();
+      if (parseInt(this.actividadItem.cantParticipantes) > 0) {
+        this.Llenarforms();
+        this.$Progress.start();
+        axios.get("/api/voluntarioActividad/ValorCupos/", {
+          params: {
+            idAct: this.actividadItem.id,
+            Cupos: this.actividadItem.cantParticipantes - 1,
+          },
+        });
+        axios.get("/api/voluntarioActividad/ValorEst/", {
+          params: {
+            idVoluntarioEst: this.estudianteItem.voluntariadoID,
+            CantidadEst: this.estudianteItem.cantidadActividad + 1,
+          },
+        });
+        axios.get("/api/voluntarioActividad/ValorPer/", {
+          params: {
+            idVoluntarioPer: this.PersonaItem.voluntariadoID,
+            CantidadPer: this.PersonaItem.cantidadActividad + 1,
+          },
+        });
+        this.form
+          .post(`/api/voluntarioActividad`)
+          .then((response) => {
+            $("#addNew").modal("hide");
+
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$Progress.finish();
+            this.cargarDatosVoluntarioActividad();
+            this.cargarActividadVoluntariado();
+          })
+          .catch(() => {
+            Toast.fire({
+              icon: "error",
+              title: "Ocurrio un error!",
+            });
+          });
+      } else {
+        Swal.fire("Fallo!", "No cuenta con cupos disponibles", "warning");
+      }
+    },
+    //////////////////////////////////////////////////////////
+    reiniciar(idAct, Cupos, idEstVol, cantEstAct, idPerVol, cantPerAct) {
+      
       axios.get("/api/voluntarioActividad/ValorCupos/", {
         params: {
-          idAct: this.actividadItem.id,
-          Cupos: this.actividadItem.cantParticipantes-1,
+          idAct: idAct,
+          Cupos: Cupos + 1,
         },
       });
       axios.get("/api/voluntarioActividad/ValorEst/", {
         params: {
-          idVoluntarioEst: this.estudianteItem.voluntariadoID,
-          CantidadEst: this.estudianteItem.cantidadActividad+1,
+          idVoluntarioEst: idEstVol,
+          CantidadEst: cantEstAct - 1,
         },
       });
       axios.get("/api/voluntarioActividad/ValorPer/", {
         params: {
-          idVoluntarioPer: this.PersonaItem.voluntariadoID,
-          CantidadPer: this.PersonaItem.cantidadActividad+1,
+          idVoluntarioPer: idPerVol,
+          CantidadPer: cantPerAct - 1,
         },
       });
-      this.form
-        .post(`/api/voluntarioActividad`)
-        .then((response) => {
-          $("#addNew").modal("hide");
-
-          Toast.fire({
-            icon: "success",
-            title: response.data.message,
-          });
-          this.$Progress.finish();
-          this.cargarActividadVoluntariado();
-        })
-        .catch(() => {
-          Toast.fire({
-            icon: "error",
-            title: "Ocurrio un error!",
-          });
-        });
     },
-    //////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////
     eliminarActividadVoluntario(id) {
       Swal.fire({
@@ -387,6 +421,7 @@ export default {
         confirmButtonText: "Si, Eliminar!",
       }).then((result) => {
         if (result.value) {
+          this.reiniciar();
           this.form
             .delete(`/api/voluntarioActividad/${id}`)
             .then(() => {

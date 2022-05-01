@@ -38,9 +38,11 @@ class VoluntarioActividadesController extends BaseController
             ->join('personas as perVoluntarias', 'voluntario_personas.identificacion', '=', 'perVoluntarias.id')//Personas con VOluntario Personas
             ->join('voluntario_estudiantes', 'voluntario_actividades.idVoluntario_Estudiante', '=', 'voluntario_estudiantes.id')//Estudiantes con Voluntario Actividades
             ->join('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id')//Persona con Estudiante
-            ->select('voluntario_actividades.*', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
+            ->join('voluntarios as voluntariosEst', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntariosEst.id')//Persona con Estudiante
+            ->join('voluntarios as voluntariosPer', 'voluntario_personas.voluntariado_id', '=', 'voluntariosPer.id')//Persona con Estudiante
+            ->select('voluntario_actividades.*', 'voluntariosEst.cantidad as VoluntarioEstCantidad', 'voluntariosPer.cantidad as VoluntarioPerCantidad', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
                 'perEstudiante.nombre as NombreEstudiante', 'perEstudiante.apellido1 as ApellidoEstudiante',
-                'actividades.id as ActId', 'actividades.nombre as ActNombre', 'voluntario_personas.identificacion as VolPerId',
+                'actividades.id as ActId', 'actividades.nombre as ActNombre', 'actividades.cantParticipantes as ActCupos', 'voluntario_personas.identificacion as VolPerId',
                 'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',
                 'voluntario_estudiantes.identificacionPersona as volEstCedula', 'voluntario_estudiantes.identificacionPersona as volEstCedula')
             ->paginate(10);
@@ -60,7 +62,7 @@ class VoluntarioActividadesController extends BaseController
             ->join('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id')//Persona con Estudiante
             ->select('voluntario_actividades.*', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
                 'perEstudiante.nombre as NombreEstudiante', 'perEstudiante.apellido1 as ApellidoEstudiante',
-                'actividades.id as ActId', 'actividades.nombre as ActNombre', 'voluntario_personas.identificacion as VolPerId',
+                'actividades.id as ActId', 'actividades.nombre as ActNombre','actividades.cantParticipantes as ActCupos', 'voluntario_personas.identificacion as VolPerId',
                 'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',
                 'voluntario_estudiantes.identificacionPersona as volEstCedula', 'voluntario_estudiantes.identificacionPersona as volEstCedula')
             ->paginate($filtro);
@@ -78,7 +80,7 @@ class VoluntarioActividadesController extends BaseController
         ->join('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id')//Persona con Estudiante
         ->select('voluntario_actividades.*', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
             'perEstudiante.nombre as NombreEstudiante', 'perEstudiante.apellido1 as ApellidoEstudiante',
-            'actividades.id as ActId', 'actividades.nombre as ActNombre', 'voluntario_personas.identificacion as VolPerId',
+            'actividades.id as ActId', 'actividades.nombre as ActNombre', 'actividades.cantParticipantes as ActCupos', 'voluntario_personas.identificacion as VolPerId',
             'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',
             'voluntario_estudiantes.identificacionPersona as volEstCedula', 'voluntario_estudiantes.identificacionPersona as volEstCedula')
         ->get();
@@ -115,7 +117,7 @@ class VoluntarioActividadesController extends BaseController
             ->where('id', $filtro)
             ->update(['cantParticipantes' => $CuposNuevo]);
 
-        return $this->sendResponse($voluntarioActi, 'Resta realizada!');
+        return $this->sendResponse($voluntarioActi, 'Accion realizada!');
     }
 
     public function valorPerVolunt(Request $request)
@@ -127,7 +129,7 @@ class VoluntarioActividadesController extends BaseController
             ->where('id', $filtro)
             ->update(['cantidad' => $cantidadPer]);
 
-        return $this->sendResponse($voluntarioActi, 'Suma realizada!');
+        return $this->sendResponse($voluntarioActi, 'Accion realizada!');
     }
 
     public function valorEstVolunt(Request $request)
@@ -139,7 +141,7 @@ class VoluntarioActividadesController extends BaseController
             ->where('id', $filtro)
             ->update(['cantidad' => $cantidadEst]);
 
-        return $this->sendResponse($voluntarioActi, 'Suma realizada!');
+        return $this->sendResponse($voluntarioActi, 'Accion realizada!');
 
     }
 
