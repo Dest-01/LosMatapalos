@@ -68,6 +68,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('voluntarioActividad/listar', 'VoluntarioActividadesController@list');
     Route::get('voluntarioActividad/mostrar', 'VoluntarioActividadesController@mostrar');
     Route::get('voluntarioActividad/voluntarioEst', 'VoluntarioActividadesController@listarVoluntarioEstudiantes');
+    Route::get('voluntarioActividad/voluntarioPer', 'VoluntarioActividadesController@listarVoluntarioPersonas');
     
     /////////////////////////---RUTAS DASHBOARD---//////////////////////////////////////////////////////////////////
     Route::get('dashboard/TotalPersonas', 'DashboardController@TotalPersonas');

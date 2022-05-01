@@ -162,8 +162,28 @@
                         :list="actividades"
                         v-model="actividadItem"
                         option-value="id"
-                        option-text="nombre"
+                        :custom-text="DateAndName"
                         placeholder="Seleccione la actividad"
+                      >
+                      </model-list-select>
+                    </div>
+                    <div class="form-group">
+                      <model-list-select
+                        :list="volEstudiante"
+                        v-model="estudianteItem"
+                        option-value="id"
+                        :custom-text="DNIAndName"
+                        placeholder="Seleccione al estudiante voluntariado"
+                      >
+                      </model-list-select>
+                    </div>
+                    <div class="form-group">
+                      <model-list-select
+                        :list="volPersonas"
+                        v-model="PersonaItem"
+                        option-value="id"
+                        :custom-text="DNIAndName"
+                        placeholder="Seleccione la persona voluntariada"
                       >
                       </model-list-select>
                     </div>
@@ -204,7 +224,7 @@
 
 <script>
 import { ModelListSelect } from "vue-search-select";
-import 'vue-search-select/dist/VueSearchSelect.css'
+import "vue-search-select/dist/VueSearchSelect.css";
 export default {
   components: {
     ModelListSelect,
@@ -215,14 +235,27 @@ export default {
       filtrarBusqueda: "",
       editmode: false,
       actividades: [{}],
-      volEstudiante: {},
+      volEstudiante: [{}],
+      volPersonas: [{}],
       actividadItem: {},
+      estudianteItem: {},
+      PersonaItem: {},
       actividadVoluntarios: {},
       form: new Form({
         id: "",
         idActividad: "",
         idVoluntario_Persona: "",
         idVoluntario_Estudiante: "",
+      }),
+      formActividad: new Form({
+        id: "",
+        nombre: "",
+        fecha: "",
+        hora: "",
+        descripcion: "",
+        cantParticipantes: "",
+        imagen: "",
+        tipo: "",
       }),
     };
   },
@@ -261,7 +294,7 @@ export default {
         .then(({ data }) => (this.actividadVoluntarios = data.data));
       this.$Progress.finish();
     },
-    //Metodo para poder cargar la actividades de voluntarios registrados
+
     async cargarActividadVoluntariado() {
       if (this.$gate.isAdmin()) {
         await axios
@@ -273,18 +306,102 @@ export default {
       }
     },
 
+    //Metodos para llenar los combobox de actividad y voluntarios personas y estudiantes
     async cargarDatosVoluntarioActividad() {
-
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-       await axios
+        await axios
           .get("/api/actividad/listar")
           .then(({ data }) => (this.actividades = data.data));
         await axios
           .get("/api/voluntarioActividad/voluntarioEst/")
           .then(({ data }) => (this.volEstudiante = data.data));
+        await axios
+          .get("/api/voluntarioActividad/voluntarioPer/")
+          .then(({ data }) => (this.volPersonas = data.data));
       }
     },
+    DateAndName(item) {
+      return `${item.nombre} - ${
+        "Cupos disponibles: " + item.cantParticipantes
+      }`;
+    },
+    DNIAndName(item) {
+      return `${item.identificacion} - ${item.nombre} ${item.apellido1} ${item.apellido2}`;
+    },
+    ////////////////////////////////////////////////////////////
+
+    Llenarforms() {
+      this.form.idActividad = this.actividadItem.id;
+      this.form.idVoluntario_Persona = this.PersonaItem.VolPerID;
+      this.form.idVoluntario_Estudiante = this.estudianteItem.VolEstID;
+    },
+    restarActividad() {
+      (this.formActividad.id = this.actividadItem.id),
+        (this.formActividad.nombre = this.actividadItem.nombre),
+        (this.formActividad.fecha = this.actividadItem.fecha),
+        (this.formActividad.hora = this.actividadItem.hora),
+        (this.formActividad.descripcion = this.actividadItem.descripcion),
+        (this.formActividad.imagen = this.actividadItem.imagen),
+        (this.formActividad.tipo = this.actividadItem.tipo),
+        (this.formActividad.cantParticipantes =
+          parseInt(element.cantParticipantes) - 1);
+    },
+
+    crearActividadVoluntariado() {
+      this.Llenarforms();
+      this.restarActividad();
+      this.$Progress.start();
+      this.formActividad.put(
+        "/calculoActividad/restar/" + this.formActividad.id
+      )
+      this.form
+        .post(`/api/voluntarioActividad`)
+        .then((response) => {
+          $("#addNew").modal("hide");
+
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.restarActividad();
+          this.$Progress.finish();
+          this.cargarActividadVoluntariado();
+        })
+        .catch(() => {
+          Toast.fire({
+            icon: "error",
+            title: "Ocurrio un error!",
+          });
+        });
+    },
+    //////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////
+    eliminarActividadVoluntario(id) {
+      Swal.fire({
+        title: "Seguro que lo desea eliminar?",
+        text: "Esta acción no puede revertirse!",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Si, Eliminar!",
+      }).then((result) => {
+        if (result.value) {
+          this.form
+            .delete(`/api/voluntarioActividad/${id}`)
+            .then(() => {
+              Swal.fire(
+                "Eliminado!",
+                "Se ha eliminado la información.",
+                "success"
+              );
+              this.cargarActividadVoluntariado();
+            })
+            .catch((data) => {
+              Swal.fire("Fallo!", data.message, "warning");
+            });
+        }
+      });
+    },
   },
 
   created() {
@@ -364,18 +481,17 @@ export default {
   flex-direction: row;
   flex-wrap: nowrap;
 }
-#modal-contentino {
-  width: 150%;
+.modal-content {
+  width: 100%;
 }
-#modal-body {
+.modal-body {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
-#inputsModal {
-  width: 45%;
-  margin: 10px 15px;
+.form-group {
+  margin: 10px;
 }
 
 .table th,
@@ -388,15 +504,7 @@ export default {
   .modal-content {
     width: 100%;
   }
-  #modal-contentino {
-    width: 100%;
-  }
-  #inputsModal {
-    width: 100%;
-  }
-  .form-group img {
-    height: 250px;
-  }
+
   @media only screen and (min-device-width: 100px) and (max-device-width: 900px) {
     .pagination {
       display: flex;

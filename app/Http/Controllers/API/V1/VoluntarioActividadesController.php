@@ -91,10 +91,18 @@ class VoluntarioActividadesController extends BaseController
     {
         $voluntarioActi = DB::table('voluntario_estudiantes')
             ->join('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id')//Persona con Estudiante
-            ->select('perEstudiante.*')
-            ->paginate(10);
-
+            ->select('perEstudiante.*', 'voluntario_estudiantes.id as VolEstID')
+            ->get();
         return $this->sendResponse($voluntarioActi, 'Lista de Voluntario Estudiantes!');
+    }
+
+    public function listarVoluntarioPersonas()
+    {
+        $voluntarioActi = DB::table('voluntario_personas')
+            ->join('personas as perVoluntariados', 'voluntario_personas.identificacion', '=', 'perVoluntariados.id')//Persona con Voluntariado
+            ->select('perVoluntariados.*','voluntario_personas.id as VolPerID')
+            ->get();
+        return $this->sendResponse($voluntarioActi, 'Lista de Personas Voluntariadas!');
     }
 
 

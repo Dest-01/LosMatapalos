@@ -69,7 +69,7 @@
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Descripción</th>
-                    <th>Cantidad participantes</th>
+                    <th>Cupos Disponibles</th>
                     <th>Imagen</th>
                     <th>Tipo de actividad</th>
                   </tr>
@@ -231,7 +231,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Cantidad Participantes</label>
+                  <label>Cupos Disponibles</label>
                   <input
                     v-model="form.cantParticipantes"
                     type="number"
@@ -244,7 +244,7 @@
                     max="30"
                     v-mask="'##'"
                     required
-                    placeholder="Cantidad de participantes"
+                    placeholder="Cupos disponibles"
                   />
                   <has-error :form="form" field="cantParticipantes"></has-error>
                 </div>
