@@ -65,11 +65,9 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('reserva/listar', 'ReservaController@list');
     Route::get('reserva/mostrar', 'ReservaController@mostrar');
 /////////////////////////---VOLUNTARIO ACTIVIDAD---//////////////////////////////////////////////////////////////////
-    Route::get('voluntarioActividad/GetActividades', 'VoluntarioActividadesController@GetActividades');
-    Route::get('voluntarioActividad/GetVoluntarioEstudiantes', 'VoluntarioActividadesController@GetVoluntarioEstudiantes');
-    Route::get('voluntarioActividad/GetVoluntarioPersona', 'VoluntarioActividadesController@GetVoluntarioPersona');
     Route::get('voluntarioActividad/listar', 'VoluntarioActividadesController@list');
     Route::get('voluntarioActividad/mostrar', 'VoluntarioActividadesController@mostrar');
+    Route::get('voluntarioActividad/voluntarioEst', 'VoluntarioActividadesController@listarVoluntarioEstudiantes');
     
     /////////////////////////---RUTAS DASHBOARD---//////////////////////////////////////////////////////////////////
     Route::get('dashboard/TotalPersonas', 'DashboardController@TotalPersonas');

@@ -215,6 +215,7 @@ export default {
       filtrarBusqueda: "",
       editmode: false,
       actividades: [{}],
+      volEstudiante: {},
       actividadItem: {},
       actividadVoluntarios: {},
       form: new Form({
@@ -272,11 +273,15 @@ export default {
       }
     },
 
-    cargarActividad() {
+    async cargarDatosVoluntarioActividad() {
+
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
-        axios
+       await axios
           .get("/api/actividad/listar")
           .then(({ data }) => (this.actividades = data.data));
+        await axios
+          .get("/api/voluntarioActividad/voluntarioEst/")
+          .then(({ data }) => (this.volEstudiante = data.data));
       }
     },
     /////////////////////////////////////////////////////
@@ -285,7 +290,7 @@ export default {
   created() {
     this.$Progress.start();
     this.cargarActividadVoluntariado();
-    this.cargarActividad();
+    this.cargarDatosVoluntarioActividad();
     this.$Progress.finish();
   },
   computed: {
