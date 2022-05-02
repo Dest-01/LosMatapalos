@@ -65,9 +65,7 @@
                 <i class="fas fa-chalkboard-teacher"></i>
                 <h4>{{$t('Capacitaciones_y_Cursos')}}</h4>
                 <p>
-                  El Sendero Los Matapalos cuenta con una amplia variedad de
-                  cursos referentes al ambiente y su cuidado al igual que una
-                  amplia lista de capacitaciones ambientales.
+                 {{$t('Capacitaciones_y_Cursos_info')}}
                 </p>
               </div>
             </div>
@@ -92,9 +90,7 @@
                 <i class="fas fa-walking"></i>
                 <h4>Tours</h4>
                 <p>
-                  El Sendero Los Matapalos cuenta con una amplia variedad de
-                  cursos referentes al ambiente y su cuidado al igual que una
-                  amplia lista de capacitaciones ambientales.
+                   {{$t('Tours_info')}}
                 </p>
               </div>
             </div>
@@ -119,9 +115,7 @@
                 <i class="fas fa-book"></i>
                 <h4>{{$t('Educacion_ambiental')}}</h4>
                 <p>
-                  El Sendero Los Matapalos cuenta con una amplia variedad de
-                  cursos referentes al ambiente y su cuidado al igual que una
-                  amplia lista de capacitaciones ambientales.
+                  {{$t('Educacion_ambiental_info')}}
                 </p>
               </div>
             </div>

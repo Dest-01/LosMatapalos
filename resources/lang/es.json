@@ -30,7 +30,7 @@
     "Actividad": "Actividades",
     "Para": "Para:",
     "Hora": "Hora:",
-    "Cantidad_P": "Cantidad de participantes",
+    "Cantidad_P": "Cupos disponibles",
     "Fecha_A": "Fecha de actividad",
     "Contactanos": "Contactanos",
     "us": "",
@@ -247,5 +247,8 @@
     "EventosP": "Eventos Pasados",
     "PersonasDonadoras" : "Personas Donadoras",
     "OrganizacionesDonadoras" : "Organizaciones Donadoras",
-    "Ultimos_Donadores" : "Últimas Donaciones!"
+    "Ultimos_Donadores" : "Últimas Donaciones!",
+    "Capacitaciones_y_Cursos_info":"Falta información",
+    "Tours_info":"Falta información",
+    "Educacion_ambiental_info":"Falta información"
 }

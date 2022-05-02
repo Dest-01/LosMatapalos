@@ -30,7 +30,7 @@
     "Actividad": "Activities",
     "Para": "To:",
     "Hora": "Time:",
-    "Cantidad_P": "amount of participants",
+    "Cantidad_P": "Space available",
     "Fecha_A": "Activity date",
     "Contactanos": "Contact ",
     "us": "us",
@@ -246,5 +246,8 @@
     "EventosP": "Gallery",
     "PersonasDonadoras" : "Donor Persons",
     "OrganizacionesDonadoras" : "Donor Organizations",
-    "Ultimos_Donadores" : "Last Donations!"
+    "Ultimos_Donadores" : "Last Donations!",
+    "Capacitaciones_y_Cursos_info":"Falta información",
+    "Tours_info":"Falta información",
+    "Educacion_ambiental_info":"Falta información"
 }

@@ -571,6 +571,9 @@ export default {
       this.verIdentificacion = true;
       this.verIdentificacionedit = false;
       this.form.reset();
+      this.DNIResidencial = "";
+      this.DNIPasaporte = "";
+      this.DNINacional = "";
       $("#addNew").modal("show");
       this.form.errors.clear();
     },

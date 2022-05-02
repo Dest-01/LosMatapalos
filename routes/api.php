@@ -69,9 +69,8 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('voluntarioActividad/mostrar', 'VoluntarioActividadesController@mostrar');
     Route::get('voluntarioActividad/voluntarioEst', 'VoluntarioActividadesController@listarVoluntarioEstudiantes');
     Route::get('voluntarioActividad/voluntarioPer', 'VoluntarioActividadesController@listarVoluntarioPersonas');
-    Route::get('voluntarioActividad/ValorCupos', 'VoluntarioActividadesController@valorCupos');
-    Route::get('voluntarioActividad/ValorEst', 'VoluntarioActividadesController@valorEstVolunt');
-    Route::get('voluntarioActividad/ValorPer', 'VoluntarioActividadesController@valorPerVolunt');
+    Route::get('voluntarioActividad/datos', 'VoluntarioActividadesController@ActualizarDatosActividad');
+    Route::get('voluntarioActividad/datosAnterior', 'VoluntarioActividadesController@ActualizarDatosActividadAnterior');
     
     /////////////////////////---RUTAS DASHBOARD---//////////////////////////////////////////////////////////////////
     Route::get('dashboard/TotalPersonas', 'DashboardController@TotalPersonas');

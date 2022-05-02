@@ -91,7 +91,13 @@
                       {{ actividadVoluntario.ApellidoEstudiante }}
                     </td>
                     <td>
-                      <a href="#" @click="editModal(actividadVoluntario)">
+                      <a
+                        href="#"
+                        @click="
+                          editModal(actividadVoluntario),
+                            guardarDatosActualizar(actividadVoluntario)
+                        "
+                      >
                         <i id="icono" class="fa fa-edit blue"></i>
                       </a>
                       /
@@ -105,7 +111,7 @@
                               actividadVoluntario.idVoluntario_Estudiante,
                               actividadVoluntario.VoluntarioEstCantidad,
                               actividadVoluntario.idVoluntario_Persona,
-                              actividadVoluntario.VoluntarioPerCantidad 
+                              actividadVoluntario.VoluntarioPerCantidad
                             )
                         "
                       >
@@ -223,6 +229,90 @@
               </div>
             </div>
           </div>
+          <!--Modal de ver detalles-->
+          <div
+            class="modal fade"
+            id="ModalVer"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="ModalVer"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div id="modal-contentino" class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    Detalles del voluntariado actividad
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div id="modal-body" class="modal-body">
+                  <div id="inputsModal" class="form-group">
+                    <label>Id Voluntariado Actividad</label>
+                    <input
+                      v-model="formDetails.id"
+                      type="text"
+                      class="form-control"
+                      :disabled="verDetalles"
+                    />
+                  </div>
+                  <div id="inputsModal" class="form-group">
+                    <label>Id Actividad</label>
+                    <input
+                      v-model="formDetails.idActividad"
+                      type="text"
+                      class="form-control"
+                      :disabled="verDetalles"
+                    />
+                  </div>
+                  <div id="inputsModal" class="form-group">
+                    <label>Nombre de la Actividad</label>
+                    <input
+                      v-model="formDetails.ActNombre"
+                      type="text"
+                      class="form-control"
+                      :disabled="verDetalles"
+                    />
+                  </div>
+                  <div id="inputsModal" class="form-group">
+                    <label>Persona Voluntariada</label>
+                    <input
+                      v-model="DNINombrePersona"
+                      type="text"
+                      class="form-control"
+                      :disabled="verDetalles"
+                    />
+                  </div>
+                  <div id="inputsModal" class="form-group">
+                    <label>Estudiante Voluntariado</label>
+                    <input
+                      v-model="DNINombreEstudiante"
+                      type="text"
+                      class="form-control"
+                      :disabled="verDetalles"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-dismiss="modal"
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -239,6 +329,23 @@ export default {
   },
   data() {
     return {
+      verDetalles: true,
+      idVolEstCupos: "",
+      idVolPerCupos: "",
+      idActivAnt: "", //Guardamos la actividad anterior
+      ActiCuposAnt: "", //Guardamos los cupos anterior
+      idVolEstAnt: "", //Guardamos el id vol estudiante anterior
+      idVolEstNuv: "", //Guardamos el id del vol estudiante nuevo
+      VolEstCantNuv: "", //Guardamos la cantidad de actividades del estudiante nuevo
+      VolEstCantAnt: "", //Guardamos la cantidad de actividades de la persona anterior
+      idVolPertAnt: "", //Guardamos el id vol persona anterior
+      idVolPertNuv: "",
+      VolperCantAnt: "", //Guardamos la cantidad de actividades de la persona anterior
+      VolperCantNuv: "",
+      CuposSi: false,
+      DNINombrePersona: "",
+      DNINombreEstudiante: "",
+      CuposRebajo: 0,
       valorMostrar: 10,
       filtrarBusqueda: "",
       editmode: false,
@@ -265,6 +372,11 @@ export default {
         imagen: "",
         tipo: "",
       }),
+      formDetails: new Form({
+        id: "",
+        idActividad: "",
+        ActNombre: "",
+      }),
     };
   },
   methods: {
@@ -276,6 +388,7 @@ export default {
         this.actividadVoluntarios.data = this.voluntarioActividadesFiltros;
       }
     },
+    /////Metodo para la paginacion
     mostrar() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         axios
@@ -285,7 +398,33 @@ export default {
           .then(({ data }) => (this.actividadVoluntarios = data.data));
       }
     },
-
+    //metodo para limpar los combo box
+    limpiarComboBox() {
+      (this.actividadItem = {}),
+        (this.estudianteItem = {}),
+        (this.PersonaItem = {});
+    },
+    //Metodo para ver detalles
+    detailsModal(actividadVoluntario) {
+      $("#ModalVer").modal("show");
+      this.formDetails.fill(actividadVoluntario);
+      this.DNINombrePersona =
+        "Identificación: " +
+        actividadVoluntario.VolPerCedula +
+        " - " +
+        "Nombre: " +
+        actividadVoluntario.NombrePersona +
+        " " +
+        actividadVoluntario.ApellidoPersona;
+      this.DNINombreEstudiante =
+        "Identificación: " +
+        actividadVoluntario.volEstCedula +
+        " - " +
+        "Nombre: " +
+        actividadVoluntario.NombreEstudiante +
+        " " +
+        actividadVoluntario.ApellidoEstudiante;
+    },
     //Metodo para abrir un nuevo modal
     newModal() {
       this.editmode = false;
@@ -293,7 +432,25 @@ export default {
       $("#addNew").modal("show");
       this.form.errors.clear();
     },
+    //Metodo para editar el modal
+    editModal(actividadVoluntario) {
+      this.editmode = true;
+      this.form.reset();
+      const { idActividad, idVoluntario_Persona, idVoluntario_Estudiante } =
+        actividadVoluntario;
+      this.actividadItem = this.actividades.find(
+        (actividad) => actividad.id === idActividad
+      );
+      this.estudianteItem = this.volEstudiante.find(
+        (voluntarioEstu) => voluntarioEstu.VolEstID === idVoluntario_Estudiante
+      );
+      this.PersonaItem = this.volPersonas.find(
+        (voluntario) => voluntario.VolPerID === idVoluntario_Persona
+      );
 
+      $("#addNew").modal("show");
+      this.form = new Form({ ...actividadVoluntario });
+    },
     //Metodo para realizar la paginacion
     getResults(page = 1) {
       this.$Progress.start();
@@ -302,7 +459,7 @@ export default {
         .then(({ data }) => (this.actividadVoluntarios = data.data));
       this.$Progress.finish();
     },
-
+    //Metodo para cargar las actividades con los voluntariados
     async cargarActividadVoluntariado() {
       if (this.$gate.isAdmin()) {
         await axios
@@ -313,7 +470,6 @@ export default {
           .then(({ data }) => (this.nuevoactividadVoluntarios = data.data));
       }
     },
-
     //Metodos para llenar los combobox de actividad y voluntarios personas y estudiantes
     async cargarDatosVoluntarioActividad() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
@@ -337,80 +493,108 @@ export default {
       return `${item.identificacion} - ${item.nombre} ${item.apellido1} ${item.apellido2}`;
     },
     ////////////////////////////////////////////////////////////
+    CuposDisponibleCrear() {
+      this.idVolPerCupos = this.PersonaItem.VolPerID;
+      this.idVolEstCupos = this.estudianteItem.VolEstID;
 
+      if (this.idVolPerCupos != 0 && this.idVolEstCupos != 0) {
+        this.CuposRebajo = 2;
+      }
+      if (this.idVolPerCupos != 0 && !this.idVolEstCupos) {
+        this.CuposRebajo = 1;
+      }
+      if (!this.idVolPerCupos && this.idVolEstCupos != 0) {
+        this.CuposRebajo = 1;
+      }
+      if (this.actividadItem.cantParticipantes >= this.CuposRebajo) {
+        this.CuposSi = true;
+      } else {
+        this.CuposSi = false;
+      }
+    },
+
+    ///////////////////////////////////////////////////////////
     Llenarforms() {
       this.form.idActividad = this.actividadItem.id;
       this.form.idVoluntario_Persona = this.PersonaItem.VolPerID;
       this.form.idVoluntario_Estudiante = this.estudianteItem.VolEstID;
+      this.CuposDisponibleCrear();
     },
-    crearActividadVoluntariado() {
-      if (parseInt(this.actividadItem.cantParticipantes) > 0) {
-        this.Llenarforms();
+
+    async CrearDatos() {
+      try {
         this.$Progress.start();
-        axios.get("/api/voluntarioActividad/ValorCupos/", {
+        await axios.get("/api/voluntarioActividad/datos/", {
           params: {
+            //Pasamos el id de la actividad
             idAct: this.actividadItem.id,
-            Cupos: this.actividadItem.cantParticipantes - 1,
-          },
-        });
-        axios.get("/api/voluntarioActividad/ValorEst/", {
-          params: {
+            //Pasamos la cantidad de los cupos
+            Cupos: this.actividadItem.cantParticipantes - this.CuposRebajo,
+            //pasamos el id del estudiante voluntariado
             idVoluntarioEst: this.estudianteItem.voluntariadoID,
+            //Pasamos la cantidad de actividades para sumarle 1
             CantidadEst: this.estudianteItem.cantidadActividad + 1,
-          },
-        });
-        axios.get("/api/voluntarioActividad/ValorPer/", {
-          params: {
+            //Le sumamos los datos a la persona voluntariada
             idVoluntarioPer: this.PersonaItem.voluntariadoID,
             CantidadPer: this.PersonaItem.cantidadActividad + 1,
           },
         });
-        this.form
-          .post(`/api/voluntarioActividad`)
-          .then((response) => {
-            $("#addNew").modal("hide");
-
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
-            this.$Progress.finish();
-            this.cargarDatosVoluntarioActividad();
-            this.cargarActividadVoluntariado();
-          })
-          .catch(() => {
-            Toast.fire({
-              icon: "error",
-              title: "Ocurrio un error!",
-            });
+        this.form.post(`/api/voluntarioActividad`).then((response) => {
+          $("#addNew").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
           });
+          this.$Progress.finish();
+          this.form.reset();
+          this.limpiarComboBox();
+          this.cargarDatosVoluntarioActividad();
+          this.cargarActividadVoluntariado();
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "Ocurrio un error!",
+        });
+      }
+    },
+    ///metodo para crear registrar el voluntario de actividad
+    crearActividadVoluntariado() {
+      this.Llenarforms();
+      //Comparamos para que la cantidad de cupos sea mayor o igual a la cantidad de cupos a restar
+      if (this.CuposSi == true) {
+        //Enviamos los datos a la rutas para actualizar la informacion
+        this.CrearDatos();
       } else {
+        //Mensaje en caso de no contar con los cupos disponibles
         Swal.fire("Fallo!", "No cuenta con cupos disponibles", "warning");
       }
     },
     //////////////////////////////////////////////////////////
-    reiniciar(idAct, Cupos, idEstVol, cantEstAct, idPerVol, cantPerAct) {
-      
-      axios.get("/api/voluntarioActividad/ValorCupos/", {
+    ///////////METODO PARA APLICAR RESTAS Y SUMAS AL ELIMINAR /////////////
+    async reiniciar(idAct, Cupos, idEstVol, cantEstAct, idPerVol, cantPerAct) {
+      if (idEstVol != 0 && idPerVol != 0) {
+        this.CuposRebajo = 2;
+      }
+      if (idEstVol != 0 && !idPerVol) {
+        this.CuposRebajo = 1;
+      }
+      if (!idEstVol && idPerVol != 0) {
+        this.CuposRebajo = 1;
+      }
+      await axios.get("/api/voluntarioActividad/datos/", {
         params: {
           idAct: idAct,
-          Cupos: Cupos + 1,
-        },
-      });
-      axios.get("/api/voluntarioActividad/ValorEst/", {
-        params: {
+          Cupos: Cupos + this.CuposRebajo,
           idVoluntarioEst: idEstVol,
           CantidadEst: cantEstAct - 1,
-        },
-      });
-      axios.get("/api/voluntarioActividad/ValorPer/", {
-        params: {
           idVoluntarioPer: idPerVol,
           CantidadPer: cantPerAct - 1,
         },
       });
     },
     /////////////////////////////////////////////////////
+    ///////METODO PARA ELIMINAR ////////////////////
     eliminarActividadVoluntario(id) {
       Swal.fire({
         title: "Seguro que lo desea eliminar?",
@@ -421,7 +605,7 @@ export default {
         confirmButtonText: "Si, Eliminar!",
       }).then((result) => {
         if (result.value) {
-          this.reiniciar();
+          this.reiniciar(); //Metodo para pasar los datos a modificar al momento de eliminar
           this.form
             .delete(`/api/voluntarioActividad/${id}`)
             .then(() => {
@@ -430,6 +614,7 @@ export default {
                 "Se ha eliminado la información.",
                 "success"
               );
+              this.cargarDatosVoluntarioActividad();
               this.cargarActividadVoluntariado();
             })
             .catch((data) => {
@@ -437,6 +622,96 @@ export default {
             });
         }
       });
+    },
+    //Guardamos los datos para comparar en caso de que cambie algun dato
+    guardarDatosActualizar(actividadVoluntario) {
+      (this.idActivAnt = actividadVoluntario.ActId),
+        (this.ActiCuposAnt = actividadVoluntario.ActCupos),
+        (this.idVolEstAnt = actividadVoluntario.idVoluntario_Estudiante),
+        (this.VolEstCantAnt = actividadVoluntario.VoluntarioEstCantidad),
+        (this.idVolPertAnt = actividadVoluntario.idVoluntario_Persona),
+        (this.VolperCantAnt = actividadVoluntario.VoluntarioPerCantidad);
+    },
+    //Comparamos y modificamos los datos anterior
+    async compararDatosActualizar() {
+      if (!this.idVolPertAnt || !this.idVolEstAnt) {
+        this.CuposRebajo = 1;
+      } else {
+        this.CuposRebajo = 2;
+      }
+      if (this.estudianteItem !== undefined) {
+        this.form.idVoluntario_Estudiante = this.estudianteItem.VolEstID;
+        this.idVolEstNuv = this.estudianteItem.voluntariadoID;
+        this.VolEstCantNuv = this.estudianteItem.cantidadActividad;
+      }
+      if (this.PersonaItem !== undefined) {
+        this.form.idVoluntario_Persona = this.PersonaItem.VolPerID;
+        this.idVolPertNuv = this.PersonaItem.voluntariadoID;
+        this.VolperCantNuv = this.PersonaItem.cantidadActividad;
+      }
+      if (this.actividadItem.cantParticipantes >= this.CuposRebajo) {
+        this.CuposSi = true;
+      } else {
+        this.CuposSi = false;
+      }
+
+      await axios.get("/api/voluntarioActividad/datosAnterior/", {
+        params: {
+          //Pasamos el id de la actividad
+          idAct: this.idActivAnt,
+          //Pasamos la cantidad de los cupos
+          Cupos: this.ActiCuposAnt + this.CuposRebajo,
+          //pasamos el id del estudiante voluntariado
+          idVoluntarioEst: this.idVolEstAnt,
+          //Pasamos la cantidad de actividades para sumarle 1
+          CantidadEst: this.VolEstCantAnt - 1,
+          //Le sumamos los datos a la persona voluntariada
+          idVoluntarioPer: this.idVolPertAnt,
+          CantidadPer: this.VolperCantAnt - 1,
+        },
+      });
+    },
+
+    async actualizarActividadVoluntario() {
+      this.compararDatosActualizar();
+      //Le pasamos los datos nuevo a la actividad
+      this.form.idActividad = this.actividadItem.id;
+      if (this.CuposSi == true) {
+        this.$Progress.start();
+        await axios.get("/api/voluntarioActividad/datos/", {
+          params: {
+            //Pasamos el id de la actividad
+            idAct: this.actividadItem.id,
+            //Pasamos la cantidad de los cupos
+            Cupos: this.actividadItem.cantParticipantes - this.CuposRebajo,
+            //pasamos el id del estudiante voluntariado
+            idVoluntarioEst: this.idVolEstNuv,
+            //Pasamos la cantidad de actividades para sumarle 1
+            CantidadEst: this.VolEstCantNuv + 1,
+            //Le sumamos los datos a la persona voluntariada
+            idVoluntarioPer: this.idVolPertNuv,
+            CantidadPer: this.VolperCantNuv + 1,
+          },
+        });
+        this.form
+          .put(`/api/voluntarioActividad/${this.form.id}`)
+          .then((response) => {
+            $("#addNew").modal("hide");
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$Progress.finish();
+            this.cargarDatosVoluntarioActividad();
+            this.cargarActividadVoluntariado();
+          })
+          .catch(() => {
+            this.$Progress.fail();
+          });
+      } else {
+        //Mensaje en caso de no contar con los cupos disponibles
+        Swal.fire("Fallo!", "No cuenta con cupos disponibles", "warning");
+      }
     },
   },
 
