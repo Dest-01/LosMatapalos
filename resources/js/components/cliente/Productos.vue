@@ -1,13 +1,13 @@
 <template>
   <div class="contenedor">
     <div class="site-heading text-center">
-      <h1>Nuestros <span style="color: #38ab81">Productos</span></h1>
+      <h1>{{ $t("nuestros") }} <span style="color: #38ab81">{{ $t("productos") }}</span></h1>
     </div>
     <div v-if="Productos.data == 0" class="row">
       <div class="mensaje">
         <i class="far fa-folder-open"></i>
         <h1>Oops!</h1>
-        <h3>No hay productos del sendero</h3>
+        <h3>{{ $t("productos_nada") }}</h3>
         <h4>Muy pronto...</h4>
       </div>
     </div>
@@ -29,13 +29,13 @@
           </div>
           <div class="detalles">
             <div class="Nombre">
-              <h3>Nombre: {{ producto.Nombre }}</h3>
+              <h3>{{ $t("nombre") }}: {{ producto.Nombre }}</h3>
             </div>
             <div class="tipo">
-              <h5>Tipo: {{ producto.Tipo }}</h5>
+              <h5>{{ $t("tipo") }}: {{ producto.Tipo }}</h5>
             </div>
             <div class="Descripcion">
-              <h6>Descripción: {{ producto.Descripcion }}</h6>
+              <h6>{{ $t("descripcion") }}: {{ producto.Descripcion }}</h6>
             </div>
             <button
               type="button"
@@ -43,7 +43,7 @@
               data-target="#modalConseguir"
               class=""
             >
-              ¿Como conseguir?
+             {{$t("informacion")}}
             </button>
           </div>
         </div>
@@ -63,7 +63,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">
-              Nombre Producto: {{ form.Nombre }}
+              {{$t("nombre_Producto")}}: {{ form.Nombre }}
             </h5>
             <button type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -92,21 +92,20 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content_info">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Información</h5>
+          <div class="modal-header info_header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{$t("informacion_titulo")}}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body_info">
             <p>
-              Para conseguir este producto es necesario contactar con miembros
-              del sendero.
+              {{$t("obtener")}}
             </p>
-            <p>Correo: sendero.una.ac.cr</p>
-            <p>Número (506) 0000-0000</p>
+            <p>{{$t("correo")}}: sendero.una.ac.cr</p>
+            <p>{{$t("celular")}} (506) 2562-6253</p>
             <p>
-              Dirección: 600 m al sur del Colegio Técnico de Liberia, Campus
+              {{$t("direccion")}}: 600 m al sur del Colegio Técnico de Liberia, Campus
               Liberia, Sede Regional Chorotega, Universidad Nacional.
             </p>
           </div>
@@ -301,18 +300,27 @@ button:hover {
   color: #111;
   border: none;
   font-size: 1.25rem;
+  
+}
+.info_header{
+  background: #1cc185;
+  border-top-left-radius: 10px;
 }
 .modal-content_info {
   width: 420px;
-  height: 400px;
-  background: #ffffff;
+  height: auto;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 1px 1px 12px 1px #000;
 }
 
 .modal-body_info {
+  background: #fff;
   width: 420px;
-  height: 400px;
+  height: auto;
   padding: 5px;
   font-size: 1.25rem;
+  border-radius: 0px 0px 10px 0px;
 }
 .modal_info {
   width: 100%;

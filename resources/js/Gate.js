@@ -23,11 +23,11 @@ export default class Gate{
     }
 
     isUser(){
-        return this.user.type === 'usuario';
+        return this.user.type === 'user';
     }
     
     isAdminOrUser(){
-        if(this.user.type === 'usuario' || this.user.type === 'admin'){
+        if(this.user.type === 'user' || this.user.type === 'admin'){
             return true;
         }
     }

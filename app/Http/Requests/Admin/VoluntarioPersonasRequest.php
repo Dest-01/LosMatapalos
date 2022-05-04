@@ -58,7 +58,7 @@ class VoluntarioPersonasRequest extends FormRequest
             'voluntariado_id' => 'required|integer|min:1|max:9999',
             'lugar' => 'required|string|min:3|max:50',
             'idVoluntario' => 'required|integer|min:1|max:9999',
-            'cantidad' => 'required|integer|min:1|max:9999',
+            'cantidad' => 'required|integer|min:0|max:999',
         ];
     }
 

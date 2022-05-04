@@ -64,7 +64,6 @@ class GruposController extends BaseController
                     'tematica' => $request->get('tematica'),
                     'detalles' => $request->get('detalles'),
                 ]);
-
                 return $this->sendResponse($tag, 'Grupo registrado!');
             } else {
                 return response()->json(['success' => false, 'message' => 'Nombre ya existe!']);

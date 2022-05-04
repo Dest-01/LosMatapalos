@@ -53,6 +53,21 @@ class ReservaController extends BaseController
 
         return $this->sendResponse($reservas, 'Lista de todas las reservas!');
     }
+    public function consultarCedula(Request $request)
+    {
+        try {
+            $filtro = $request->buscador;
+            $existencia = Personas::where('identificacion', '=', $filtro)->first();
+            if ($existencia !== null) {
+                return response()->json(['success' => true, 'message' => 'Identifación si existe!']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Identifación no existe!']);
+            }
+        } catch (Exception $e) {
+
+            return $e->getMessage();
+        }
+    }
 
     public function obtenerCedula(Request $request)
     {
@@ -61,11 +76,46 @@ class ReservaController extends BaseController
         return $this->sendResponse($persona, 'Identifación si existe!');
 
     }
+
+    public function consultarCedulaOrg(Request $request)
+    {
+        try {
+            $filtro = $request->buscador;
+            $existencia = Organizaciones::where('identificacion', '=', $filtro)->first();
+            if ($existencia !== null) {
+                return response()->json(['success' => true, 'message' => 'Identifación si existe!']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Identifación no existe!']);
+            }
+
+        } catch (Exception $e) {
+
+            return $e->getMessage();
+        }
+    }
+
     public function obtenerCedulaOrg(Request $request)
     {
         $filtro = $request->buscador;
         $organizacion = Organizaciones::where('identificacion', $filtro)->select('id','identificacion','correo')->get();
         return $this->sendResponse($organizacion, 'Cédula jurídica si existe!');
+    }
+
+    public function consultarNombreGrupo(Request $request)
+    {
+        try {
+            $filtro = $request->buscador;
+            $existencia = Grupo::where('nombre', '=', $filtro)->first();
+            if ($existencia !== null) {
+                return response()->json(['success' => true, 'message' => 'Identifación si existe!']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Identifación no existe!']);
+            }
+
+        } catch (Exception $e) {
+
+            return $e->getMessage();
+        }
     }
 
     public function obtenerNombreGrupo(Request $request)

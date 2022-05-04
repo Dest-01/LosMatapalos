@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Requests\Admin\PersonasRequest;
-use App\Http\Requests\admin\VoluntarioPersonasRequest;
 use App\Models\Personas;
 use App\Models\Voluntario;
 use App\Models\VoluntarioPersona;
@@ -24,11 +23,33 @@ class VoluntarioPersonaController extends BaseController
         $this->voluntarios = $voluntarios;
     }
 
+    public function consultarCedula(Request $request)
+    {
+        try {
+            $filtro = $request->buscador;
+            $existencia = Personas::where('identificacion', '=', $filtro)->first();
+            if ($existencia !== null) {
+                return response()->json(['success' => true, 'message' => 'Identifación si existe!']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Identifación no existe!']);
+            }
+
+        } catch (Exception $e) {
+
+            return $e->getMessage();
+        }
+    }
+
     public function obtenerCedula(Request $request)
     {
-        $filtro = $request->buscador;
-        $persona = Personas::where('identificacion', $filtro)->get();
-        return $this->sendResponse($persona, 'Identificación si existe!');
+        try {
+            $filtro = $request->buscador;
+            $persona = Personas::where('identificacion', $filtro)->select('id','identificacion','correo')->get();
+            return $this->sendResponse($persona, 'Identifación si existe!');
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
 
     }
 
@@ -61,13 +82,11 @@ class VoluntarioPersonaController extends BaseController
         return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
     }
 
-    public function list()
-    {
+    function list() {
         $voluntarioPer = $this->voluntarioPersona->get();
 
         return $this->sendResponse($voluntarioPer, 'Lista de personas de voluntario');
     }
-
 
     public function cargarVoluntarios()
     {
@@ -111,8 +130,8 @@ class VoluntarioPersonaController extends BaseController
     {
         try {
             $rules = [
-                'cantidad'=> 'required|integer|min:1|max:30|',
-                'lugar'=> 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+                'cantidad' => 'required|integer|min:1|max:30|',
+                'lugar' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
                 'idVoluntario' => 'required|integer|min:1|',
             ];
             $messages = [
@@ -125,11 +144,13 @@ class VoluntarioPersonaController extends BaseController
                 'idVoluntario' => 'Mínimo 1 Id de voluntario',
                 'idVoluntario.*' => 'Se requiere un Id de voluntario',
             ];
-            $this->validate($request, $rules,$messages);
-            
+            $this->validate($request, $rules, $messages);
+
             $filtro = $request->idVoluntario;
+            $filtro2 = $request->IdentificacionPer;
             $existencia = Voluntario::where('id', '=', $filtro)->first();
-            if ($existencia === null) {
+            $existencia2 = VoluntarioPersona::where('identificacionPersona', '=', $filtro2)->first();
+            if ($existencia === null && $existencia2 === null) {
                 $tag = $this->voluntarios->create([
                     'id' => $request->get('idVoluntario'),
                     'cantidad' => $request->get('cantidad'),
@@ -140,9 +161,9 @@ class VoluntarioPersonaController extends BaseController
                     'voluntariado_id' => $request->get('voluntariado_id'),
                     'lugar' => $request->get('lugar'),
                 ]);
-                return $this->sendResponse($tag, 'Voluntario persona registrado!');
+                return response()->json(['success' => true, 'message' => 'Se registro el voluntariado!']);
             } else {
-                return response()->json(['success' => false, 'message' => 'El id del voluntario ya existe!']);
+                return response()->json(['success' => false, 'message' => 'El voluntario ya existe!']);
             }
 
         } catch (\Exception$e) {
@@ -173,8 +194,8 @@ class VoluntarioPersonaController extends BaseController
     {
         $rules = [
             'idVoluntario' => 'required|integer|min:1|',
-            'cantidad'=> 'required|integer|min:1|max:30|',
-            'lugar'=> 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'cantidad' => 'required|integer|min:1|max:30|',
+            'lugar' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
         ];
         $messages = [
             'cantidad.min' => 'Mínimo 1 actividad',

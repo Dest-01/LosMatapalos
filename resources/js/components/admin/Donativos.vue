@@ -934,6 +934,9 @@ export default {
       $("#modalPersona").modal("show");
       this.formPer.reset();
       this.formPer.errors.clear();
+      this.DNIResidencial = "";
+      this.DNIPasaporte = "";
+      this.DNINacional = "";
     },
     modalOrganizacion() {
       $("#modalOrganizacion").modal("show");
@@ -994,26 +997,50 @@ export default {
       }
     },
 
-    ConsultaCedula() {
+    async ConsultaCedula() {
       if (this.buscador.length != 0) {
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.buscador) ||
           /^[1-9]\d{9}$/.test(this.buscador) ||
           /^\d{11,12}$/.test(this.buscador)
         ) {
-          this.form
+          await axios
             .get("/api/donativo/verificar", {
               params: { buscador: this.buscador },
             })
-            .then(({ data }) => (this.personaIdArray = data.data));
-          this.mostrarMensajeConsulta();
+            .then((response) => {
+              if (response.data.success == true) {
+                this.mostrarMensajeConsulta();
+                axios
+                  .get("/api/donativo/obtener", {
+                    params: { buscador: this.buscador },
+                  })
+                  .then(({ data }) => (this.personaIdArray = data.data));
+              } else {
+                this.VermensajeSiExiste = false;
+                this.VermensajeNoExiste = true;
+                this.mensajeDeExistencia = "No existe!";
+              }
+            });
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
-          this.form
+          await axios
             .get("/api/donativo/verificarOrg", {
               params: { buscador: this.buscador },
             })
-            .then(({ data }) => (this.organizacionIdArray = data.data));
-          this.mostrarMensajeConsulta();
+            .then((response) => {
+              if (response.data.success == true) {
+                this.mostrarMensajeConsulta();
+                axios
+                  .get("/api/donativo/obtenerOrg", {
+                    params: { buscador: this.buscador },
+                  })
+                  .then(({ data }) => (this.organizacionIdArray = data.data));
+              } else {
+                this.VermensajeSiExiste = false;
+                this.VermensajeNoExiste = true;
+                this.mensajeDeExistencia = "No existe!";
+              }
+            });
         } else {
           this.VermensajeSiExiste = false;
           this.VermensajeNoExiste = true;
@@ -1359,8 +1386,8 @@ export default {
     width: 100%;
   }
   #inputsModal {
-  width: 90%;
-  margin: 10px 15px;
-}
+    width: 90%;
+    margin: 10px 15px;
+  }
 }
 </style>

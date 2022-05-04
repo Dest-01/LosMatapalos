@@ -34,19 +34,23 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::post('perfil/cambiar', 'PerfilController@cambiarPassword');
 
     ///////Rutas Personalizadas o especificas a un metodo
-    Route::get('donativo/verificar', 'DonativosController@obtenerCedula');
-    Route::get('donativo/verificarOrg', 'DonativosController@obtenerCedulaOrg');
+    Route::get('donativo/verificar', 'DonativosController@consultarCedula');
+    Route::get('donativo/verificarOrg', 'DonativosController@consultarCedulaOrg');
+    Route::get('donativo/obtener', 'DonativosController@obtenerCedula');
+    Route::get('donativo/obtenerOrg', 'DonativosController@obtenerCedulaOrg');
     Route::post('donativo/guardarPersona', 'DonativosController@guardarPersona');
     Route::post('donativo/guardarOrganizacion', 'DonativosController@guardarOrganizacion');
     Route::get('donativo/listar', 'DonativosController@list');
     Route::get('donativo/mostrar', 'DonativosController@mostrar');
       /////////////////////////---VOLUNTARIO--ESTUDIANTE---//////////////////////////////////////////////////////////////////
+    Route::get('voluntarioEstudiante/verificarCedula', 'VoluntarioEstudiantesController@consultarCedula');
     Route::get('voluntarioEstudiante/obtenerCedula', 'VoluntarioEstudiantesController@obtenerCedula');
     Route::get('voluntarioEstudiante/obtenerCantidad', 'VoluntarioEstudiantesController@obtenerCantidad');
     Route::post('voluntarioEstudiante/guardarPersona', 'VoluntarioEstudiantesController@guardarPersona');
     Route::get('voluntarioEstudiante/listar', 'VoluntarioEstudiantesController@list');
     Route::get('voluntarioEstudiante/mostrar', 'VoluntarioEstudiantesController@mostrar');
     /////////////////////////---VOLUNTARIO--PERSONA---//////////////////////////////////////////////////////////////////
+    Route::get('voluntarioPersona/verificarCedula', 'VoluntarioPersonaController@consultarCedula');
     Route::get('voluntarioPersona/obtenerCedula', 'VoluntarioPersonaController@obtenerCedula');
     Route::get('voluntarioPersona/obtenerCantidad', 'VoluntarioPersonaController@obtenerCantidad');
     Route::get('voluntarioPersona/cargarVoluntarios', 'VoluntarioPersonaController@cargarVoluntarios');
@@ -56,9 +60,13 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
 
     Route::get('GetVoluntarios', 'ActividadesParticipantesController@GetVoluntarios');
    /////////////////////////---RESERVAS---//////////////////////////////////////////////////////////////////
-    Route::get('reserva/verificar', 'ReservaController@obtenerCedula');
-    Route::get('reserva/verificarOrg', 'ReservaController@obtenerCedulaOrg');
-    Route::get('reserva/verificarGrupo', 'ReservaController@obtenerNombreGrupo');
+    Route::get('reserva/verificar', 'ReservaController@consultarCedula');
+    Route::get('reserva/verificarOrg', 'ReservaController@consultarCedulaOrg');
+    Route::get('reserva/verificarGrupo', 'ReservaController@consultarNombreGrupo');
+    Route::get('reserva/obtener', 'ReservaController@obtenerCedula');
+    Route::get('reserva/obtenerOrg', 'ReservaController@obtenerCedulaOrg');
+    Route::get('reserva/obtenerGrupo', 'ReservaController@obtenerNombreGrupo');
+
     Route::post('reserva/guardarPersona', 'ReservaController@guardarPersona');
     Route::post('reserva/guardarOrganizacion', 'ReservaController@guardarOrganizacion');
     Route::post('reserva/guardarGrupo', 'ReservaController@GuardarGrupo');
@@ -139,9 +147,12 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
 
 Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         
-    Route::get('reservarCliente/verificar', 'ReservarCliController@obtenerCedula');
-    Route::get('reservarCliente/verificarOrg', 'ReservarCliController@obtenerCedulaOrg');
-    Route::get('reservarCliente/verificarGrupo', 'ReservarCliController@obtenerNombreGrupo');
+    Route::get('reservarCliente/verificar', 'ReservarCliController@consultarCedula');
+    Route::get('reservarCliente/verificarOrg', 'ReservarCliController@consultarCedulaOrg');
+    Route::get('reservarCliente/verificarGrupo', 'ReservarCliController@consultarNombreGrupo');
+    Route::get('reservarCliente/obtener', 'ReservarCliController@obtenerCedula');
+    Route::get('reservarCliente/obtenerOrg', 'ReservarCliController@obtenerCedulaOrg');
+    Route::get('reservarCliente/obtenerGrupo', 'ReservarCliController@obtenerNombreGrupo');
     Route::post('reservarCliente/persona', 'ReservarCliController@GuardarPersona');
     Route::post('reservarCliente/organizacion', 'ReservarCliController@GuardarOrganizacion');
     Route::post('reservarCliente/grupo', 'ReservarCliController@GuardarGrupo');

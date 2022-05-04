@@ -23,13 +23,36 @@ class VoluntarioEstudiantesController extends BaseController
         $this->voluntarios = $voluntarios;
     }
 
+    public function consultarCedula(Request $request)
+    {
+        try {
+            $filtro = $request->buscador;
+            $existencia = Personas::where('identificacion', '=', $filtro)->first();
+            if ($existencia !== null) {
+                return response()->json(['success' => true, 'message' => 'Identifación si existe!']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Identifación no existe!']);
+            }
+
+        } catch (Exception $e) {
+
+            return $e->getMessage();
+        }
+    }
+
     public function obtenerCedula(Request $request)
     {
-        $filtro = $request->buscador;
-        $persona = Personas::where('identificacion', $filtro)->get();
-        return $this->sendResponse($persona, 'Identificación si existe!');
+        try {
+            $filtro = $request->buscador;
+            $persona = Personas::where('identificacion', $filtro)->select('id','identificacion','correo')->get();
+            return $this->sendResponse($persona, 'Identifación si existe!');
+
+        } catch (\Exception$e) {
+            return $e->getMessage();
+        }
 
     }
+
     public function obtenerCantidad(Request $request)
     {
         $filtro = $request->VolCantidad;
@@ -104,7 +127,7 @@ class VoluntarioEstudiantesController extends BaseController
             'carrera' => 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:50|min:3',
             'imagen' => 'required|sometimes|base64image:png,jpeg,jpg',
             'idVoluntario' => 'required|integer|min:1|max:9999',
-            'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
+            'cantidad'=> 'required|integer|min:0|max:999|',
         ];
 
         $messages = [
@@ -114,8 +137,7 @@ class VoluntarioEstudiantesController extends BaseController
             'imagen.*' => 'Se requiere la foto del estudiante',
             'idVoluntario' => 'Mínimo 1 Id de voluntario',
             'idVoluntario.*' => 'Se requiere un Id de voluntario',
-            'cantidad.min' => 'Mínimo 1 actividad',
-            'cantidad.max' => 'Máximo 30 actividades',
+            'cantidad.*' => 'Se requiere una cantidad',
             'cantidad.*' => 'Se requiere una cantidad de actividades',
         ];
         $this->validate($request, $rules, $messages);
@@ -130,8 +152,11 @@ class VoluntarioEstudiantesController extends BaseController
 
         try {
             $filtro = $request->idVoluntario;
+            $filtro2 = $request->IdentificacionEst;
             $existencia = Voluntario::where('id', '=', $filtro)->first();
-            if ($existencia === null) {
+            $existencia2 = VoluntarioEstudiantes::where('identificacionPersona', '=', $filtro2)->first();
+
+            if ($existencia === null && $existencia2 === null) {
                 $tag = $this->voluntarios->create([
                     'id' => $request->get('idVoluntario'),
                     'cantidad' => $request->get('cantidad'),
@@ -145,7 +170,7 @@ class VoluntarioEstudiantesController extends BaseController
                 ]);
                 return $this->sendResponse($tag, 'Voluntario estudiante registrado!');
             } else {
-                return response()->json(['success' => false, 'message' => 'El id del voluntario ya existe!']);
+                return response()->json(['success' => false, 'message' => 'El voluntario ya existe!']);
             }
 
         } catch (\Exception$e) {

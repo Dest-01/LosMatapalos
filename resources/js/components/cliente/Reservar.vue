@@ -435,7 +435,8 @@
                   style="margin-top: 6px; left: -2px"
                 ></i>
                 <input
-                  v-model="formPersona.identificacion"
+                  v-model="DNINacional"
+                  v-mask="[/[1-9]/, '-####-####']"
                   type="text"
                   name="identificacion"
                   class="input_modal"
@@ -458,7 +459,9 @@
                   style="margin-top: 6px; left: -2px"
                 ></i>
                 <input
-                  v-model="formPersona.identificacion"
+                  v-model="DNIResidencial"
+                  pattern="[0-9]{10}"
+                  v-mask="'##########'"
                   id="residencial"
                   type="text"
                   name="identificacion"
@@ -482,7 +485,9 @@
                 ></i>
                 <input
                   id="pasaporte"
-                  v-model="formPersona.identificacion"
+                  v-model="DNIPasaporte"
+                  pattern="[0-9]{11,12}"
+                  v-mask="'############'"
                   type="text"
                   name="identificacion"
                   class="input_modal"
@@ -582,6 +587,8 @@
                   min="10000000"
                   v-bind:placeholder="$t('EscibaNumero')"
                   required
+                  v-mask="[/[2-9]/, '#######']"
+                   pattern="[0-9]{8}"
                 />
                 <has-error
                   class="error_modal"
@@ -670,6 +677,8 @@
                   'is-invalid': formOrganizacion.errors.has('identificacion'),
                 }"
                 v-bind:placeholder="$t('CedulaOrga')"
+                pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
+                    v-mask="'#-###-######'"
               />
               <has-error
                 style="top: 80px"
@@ -781,10 +790,12 @@
               <label>{{ $t("Nombre_Grup") }}</label>
               <i class="fas fa-file-signature iconoInput_modal"></i>
               <input
+                :disabled="true"
                 v-model="formGrupo.nombre"
                 type="text"
                 name="nombre"
                 class="input_modal"
+                v-mask="[/[G]/, '-####']"
                 :class="{
                   'is-invalid': formGrupo.errors.has('nombre'),
                 }"
@@ -798,6 +809,16 @@
                 :form="formGrupo"
                 field="nombre"
               ></has-error>
+            </div>
+
+            <div class="group">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                @click="GenerarIdRamdon()"
+              >
+                {{ $t("GenerarNombre") }}
+              </button>
             </div>
             <div class="group">
               <label>{{ $t("Correo") }}</label>
@@ -990,6 +1011,9 @@ export default {
       grupoIdArray: {},
       grupo: {}, //array de grupo
       buscador: "",
+      DNINacional: "",
+      DNIResidencial: "",
+      DNIPasaporte: "",
       VerOtraTematica: false,
       formCorreo: new Form({
         cedulaReservacion: "",
@@ -1041,6 +1065,10 @@ export default {
     };
   },
   methods: {
+    GenerarIdRamdon() {
+      let numeros = Math.floor(Math.random() * 1000);
+      this.formGrupo.nombre = "G-" + numeros;
+    },
     verInputOtraTematica() {
       if (this.formGrupo.tematica == "Otros") {
         this.VerOtraTematica = true;
@@ -1090,17 +1118,36 @@ export default {
         this.Pasaporte = false;
         this.CedulaResidencial = false;
         this.formPersona.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       }
       if (this.tipoIndenteficacion == "Cedula Residencial") {
         this.CedulaNacional = false;
         this.Pasaporte = false;
         this.CedulaResidencial = true;
         this.formPersona.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
       } else if (this.tipoIndenteficacion == "Pasaporte") {
         this.CedulaNacional = false;
         this.Pasaporte = true;
         this.CedulaResidencial = false;
         this.formPersona.identificacion = "";
+        this.DNINacional = "";
+        this.DNIResidencial = "";
+        this.DNIPasaporte = "";
+      }
+    },
+
+    asignarDNI() {
+      if (this.DNINacional != "") {
+        this.formPersona.identificacion = this.DNINacional;
+      } else if (this.DNIResidencial != "") {
+        this.formPersona.identificacion = this.DNIResidencial;
+      } else if (this.DNIPasaporte) {
+        this.formPersona.identificacion = this.DNIPasaporte;
       }
     },
 
@@ -1108,6 +1155,9 @@ export default {
       $("#modalPersona").modal("show");
       this.formPersona.reset();
       this.formPersona.errors.clear();
+      this.DNIResidencial = "";
+      this.DNIPasaporte = "";
+      this.DNINacional = "";
     },
     modalOrganizacion() {
       $("#modalOrganizacion").modal("show");
@@ -1141,8 +1191,13 @@ export default {
         this.bloquearReservar = false;
       }
     },
-    crearPersona() {
-      if (this.formPersona.identificacion != "") {
+    async crearPersona() {
+      if (
+        this.DNINacional != "" ||
+        this.DNIResidencial != "" ||
+        this.DNIPasaporte != ""
+      ) {
+        this.asignarDNI();
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.formPersona.identificacion) ||
           /^[1-9]\d{9}$/.test(this.formPersona.identificacion) ||
@@ -1240,33 +1295,75 @@ export default {
       this.bloquearConsulta = true;
       this.bloquearterminos = false;
     },
-    consultarDatos() {
+    async consultarDatos() {
       if (this.buscador.length != "") {
         if (
           /^[1-9]-\d{4}-\d{4}$/.test(this.buscador) ||
           /^[1-9]\d{9}$/.test(this.buscador) ||
           /^\d{11,12}$/.test(this.buscador)
         ) {
-          this.formReserva
+          await axios
             .get("/api/reservarCliente/verificar", {
               params: { buscador: this.buscador },
             })
-            .then(({ data }) => (this.personaIdArray = data.data));
-          this.HabilitarMostrarMensaje();
+            .then((response) => {
+              if (response.data.success == true) {
+                this.HabilitarMostrarMensaje();
+                axios
+                  .get("/api/reservarCliente/obtener", {
+                    params: { buscador: this.buscador },
+                  })
+                  .then(({ data }) => (this.personaIdArray = data.data));
+              } else {
+                this.VermensajeNoExiste = true;
+                this.VermensajeSiExiste = false;
+                this.mensajeDeExistencia = this.$t("NoEstaRegistrado");
+                this.bloquearConsulta = false;
+                this.bloquearterminos = true;
+              }
+            });
         } else if (/^[1-9]-\d{3}-\d{6}$/.test(this.buscador)) {
-          this.formReserva
+          await axios
             .get("/api/reservarCliente/verificarOrg", {
               params: { buscador: this.buscador },
             })
-            .then(({ data }) => (this.organizacionIdArray = data.data));
-          this.HabilitarMostrarMensaje();
+            .then((response) => {
+              if (response.data.success == true) {
+                this.HabilitarMostrarMensaje();
+                axios
+                  .get("/api/reservarCliente/obtenerOrg", {
+                    params: { buscador: this.buscador },
+                  })
+                  .then(({ data }) => (this.organizacionIdArray = data.data));
+              } else {
+                this.VermensajeNoExiste = true;
+                this.VermensajeSiExiste = false;
+                this.mensajeDeExistencia = this.$t("NoEstaRegistrado");
+                this.bloquearConsulta = false;
+                this.bloquearterminos = true;
+              }
+            });
         } else if (/^[G]{1}-\d{1,4}$/.test(this.buscador)) {
-          this.formReserva
+          await axios
             .get("/api/reservarCliente/verificarGrupo", {
               params: { buscador: this.buscador },
             })
-            .then(({ data }) => (this.grupoIdArray = data.data));
-          this.HabilitarMostrarMensaje();
+            .then((response) => {
+              if (response.data.success == true) {
+                this.HabilitarMostrarMensaje();
+                axios
+                  .get("/api/reservarCliente/obtenerGrupo", {
+                    params: { buscador: this.buscador },
+                  })
+                  .then(({ data }) => (this.grupoIdArray = data.data));
+              } else {
+                this.VermensajeNoExiste = true;
+                this.VermensajeSiExiste = false;
+                this.mensajeDeExistencia = this.$t("NoEstaRegistrado");
+                this.bloquearConsulta = false;
+                this.bloquearterminos = true;
+              }
+            });
         } else {
           this.VermensajeNoExiste = true;
           this.VermensajeSiExiste = false;

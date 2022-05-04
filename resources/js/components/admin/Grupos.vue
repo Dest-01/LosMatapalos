@@ -162,7 +162,19 @@
                     required
                   />
                   <has-error :form="form" field="nombre"></has-error>
+                  
                 </div>
+                <div v-show="ocultarGenerador" class="form-group">
+                   <button
+                    type="button"
+                    class="btn btn-success my-7"
+                    @click="GenerarIdRamdon()"
+                  >
+                    Generar Nombre
+                  </button>
+                </div>
+
+                
                 <div class="form-group">
                   <label>Correo</label>
                   <input
@@ -411,9 +423,10 @@
 export default {
   data() {
     return {
+      ocultarGenerador: false,
       valorMostrar: "10",
       editmode: false,
-      bloquearNombre: false,
+      bloquearNombre: true,
       errors: {},
       grupos: {},
       nuevoGrupos: {},
@@ -440,6 +453,10 @@ export default {
         this.grupos.data = this.grupoFiltradas;
       }
     },
+    GenerarIdRamdon(){
+         let numeros = Math.floor(Math.random() * 1000) 
+         this.form.nombre =  "G-"  + numeros
+    },
     verInputOtraTematica() {
       if (this.form.tematica == "Otros") {
         this.VerOtraTematica = true;
@@ -455,10 +472,12 @@ export default {
       this.form.fill(grupo);
       this.form.errors.clear();
       this.bloquearNombre = true;
+      this.ocultarGenerador = false;
     },
     newModal() {
       this.editmode = false;
-      this.bloquearNombre = false;
+      this.bloquearNombre = true;
+      this.ocultarGenerador = true;
       this.form.reset();
       $("#addNew").modal("show");
       this.form.errors.clear();

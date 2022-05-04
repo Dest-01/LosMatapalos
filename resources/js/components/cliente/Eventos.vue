@@ -5,9 +5,7 @@
         {{ $t("Galery")}} <span style="color: #38ab81">{{ $t("EventosP")}}</span>
       </h1>
     </div>
-    <div class="menu">
-      <button @click="vertodo()" class="btn_menu">{{ $t("Todo") }}</button>
-    </div>
+
     <div v-if="eventos.data == 0" class="row">
       <div class="mensaje">
         <i class="far fa-image"></i>
@@ -109,10 +107,6 @@ export default {
     };
   },
   methods: {
-    vertodo() {
-      this.eventos.data = this.eventosTodos;
-    },
-
     verImagen(evento) {
       this.form.fill(evento);
     },
@@ -144,20 +138,7 @@ export default {
     },
   },
   computed: {
-    filtroHerbaceas: function () {
-      return this.eventosTodos.filter((evento) => {
-        return evento.tipo
-          .toLowerCase()
-          .includes(this.filtrarBusqueda.toLowerCase());
-      });
-    },
-    filtroLenosas: function () {
-      return this.eventosTodos.filter((evento) => {
-        return evento.tipo
-          .toLowerCase()
-          .includes(this.filtrarBusqueda2.toLowerCase());
-      });
-    },
+
   },
 };
 </script>

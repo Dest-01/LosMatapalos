@@ -41,7 +41,7 @@ class UserRequest extends FormRequest
             'type' => 'required|in:admin,user',
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users',
-            'password' => 'required|string|min:6'
+            'password' => 'required|min:8|max:20|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/',
         ];
     }
 
@@ -55,16 +55,20 @@ class UserRequest extends FormRequest
         return [
             'type' => 'sometimes|in:admin,user',
             'name' => 'sometimes|string|max:191',
-            'email' => 'sometimes|string|email|max:191|unique:users,email,' . $this->get('id')
+            'email' => 'sometimes|string|email|max:191|unique:users,email,' . $this->get('id'),
+            'password' => 'required|min:8|max:20|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/'
         ];
     }
     public function messages(){
         return [
             'name.mun' => 'Minimo de 3 caracteres',
-            'name.max' => 'Maximo de 100 caracteres',
+            'name.max' => 'Máximo de 100 caracteres',
             'name.*' => 'Se requiere un nombre',
             'email.*' => 'Se require un correo',
-            'password.*' => 'Se require una contraseña',
+            'password.required' => 'Se require una contraseña',
+            'password.min' => 'Minimo 8 caracteres',
+            'password.max' => 'Máximo 20 caracteres',
+            'password.regex' => 'Agrega mayúsculas, minúsculas y números',
             'type.*' => 'Seleccione un tipo de rol',
         ];
     }
