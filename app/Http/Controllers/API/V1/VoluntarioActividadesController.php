@@ -40,7 +40,7 @@ class VoluntarioActividadesController extends BaseController
             ->leftJoin('personas as perEstudiante', 'voluntario_estudiantes.identificacion', '=', 'perEstudiante.id') //Persona con Estudiante
             ->leftJoin('voluntarios as voluntariosEst', 'voluntario_estudiantes.voluntariado_id', '=', 'voluntariosEst.id') //Persona con Estudiante
             ->leftJoin('voluntarios as voluntariosPer', 'voluntario_personas.voluntariado_id', '=', 'voluntariosPer.id') //Persona con Estudiante
-            ->select('voluntario_actividades.*', 'voluntariosEst.cantidad as VoluntarioEstCantidad', 'voluntariosPer.cantidad as VoluntarioPerCantidad', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
+            ->select('voluntario_actividades.*','voluntariosPer.id as voluntariosIDPersona', 'voluntariosEst.id as voluntariosIDEstudiante', 'voluntariosEst.cantidad as VoluntarioEstCantidad', 'voluntariosPer.cantidad as VoluntarioPerCantidad', 'perVoluntarias.nombre as NombrePersona', 'perVoluntarias.apellido1 as ApellidoPersona',
                 'perEstudiante.nombre as NombreEstudiante', 'perEstudiante.apellido1 as ApellidoEstudiante',
                 'actividades.id as ActId', 'actividades.nombre as ActNombre', 'actividades.cantParticipantes as ActCupos', 'voluntario_personas.identificacion as VolPerId',
                 'voluntario_personas.identificacionPersona as VolPerCedula', 'voluntario_estudiantes.identificacion as volEstId',

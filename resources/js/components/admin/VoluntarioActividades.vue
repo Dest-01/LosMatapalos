@@ -108,9 +108,9 @@
                             reiniciar(
                               actividadVoluntario.idActividad,
                               actividadVoluntario.ActCupos,
-                              actividadVoluntario.idVoluntario_Estudiante,
+                              actividadVoluntario.voluntariosIDEstudiante,
                               actividadVoluntario.VoluntarioEstCantidad,
-                              actividadVoluntario.idVoluntario_Persona,
+                              actividadVoluntario.voluntariosIDPersona,
                               actividadVoluntario.VoluntarioPerCantidad
                             )
                         "
@@ -573,23 +573,33 @@ export default {
     //////////////////////////////////////////////////////////
     ///////////METODO PARA APLICAR RESTAS Y SUMAS AL ELIMINAR /////////////
     async reiniciar(idAct, Cupos, idEstVol, cantEstAct, idPerVol, cantPerAct) {
-      if (idEstVol != 0 && idPerVol != 0) {
+      this.VolperCantAnt = 0;
+      this.VolEstCantAnt = 0;
+
+      if (idEstVol !== null && idPerVol !== null) {
         this.CuposRebajo = 2;
+        cantEstAct = cantEstAct -1;
+        cantPerAct = cantPerAct -1;
+        console.log("Se suman 2 cupos")
       }
-      if (idEstVol != 0 && !idPerVol) {
+      if (idEstVol !== null && idPerVol === null) {
         this.CuposRebajo = 1;
+        this.VolEstCantAnt = cantEstAct -1;
+        console.log("Se le rebaja 1 al estudiante")
       }
-      if (!idEstVol && idPerVol != 0) {
+      if (idEstVol === null && idPerVol !== null) {
         this.CuposRebajo = 1;
+        this.VolperCantAnt = cantPerAct -1;
+        console.log("Se le rebaja 1 a la persona")
       }
       await axios.get("/api/voluntarioActividad/datos/", {
         params: {
           idAct: idAct,
           Cupos: Cupos + this.CuposRebajo,
           idVoluntarioEst: idEstVol,
-          CantidadEst: cantEstAct - 1,
+          CantidadEst: this.VolEstCantAnt,
           idVoluntarioPer: idPerVol,
-          CantidadPer: cantPerAct - 1,
+          CantidadPer: this.VolperCantAnt,
         },
       });
     },
@@ -627,9 +637,9 @@ export default {
     guardarDatosActualizar(actividadVoluntario) {
       (this.idActivAnt = actividadVoluntario.ActId),
         (this.ActiCuposAnt = actividadVoluntario.ActCupos),
-        (this.idVolEstAnt = actividadVoluntario.idVoluntario_Estudiante),
+        (this.idVolEstAnt = actividadVoluntario.voluntariosIDEstudiante),
         (this.VolEstCantAnt = actividadVoluntario.VoluntarioEstCantidad),
-        (this.idVolPertAnt = actividadVoluntario.idVoluntario_Persona),
+        (this.idVolPertAnt = actividadVoluntario.voluntariosIDPersona),
         (this.VolperCantAnt = actividadVoluntario.VoluntarioPerCantidad);
     },
     //Comparamos y modificamos los datos anterior

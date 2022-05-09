@@ -132,8 +132,8 @@ class VoluntarioEstudiantesController extends BaseController
 
         $messages = [
             'carrera.*' => 'Se requiere la carrera del estudiante',
-            'carrera.min' => 'Mínimo 3 caracteres',
-            'carrera.max' => 'Máximo 50 caracteres',
+            'carrera.min' => 'Mínimo 0 caracteres',
+            'carrera.max' => 'Máximo 999 caracteres',
             'imagen.*' => 'Se requiere la foto del estudiante',
             'idVoluntario' => 'Mínimo 1 Id de voluntario',
             'idVoluntario.*' => 'Se requiere un Id de voluntario',
@@ -201,13 +201,13 @@ class VoluntarioEstudiantesController extends BaseController
       
         $rules = [
             'carrera' => 'required|string|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/|string|max:30|min:3',
-            'cantidad'=> 'required|integer|min:1|max:30|regex:/[0-9]{1,30}/',
+            'cantidad'=> 'required|integer|min:0|max:999|regex:/[0-9]{1,30}/',
         ];
 
         $messages = [
             'carrera.*' => 'Se requiere la carrera del Estudiante',
-            'carrera.min' => 'Mínimo 3 caracteres',
-            'carrera.max' => 'Maximo 50 caracteres',
+            'carrera.min' => 'Mínimo 0 caracteres',
+            'carrera.max' => 'Maximo 999 caracteres',
             'cantidad.min' => 'Mínimo 1 actividad',
             'cantidad.max' => 'Maximo 30 actividades',
             'cantidad.*' => 'Se requiere una cantidad de actividades',
