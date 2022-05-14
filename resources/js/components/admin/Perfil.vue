@@ -42,7 +42,7 @@
                         <tr>
                           <th>Usuario Activo</th>
                           <th>Usuario Agregado</th>
-                          <th>Usuario Modficado</th>
+                          <th>Usuario Modificado</th>
                           <th>Usuario Eliminado</th>
                           <th>Acción Realizada</th>
                           <th>Fecha</th>
