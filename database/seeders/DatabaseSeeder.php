@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
       // ]); LLAVES FORANEAS
       
     $this->call([
-      PersonSeeder::class,
+      //PersonSeeder::class,
       // AreaSeeder::class,
       UsersTableSeeder::class,
       // RoleSeeder::class,

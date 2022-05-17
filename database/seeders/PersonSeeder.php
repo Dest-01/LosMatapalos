@@ -13,8 +13,8 @@ class PersonSeeder extends Seeder
      */
     public function run()
     {
-        Personas::factory()
+        /*Personas::factory()
             ->count(5000)
-            ->create();
+            ->create();*/
     }
 }
