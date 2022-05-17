@@ -139,7 +139,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'repositorio' => 'RepositorioDocumentosController',
         'historial' => 'TriggerUsuariosController',
         'perfil' => 'PerfilController',
-        'actividadesPasadas' => 'actividadesPasadasController',
+        'actividadesPasadas' => 'ActividadesPasadasController',
         'calculoActividad' => 'CalculosController',
     ]);
 });
