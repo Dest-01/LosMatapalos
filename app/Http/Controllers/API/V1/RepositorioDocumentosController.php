@@ -62,6 +62,7 @@ class RepositorioDocumentosController extends BaseController
 			'descripcion.*' => 'Breve descripción del documento',
 			'fecha.*' => 'Seleccione fecha del documento',
 		];
+		$this->validate($request, $rules,$messages);
 		try {
 			$repositorioDocumentos = $request->all();
 			if ($repositorioDocumentos['documento']) {
