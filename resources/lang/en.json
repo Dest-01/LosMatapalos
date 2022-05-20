@@ -6,7 +6,7 @@
     "Flora": "Flora",
     "Fauna": "Fauna",
     "Repositorio": "Repository",
-    "Marca": "Brand",
+    "Nuestros Productos": "Our Products",
     "Quienes": "About us!",
 
     "Nuestros": "Our",
@@ -147,7 +147,7 @@
     "ReservacionMensaje4": "Incorrect ID or group name format!",
     "ReservacionMensaje5": "First verify that you are registered!",
 
-    "EscribaElIDCOnsultar": "Write the id or name to consult...",
+    "EscribaElIDCOnsultar": "Write the ID or name to consult...",
     "EscribaIDNacional": "Format #-####-####",
     "EscribaResidencial": "Format of 10 digits",
     "EscribaPasaporte": "Format of 11 a 12 digits",

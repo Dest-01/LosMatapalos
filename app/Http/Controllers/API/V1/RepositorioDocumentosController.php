@@ -50,8 +50,8 @@ class RepositorioDocumentosController extends BaseController
 	public function store(Request $request)
 	{
 		$rules = [
-			'nombre' => 'required|string|max:50',
-			'descripcion' => 'required|string|min:3|max:255|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+			'nombre' => 'required|string|max:150',
+			'descripcion' => 'required|string|min:3|max:600|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
 			'fecha' => 'required|date|after:2000-01-01',
 
 		];

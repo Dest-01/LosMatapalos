@@ -6,7 +6,7 @@
     "Flora": "Flora",
     "Fauna": "Fauna",
     "Repositorio": "Repositorio",
-    "Marca": "Marca",
+    "Nuestros Productos": "Nuestros Productos",
     "Quienes": "¿Quiénes somos?",
 
     "Nuestros": "Nuestros",
@@ -146,7 +146,7 @@
     "ReservacionMensaje4": "Identificación o nombre de grupo formato incorrecto!",
     "ReservacionMensaje5": "Primero verifique que este registrado!",
 
-    "EscribaElIDCOnsultar": "Escriba el id o nombre a consultar...",
+    "EscribaElIDCOnsultar": "Escriba el ID o nombre a consultar...",
     "EscribaIDNacional": "Formato #-####-####",
     "EscribaResidencial": "Formato de 10 dígitos",
     "EscribaPasaporte": "Formato de 11 a 12 dígitos",
@@ -174,7 +174,7 @@
     "tipoPublico": "Público",
 
     "tipoLenosa": "Leñosa",
-    "tipoHerbaceas": "Herbaceas",
+    "tipoHerbaceas": "Herbáceas",
 
     "Donacion_T1": "¡Haz una donación!",
     "Donacion_P1_s1": "Su generosa donación y su continuo apoyo marcan una gran ayuda al",
@@ -200,7 +200,7 @@
     "About_T1": "Acerca de",
     "About_T2": "nosotros",
     "About_T3": "Misión",
-    "About_P1": "“Aprender de la naturaleza todos los días para forjar valores biocéntricos en todas las personas que conviven en el Campus Liberia”",
+    "About_P1": "Aprender de la naturaleza todos los días para forjar valores biocéntricos en todas las personas que conviven en el Campus Liberia”",
     "About_T4": "Visión",
     "About_P2": "Colaborar para que el Campus Liberia sea el mejor en materia de sostenibilidad en Latinoamérica.",
     "About_T5": "Valores",

@@ -159,9 +159,9 @@
                     placeholder="Nombre del documento"
                     required
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
-                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,30}"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,150}"
                      minlength="1"
-                     maxlength="30"
+                     maxlength="150"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
@@ -189,8 +189,8 @@
                     placeholder="Breve descripción"
                     required
                     minlength="3"
-                    maxlength="255"
-                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,255}"
+                    maxlength="600"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,600}"
                     id=""
                     rows="3"
                   ></textarea>
