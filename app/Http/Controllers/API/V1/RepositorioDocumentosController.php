@@ -72,7 +72,7 @@ class RepositorioDocumentosController extends BaseController
 			if ($repositorioResult = RepositorioDocumentos::create($repositorioDocumentos)) :
 				return $this->sendResponse($repositorioResult, 'Documento guardado!');
 			endif;
-			return $this->sendResponse('Documento no guardado!');
+			return $this->sendResponse('Documento no guardado');
 		} catch (\Exception $e) {
 			return response()->json([
 				'message' => $e->getMessage()
