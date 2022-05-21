@@ -58,7 +58,7 @@ class RepositorioDocumentosController extends BaseController
 		$messages = [
 			'nombre.*' => "Se requiere un nombre",
 			'descripcion.min' => "Mínimo 3 caracteres",
-			'descripcion.max' => "Máximo 255 caracteres",
+			'descripcion.max' => "Máximo 600 caracteres",
 			'descripcion.*' => 'Breve descripción del documento',
 			'fecha.*' => 'Seleccione fecha del documento',
 		];

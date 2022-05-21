@@ -94,7 +94,7 @@
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/marca" onclick="cerrarNavbar()">{{
-                $t("Marca")
+                $t("Nuestros Productos")
               }}</router-link>
             </li>
             <li class="nav-item">
