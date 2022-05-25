@@ -159,9 +159,9 @@
                     placeholder="Nombre del documento"
                     required
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
-                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,150}"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,400}"
                      minlength="1"
-                     maxlength="150"
+                     maxlength="400"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>
