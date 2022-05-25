@@ -21,7 +21,7 @@
             </div>
           </div>
           <div class="image">
-            <img src="images/vivero.jpg" />
+            <img src="images/vivero.webp" />
           </div>
         </div>
         <div class="slider">
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="image">
-            <img src="images/Arboretum.JPG" />
+            <img src="images/Arboretum.webp" />
           </div>
         </div>
         <div class="slider">
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="image">
-            <img src="images/Melipo.jpg" />
+            <img src="images/Melipo.wepb" />
           </div>
         </div>
         <div class="slider">
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="image">
-            <img src="images/Reservorio.JPG" />
+            <img src="images/Reservorio.webp" />
           </div>
         </div>
       </div>
