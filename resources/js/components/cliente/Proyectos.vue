@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="image">
-            <img src="images/Melipo.wepb" />
+            <img src="images/Melipo.webp" />
           </div>
         </div>
         <div class="slider">
