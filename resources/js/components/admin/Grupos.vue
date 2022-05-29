@@ -150,7 +150,7 @@
             <form @submit.prevent="editmode ? actualizarGrupo() : crearGrupo()">
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Nombre del grupo</label>
+                  <label>Codigo del grupo</label>
                   <input
                     v-model="form.nombre"
                     type="text"
@@ -170,7 +170,7 @@
                     class="btn btn-success my-7"
                     @click="GenerarIdRamdon()"
                   >
-                    Generar Nombre
+                    Generar Codigo
                   </button>
                 </div>
 

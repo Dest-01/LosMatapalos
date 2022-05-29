@@ -112,8 +112,8 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('usuarios/listar', 'UserController@list');
     Route::get('usuarios/mostrar', 'UserController@mostrar');
     Route::get('historial/listar', 'TriggerUsuariosController@listar');
-    Route::get('actividadesPasadas/listar', 'actividadesPasadasController@list');
-    Route::get('actividadesPasadas/mostrar', 'actividadesPasadasController@mostrar');
+    Route::get('actividadesPasadas/listar', 'ActividadesPasadasController@list');
+    Route::get('actividadesPasadas/mostrar', 'ActividadesPasadasController@mostrar');
     
 
     //////RUTAS COMPLETAS GET, PUT, POST, DELETE
