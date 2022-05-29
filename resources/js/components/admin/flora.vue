@@ -168,7 +168,7 @@
                     name="nom_comun"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nom_comun') }"
-                    placeholder="Nombre común de la fauna"
+                    placeholder="Nombre común de la flora"
                     required
                     minlength="3"
                     maxlength="30"
@@ -186,7 +186,7 @@
                     name="nom_cientifico"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('nom_cientifico') }"
-                    placeholder="Nombre científico de la fauna"
+                    placeholder="Nombre científico de la flora"
                      required
                     minlength="3"
                     maxlength="30"

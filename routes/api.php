@@ -162,7 +162,7 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
     Route::get('floraCliente/List', 'FloraController@list');
     Route::get('faunaCliente/List', 'FaunaController@list');
     Route::get('repositorioCliente/List', 'RepositorioController@list');
-    Route::get('actividadesPasadasCliente/List', 'actividadesPasadasController@list');
+    Route::get('actividadesPasadasCliente/List', 'ActividadesPasadasController@list');
 
     Route::apiResources([
         'reservarCliente' => 'ReservarCliController',
@@ -173,7 +173,7 @@ Route::namespace('App\\Http\\Controllers\\API\client')->group(function () {
         'articulosCliente' => 'ArticuloController',
         'repositorioCliente' => 'RepositorioController',
         'voluntariosCliente' => 'VoluntarioEstudiantesController',
-        'actividadesPasadasCliente' => 'actividadesPasadasController',
+        'actividadesPasadasCliente' => 'ActividadesPasadasController',
     ]);
 });
 //API DE REPORTES PARA CONSULTAR DATOS
