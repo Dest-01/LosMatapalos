@@ -185,7 +185,7 @@
                     required
                     minlength="3"
                     maxlength="50"
-                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,50}"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ.\s]{3,50}"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>

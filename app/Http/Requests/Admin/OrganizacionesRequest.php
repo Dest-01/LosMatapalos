@@ -38,7 +38,7 @@ class OrganizacionesRequest extends FormRequest
     {
         return [
             'identificacion' => 'required|regex:/^[1-9]-\d{3}-\d{6}$/',
-            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'nombre' => 'required|string|min:3|max:40|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ.-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ.-]*)*)+$/',
             'telefono' => 'required|regex:/^[2-9]\d{3}\d{4}$/',
             'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',
         ];

@@ -697,6 +697,7 @@
                 :class="{
                   'is-invalid': formOrganizacion.errors.has('nombre'),
                 }"
+                
                 v-bind:placeholder="$t('NombreOrga')"
               />
               <has-error
