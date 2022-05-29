@@ -67,7 +67,7 @@ class ActividadesParticipantesController extends BaseController
             ]);
             return $this->sendResponse($tag, 'Participante añadido a actividad!');
         }
-        return this->sendResponse('','Error al anadir a actividad!');
+        return $this->sendResponse('','Error al añadir la actividad!');
     }
 
     /**

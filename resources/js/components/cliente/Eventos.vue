@@ -17,7 +17,7 @@
     <div v-else class="container-all wow fadeInLeft" data-wow-duration="2s">
       <div v-for="evento in eventos.data" :key="evento.id" class="container">
         <img
-          v-bind:src="'/images/actividadesPasadas/' + evento.imagen"
+          v-bind:src="'/images/ActividadesPasadas/' +   evento.imagen"
           width="100%"
           height="100%"
           alt=""
@@ -73,7 +73,7 @@
           </div>
           <div class="modal-body">
             <img
-              v-bind:src="'/images/actividadesPasadas/' + form.imagen"
+              v-bind:src="'/images/ActividadesPasadas/' + form.imagen"
               v-bind:alt="form.nombre"
               width="100%"
               height="720px"
