@@ -178,9 +178,7 @@
                     :class="{ 'is-invalid': form.errors.has('nombre') }"
                     placeholder="Nombre de la actividad"
                     required
-                    minlength="3"
-                    maxlength="30"
-                    pattern="[a-zA-Z'-'\s]*"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{3,30}"
                   />
                   <has-error :form="form" field="nombre"></has-error>
                 </div>

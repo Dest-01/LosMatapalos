@@ -251,7 +251,7 @@
     "Capacitaciones_y_Cursos_info":"Falta información",
     "Tours_info":"Falta información",
     "Educacion_ambiental_info":"Falta información",
-    "GenerarNombre":"Generar Code",
+    "GenerarNombre":"Generar Codigo",
     "nuestros":"Nuestros ",
     "productos":"Productos",
     "productos_nada":"No hay productos del sendero",
@@ -264,6 +264,8 @@
     "correo":"Correo",
     "celular":"Teléfono",
     "direccion":"Dirección",
-    "nombre_Producto":"Nombre Producto"
+    "nombre_Producto":"Nombre Producto",
+    "donativo_nombre":"Nombre del Donativo",
+    "donativo_detalle": "Detalle del Donativo"
 }
 

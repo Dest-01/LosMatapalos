@@ -184,11 +184,15 @@
 
           <div class="descripcion">
             <span class="text" style="font-size: 25px">
-              detalle: <br />{{ donativoOrg.detalle }}</span
+              detalle: <br />
+              {{$t('donativo_detalle')}}
+              {{ donativoOrg.detalle }}
+              </span
             >
 
             <div class="donante" style="font-size: 25px">
               donante:<br />
+                {{$t('donativo_nombre')}}
               {{ donativoOrg.nombre }}
             </div>
           </div>

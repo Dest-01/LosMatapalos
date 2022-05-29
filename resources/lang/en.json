@@ -263,5 +263,7 @@
     "correo":"Email",
     "celular":"Telephone",
     "direccion":"Direction",
-    "nombre_Producto":"Product Name"
+    "nombre_Producto":"Product Name",
+    "donativo_nombre":"Donation Name",
+    "donativo_detalle": "Donation Details"
 }

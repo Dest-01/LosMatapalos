@@ -160,7 +160,7 @@ class DonativosController extends BaseController
         try {
             $rules = [
                 'tipo' => 'required|string|max:50',
-                'detalle' => 'required|string|min:3|max:255|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+                'detalle' => 'required|string|min:3|max:255|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]*)*)+$/',
                 'fecha' => 'required|date|after:2000-01-01',
                 'photo' => 'required|sometimes|base64image:png,jpeg,jpg',
                 'estado' => 'required|string|',
