@@ -419,11 +419,12 @@ export default {
       }
     },
     limpiar() {
+      document.querySelector('#documento').value = null;
       this.form.nombre = "";
       this.form.fecha = "";
       this.form.descripcion = "";
       this.form.tipo = "";
-      this.form.documento = "";
+      //this.form.documento = "";
       this.form.errors.clear();
     },
     mostrar() {
