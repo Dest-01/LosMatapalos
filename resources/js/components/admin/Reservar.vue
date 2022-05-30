@@ -289,6 +289,7 @@
                     :disabled="bloquearCamposReservacion"
                     min="08:00:00"
                     max="14:00:00"
+                    placeholder="hrs:mins"
                   />
                   <has-error :form="form" field="horaInicio"></has-error>
                 </div>
@@ -306,6 +307,7 @@
                     :disabled="bloquearCamposReservacion"
                     min="09:00:00"
                     max="15:00:00"
+                    placeholder="hrs:mins"
                   />
                   <has-error :form="form" field="horaFin"></has-error>
                 </div>

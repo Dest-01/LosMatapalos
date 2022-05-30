@@ -26,8 +26,8 @@ class CreateReservasTable extends Migration
             $table->string('nombreGrupo')->nullable();
             $table->integer('cantidad');
             $table->date('fecha')->format('d/m/Y');
-            $table->time('horaInicio');
-            $table->time('horaFin');
+            $table->time('horaInicio')->format('H:i:s');
+            $table->time('horaFin')->format('H:i:s');;
             $table->timestamps();
         });
     }

@@ -42,8 +42,8 @@ class ReservaRequest extends FormRequest
         return [
             'cantidad' => 'required|numeric|min:1|max:30',
             'fecha' => 'required|after:tomorrow',
-            'horaInicio' => 'required|date_format:H:i|',
-            'horaFin' => 'required|date_format:H:i|',
+            'horaInicio' => 'required|date_format:H:i:s|',
+            'horaFin' => 'required|date_format:H:i:s|',
             'fecha' => 'required|after:tomorrow',
         ];
     }

@@ -26,8 +26,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>8:00 a.m.</td>
-                    <td>9:00 a.m.</td>
+                    <td>8:00:00 </td>
+                    <td>9:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -39,8 +39,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>9:00 a.m.</td>
-                    <td>10:00 a.m.</td>
+                    <td>9:00:00 </td>
+                    <td>10:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -52,8 +52,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>10:00 a.m.</td>
-                    <td>11:00 a.m.</td>
+                    <td>10:00:00 </td>
+                    <td>11:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -65,8 +65,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>11:00 a.m.</td>
-                    <td>12:00 p.m.</td>
+                    <td>11:00:00 </td>
+                    <td>12:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -78,8 +78,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>01:00 p.m.</td>
-                    <td>02:00 p.m.</td>
+                    <td>13:00:00 </td>
+                    <td>14:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -91,8 +91,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>02:00 p.m.</td>
-                    <td>03:00 p.m.</td>
+                    <td>14:00:00 </td>
+                    <td>15:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -104,8 +104,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>03:00 p.m.</td>
-                    <td>04:00 p.m.</td>
+                    <td>15:00:00 </td>
+                    <td>16:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -117,8 +117,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>04:00 p.m.</td>
-                    <td>05:00 p.m.</td>
+                    <td>16:00:00 </td>
+                    <td>17:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -130,8 +130,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>05:00 p.m.</td>
-                    <td>06:00 p.m.</td>
+                    <td>17:00:00 </td>
+                    <td>18:00:00 </td>
                     <td>
                       <button
                         type="button"
@@ -1462,43 +1462,43 @@ export default {
 
     opcionHora1() {
       this.formReserva.horaInicio = "08:00:00";
-      this.formReserva.horaFin = "09:00";
+      this.formReserva.horaFin = "09:00:00";
     },
     opcionHora2() {
-      this.formReserva.horaInicio = "09:00";
-      this.formReserva.horaFin = "10:00";
+      this.formReserva.horaInicio = "09:00:00";
+      this.formReserva.horaFin = "10:00:00";
     },
     opcionHora3() {
-      this.formReserva.horaInicio = "10:00";
-      this.formReserva.horaFin = "11:00";
+      this.formReserva.horaInicio = "10:00:00";
+      this.formReserva.horaFin = "11:00:00";
     },
     opcionHora4() {
-      this.formReserva.horaInicio = "11:00";
-      this.formReserva.horaFin = "12:00";
+      this.formReserva.horaInicio = "11:00:00";
+      this.formReserva.horaFin = "12:00:00";
     },
     opcionHora5() {
-      this.formReserva.horaInicio = "12:00";
-      this.formReserva.horaFin = "13:00";
+      this.formReserva.horaInicio = "12:00:00";
+      this.formReserva.horaFin = "13:00:00";
     },
     opcionHora6() {
-      this.formReserva.horaInicio = "13:00";
-      this.formReserva.horaFin = "14:00";
+      this.formReserva.horaInicio = "13:00:00";
+      this.formReserva.horaFin = "14:00:00";
     },
     opcionHora7() {
-      this.formReserva.horaInicio = "14:00";
-      this.formReserva.horaFin = "15:00";
+      this.formReserva.horaInicio = "14:00:00";
+      this.formReserva.horaFin = "15:00:00";
     },
     opcionHora8() {
-      this.formReserva.horaInicio = "15:00";
-      this.formReserva.horaFin = "16:00";
+      this.formReserva.horaInicio = "15:00:00";
+      this.formReserva.horaFin = "16:00:00";
     },
     opcionHora9() {
-      this.formReserva.horaInicio = "16:00";
-      this.formReserva.horaFin = "17:00";
+      this.formReserva.horaInicio = "16:00:00";
+      this.formReserva.horaFin = "17:00:00";
     },
     opcionHora10() {
-      this.formReserva.horaInicio = "17:00";
-      this.formReserva.horaFin = "18:00";
+      this.formReserva.horaInicio = "17:00:00";
+      this.formReserva.horaFin = "18:00:00";
     },
   },
   created() {
