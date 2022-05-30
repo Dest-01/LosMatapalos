@@ -76,9 +76,7 @@ class GrupoRequest extends FormRequest
             'lugar.*' => "Se requiere un lugar de procedencia",
             'tematica.*' => "Se requiere una temática de interes",
             'detalles.*' => "Notas a considerar",
-            'correo.*' => "Se requiere un nombre correo, ejemplo@gmail.com",
-            
-
+            'correo.*' => "Se requiere un nombre correo, ejemplo@gmail.com", 
         ];
     }
 }

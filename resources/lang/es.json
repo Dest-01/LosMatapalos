@@ -266,6 +266,8 @@
     "direccion":"Dirección",
     "nombre_Producto":"Nombre Producto",
     "donativo_nombre":"Nombre del Donativo",
-    "donativo_detalle": "Detalle del Donativo"
+    "donativo_detalle": "Detalle del Donativo",
+    "donante_nombre" : "Nombre Donante",
+    "Detalle":"Detalle"
 }
 

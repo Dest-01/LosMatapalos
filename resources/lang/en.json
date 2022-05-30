@@ -265,5 +265,7 @@
     "direccion":"Direction",
     "nombre_Producto":"Product Name",
     "donativo_nombre":"Donation Name",
-    "donativo_detalle": "Donation Details"
+    "donativo_detalle": "Donation Details",
+    "donante_nombre" : "Donor Name",
+    "Detalle":"Details"
 }

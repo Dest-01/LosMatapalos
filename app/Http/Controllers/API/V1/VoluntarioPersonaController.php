@@ -131,7 +131,7 @@ class VoluntarioPersonaController extends BaseController
         try {
             $rules = [
                 'cantidad' => 'required|integer|min:0|max:900|',
-                'lugar' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+                'lugar' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]*)*)+$/',
                 'idVoluntario' => 'required|integer|min:1|',
             ];
             $messages = [
@@ -195,7 +195,7 @@ class VoluntarioPersonaController extends BaseController
         $rules = [
             'idVoluntario' => 'required|integer|min:1|',
             'cantidad' => 'required|integer|min:0|max:900|',
-            'lugar' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
+            'lugar' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]*)*)+$/',
         ];
         $messages = [
             'cantidad.min' => 'Mínimo 0 actividad',

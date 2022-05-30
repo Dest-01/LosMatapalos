@@ -277,7 +277,8 @@
                     :class="{ 'is-invalid': form.errors.has('lugar') }"
                     required
                     minlength="3"
-                    maxlength="70"
+                    maxlength="100"
+                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{3,100}"
                     placeholder="Escriba el lugar de procedencia..."
                     :disabled="bloquearCamposVoluntario"
                   />
