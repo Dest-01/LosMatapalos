@@ -472,12 +472,12 @@ export default {
       this.form.fill(grupo);
       this.form.errors.clear();
       this.bloquearNombre = true;
-      this.ocultarGenerador = false;
+      this.ocultarGenerador = true;
     },
     newModal() {
       this.editmode = false;
       this.bloquearNombre = true;
-      this.ocultarGenerador = true;
+      this.ocultarGenerador = false;
       this.form.reset();
       $("#addNew").modal("show");
       this.form.errors.clear();
