@@ -71,7 +71,6 @@
                     <th>Rango Edades</th>
                     <th>Lugar</th>
                     <th>Tematica</th>
-                    <th>Detalles</th>
                     <th>Funciones</th>
                   </tr>
                 </thead>
@@ -84,7 +83,6 @@
                     <td>{{ grupo.edades }}</td>
                     <td>{{ grupo.lugar }}</td>
                     <td>{{ grupo.tematica }}</td>
-                    <td>{{ grupo.detalles | truncate(10, "...") }}</td>
                     <td>
                       <a href="#" @click="editModal(grupo)">
                         <i id="icono" class="fa fa-edit blue"></i>
@@ -150,7 +148,7 @@
             <form @submit.prevent="editmode ? actualizarGrupo() : crearGrupo()">
               <div class="modal-body">
                 <div class="form-group">
-                  <label>Codigo del grupo</label>
+                  <label>Nombre del grupo</label>
                   <input
                     v-model="form.nombre"
                     type="text"
@@ -170,7 +168,7 @@
                     class="btn btn-success my-7"
                     @click="GenerarIdRamdon()"
                   >
-                    Generar Codigo
+                    Generar Nombre
                   </button>
                 </div>
 
@@ -283,7 +281,7 @@
                     cols="5"
                     rows="5"
                     placeholder="Algunas notas a considerar, por ejemplos alergias..."
-                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{3,255}"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ[0-9]\s]{3,255}"
                   ></textarea>
                   <has-error :form="form" field="detalles"></has-error>
                 </div>
@@ -472,12 +470,12 @@ export default {
       this.form.fill(grupo);
       this.form.errors.clear();
       this.bloquearNombre = true;
-      this.ocultarGenerador = true;
+      this.ocultarGenerador = false;
     },
     newModal() {
       this.editmode = false;
       this.bloquearNombre = true;
-      this.ocultarGenerador = false;
+      this.ocultarGenerador = true;
       this.form.reset();
       $("#addNew").modal("show");
       this.form.errors.clear();
@@ -497,7 +495,6 @@ export default {
     },
     getResults(page = 1) {
       this.$Progress.start();
-
       axios
         .get("/api/grupo/mostrar?page=" + page, {
           params: { valor: this.valorMostrar },
@@ -505,7 +502,6 @@ export default {
         .then(({ data }) => (this.grupos = data.data));
       this.$Progress.finish();
     },
-
     async cargarGrupos() {
       if (this.$gate.isAdmin() || this.$gate.isUser()) {
         await axios
@@ -530,12 +526,10 @@ export default {
               });
             } else {
               $("#addNew").modal("hide");
-
               Toast.fire({
                 icon: "success",
                 title: response.data.message,
               });
-
               this.$Progress.finish();
               this.cargarGrupos();
             }
@@ -554,7 +548,6 @@ export default {
       }
     },
     /*////////////////////////////////////////////////////////////*/
-
     actualizarGrupo() {
       if (/^[G]{1}-\d{1,4}$/.test(this.form.nombre)) {
         this.$Progress.start();
@@ -569,7 +562,6 @@ export default {
             });
             this.$Progress.finish();
             //  Fire.$emit('AfterCreate');
-
             this.cargarGrupos();
           })
           .catch(() => {
@@ -582,7 +574,6 @@ export default {
         });
       }
     },
-
     eliminarGrupo(id) {
       Swal.fire({
         title: "Seguro que lo desea eliminar?",
@@ -663,7 +654,6 @@ export default {
   padding: 1px 5px;
   margin: 1px 1px 1px 10px;
 }
-
 #icono {
   font-size: 20px;
 }

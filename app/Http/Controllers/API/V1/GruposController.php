@@ -37,9 +37,9 @@ class GruposController extends BaseController
         return $this->sendResponse($grupo, 'Lista de grupos!');
     }
 
-    function list() {
+    public function list() {
         $grupo = $this->grupos->get();
-
+        var_dump($grupo);
         return $this->sendResponse($grupo, 'Lista de todos los grupos!');
     }
 
