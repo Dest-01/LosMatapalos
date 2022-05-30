@@ -63,7 +63,6 @@ class GrupoRequest extends FormRequest
             'tematica' => 'required|string|min:3|max:100|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'detalles' => 'string|max:250|regex:/^([a-zA-Z0-9ñÑáéíóúÁÉÍÓ-])+((\s*)+([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ-]*)*)+$/',
             'correo' => 'required|email|regex:/[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/|min:4|max:100',
-
         ];
     }
 

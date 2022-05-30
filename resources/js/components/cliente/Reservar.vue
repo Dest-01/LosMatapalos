@@ -965,7 +965,6 @@
                   'is-invalid': formGrupo.errors.has('detalles'),
                 }"
                 v-bind:placeholder="$t('EscribaConsideraciones')"
-                required
               >
               </textarea>
             </div>

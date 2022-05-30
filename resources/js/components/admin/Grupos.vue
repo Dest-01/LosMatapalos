@@ -283,7 +283,7 @@
                     cols="5"
                     rows="5"
                     placeholder="Algunas notas a considerar, por ejemplos alergias..."
-                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ[0-9]\s]{3,255}"
+                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s]{3,255}"
                   ></textarea>
                   <has-error :form="form" field="detalles"></has-error>
                 </div>
