@@ -17,7 +17,7 @@
         <div class="card">
           <div class="content">
             <div class="img">
-              <img v-bind:src="'/images/user.png'" alt="" />
+              <img v-bind:src="'/images/Yerry.png'" alt="Yerry" />
               <!--- <img src="images/img1.jpg" alt="">-->
             </div>
             <div class="details">
@@ -25,16 +25,14 @@
               <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>
         <div class="card">
           <div class="content">
             <div class="img">
-              <img v-bind:src="'/images/user.png'" alt="" />
+              <img v-bind:src="'/images/Marko.JPG'" alt="Marko Guevara" />
               <!--- <img src="images/img2.jpg" alt="">--->
             </div>
             <div class="details">
@@ -45,16 +43,14 @@
               <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+             <a href="https://www.linkedin.com/in/marko-guevara-744bb1229/" target="_BLANK"><i class="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>
         <div class="card">
           <div class="content">
             <div class="img">
-              <img v-bind:src="'/images/user.png'" alt="" />
+              <img v-bind:src="'/images/Erick.JPG'" alt="Erick Valle" />
               <!-- <img src="images/img3.jpg" alt="">---->
             </div>
             <div class="details">
@@ -65,16 +61,14 @@
              <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+             <a href="www.linkedin.com/in/erick-valle-85083a225" target="_BLANK"><i class="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>
         <div class="card">
           <div class="content">
             <div class="img">
-              <img v-bind:src="'/images/user.png'" alt="" />
+              <img v-bind:src="'/images/Cesar.png'" alt="Cesar Matarrita" />
               <!---<img src="images/img4.jpg" alt="">--->
             </div>
             <div class="details">
@@ -82,9 +76,7 @@
               <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/in/francisco-matarrita-a842a5209/" target="_BLANK"><i class="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -92,16 +84,14 @@
           <div class="content">
             <div class="img">
               <!---<img src="images/img4.jpg" alt="">--->
-              <img v-bind:src="'/images/user.png'" alt="" />
+              <img v-bind:src="'/images/Montiel.png'" alt="Montiel" />
             </div>
             <div class="details">
               <div class="name">Jose Montiel Hernandez</div>
               <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+             <a href="#"><i class="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>
