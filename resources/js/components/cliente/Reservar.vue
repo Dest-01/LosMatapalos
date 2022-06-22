@@ -26,8 +26,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>8:00:00 </td>
-                    <td>9:00:00 </td>
+                    <td>8:00 a.m.</td>
+                    <td>9:00 a.m.</td>
                     <td>
                       <button
                         type="button"
@@ -39,8 +39,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>9:00:00 </td>
-                    <td>10:00:00 </td>
+                    <td>9:00 a.m.</td>
+                    <td>10:00 a.m.</td>
                     <td>
                       <button
                         type="button"
@@ -52,8 +52,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>10:00:00 </td>
-                    <td>11:00:00 </td>
+                    <td>10:00 a.m.</td>
+                    <td>11:00 a.m.</td>
                     <td>
                       <button
                         type="button"
@@ -65,8 +65,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>11:00:00 </td>
-                    <td>12:00:00 </td>
+                    <td>11:00 a.m.</td>
+                    <td>12:00 p.m.</td>
                     <td>
                       <button
                         type="button"
@@ -78,8 +78,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>13:00:00 </td>
-                    <td>14:00:00 </td>
+                    <td>01:00 p.m.</td>
+                    <td>02:00 p.m.</td>
                     <td>
                       <button
                         type="button"
@@ -91,8 +91,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>14:00:00 </td>
-                    <td>15:00:00 </td>
+                    <td>02:00 p.m.</td>
+                    <td>03:00 p.m.</td>
                     <td>
                       <button
                         type="button"
@@ -104,8 +104,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>15:00:00 </td>
-                    <td>16:00:00 </td>
+                    <td>03:00 p.m.</td>
+                    <td>04:00 p.m.</td>
                     <td>
                       <button
                         type="button"
@@ -117,8 +117,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>16:00:00 </td>
-                    <td>17:00:00 </td>
+                    <td>04:00 p.m.</td>
+                    <td>05:00 p.m.</td>
                     <td>
                       <button
                         type="button"
@@ -130,8 +130,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>17:00:00 </td>
-                    <td>18:00:00 </td>
+                    <td>05:00 p.m.</td>
+                    <td>06:00 p.m.</td>
                     <td>
                       <button
                         type="button"
@@ -190,6 +190,21 @@
                     <h3>{{ $t("Busqueda_") }}</h3>
                   </div>
                   <div class="campo_consulta">
+                    <div class="opciones">
+                        <label for="">Tipo de identificacion</label>
+                    <div class="tipo">
+                        <label for="">Nacional</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="CN"/>
+                       <label for="">Residencial</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="CR"/>
+                       <label for="">Pasaporte</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="CP"/>
+                      <label for="">Jurídica</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="CJ"/>
+                      <label for="">Grupo</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="G"/>
+                    </div>
+                    </div>
                     <div class="input_buscador">
                       <i class="fas fa-id-card iconoInput"></i>
                       <input
@@ -200,6 +215,8 @@
                         required
                         :disabled="bloquearConsulta"
                         v-bind:placeholder="$t('EscribaElIDCOnsultar')"
+                        v-on:keyup="AsignarVMask()"
+                        v-mask="buscarID"
                       />
                     </div>
                     <div class="btn_consultar">
@@ -588,7 +605,7 @@
                   v-bind:placeholder="$t('EscibaNumero')"
                   required
                   v-mask="[/[2-9]/, '#######']"
-                   pattern="[0-9]{8}"
+                  pattern="[0-9]{8}"
                 />
                 <has-error
                   class="error_modal"
@@ -678,7 +695,7 @@
                 }"
                 v-bind:placeholder="$t('CedulaOrga')"
                 pattern="[1-9]{1}-[0-9]{3}-[0-9]{6}"
-                    v-mask="'#-###-######'"
+                v-mask="'#-###-######'"
               />
               <has-error
                 style="top: 80px"
@@ -697,7 +714,6 @@
                 :class="{
                   'is-invalid': formOrganizacion.errors.has('nombre'),
                 }"
-                
                 v-bind:placeholder="$t('NombreOrga')"
               />
               <has-error
@@ -965,6 +981,7 @@
                   'is-invalid': formGrupo.errors.has('detalles'),
                 }"
                 v-bind:placeholder="$t('EscribaConsideraciones')"
+                required
               >
               </textarea>
             </div>
@@ -993,6 +1010,8 @@ export default {
   name: "Reservacion",
   data() {
     return {
+      TipobuscarID: "",
+      buscarID: "",
       bloqueraHoras: true, //Bloqueamos las horas para que esten de acuerdo al horario
       bloquearConsulta: false, //Bloqueamos el campo de consulta y su boton
       bloquearReservar: true, //Bloqueamos el boton de reserva hasta que acepte los terminos
@@ -1077,6 +1096,22 @@ export default {
         this.VerOtraTematica = false;
       }
     },
+    AsignarVMask() {
+      if (this.TipobuscarID == "CN") {
+        this.buscarID = "#-####-####";
+      } else if (this.TipobuscarID == "CR") {
+        this.buscarID = "##########";
+      } else if (this.TipobuscarID == "CP") {
+        this.buscarID = "############";
+      } else if (this.TipobuscarID == "CJ") {
+        this.buscarID = "#-###-######";
+      } else if (this.TipobuscarID == "G") {
+        this.buscarID = "G-####";
+      } else {
+        this.buscarID = "";
+      }
+    },
+
     llenarFormularioCorreo() {
       (this.formCorreo.horaInicio = this.formReserva.horaInicio),
         (this.formCorreo.horaFin = this.formReserva.horaFin),
@@ -1462,43 +1497,43 @@ export default {
 
     opcionHora1() {
       this.formReserva.horaInicio = "08:00:00";
-      this.formReserva.horaFin = "09:00:00";
+      this.formReserva.horaFin = "09:00";
     },
     opcionHora2() {
-      this.formReserva.horaInicio = "09:00:00";
-      this.formReserva.horaFin = "10:00:00";
+      this.formReserva.horaInicio = "09:00";
+      this.formReserva.horaFin = "10:00";
     },
     opcionHora3() {
-      this.formReserva.horaInicio = "10:00:00";
-      this.formReserva.horaFin = "11:00:00";
+      this.formReserva.horaInicio = "10:00";
+      this.formReserva.horaFin = "11:00";
     },
     opcionHora4() {
-      this.formReserva.horaInicio = "11:00:00";
-      this.formReserva.horaFin = "12:00:00";
+      this.formReserva.horaInicio = "11:00";
+      this.formReserva.horaFin = "12:00";
     },
     opcionHora5() {
-      this.formReserva.horaInicio = "12:00:00";
-      this.formReserva.horaFin = "13:00:00";
+      this.formReserva.horaInicio = "12:00";
+      this.formReserva.horaFin = "13:00";
     },
     opcionHora6() {
-      this.formReserva.horaInicio = "13:00:00";
-      this.formReserva.horaFin = "14:00:00";
+      this.formReserva.horaInicio = "13:00";
+      this.formReserva.horaFin = "14:00";
     },
     opcionHora7() {
-      this.formReserva.horaInicio = "14:00:00";
-      this.formReserva.horaFin = "15:00:00";
+      this.formReserva.horaInicio = "14:00";
+      this.formReserva.horaFin = "15:00";
     },
     opcionHora8() {
-      this.formReserva.horaInicio = "15:00:00";
-      this.formReserva.horaFin = "16:00:00";
+      this.formReserva.horaInicio = "15:00";
+      this.formReserva.horaFin = "16:00";
     },
     opcionHora9() {
-      this.formReserva.horaInicio = "16:00:00";
-      this.formReserva.horaFin = "17:00:00";
+      this.formReserva.horaInicio = "16:00";
+      this.formReserva.horaFin = "17:00";
     },
     opcionHora10() {
-      this.formReserva.horaInicio = "17:00:00";
-      this.formReserva.horaFin = "18:00:00";
+      this.formReserva.horaInicio = "17:00";
+      this.formReserva.horaFin = "18:00";
     },
   },
   created() {
@@ -1542,7 +1577,14 @@ export default {
     opacity: 1;
   }
 }
-
+.tipo{
+    display: flex;
+    margin: 5px;
+    padding: 5px;
+}
+.tipo input{
+    margin: 5px;
+}
 .contenedor-2 {
   /*Contiene toda la card*/
   display: flex;
@@ -1763,6 +1805,12 @@ h3 {
     display: flex;
     flex-direction: column;
   }
+  .tipo{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    padding: 5px;
+}
   .contenedor {
     margin: 40px auto;
   }
