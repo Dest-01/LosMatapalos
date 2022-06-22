@@ -64,13 +64,13 @@ function validarHora() {
     var horaInicio = $("#horaInicio").val();
     var horaFin = $("#horaFin").val();
 
-    if (horaInicio <= "08:00" || horaInicio >= "14:00" || horaFin <= "08:59" || horaFin >= "18:00") {
+    if (horaInicio <= "08:00" || horaInicio >= "14:00" || horaFin >= "18:00") {
         $("#horaFin").parent().after(
-            '<div class="alert alert-warning">Cambiar las horas! <br>Hora inicio entre 08:00 y 18:00 pm<br> Hora fin entre las 09:00  y 18:00 </div>'
+            '<div class="alert alert-warning">Cambiar las horas! <br>Hora inicio entre 08:00 y 14:00 <br> Hora fin entre 18:00 </div>'
         );
         button.disabled = true;
 
-    } else if (horaFin > horaInicio) {
+    } else if (horaInicio < horaFin) {
         $("#horaFin").parent().after(
             '<div class="alert alert-success">Correcto! <br>Las horas corresponden al horario</div>'
         );
