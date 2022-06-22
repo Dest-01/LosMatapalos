@@ -25,7 +25,7 @@
               <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
-              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="https://www.linkedin.com/in/yerry-rodr%C3%ADguez-barquero-14b880228" target="_BLANK"><i class="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
              <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
-             <a href="www.linkedin.com/in/erick-valle-85083a225" target="_BLANK"><i class="fab fa-linkedin"></i></a>
+             <a href="https://www.linkedin.com/in/erick-valle-85083a225" target="_BLANK"><i class="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@
               <div class="job">{{$t('Nosotros_T3')}}</div>
             </div>
             <div class="media-icons">
-             <a href="#"><i class="fab fa-linkedin"></i></a>
+             <a href="https://www.linkedin.com/in/jose-daniel-montiel-hern%C3%A1ndez-1250b2243" target="_BLANK"><i class="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>
