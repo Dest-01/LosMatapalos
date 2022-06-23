@@ -7,7 +7,7 @@
         </a>
         <a
           class="navbar-brand icono_sendero"
-          href="https://sendero.herokuapp.com/"
+          href="https://sea-lion-app-heqy2.ondigitalocean.app"
         >
           <img src="images/logo2.png" alt="" width="100%" height="100%" />
         </a>
