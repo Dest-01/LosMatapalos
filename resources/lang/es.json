@@ -8,7 +8,7 @@
     "Repositorio": "Repositorio",
     "Nuestros Productos": "Nuestros Productos",
     "Quienes": "¿Quiénes somos?",
-
+ 
     "Nuestros": "Nuestros",
     "Inicios": "Inicios",
     "Nuestros_parrafo1": "La Universidad Nacional en su Campus Liberia, ha tenido una significativa regeneración y enriquecimiento biológico que se ha aprovechado para desarrollar un proyecto de sendero universitario llamado “Los Matapalos”, nombre que se deriva de la abundancia de esta especie y por los frondosos ejemplares que están en la entrada del sendero.",
@@ -268,6 +268,9 @@
     "donativo_nombre":"Nombre del Donativo",
     "donativo_detalle": "Detalle del Donativo",
     "donante_nombre" : "Nombre Donante",
-    "Detalle":"Detalle"
+    "Detalle":"Detalle",
+    "Cedula_Juridica":"Cédula Jurídica",
+    "ID_Type":"Seleccione el tipo de identificación"
+
 }
 

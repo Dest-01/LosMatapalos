@@ -191,17 +191,17 @@
                   </div>
                   <div class="campo_consulta">
                     <div class="opciones">
-                        <label for="">Tipo de identificacion</label>
+                        <label for="">{{ $t("ID_Type") }}</label>
                     <div class="tipo">
-                        <label for="">Nacional</label>
+                        <label for="">{{ $t("Cedula_Nacional") }}</label>
                       <input type="radio" name="radio_value" v-model="TipobuscarID" value="CN"/>
-                       <label for="">Residencial</label>
+                       <label for="">{{ $t("Cedula_Residencial") }}</label>
                       <input type="radio" name="radio_value" v-model="TipobuscarID" value="CR"/>
-                       <label for="">Pasaporte</label>
+                       <label for="">{{ $t("Pasaporte") }}</label>
                       <input type="radio" name="radio_value" v-model="TipobuscarID" value="CP"/>
-                      <label for="">Jurídica</label>
+                      <label for="">{{ $t("Cedula_Juridica") }}</label>
                       <input type="radio" name="radio_value" v-model="TipobuscarID" value="CJ"/>
-                      <label for="">Grupo</label>
+                      <label for="">{{ $t("Grupo") }}</label>
                       <input type="radio" name="radio_value" v-model="TipobuscarID" value="G"/>
                     </div>
                     </div>
@@ -1102,7 +1102,7 @@ export default {
       } else if (this.TipobuscarID == "CR") {
         this.buscarID = "##########";
       } else if (this.TipobuscarID == "CP") {
-        this.buscarID = "############";
+        this.buscarID = "";
       } else if (this.TipobuscarID == "CJ") {
         this.buscarID = "#-###-######";
       } else if (this.TipobuscarID == "G") {

@@ -190,13 +190,32 @@
               <div class="modal-body">
                 <div v-show="verCamposdeConsulta" class="form-group">
                   <label>Consultar identificación:</label>
-                  <input
+
+                      <div class="opciones">
+                        <label for="">Tipo de identificacion</label>
+                    <div class="tipo">
+                        <label for="">Nacional</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="CN"/>
+                       <label for="">Residencial</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="CR"/>
+                       <label for="">Pasaporte</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="CP"/>
+                      <label for="">Jurídica</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="CJ"/>
+                      <label for="">Grupo</label>
+                      <input type="radio" name="radio_value" v-model="TipobuscarID" value="G"/>
+                    </div>
+                    </div>
+
+                   <input
                     v-model="buscador"
                     type="text"
                     name="buscador"
                     class="form-control"
                     :disabled="bloquearCampoConsulta"
-                    placeholder="Escriba la identificación a consultar..."
+                    placeholder="Escriba la identificación a consultar..." 
+                    v-on:keyup="AsignarVMask()"
+                   v-mask="buscarID"
                   />
                 </div>
                 <div v-show="verCamposdeConsulta">
@@ -602,6 +621,7 @@
 export default {
   data() {
     return {
+      buscarID:'',
       valorMostrar: "10",
       find: undefined,
       editmode: false,
@@ -657,6 +677,21 @@ export default {
     };
   },
   methods: {
+       AsignarVMask() {
+      if (this.TipobuscarID == "CN") {
+        this.buscarID = "#-####-####";
+      } else if (this.TipobuscarID == "CR") {
+        this.buscarID = "##########";
+      } else if (this.TipobuscarID == "CP") {
+        this.buscarID = "";
+      } else if (this.TipobuscarID == "CJ") {
+        this.buscarID = "#-###-######";
+      } else if (this.TipobuscarID == "G") {
+        this.buscarID = "G-####";
+      } else {
+        this.buscarID = "";
+      }
+    },
     /*////////////////////////////////////////////////////////////*/
     /*-------------------------Validaciones----------------------*/
     tiposDeIndentificacon() {
