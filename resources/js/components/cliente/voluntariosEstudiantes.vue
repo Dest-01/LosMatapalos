@@ -74,8 +74,8 @@ span {
   color: #38ab81;
 }
 .card {
-  width: 282px;
-  height: 380px;
+  width: 300px;
+  height: 400px;
   margin: 10px;
   padding: 5px;
   border: 2px solid #7fa6cd8a;
@@ -89,9 +89,9 @@ span {
 }
 .foto_estudiante {
   width: 250px;
-    height: 245px;
+  height: 250px;
   box-sizing: border-box;
-  
+  object-fit: cover;
 }
 .foto_estudiante img {
   box-sizing: content-box;
@@ -108,6 +108,7 @@ span {
   color: #346da7;
   font-weight: 400;
 }
+
 .info{
     margin-top: 35px;
 }
