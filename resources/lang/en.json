@@ -173,7 +173,7 @@
 
     "tipoVoluntario": "Volunteers",
     "tipoPublico": "Public",
-
+ 
     "tipoLenosa": "Woody",
     "tipoHerbaceas": "Herbaceous",
     "Donacion_T1": "Make a donation!",
@@ -267,5 +267,7 @@
     "donativo_nombre":"Donation Name",
     "donativo_detalle": "Donation Details",
     "donante_nombre" : "Donor Name",
-    "Detalle":"Details"
+    "Detalle":"Details",
+     "Cedula_Juridica":"Corporation Id",
+    "ID_Type":"Choose the type of ID"
 }
