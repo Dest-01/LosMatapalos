@@ -62,7 +62,7 @@
                   <div class="carousel-inner">
                     <div class="carousel-item active">
                       <img
-                        v-bind:src="'/images/PortadaDonaciones2.jpg'"
+                        v-bind:src="'/images/PortadaDonaciones2.JPG'"
                         class=""
                         object-fit="cover"
                         width="100%"
