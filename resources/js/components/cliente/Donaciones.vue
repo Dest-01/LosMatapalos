@@ -69,7 +69,7 @@
                         height="430px"
                         alt=""
                       />
-                      <div class="carousel-caption d-none d-md-block">
+                      <div class="carousel-caption d-none d-md-block negrito">
                         <h1>{{ $t("Donacion_T7") }}</h1>
                         <p>
                           {{ $t("Donacion_P4") }}
@@ -364,7 +364,12 @@ article h2 {
   text-transform: uppercase;
 }
 article img {
-  border-radius: 30 px;
+  border-radius: 30px;
+}
+
+.negrito{
+  background-color:rgba(0, 0, 0, 0.555);
+  border-radius: 15px;
 }
 
 .control {

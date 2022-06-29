@@ -77,7 +77,7 @@
             <ul>
               <li><i class="fas fa-phone"></i> (506) 2562-6253</li>
               <li>
-                <i class="fas fa-envelope-open-text"></i> sendero.una.ac.cr
+                <i class="fas fa-envelope-open-text"></i> senderomatapalos@gmail.com
               </li>
             </ul>
             <i class="fas fa-map-marker-alt"></i>
