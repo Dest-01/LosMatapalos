@@ -201,7 +201,7 @@
 export default {
   data() {
     return {
-      portada: "../images/PortadaDonaciones.jpg",
+      portada: "../images/PortadaDonaciones.JPG",
       text: "Portada",
       donativos: {},
       donativosOrg: {},
