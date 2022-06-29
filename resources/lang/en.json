@@ -17,6 +17,7 @@
     "Que_Ofrecemos": "What our trail",
     "Sendero?": " offer?",
     "Capacitaciones_y_Cursos": "Courses and training",
+    
     "Educacion_ambiental": "environmental education",
     "Proyectos": "Projects!",
     "Vivero": "Nursery",
@@ -247,9 +248,9 @@
     "PersonasDonadoras" : "Donor Persons",
     "OrganizacionesDonadoras" : "Donor Organizations",
     "Ultimos_Donadores" : "Last Donations!",
-    "Capacitaciones_y_Cursos_info":"Falta información",
-    "Tours_info":"Falta información",
-    "Educacion_ambiental_info":"Falta información",
+    "Capacitaciones_y_Cursos_info":"We have training in the area of ​​Bioconstruction, Organic Fertilizers, Bioferments, Microorganisms, Solid Waste Management and Biodigesters.",
+    "Tours_info":"We have a wide variety of tours among them are those of Avifauna, Sustainability, Agribusiness and entrepreneurship, nocturnal fauna, astronomical and cultural.",
+    "Educacion_ambiental_info":"We have a variety of environmental courses such as Alternative Agriculture (Orchards, Hydroponics, Aquaponics), Rainwater harvesting systems, development of nurseries and production of edible mushrooms.",
     "GenerarNombre":"Generate Code",
     "nuestros":"Our ",
     "productos":"Products",
@@ -263,11 +264,12 @@
     "correo":"Email",
     "celular":"Telephone",
     "direccion":"Direction",
-    "nombre_Producto":"Product Name",
-    "donativo_nombre":"Donation Name",
-    "donativo_detalle": "Donation Details",
-    "donante_nombre" : "Donor Name",
+    "nombre_Producto":"Product Name:",
+    "donativo_nombre":"Donor Company:",
+    "donativo_detalle": "Donation Details:",
+    "donante_nombre" : "Donor Name:",
     "Detalle":"Details",
      "Cedula_Juridica":"Corporation Id",
     "ID_Type":"Choose the type of ID"
 }
+ 

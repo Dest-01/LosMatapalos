@@ -152,9 +152,10 @@
 
           <div class="descripcion">
             <div class="donante" style="font-size: 25px">
-              donante:<br />
-              {{$t('donante_nombre')}}
-              {{ donativo.nombre }}
+             
+              {{$t('donante_nombre')}}<br/>
+              {{ donativo.nombre }} {{donativo.apellido1}}           
+
             </div>
           </div>
         </div>
@@ -181,8 +182,8 @@
 
           <div class="descripcion">
             <div class="donante" style="font-size: 25px">
-              donante:<br />
-                {{$t('donativo_nombre')}}
+            
+                {{$t('donativo_nombre')}}<br/>
               {{ donativoOrg.nombre }}
             </div>
           </div>

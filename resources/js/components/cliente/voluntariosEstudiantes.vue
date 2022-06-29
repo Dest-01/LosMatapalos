@@ -4,10 +4,10 @@
      <h1>{{$t('Vol_T1')}} <span>{{$t('Vol_T2')}}</span></h1>
     </div>
     <div class="contenedor_voluntarios">
-      <div
+      <div class="card"
         v-for="voluntarios in voluntarioEstudiante.data"
         :key="voluntarios.id"
-        class="card"
+       
       >
         <div class="foto_estudiante">
           <img
@@ -74,24 +74,29 @@ span {
   color: #38ab81;
 }
 .card {
-  width: 300px;
-  height: 400px;
+  width: 350px;
+  height: 450px;
   margin: 10px;
-  padding: 5px;
+  padding: 5px ;
   border: 2px solid #7fa6cd8a;
   box-shadow: 2px 3px 10px 0 #798b9d;
   text-align: center;
   border-radius: 10px;
   transition: all 0.4s ease;
+  justify-items: center;
+  align-items: center; 
 }
 .card:hover{
      transform: translateY(-15px);
 }
 .foto_estudiante {
-  width: 250px;
-  height: 250px;
+  width: 290px;
+  height: 270px;
   box-sizing: border-box;
   object-fit: cover;
+  justify-content: center;
+  align-items: center;
+
 }
 .foto_estudiante img {
   box-sizing: content-box;

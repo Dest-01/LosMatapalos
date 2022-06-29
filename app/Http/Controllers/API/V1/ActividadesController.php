@@ -54,7 +54,7 @@ class ActividadesController extends BaseController
     {
         try {
             $rules = [
-                'nombre' => 'required|string|max:20|min:3',
+                'nombre' => 'required|string|max:150|min:3',
                 'fecha' => 'required|after:today',
                 'hora' => 'required',
                 'descripcion' => 'required|string|max:255|min:3',
@@ -65,12 +65,12 @@ class ActividadesController extends BaseController
 
             $messages = [
                 'nombre.min' => 'Mínimo 3 caracteres',
-                'nombre.max' => 'Máximo 20 caracteres',
+                'nombre.max' => 'Máximo 150 caracteres',
                 'nombre.*' => 'Nombre requiere',
                 'fecha.*' => 'Seleccione 2 fechas después de hoy',
                 'hora.*' => 'Seleccione un hora',
                 'descripcion.min' => 'Mínimo 3 caracteres',
-                'descripcion.max' => 'Máximo 20 caracteres',
+                'descripcion.max' => 'Máximo 255 caracteres',
                 'descripcion.*' => 'Se requiere una breve descripción',
                 'cantParticipantes.min' => 'Mínimo 1 participante',
                 'cantParticipantes.max' => 'Máximo 30 participantes',
@@ -130,7 +130,7 @@ class ActividadesController extends BaseController
     {
 
         $rules = [
-            'nombre' => 'required|string|max:20|min:3',
+            'nombre' => 'required|string|max:150|min:3',
             'fecha' => 'required',
             'hora' => 'required',
             'descripcion' => 'required|string|max:255|min:3',
@@ -140,12 +140,12 @@ class ActividadesController extends BaseController
 
         $messages = [
             'nombre.min' => 'Mínimo 3 caracteres',
-            'nombre.max' => 'Máximo 20 caracteres',
+            'nombre.max' => 'Máximo 150 caracteres',
             'nombre.*' => 'Nombre requiere',
             'fecha.*' => 'Fecha se requiere',
             'hora.*' => 'Seleccione un hora',
             'descripcion.min' => 'Mínimo 3 caracteres',
-            'descripcion.max' => 'Máximo 20 caracteres',
+            'descripcion.max' => 'Máximo 255 caracteres',
             'descripcion.*' => 'Se requiere una breve descripción',
             'cantParticipantes.min' => 'Mínimo 1 participante',
             'cantParticipantes.max' => 'Máximo 30 participantes',
@@ -184,7 +184,7 @@ class ActividadesController extends BaseController
     {
 
         $rules = [
-            'nombre' => 'required|string|max:20|min:3',
+            'nombre' => 'required|string|max:150|min:3',
             'fecha' => 'required|after:today',
             'hora' => 'required',
             'descripcion' => 'required|string|max:255|min:3',
@@ -194,12 +194,12 @@ class ActividadesController extends BaseController
 
         $messages = [
             'nombre.min' => 'Mínimo 3 caracteres',
-            'nombre.max' => 'Máximo 20 caracteres',
+            'nombre.max' => 'Máximo 150 caracteres',
             'nombre.*' => 'Nombre requiere',
             'fecha.*' => 'Seleccione 2 fechas después de hoy',
             'hora.*' => 'Seleccione un hora',
             'descripcion.min' => 'Mínimo 3 caracteres',
-            'descripcion.max' => 'Máximo 20 caracteres',
+            'descripcion.max' => 'Máximo 255 caracteres',
             'descripcion.*' => 'Se requiere una breve descripción',
             'cantParticipantes.min' => 'Mínimo 1 participante',
             'cantParticipantes.max' => 'Máximo 30 participantes',

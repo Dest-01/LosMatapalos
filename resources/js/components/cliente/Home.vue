@@ -296,7 +296,13 @@ section {
 }
 
 p {
-  text-align: justify;
+  text-align:left ;
+}
+.item{
+  min-width: 420px;
+  min-height:420px;
+   max-width: 420px;
+  max-height:420px;
 }
 
 .we-offer-area.text-center .item i {

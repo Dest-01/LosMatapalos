@@ -248,9 +248,9 @@
     "PersonasDonadoras" : "Personas Donadoras",
     "OrganizacionesDonadoras" : "Organizaciones Donadoras",
     "Ultimos_Donadores" : "Últimas Donaciones!",
-    "Capacitaciones_y_Cursos_info":"Falta información",
-    "Tours_info":"Falta información",
-    "Educacion_ambiental_info":"Falta información",
+    "Capacitaciones_y_Cursos_info":"Contamos con capacitaciones en el área de Bioconstrucción, Abonos orgánicos, Biofermentos, Microorganizmos, Manejos de residuos sólidos y Biodigestores.",
+    "Tours_info":"Contamos una gran variedad de tours entre ellos estan los de Avifauna, Sostenibilidad, Agronegocios y emprendedurismos, fauna nocturna, astronómico y cultural.",
+    "Educacion_ambiental_info":"Contamos con una variedad de cursos ambientales como Agricultura Alternativa(Huertos, Hidroponía, Acuaponía), Sistemas de captación de agua de lluvia, elaboración de viveros y producción de hongos comestibles.",
     "GenerarNombre":"Generar Codigo",
     "nuestros":"Nuestros ",
     "productos":"Productos",
@@ -264,13 +264,14 @@
     "correo":"Correo",
     "celular":"Teléfono",
     "direccion":"Dirección",
-    "nombre_Producto":"Nombre Producto",
-    "donativo_nombre":"Nombre del Donativo",
-    "donativo_detalle": "Detalle del Donativo",
-    "donante_nombre" : "Nombre Donante",
+    "nombre_Producto":"Nombre Producto:",
+    "donativo_nombre":"Empresa donante:",
+    "donativo_detalle": "Detalle del Donativo:",
+    "donante_nombre" : "Nombre Donante:",
     "Detalle":"Detalle",
     "Cedula_Juridica":"Cédula Jurídica",
     "ID_Type":"Seleccione el tipo de identificación"
 
 }
 
+ 
