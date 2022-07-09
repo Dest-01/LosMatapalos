@@ -63,7 +63,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">
-              {{$t("nombre_Producto")}}: {{ form.Nombre }}
+              {{$t("nombre_Producto")}} {{ form.Nombre }}
             </h5>
             <button type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -300,7 +300,7 @@ button:hover {
   color: #111;
   border: none;
   font-size: 1.25rem;
-  
+
 }
 .info_header{
   background: #1cc185;

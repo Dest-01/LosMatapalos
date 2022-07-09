@@ -197,7 +197,7 @@
                       <input type="radio" name="radio_value" v-model="TipobuscarID" value="CP"/>
                       <label for="">Jurídica</label>
                       <input type="radio" name="radio_value" v-model="TipobuscarID" value="CJ"/>
-                      <label for="">{Grupo}</label>
+                      <label for="">Grupo</label>
                       <input type="radio" name="radio_value" v-model="TipobuscarID" value="G"/>
                     </div>
                     </div>
@@ -208,7 +208,7 @@
                     name="buscador"
                     class="form-control"
                     :disabled="bloquearCampoConsulta"
-                    placeholder="Escriba la identificación a consultar..." 
+                    placeholder="Escriba la identificación a consultar..."
                     v-on:keyup="AsignarVMask()"
                    v-mask="buscarID"
                   />
@@ -242,7 +242,7 @@
                   </button>
                 </div>
                 <div v-show="verCampoDeIdentificacionEdit" class="form-group">
-                  <label>Identificación Donante</label>
+                  <label>Identificación Persona</label>
                   <input
                     v-model="form.identificacionPersona"
                     type="text"
@@ -570,7 +570,7 @@
                     name="nombre"
                     class="form-control"
                     :class="{ 'is-invalid': formPer.errors.has('nombre') }"
-                    placeholder="Escriba el nombre del donante"
+                    placeholder="Escriba el nombre de la persona"
                     required
                     minlength="2"
                     maxlength="30"
@@ -588,7 +588,7 @@
                     name="apellido1"
                     class="form-control"
                     :class="{ 'is-invalid': formPer.errors.has('apellido1') }"
-                    placeholder="Primer apellido del donante"
+                    placeholder="Primer apellido de la persona"
                     minlength="3"
                     maxlength="30"
                     required
@@ -606,7 +606,7 @@
                     name="apellido2"
                     class="form-control"
                     :class="{ 'is-invalid': formPer.errors.has('apellido2') }"
-                    placeholder="Segundo apellido del donante"
+                    placeholder="Segundo apellido de la persona"
                     minlength="3"
                     maxlength="30"
                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ]{1,30}"
@@ -899,9 +899,9 @@
                       required
                       @change="verInputOtraTematica()"
                     >
-                      <option disabled value="">Seleccione una tematica</option>
-                      <option value="Todas las tematicas">
-                        Todas las tematicas
+                      <option disabled value="">Seleccione una temática</option>
+                      <option value="Todas las temáticas">
+                        Todas las temática
                       </option>
                       <option value="Biodiversidad">Biodiversidad</option>
                       <option value="Cultura">Cultura</option>

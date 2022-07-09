@@ -192,7 +192,7 @@
                     maxlength="30"
                     pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,30}"
                     title="Nombre común valido de flora, no incluya números."
-                    
+
                   />
                   <has-error :form="form" field="nom_cientifico"></has-error>
                 </div>
@@ -244,7 +244,7 @@
                             @change="updatePhoto"
                             :class="{ 'is-invalid': form.errors.has('photo') }"
                             id="SubirImagen"
-                            
+
                           />
                           <has-error :form="form" field="photo"></has-error>
                         </label>
@@ -387,7 +387,7 @@
                   type="text"
                   class="form-control"
                   :disabled="verDetalles">
-                  
+
                 </textarea>
               </div>
               <div id="inputsModal" class="form-group">
@@ -439,7 +439,7 @@
     </div>
   </section>
 </template>
- 
+
 <script>
 export default {
   data() {

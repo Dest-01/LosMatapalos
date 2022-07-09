@@ -59,7 +59,7 @@ class FloraController extends BaseController
             'fam_cientifica' =>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|max:20|min:3',
 
         ];
-    
+
         $messages = [
             'nom_comun.min' =>'Mínimo  3 caracteres y máximo 30',
             'nom_comun.max' => 'Maximo 30 caracteres',
@@ -84,7 +84,7 @@ class FloraController extends BaseController
         if($request->photo){
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos
             ($request->photo, ';')))[1])[1];
-            
+
            \Image::make($request->photo)->save(public_path('images/flora/').$name);
            $request->merge(['photo' => $name]);
 
@@ -98,7 +98,7 @@ class FloraController extends BaseController
             'photo' => $request->get('photo'),
             'fecha_registro' => $request->get('fecha_registro'),
             'fam_cientifica' => $request->get('fam_cientifica')
-            
+
         ]);
         return $this->sendResponse($tag, 'Flora registrada!');
     }
@@ -127,12 +127,12 @@ class FloraController extends BaseController
             'nom_comun' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'nom_cientifico' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|string|max:30|min:3',
             'descripcion' => 'required|string|max:255|min:5',
-            'tipo' => 'required|string|max:50',
+            'tipo' => 'required|',
             'fecha_registro' => 'required|date|after:2020-01-01',
-            'fam_cientifica' =>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/]+$/u|string|max:20|min:3',
+            'fam_cientifica' =>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ-]*)*)+$/|max:20|min:3',
 
         ];
-    
+
         $messages = [
             'nom_comun.min' =>'Mínimo  3 caracteres y máximo 30',
             'nom_comun.max' => 'Maximo 30 caracteres',
@@ -145,6 +145,7 @@ class FloraController extends BaseController
             'tipo.*' => 'Seleccione un tipo de flora',
             'fechaRegistro.after' => 'requiere una fecha mayor al 2020-01-01',
             'fechaRegistro.*' => 'requiere una fecha mayor al 2020-01-01',
+            'photo.*' => 'Cargue una foto',
             'fam_cientifica.min' =>'Mínimo 3 caracteres',
             'fam_cientifica.max' => 'Máximo 30 caracteres',
             'fam_cientifica.*' => 'Nombre de la familia científca',
@@ -157,15 +158,14 @@ class FloraController extends BaseController
 
         $currentPhoto = $tag->photo;
 
-
-        if($request->photo != $currentPhoto){
+        if ($request->photo != $currentPhoto) {
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
 
             \Image::make($request->photo)->save(public_path('images/flora/').$name);
             $request->merge(['photo' => $name]);
 
-            $userPhoto = public_path('images/flora/').$currentPhoto;
-            if(file_exists($userPhoto)){
+            $userPhoto = public_path('images/flora/') . $currentPhoto;
+            if (file_exists($userPhoto)) {
                 @unlink($userPhoto);
             }
 
@@ -184,25 +184,25 @@ class FloraController extends BaseController
      */
     public function destroy($id)
     {
-       
 
-        $flora = Flora::FindOrFail($id);  
-        if(file_exists('images/flora/'.$flora->photo) AND !empty($flora->photo)){ 
+
+        $flora = Flora::FindOrFail($id);
+        if(file_exists('images/flora/'.$flora->photo) AND !empty($flora->photo)){
               unlink('images/flora/'.$flora->photo);
-           } 
+           }
               try{
-  
+
                   $flora->delete();
                   $bug = 0;
               }
               catch(\Exception $e){
                   $bug = $e->errorInfo[1];
-              } 
+              }
               if($bug==0){
                   echo "success";
               }else{
                   echo 'error';
               }
-    
+
     }
 }
