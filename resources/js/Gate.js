@@ -17,11 +17,11 @@ export default class Gate{
     getImageUser(){
         return this.user.image;
     }
-    //roles
+
     isAdmin(){
         return this.user.type === 'admin';
     }
-    //roles
+
     isUser(){
         return this.user.type === 'user';
     }
