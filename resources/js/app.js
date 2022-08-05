@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 
  import { Form, HasError, AlertError } from 'vform';
  window.Form = Form;
- 
+ //Importamos gate.js
  import Gate from "./Gate";
  Vue.prototype.$gate = new Gate(window.user);
  

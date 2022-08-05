@@ -30,6 +30,8 @@ class PersonasController extends BaseController
 
         return $this->sendResponse($persona, 'Lista de personas!');
     }
+
+    
     public function mostrar(Request $request)
     {
         $filtro = $request->valor;
